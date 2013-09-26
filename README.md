@@ -17,3 +17,7 @@ Install
 3. And reload dependancies (such as angular ones)
 
         bower install
+
+4. Run the web server
+
+        grunt server
