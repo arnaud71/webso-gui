@@ -57,3 +57,30 @@ angular.module('websoApp')
     });
 
 //http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1
+
+angular.module('websoApp')
+
+    .controller('AddSourceCtrl', function ($scope,$resource) {
+
+        $scope.inputType    = 'rss';
+        $scope.inputRefresh = 1440; // per day
+        $scope.inputLevel   = 0;
+        $scope.inputUser    = 'user_1';
+
+        $scope.sourceAdd = $resource('http://albator.hesge.ch/cgi-bin/webso/sources/:action',
+            {action:'put.json', source_user:'user_1' ,source_url:'',source_type:'rss',source_level_sharing:'0',callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+
+        $scope.doAdd = function () {
+            $scope.sourceAddResult = $scope.sourceAdd.get({   source_url:     $scope.inputUrl,
+                                                        source_type:    $scope.inputType,
+                                                        source_user:    $scope.inputUser,
+                                                        source_level:   $scope.inputLevel
+
+            });
+        };
+
+
+    });
+
+// http://albator.hesge.ch/cgi-bin/webso/sources/put.json?source_url=http://www.site.com/rss&source_type=rss&source_user=user_1&source_level_sharing=0

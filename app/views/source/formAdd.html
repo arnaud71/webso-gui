@@ -1,30 +1,40 @@
-<div class="container">
-<form class="form-horizontal" role="form">
+<div ng-controller="AddSourceCtrl">
+
+<form name="sourceForm" class="form-horizontal" role="form">
     <div class="form-group">
-        <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
+        <label for="inputUrl" class="col-lg-2 control-label">URL: </label>
         <div class="col-lg-10">
-            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
+            <input type="url" class="form-control" ng-model="inputUrl" id="inputUrl" name="inputUrl" value="http://" required>
+             <span class="error" ng-show="sourceForm.inputUrl.$error.required">
+                URL requis!
+             </span>
+            <span class="error" ng-show="sourceForm.inputUrl.$error.url">
+                URL non valid!
+            </span>
         </div>
     </div>
+
+
     <div class="form-group">
-        <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+        <label for="inputRefresh" class="col-lg-2 control-label">Rafraichissement: </label>
         <div class="col-lg-10">
-            <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+            <input type="number" class="form-control" ng-model="inputRefresh" name="inputRefresh" id="inputRefresh" value="3600" min="1" required>
+            <span class="error" ng-show="sourceForm.inputRefresh.$error.number">
+                Doit être un nombre en minutes!
+            </span>
+            <span class="error" ng-show="sourceForm.inputRefresh.$error.number">
+                Doit être supérieur à 0!
+            </span>
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Remember me
-                </label>
-            </div>
+            <button type="submit" class="btn btn-default" ng-click="doAdd()">Ajouter</button>
+            <button type="cancel" class="btn btn-default" ng-click="doCancel()">Annuler</button>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" class="btn btn-default">Sign in</button>
-        </div>
-    </div>
+
+
+
 </form>
 </div>
