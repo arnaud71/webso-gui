@@ -44,27 +44,56 @@
                     <a class="brand" href="#">Webso</a>
 
                     <div class="nav-collapse collapse navbar-inverse-collapse">
-                        <ul class="nav">
-                            <li data-match-route="/"><a href="#/watch">Accueil</a></li>
-                        </ul>
                         <form class="navbar-search pull-left" ng-submit="doSearch()">
-                            <input type="text" class="search-query span2" placeholder="Recherche" ng-model="searchTerm">
+                            <input type="text" class="search-query span2" placeholder="Rechercher" ng-model="searchTerm">
                         </form>
                         <ul class="nav">
-                            <li data-match-route="/organise"><a href="#/organise">Informations</a></li>
+
+
+
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Ajouter</a></li>
-                                    <li data-match-route="/source/list"><a href="#/source/list">Lister</a></li>
-                                    <li data-match-route="/source/searchNew"><a href="#/source/searchNew">Rechercher Nouveau Flux</a></li>
+                                    <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Ajouter une sélection</a></li>
+                                    <li data-match-route="/publish/list"><a href="#/source/list">Afficher les sélections validées</a></li>
+
                                 </ul>
                             </li>
 
-                            <li data-match-route="/watch"><a href="#/watch">Surveillances</a></li>
-                            <li data-match-route="/publish"><a href="#/publish">Diffusion</a></li>
-                            <li data-match-route="/dashboard"><a href="#/dashboard">Tableau de bord</a></li>
 
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Ajouter une source</a></li>
+                                    <li data-match-route="/source/list"><a href="#/source/source">Afficher les sources</a></li>
+                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Ajouter une surveillance</a></li>
+                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Afficher les surveillances</a></li>
+
+                                  <!--   <li data-match-route="/source/searchNew"><a href="#/source/searchNew">Rechercher Nouveau Flux</a></li> -->
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Ajouter une sélection</a></li>
+                                    <li data-match-route="/publish/list"><a href="#/source/list">Afficher les sélections validées</a></li>
+
+                                </ul>
+                            </li>
+
+
+
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Créer un rapport</a></li>
+                                <li data-match-route="/publish/list"><a href="#/source/list">Créer une newsletter</a></li>
+                                <li data-match-route="/publish/searchNew"><a href="#/source/searchNew">Partager</a></li>
+                            </ul>
+                            </li>
 
 
                         </ul>
