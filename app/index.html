@@ -14,6 +14,8 @@
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
       <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css">
+      <!--wysiwyg-->
+
         <!-- endbuild -->
 </head>
   <body ng-app="websoApp">
@@ -27,7 +29,9 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
+    <!--wysiwyg-->
 
+    <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
 
 
@@ -41,59 +45,69 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">Webso</a>
+                    <a class="brand" href="#/Home">Webso</a>
 
                     <div class="nav-collapse collapse navbar-inverse-collapse">
+                       <!--
+                        <ul class="nav">
+                            <li data-match-route="/Home"><a href="#/Home">Accueil</a></li>
+                        </ul>
+                        -->
                         <form class="navbar-search pull-left" ng-submit="doSearch()">
-                            <input type="text" class="search-query span2" placeholder="Rechercher" ng-model="searchTerm">
+                           <!--
+                            <input type="text" class="search-query span2" placeholder="Recherche" ng-model="searchTerm">
+                           -->
                         </form>
                         <ul class="nav">
 
-
-
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser<b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Ajouter une sélection</a></li>
-                                    <li data-match-route="/publish/list"><a href="#/source/list">Afficher les sélections validées</a></li>
+                                    <li data-match-route="/validate/add"><a href="#/validate/add">Ajouter information</a></li>
+                                    <li data-match-route="/validate/display"><a href="#/validate/display">Afficher informations validées</a></li>
 
                                 </ul>
                             </li>
-
-
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Ajouter une source</a></li>
-                                    <li data-match-route="/source/list"><a href="#/source/source">Afficher les sources</a></li>
-                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Ajouter une surveillance</a></li>
-                                    <li data-match-route="/source/formAdd"><a href="#/source/formAdd">Afficher les surveillances</a></li>
+                                    <li data-match-route="/watch/add"><a href="#/watch/add">Ajouter une surveillance</a></li>
+                                    <li data-match-route="/watch/sourceslist"><a href="#/watch/sourceslist">Afficher les sources</a></li>
+                                    <li data-match-route="/watch/surveillanceList"><a href="#/watch/surveillanceList">Afficher les surveillances</a></li>
 
-                                  <!--   <li data-match-route="/source/searchNew"><a href="#/source/searchNew">Rechercher Nouveau Flux</a></li> -->
                                 </ul>
                             </li>
-
-
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider<b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Ajouter une sélection</a></li>
-                                    <li data-match-route="/publish/list"><a href="#/source/list">Afficher les sélections validées</a></li>
+                                    <li data-match-route="/createNL"><a href="#/publish/newsletter">Newsletter</a></li>
+                                    <li data-match-route="/createReport"><a href="#/publish/report">Rapport</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li data-match-route="/organize"><a href="#/organize">Dossiers de surveillance</a></li>
+                                    <li data-match-route="/organize/vfolder"><a href="#/organize/vfolder">Dossiers de validation</a></li>
+                                    <li data-match-route="/organize"><a href="#/organize">Templates</a></li>
+                                    <li data-match-route="/organize"><a href="#/organize">Collectes webso</a></li>
+                                    <li data-match-route="/organize"><a href="#/organize">Packages de sources</a></li>
+                                    <li data-match-route="/organize/profile"><a href="#/organize/profile">Profils</a></li>
+                                </ul>
+                            </li>
+                            <li data-match-route="/dashboard"><a href="#/dashboard">Tableau de bord</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
 
+                                    <li data-match-route="/"><a href="#/">Dossiers</a></li>
+                                    <li data-match-route="/"><a href="#/">Collectes webso</a></li>
+                                    <li data-match-route="/"><a href="#/">Sources</a></li>
+                                    <li data-match-route="/search/rss"><a href="#/search/rss">Flux RSS</a></li>
                                 </ul>
                             </li>
 
-
-
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li data-match-route="/publish/formAdd"><a href="#/source/formAdd">Créer un rapport</a></li>
-                                <li data-match-route="/publish/list"><a href="#/source/list">Créer une newsletter</a></li>
-                                <li data-match-route="/publish/searchNew"><a href="#/source/searchNew">Partager</a></li>
-                            </ul>
-                            </li>
 
 
                         </ul>
@@ -102,6 +116,7 @@
                             <li data-match-route="/signin"><a href="#/signin">Connexion</a></li>
 
                         </ul>
+
                     </div><!-- /.nav-collapse -->
                 </div>
             </div><!-- /navbar-inner -->
@@ -127,6 +142,8 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/ng-grid/ng-grid-2.0.7.debug.js"></script>
 
         <!-- build:js scripts/plugins.js -->

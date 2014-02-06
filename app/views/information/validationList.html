@@ -1,0 +1,37 @@
+
+
+<div id="list-search">
+    <div ng-controller="displayValidatedInfosCtrl">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2">
+
+                </div>
+                <div class="span10">
+
+                    <table class="table table-bordered table-striped">
+                        <tr >
+                            <th>Titre</th>
+                            <th>Lien</th>
+                            <th>Auteur</th>
+                            <th>Dossier de validation </th>
+                            <th>Date </th>
+                        </tr>
+                        <tr ng-repeat="information in informationResult.success.response.docs">
+                            <td>{{information.information_title_s}}</td>
+                            <td>{{information.information_url_s}}</td>
+                            <td>{{information.source_user_s}} </td>
+                            <td> </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    Nombre de résultats trouvés:
+                    {{informationResult.success.response.numFound}}
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <button ng-click="" ><i>Ajouter information</i></button>
+        </div>
+    </div>
+</div>

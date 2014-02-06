@@ -6,19 +6,38 @@
                 <!--Sidebar content-->
             </div>
             <div class="span10">
-                <table class="table table-striped">
-                    {{sourceResult.success.response.numFound}}
+                <table class="table table-bordered table-striped">
+
                     <tr >
                         <th>Source</th>
                         <th>Type</th>
                         <th>Niveau de Partage</th>
+                        <th>Tag</th>
+                        <th>Domaine</th>
+                        <th>Auteur</th>
+                        <th>Surveillance</th>
+                        <!--
+                        <th>URL</th>
+                        <th>Langue</th>
+
+                        -->
                     </tr>
                     <tr ng-repeat="source in sourceResult.success.response.docs">
                         <td><a href="{{source.source_url_s}}">{{source.source_url_s}}</a></td>
                         <td>{{source.source_type_s}}</td>
                         <td>{{source.source_level_sharing_i}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <!--
+
+                        <td></td>
+                        <td></td>
+                        -->
                     </tr>
                 </table>
+                Nombre de sources trouvées: {{sourceResult.success.response.numFound}}
             </div>
         </div>
     </div>
