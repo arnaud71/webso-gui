@@ -3,33 +3,39 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
 
+
+
 /* Put your CSS here */
 html, body {
   margin: 20px;
 }
 
+
+.carousel .item {
+  background-color: black;
+}
+
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 
 .hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-
+  margin: 50px auto 0 auto;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px;
 }
 
 .hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
 }
 
 .gridStyle {
@@ -38,24 +44,27 @@ body {
   height: 350px
 }
 
-
-.hero-unit-bis {
-  margin: 50px auto 0 auto;
-  width: auto;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-  font-family:Arial;
-
-
+.gridStyleOnto {
+  border: 1px solid rgb(212,212,212);
+  width: "100%";
+  height: 240px
 }
 
-.section{
-  //border-style:solid;
-  border-bottom:thick inset ;
 
+.gridStyleAnalysis {
+  border: 1px solid rgb(212,212,212);
+  width: "100%";
+  height: 240px
 }
 
+.gridStylePeriod {
+  border: 1px solid rgb(212,212,212);
+  width: "100%";
+  height: 150px
+}
+
+.gridStyleContext {
+  border: 1px solid rgb(212,212,212);
+  width: "100%";
+  height: 350px
+}

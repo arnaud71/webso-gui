@@ -113,6 +113,12 @@ angular.module('websoApp', ['ui.bootstrap','ngResource','ngSanitize','ngGrid'])
 
         })
 
+      .when('/search/webso', {
+        templateUrl: 'views/search/webso.html',
+        controller: 'SolrCtrl'
+
+      })
+
         .otherwise({
         redirectTo: '/'
       });
