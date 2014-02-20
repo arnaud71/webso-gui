@@ -71,7 +71,7 @@ angular.module('websoApp')
 
     $scope.doSearchFromPage = function () {
       if ($scope.searchTerm) {
-        $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10},
+        $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
           function () {
             $scope.totalItems     = $scope.solrResult.response.numFound;
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;

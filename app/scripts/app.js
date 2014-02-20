@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('websoApp', ['ui.bootstrap','ngResource','ngSanitize','ngGrid'])
-  .config(function ($routeProvider) {
+angular.module('websoApp', ['ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid']);
+
+angular.module('websoApp')
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         /*
         Menu
@@ -122,7 +124,7 @@ angular.module('websoApp', ['ui.bootstrap','ngResource','ngSanitize','ngGrid'])
         .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);
 
 
 
