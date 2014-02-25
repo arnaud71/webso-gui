@@ -11,10 +11,10 @@ angular.module('websoApp')
 
     // data for period menu
     $scope.myDataDate = [
-      {period: 'day',fq:'last_modified:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
-      {period: 'week',fq:'last_modified:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
-      {period: 'month',fq:'last_modified:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
-      {period: 'all',fq:''}
+      {period: 'jour',fq:'last_modified:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
+      {period: 'semaine',fq:'last_modified:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
+      {period: 'mois',fq:'last_modified:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
+      {period: 'tout',fq:''}
     ];
 
     // default values
@@ -48,7 +48,7 @@ angular.module('websoApp')
       headerRowHeight: 30,
 
       columnDefs: [
-        {visible:'true',field:'period', displayName: 'Select Period', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        {visible:'true',field:'period', displayName: 'Dernier', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
 
       ]
     };

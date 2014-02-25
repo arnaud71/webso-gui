@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-10">
                 <form class="form-horizontal" ng-submit="doSearch()">
-                    <input type="text" placeholder="Search" ng-model="searchTerm">
+                    <input type="text" placeholder="Chercher" ng-model="searchTerm">
                     <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
                 </form>
                 <div solr-results_number ng-show="solrResult.response.numFound">
