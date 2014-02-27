@@ -32,10 +32,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cfg.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="cfg.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="61" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+            <state line="3" column="61" selection-start="143" selection-end="143" vertical-scroll-proportion="0.08302583" vertical-offset="0" max-vertical-offset="542">
               <folding />
             </state>
           </provider>
@@ -71,7 +71,7 @@
       <file leaf-file-name="SolrCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
+            <state line="15" column="33" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1710">
               <folding />
             </state>
           </provider>
@@ -86,10 +86,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webso.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="webso.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/search/webso.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="64" selection-start="1816" selection-end="1816" vertical-scroll-proportion="0.6889353" vertical-offset="105" max-vertical-offset="930">
+            <state line="29" column="64" selection-start="1816" selection-end="1816" vertical-scroll-proportion="-6.6" vertical-offset="105" max-vertical-offset="930">
               <folding />
             </state>
           </provider>
@@ -128,8 +128,8 @@
         <option value="$PROJECT_DIR$/bower.json" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/GoogleFeedCtrl.js" />
         <option value="$PROJECT_DIR$/app/scripts/cfg.js" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js" />
         <option value="$PROJECT_DIR$/app/views/search/webso.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js" />
       </list>
     </option>
   </component>
@@ -536,23 +536,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+    <entry file="file://$PROJECT_DIR$/app/views/search/webso.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="61" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+        <state line="29" column="64" selection-start="1816" selection-end="1816" vertical-scroll-proportion="-6.6" vertical-offset="105" max-vertical-offset="930">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
+        <state line="15" column="33" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1710">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/search/webso.html">
+    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="64" selection-start="1816" selection-end="1816" vertical-scroll-proportion="0.6889353" vertical-offset="105" max-vertical-offset="930">
+        <state line="3" column="61" selection-start="143" selection-end="143" vertical-scroll-proportion="0.08302583" vertical-offset="0" max-vertical-offset="542">
           <folding />
         </state>
       </provider>

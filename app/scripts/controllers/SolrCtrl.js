@@ -11,9 +11,9 @@ angular.module('websoApp')
 
     // data for period menu
     $scope.myDataDate = [
-      {period: 'jour',fq:'last_modified:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
-      {period: 'semaine',fq:'last_modified:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
-      {period: 'mois',fq:'last_modified:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
+      {period: 'jour',fq:'date_dt:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
+      {period: 'semaine',fq:'date_dt:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
+      {period: 'mois',fq:'date_dt:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
       {period: 'tout',fq:''}
     ];
 
