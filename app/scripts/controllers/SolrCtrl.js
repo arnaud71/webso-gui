@@ -23,8 +23,9 @@ angular.module('websoApp')
     $scope.currentPeriod      = 'all';
     $scope.currentFq          = '';
 
-    $scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
-      {action:'itas', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'json.wrf':'JSON_CALLBACK'},
+    //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
+    $scope.solr             = $resource('http://localhost\\:8983/solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
     // http://albator.hesge.ch:8984/solr/collection1/select?q=*%3A*&wt=json&indent=true

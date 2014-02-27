@@ -21,24 +21,24 @@
                         <tr ng-repeat="doc in solrResult.response.docs">
                             <td>
                                 <table class="table table-striped">
-                                    <tr><td><a href="{{doc.url_page}}" target="_blank">{{doc.title}}</a></td></tr>
+                                    <tr><td><a href="{{doc.url_page}}" target="_blank">{{doc.title_t}}</a></td></tr>
 
                                     <div ng-controller="CollapseSolrCtrl">
                                         <tr><td>
                                             <div collapse="isCollapsed">
                                                 <span ng-click="isCollapsed = !isCollapsed">
-                                                {{ doc.content | limitTo:300 }} &gt;&gt;&gt;&gt;
+                                                {{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt;
                                                 </span>
                                             </div>
                                             <div collapse="!isCollapsed">
                                                 <span ng-click="isCollapsed = !isCollapsed">
-                                                {{doc.content}} &lt;&lt;&lt;&lt;
+                                                {{doc.content_en}} &lt;&lt;&lt;&lt;
                                                 </span>
                                             </div>
                                         </td></tr>
                                     </div>
-                                    <tr><td>{{doc.url_page}}</td></tr>
-                                    <tr><td>{{doc.last_modified|date:'yyyy-MM-dd'}}</td></tr>
+                                    <tr><td>{{doc.url_s}}</td></tr>
+                                    <tr><td>{{doc.date_dt|date:'yyyy-MM-dd'}}</td></tr>
 
                                 </table>
                             </td>
