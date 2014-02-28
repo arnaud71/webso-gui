@@ -1,7 +1,13 @@
 
 
 <div id="list-search">
-    <div ng-controller="displayValidatedInfosCtrl">
+    <ol class="breadcrumb text-center">
+        <li><a href="#/home">Webso</a></li>
+        <li><a href="#">Valider</a></li>
+        <li class="active">Afficher les informations validées</li>
+    </ol>
+
+    <div ng-controller="ValidationDataCtrl">
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span2">
@@ -17,21 +23,20 @@
                             <th>Dossier de validation </th>
                             <th>Date </th>
                         </tr>
-                        <tr ng-repeat="information in informationResult.success.response.docs">
-                            <td>{{information.information_title_s}}</td>
-                            <td>{{information.information_url_s}}</td>
-                            <td>{{information.source_user_s}} </td>
+
+                        <tr ng-repeat="validation in validationResult.success.response.docs">
+                            <td>{{validation.title_s}}</td>
+                            <td>{{validation.url_s}}</td>
+                            <td>{{validation.user_s}} </td>
                             <td> </td>
                             <td></td>
                         </tr>
                     </table>
                     Nombre de résultats trouvés:
-                    {{informationResult.success.response.numFound}}
+                    {{Result.success.response.numFound}}
                 </div>
             </div>
         </div>
-        <div class="">
-            <button ng-click="" ><i>Ajouter information</i></button>
-        </div>
+
     </div>
 </div>

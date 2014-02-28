@@ -1,9 +1,27 @@
-<div id="webso-search">
+
+<div ng-controller="CarouselCtrl">
+
+    <carousel interval="myInterval">
+        <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}" style="margin:auto;">
+            <div class="carousel-caption">
+
+                <h2>{{slide.text}}</h2>
+            </div>
+        </slide>
+    </carousel>
+
+
+</div>
+
+
+<!--
+        <div id="webso-search">
 
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span2">
-                    <!--Sidebar content-->
+
                 </div>
                 <div class="span10">
                     <table class="table table-striped">
@@ -17,5 +35,8 @@
         </div>
 
 </div>
+-->
+
+
 
 

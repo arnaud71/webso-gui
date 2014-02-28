@@ -2,117 +2,54 @@
 <script>
     tinymce.init({selector:'wysiwyg'});
 </script>
+<ol class="breadcrumb text-center">
+    <li><a href="#/home">Webso</a></li>
+    <li><a href="#">Valider</a></li>
+    <li class="active">Ajouter une information</li>
+</ol>
 
-<div class="hero-unit-bis" ng-controller="addInfoCtrl">
+<div class="hero-unit-bis" ng-controller="AddInformationCtrl">
 
-    <form class="form-horizontal">
-        <legend>
-               Validation - Ajout d'informations
-        </legend>
-        <div class="control-group" >
-            <label class="control-label"> Titre </label>
-            <div class="controls">
-                <input type="text" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+    <form class="form-horizontal" role="form">
+
+        <div class="form-group" >
+            <label class="col-sm-2 control-label"> Titre </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
             </div>
-
         </div>
     </form>
 
-    <form class="form-horizontal">
-        <legend>
-
-        </legend>
-        <div class="control-group" >
-            <label class="control-label"> Lien </label>
-            <div class="controls">
-                <input type="text" placeholder="Entrer lien" ng-model="inputUrl" id="inputUrl" name="inputUrl">
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label"> Lien </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Entrer lien" ng-model="inputUrl" id="inputUrl" name="inputUrl">
             </div>
-
         </div>
     </form>
-    <form class="form-horizontal ">
-        <legend>
-
-        </legend>
-        <div class="control-group" ng-controller="UnderconstructionCtrl">
-            <label class="control-label"> Sélection - Dossiers de validation </label>
-            <div class="controls">
-                <button type="btn" ng-click="open()"> <i class="icon-plus"> </i></button>
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label"> Tags </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Entrer tags" ng-model="inputTags" id="inputTags" name="inputTags">
             </div>
-            <script type="text/ng-template" id="underconstruction.html">
-                <div class="modal-header">
-                    Under construction
-                </div>
-                <div class="modal-body">
-                    Coming soon ...
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-warning" ng-click="close()">Fermer</button>
-                </div>
-            </script>
-        </div>
-
-    </form>
-    <form class="form-horizontal">
-    <legend>
-
-    </legend>
-    <div class="control-group" >
-        <label class="control-label"> Détails </label>
-        <div class="controls">
-            <wysiwyg ng-model="inputDetail" id="inputDetail" name="inputDetail"></wysiwyg>
-        </div>
-
-    </div>
-    </form>
-    <form class="form-horizontal">
-        <legend>
-
-        </legend>
-        <div class="control-group" >
-            <label class="control-label"> Commentaires </label>
-            <div class="controls">
-                <textarea ng-model="inputComment" id="inputComment" name="inputComment"></textarea>
-            </div>
-
         </div>
     </form>
 
-    <form class="form-horizontal">
-        <legend>
-
-        </legend>
-        <div class="control-group" ng-controller="UnderconstructionCtrl">
-            <label class="control-label" ng-click="open()" > Insérer fichier </label>
-            <button ng-click="open()"><icon class="icon-file"></icon></button>
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label"> Détails </label>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea>
+            </div>
         </div>
-        <script type="text/ng-template" id="">
-            <div class="modal-header">
-                Under construction
-            </div>
-            <div class="modal-body">
-                Coming soon ...
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning " ng-click="close()">Fermer</button>
-            </div>
-        </script>
     </form>
+
     <div>
         <button ng-click="doAdd()" ><i>Valider</i></button>
         <button ><i>Annuler</i></button>
     </div>
-    <script type="text/ng-template" id="informationOk.html">
-        <div class="modal-header">
-
-        </div>
-        <div class="modal-body">
-            Information validée avec succès
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-warning " ng-click="close()">Fermer</button>
-        </div>
-    </script>
 
 </div>
 

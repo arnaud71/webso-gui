@@ -9,7 +9,7 @@ angular.module('websoApp')
         Menu
          */
         .when('/', {
-            templateUrl: 'views/main.html',
+            templateUrl: 'views/comingsoon.html',
             controller: 'SolrCtrl'
         })
         .when('/home', {
@@ -28,13 +28,13 @@ angular.module('websoApp')
             templateUrl: 'views/information/validationList.html'
         })
         .when('/watch/add', {
-            templateUrl: 'views/surveillance/addSurveillance.html'
+            templateUrl: 'views/watch/watchAdd.html'
         })
         .when('/watch/sourceslist', {
             templateUrl: 'views/source/list.html'
         })
-        .when('/watch/surveillanceList', {
-            templateUrl: 'views/information/surveillanceList.html'
+        .when('/watch/watchList', {
+            templateUrl: 'views/watch/watchList.html'
         })
         .when('/publish/newsletter', {
             templateUrl: 'views/report/createNL.html'
@@ -42,19 +42,19 @@ angular.module('websoApp')
         .when('/publish/report', {
             templateUrl: 'views/report/createReport.html'
         })
-        .when('/organise/survfolder', {
+        .when('/organize/survfolder', {
             templateUrl: 'views/organise.html'
 
         })
-        .when('/organise/sourcesfolder', {
+        .when('/organize/sourcesfolder', {
             templateUrl: 'views/organise.html'
 
         })
-        .when('/organise/templates', {
+        .when('/organize/templates', {
             templateUrl: 'views/organise.html'
 
         })
-        .when('/organise/collect', {
+        .when('/organize/collect', {
             templateUrl: 'views/organise.html'
 
         })
@@ -62,8 +62,8 @@ angular.module('websoApp')
             templateUrl: 'views/user/userAdd.html'
 
         })
-        .when('/organise/sources', {
-            templateUrl: 'views/organize/organize.html'
+        .when('/organize/sources', {
+            templateUrl: 'views/sources/list.html'
 
         })
          .when('/organize/vfolder', {
@@ -110,8 +110,8 @@ angular.module('websoApp')
             controller: 'SourceDataCtrl'
 
         })
-        .when('/source/formAdd', {
-            templateUrl: 'views/source/formAdd.html'
+        .when('/source/sourceAdd', {
+            templateUrl: 'views/source/sourceAdd.html'
 
         })
 
