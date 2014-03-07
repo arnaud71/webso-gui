@@ -1,0 +1,43 @@
+<div ng-controller="AddSourceCtrl">
+    <ol class="breadcrumb text-center">
+        <li><a href="#/home">Webso</a></li>
+        <li><a>Surveiller</a></li>
+        <li class="active">Ajouter les sources</li>
+    </ol>
+    <form class="form-horizontal" role="form">
+
+    </form>
+
+    <form name="sourceForm" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"> Lien </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Entrer lien" ng-model="inputUrl" id="inputUrl" name="inputUrl">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"> Titre </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"> Tags </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Entrer tags" ng-model="inputTags" id="inputTags" name="inputTags">
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="submit" class="btn btn-default" ng-click="doAdd()">Ajouter</button>
+            </div>
+        </div>
+    </form>
+
+</div>

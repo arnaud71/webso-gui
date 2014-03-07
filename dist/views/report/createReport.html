@@ -1,0 +1,50 @@
+<div>
+    <div ng-controller="reportCtrl" class="hero-unit-bis">
+        <form class="form-horizontal">
+            <legend>
+                      Rapport de Veille
+            </legend>
+            <div class="control-group">
+                <label class="control-label"> Titre du rapport </label>
+                <div class="controls">
+                    <input type="text" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+                </div>
+                <label class="control-label"> Format du rapport </label>
+                <div class="controls">
+                    <select ng-model="format" ng-options="opt for opt in options.format"></select>
+
+                </div>
+
+            </div>
+        </form>
+
+
+        <form class="form-horizontal">
+            <legend>
+
+            </legend>
+            <div class="control-group" ng-controller="UnderconstructionCtrl">
+                <label class="control-label"> Sélection - Dossiers de validation </label>
+                <div class="controls">
+                    <button type="btn" ng-click="open()"> <i class="icon-plus"> </i></button>
+                </div>
+                <script type="text/ng-template" id="underconstruction.html">
+                    <div class="modal-header">
+                       Under construction
+                    </div>
+                    <div class="modal-body">
+                      Coming soon ...
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="close()">Fermer</button>
+                    </div>
+                </script>
+            </div>
+
+        </form>
+
+
+        <button ng-click="doAdd()">Créer rapport</button>
+
+    </div>
+</div>

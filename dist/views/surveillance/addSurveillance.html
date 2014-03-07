@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-22">
+    <div class="jumbotron" ng-controller="addSurvCtrl">
+
+        <form class="form-horizontal section">
+            <legend>
+                 Surveillance
+            </legend>
+            <div class="control-group">
+                <label class="control-label"> Source </label>
+                <div class="controls">
+                    <input type="text">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"> Nom de la surveillance </label>
+                <div class="controls">
+                    <input type="text" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"> Dossier de surveillance </label>
+                <div class="controls">
+                    <button type="btn"><i class="icon-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"> Tag </label>
+                <div class="controls">
+                    <input type="text" placeholder="tag" ng-model="inputTag" id="inputTag" name="inputTag">
+                </div>
+             </div>
+            <div class="control-group" ng-controller="menuCtrl">
+                <label class="control-label"> Domaine </label>
+                <div class="controls">
+                    <select id="inputDomain" name="inputDomain" ng-model="domain" ng-options="d.name for d in domains"></select>
+                </div>
+            </div>
+            <div class="control-group" ng-controller="menuCtrl">
+                <label class="control-label"> Secteur d'activité </label>
+                <div class="controls">
+                    <select id="inputActivity" ng-model="activity" ng-options="a.name for a in activities"></select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"> Requête </label>
+                <div class="controls">
+                    <input type="text">
+                    <button type="btn">Tester</button>
+                </div>
+            </div>
+
+            <div class="control-group" ng-controller="DatepickerCtrl">
+                <label class="control-label"> Fréquence </label>
+                <div class="controls">
+                     <select ng-model="freq" ng-options="opt for opt in options.freq"></select>
+                 </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"> Notification </label>
+                <div class="controls">
+                    <input type="text" placeholder="choisir le type de notification: mail, rss, pas de notification">
+                </div>
+            </div>
+        </form>
+
+
+
+        <button class="btn btn-small" ng-click="doAdd()">Surveiller</button>
+    </div>
+    </div>
+</div>
