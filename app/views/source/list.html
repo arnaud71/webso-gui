@@ -6,6 +6,16 @@
     </ol>
     <div ng-controller="SourceDataCtrl">
         <div class="container">
+            <div calss="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-10">
+                    <div class="gridStyleSource" ng-grid="gridOptionsSource">
+
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-2">
                     <!--Sidebar content-->
@@ -19,6 +29,7 @@
 
                         <tr >
                             <th>Source</th>
+                            <th>Nom</th>
                             <th>Type</th>
                             <th>Niveau de Partage</th>
                             <th>Tag</th>
@@ -34,6 +45,7 @@
                         </tr>
                         <tr ng-repeat="source in sourceResult.success.response.docs |filter: (currentPage*itemsPerPage)" >
                             <td><a href="{{source.url_s}}">{{source.url_s}}</a></td>
+                            <td>{{source.title_t}}</td>
                             <td>{{source.source_type_s}}</td>
                             <td>{{source.level_sharing_i}}</td>
                             <td>{{source.tags_s}}</td>
