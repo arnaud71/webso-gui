@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SolrCtrl', ['$scope', '$resource' ,function ($scope,$resource) {
+  .controller('SolrCtrl', ['$scope', '$resource','cfg' ,function ($scope,$resource,cfg) {
 
     $scope.showFound        = false;
     $scope.currentPage      = 1;
@@ -24,7 +24,7 @@ angular.module('websoApp')
     $scope.currentFq          = '';
 
     //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
-    $scope.solr             = $resource('http://localhost\\:8983/solr/collection1/:action',
+    $scope.solr             = $resource(cfg.urlDB+'solr/collection1/:action',
       {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
