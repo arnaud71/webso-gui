@@ -84,6 +84,10 @@ angular.module('websoApp')
             templateUrl: 'views/source/searchNew.html'
 
         })
+        .when('/search/source', {
+          templateUrl: 'views/source/sourceList.html'
+
+        })
         /*
           Booklet
          */
