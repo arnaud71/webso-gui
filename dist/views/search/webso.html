@@ -16,10 +16,12 @@
                     <input type="text" placeholder="Chercher" ng-model="searchTerm">
                     <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
                 </form>
-                <div solr-results_number="" ng-show="solrResult.response.numFound">
+                <div solr-results-number="" ng-show="solrResult.response">
                     Page: {{bigCurrentPage}} of {{solrResult.response.numFound}} results for <b>'{{solrResult.responseHeader.params.q}}'</b> query on last <b>{{currentPeriod}}</b> in {{solrResult.responseHeader.QTime}} ms
                     <br>
+                 </div>
 
+                 <div solr-result="" ng-show="solrResult.response.numFound">
                     <table class="table table-striped">
 
                         <tr ng-repeat="doc in solrResult.response.docs">

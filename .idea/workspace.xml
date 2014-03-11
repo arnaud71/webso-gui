@@ -59,10 +59,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="20" selection-start="3469" selection-end="3469" vertical-scroll-proportion="0.65909094" vertical-offset="1545" max-vertical-offset="2205">
+            <state line="141" column="0" selection-start="3516" selection-end="3516" vertical-scroll-proportion="0.0" vertical-offset="1545" max-vertical-offset="2205">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cfg.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="4" selection-start="88" selection-end="88" vertical-scroll-proportion="0.06818182" vertical-offset="0" max-vertical-offset="660">
               <folding />
             </state>
           </provider>
@@ -95,7 +104,6 @@
         <option value="$PROJECT_DIR$/app/views/source/list.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js" />
         <option value="$PROJECT_DIR$/Gruntfile.js" />
-        <option value="$PROJECT_DIR$/app/scripts/cfg.js" />
         <option value="$PROJECT_DIR$/app/views/search/webso.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js" />
         <option value="$PROJECT_DIR$/app/views/source/sourceList.html" />
@@ -103,11 +111,12 @@
         <option value="$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js" />
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
+        <option value="$PROJECT_DIR$/app/scripts/cfg.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="506" />
+    <option name="x" value="243" />
     <option name="y" value="22" />
     <option name="width" value="1434" />
     <option name="height" value="783" />
@@ -349,7 +358,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="506" y="22" width="1434" height="783" extended-state="0" />
+    <frame x="243" y="22" width="1434" height="783" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -405,11 +414,6 @@
     <entry file="file://$PROJECT_DIR$/Gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="187" column="16" selection-start="4554" selection-end="4554" vertical-scroll-proportion="-2.2767177" vertical-offset="3998" max-vertical-offset="5970" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.10909091" vertical-offset="0" max-vertical-offset="550" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -482,7 +486,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="20" selection-start="3469" selection-end="3469" vertical-scroll-proportion="0.65909094" vertical-offset="1545" max-vertical-offset="2205">
+        <state line="141" column="0" selection-start="3516" selection-end="3516" vertical-scroll-proportion="0.0" vertical-offset="1545" max-vertical-offset="2205">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="4" selection-start="88" selection-end="88" vertical-scroll-proportion="0.06818182" vertical-offset="0" max-vertical-offset="660">
           <folding />
         </state>
       </provider>
