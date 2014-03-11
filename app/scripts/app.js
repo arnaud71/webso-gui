@@ -33,6 +33,11 @@ angular.module('websoApp')
         .when('/watch/sourceslist', {
             templateUrl: 'views/source/list.html'
         })
+
+        .when('/source/sourcesList', {
+          templateUrl: 'views/source/sourceList.html'
+        })
+
         .when('/watch/watchList', {
             templateUrl: 'views/watch/watchList.html'
         })

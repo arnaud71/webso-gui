@@ -23,37 +23,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="main.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/styles/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+            <state line="36" column="17" selection-start="618" selection-end="618" vertical-scroll-proportion="-1.0408163" vertical-offset="489" max-vertical-offset="1050">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cfg.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+      <file leaf-file-name="sourceList.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/source/sourceList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="35" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+            <state line="17" column="18" selection-start="539" selection-end="539" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="435">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gruntfile.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <file leaf-file-name="SourceListCtrl.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="187" column="16" selection-start="4554" selection-end="4554" vertical-scroll-proportion="45.884617" vertical-offset="3998" max-vertical-offset="5970">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="12" selection-start="580" selection-end="580" vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="825">
+            <state line="6" column="0" selection-start="110" selection-end="110" vertical-scroll-proportion="-2.0547945" vertical-offset="1140" max-vertical-offset="2280">
               <folding />
             </state>
           </provider>
@@ -62,7 +53,7 @@
       <file leaf-file-name="list.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/source/list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="30" selection-start="1121" selection-end="1121" vertical-scroll-proportion="-3.0" vertical-offset="255" max-vertical-offset="1320">
+            <state line="55" column="107" selection-start="2531" selection-end="2536" vertical-scroll-proportion="0.0" vertical-offset="825" max-vertical-offset="1320">
               <folding />
             </state>
           </provider>
@@ -71,28 +62,8 @@
       <file leaf-file-name="SourceDataCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="38" selection-start="424" selection-end="439" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+            <state line="32" column="0" selection-start="692" selection-end="1285" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1095">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SolrCtrl.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="83" selection-start="125" selection-end="125" vertical-scroll-proportion="-1.4009112" vertical-offset="660" max-vertical-offset="1710">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="50" selection-start="1665" selection-end="1665" vertical-scroll-proportion="-3.38" vertical-offset="506" max-vertical-offset="2820">
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -107,30 +78,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/scripts/controllers/main.js" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/SourceCtrl.js" />
         <option value="$PROJECT_DIR$/app/styles/ng-grid.css" />
-        <option value="$PROJECT_DIR$/app/styles/main.scss" />
         <option value="$PROJECT_DIR$/app/views/surveillance/addSurveillance.html" />
-        <option value="$PROJECT_DIR$/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/bower.json" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/GoogleFeedCtrl.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/views/search/webso.html" />
-        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/views/source/list.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js" />
         <option value="$PROJECT_DIR$/Gruntfile.js" />
         <option value="$PROJECT_DIR$/app/scripts/cfg.js" />
+        <option value="$PROJECT_DIR$/app/views/search/webso.html" />
+        <option value="$PROJECT_DIR$/app/scripts/app.js" />
+        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js" />
+        <option value="$PROJECT_DIR$/app/views/source/sourceList.html" />
+        <option value="$PROJECT_DIR$/app/styles/main.scss" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-11" />
-    <option name="y" value="59" />
-    <option name="width" value="1400" />
-    <option name="height" value="575" />
+    <option name="x" value="132" />
+    <option name="y" value="23" />
+    <option name="width" value="1434" />
+    <option name="height" value="783" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -204,6 +175,64 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -242,10 +271,18 @@
     <property name="last_opened_file_path" value="/Library/WebServer/CGI-Executables/webso-services" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -256,12 +293,8 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true">
+      <setting name="config_file" value="" />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -269,10 +302,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="CHROME" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true">
-      <setting name="config_file" value="" />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -311,17 +340,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="59" width="1400" height="575" extended-state="1" />
+    <frame x="132" y="23" width="1434" height="783" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22071429" sideWeight="0.5413153" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21548118" sideWeight="0.84011626" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23065694" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15988372" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -347,112 +376,102 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/styles/ng-grid.css">
+    <entry file="file://$PROJECT_DIR$/app/views/source/searchNew.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="435" column="17" selection-start="9649" selection-end="9649" vertical-scroll-proportion="0.0" vertical-offset="6312" max-vertical-offset="6705" />
+        <state line="10" column="0" selection-start="553" selection-end="553" vertical-scroll-proportion="0.2990654" vertical-offset="22" max-vertical-offset="450" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bower.json">
+    <entry file="file://$PROJECT_DIR$/app/views/search/webso.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="506" selection-end="506" vertical-scroll-proportion="0.49227798" vertical-offset="0" max-vertical-offset="518" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/styles/main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="1" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0" vertical-offset="584" max-vertical-offset="1125">
+        <state line="19" column="74" selection-start="867" selection-end="871" vertical-scroll-proportion="-3.24" vertical-offset="123" max-vertical-offset="1020">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/GoogleFeedCtrl.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="3580" selection-start="5793" selection-end="5796" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="1320">
-          <folding />
-        </state>
+        <state line="18" column="12" selection-start="580" selection-end="580" vertical-scroll-proportion="0.513308" vertical-offset="0" max-vertical-offset="825" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/surveillance/addSurveillance.html">
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="25" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1305">
-          <folding />
-        </state>
+        <state line="187" column="16" selection-start="4554" selection-end="4554" vertical-scroll-proportion="-2.2767177" vertical-offset="3998" max-vertical-offset="5970" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.10909091" vertical-offset="0" max-vertical-offset="550" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+        <state line="5" column="0" selection-start="57" selection-end="57" vertical-scroll-proportion="0.13636364" vertical-offset="0" max-vertical-offset="550" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="172" column="0" selection-start="9251" selection-end="9251" vertical-scroll-proportion="0.50292397" vertical-offset="2322" max-vertical-offset="2880">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="2070">
-          <folding />
-        </state>
+        <state line="35" column="0" selection-start="1034" selection-end="1034" vertical-scroll-proportion="1.0019084" vertical-offset="0" max-vertical-offset="2145" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/search/webso.html">
+    <entry file="file://$PROJECT_DIR$/app/styles/ng-grid.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="16" selection-start="304" selection-end="385" vertical-scroll-proportion="-3.125" vertical-offset="60" max-vertical-offset="990">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/source/searchNew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="553" selection-end="553" vertical-scroll-proportion="0.2990654" vertical-offset="22" max-vertical-offset="450">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/source/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="30" selection-start="1121" selection-end="1121" vertical-scroll-proportion="-3.0" vertical-offset="255" max-vertical-offset="1320">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="50" selection-start="1665" selection-end="1665" vertical-scroll-proportion="-3.38" vertical-offset="506" max-vertical-offset="2820">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="12" selection-start="580" selection-end="580" vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="825">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="16" selection-start="4554" selection-end="4554" vertical-scroll-proportion="45.884617" vertical-offset="3998" max-vertical-offset="5970">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="35" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="38" selection-start="424" selection-end="439" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.9329609" vertical-offset="1038" max-vertical-offset="6705">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="83" selection-start="125" selection-end="125" vertical-scroll-proportion="-1.4009112" vertical-offset="660" max-vertical-offset="1710">
+        <state line="78" column="72" selection-start="2655" selection-end="2655" vertical-scroll-proportion="1.5921788" vertical-offset="315" max-vertical-offset="1740">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/GoogleFeedCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="7108" selection-end="7108" vertical-scroll-proportion="1.2328767" vertical-offset="105" max-vertical-offset="1320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/source/sourceList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="18" selection-start="539" selection-end="539" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/source/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="107" selection-start="2531" selection-end="2536" vertical-scroll-proportion="0.0" vertical-offset="825" max-vertical-offset="1320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="692" selection-end="1285" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/styles/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="17" selection-start="618" selection-end="618" vertical-scroll-proportion="-1.0408163" vertical-offset="489" max-vertical-offset="1050">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="110" selection-end="110" vertical-scroll-proportion="-2.0547945" vertical-offset="1140" max-vertical-offset="2280">
           <folding />
         </state>
       </provider>

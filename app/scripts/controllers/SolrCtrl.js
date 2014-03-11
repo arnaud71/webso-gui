@@ -62,8 +62,10 @@ angular.module('websoApp')
         $scope.bigCurrentPage   = 1;
         $scope.solrResult       = $scope.solr.get({q:$scope.searchTerm,start:$scope.currentPage-1,fq:$scope.currentFq},
           function () {
+            //if ($scope.solrResult.response.numFound) {
             $scope.totalItems     = $scope.solrResult.response.numFound;
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
+            //}
           }
         );
       }
@@ -78,7 +80,7 @@ angular.module('websoApp')
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
         );
-        $scope.totalItems = $scope.solrResult.response.numFound;
+        $scope.totalItems    = $scope.solrResult.response.numFound;
         $scope.bigTotalItems = $scope.solrResult.response.numFound;
       }
     };
