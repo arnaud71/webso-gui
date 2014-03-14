@@ -36,3 +36,28 @@ Pre-install
 2. install yeoman
 
         npm install -g yo (http://yeoman.io/)
+
+
+Run the tests 
+-------------
+
+1. Run unit tests
+	1.1 Start Karma :
+		karma start karma-unit.conf.js
+	
+	1.2 Run test	
+		karma run karma-unit.conf.js
+
+2. Run midway test
+	1.1 Start Karma :
+		karma start karma-midway.conf.js
+	
+	1.2 Run test	
+		karma run karma-midway.conf.js
+
+3. Run e2e test
+	1.1 Start Karma :
+		karma start karma-e2e.conf.js
+	
+	1.2 Run test	
+		karma run karma-e2e.conf.js
