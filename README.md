@@ -40,6 +40,9 @@ Pre-install
 
 Run the tests 
 -------------
+0. Before you begin testing, please install this module with NPM, if this is not done : 
+
+	npm install ng-midway-tester
 
 1. Run unit tests
 
