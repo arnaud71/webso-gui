@@ -69,6 +69,11 @@ module.exports = function (grunt) {
       }
     },
     connect: {
+      testserver: {
+        options: {
+          port: 9000
+        }
+      },
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
@@ -314,8 +319,20 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: './karma-unit.conf.js',
+        autoWatch: false,
         singleRun: true
+      },
+      unit_auto: {
+        configFile: './karma-unit.conf.js'
+      },
+      e2e: {
+        configFile: './karma-e2e.conf.js',
+        autoWatch: false,
+        singleRun: true
+      },
+      e2e_auto: {
+        configFile: './karma-e2e.conf.js'
       }
     },
     cdnify: {
@@ -359,13 +376,10 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-    'karma'
-  ]);
+  grunt.registerTask('test', ['connect:testserver','karma:unit', 'karma:e2e']);
+  grunt.registerTask('test:unit', ['karma:unit']);
+  grunt.registerTask('test:midway', ['connect:testserver','karma:midway']);
+  grunt.registerTask('test:e2e', ['connect:testserver', 'karma:e2e']);
 
   grunt.registerTask('build', [
     'clean:dist',
@@ -387,4 +401,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+
 };
