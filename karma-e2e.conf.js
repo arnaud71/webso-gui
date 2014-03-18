@@ -5,9 +5,9 @@ module.exports = function(config) {
     conf.files = conf.files.concat([
 		'test/spec/e2e/controllers/*.js'
     ]);
-	
+    
 	conf.proxies = {
-		'/': 'http://albator.hesge.ch/web/webso-gui/'
+		'/': 'http://localhost:9000/'
 	};
 	
 	conf.urlRoot = '/__karma__/';
