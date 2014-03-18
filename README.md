@@ -46,30 +46,30 @@ Run the tests
 
 1. Run unit tests
 
-	1.1 Start Karma :
+	2.1 Start Karma :
 
 		karma start karma-unit.conf.js
 	
-	1.2 Run test :	
+	2.2 Run test :	
 
 		karma run karma-unit.conf.js
 
 2. Run midway test
 
-	2.1 Start Karma :
+	3.1 Start Karma :
 
 		karma start karma-midway.conf.js
 	
-	2.2 Run test :	
+	3.2 Run test :	
 
 		karma run karma-midway.conf.js
 
 3. Run e2e test
 
-	3.1 Start Karma :
+	4.1 Start Karma :
 
 		karma start karma-e2e.conf.js
 	
-	3.2 Run test :	
+	4.2 Run test :	
 
 		karma run karma-e2e.conf.js
