@@ -4,8 +4,11 @@ module.exports = function(config) {
   var conf = sharedConfig();
   
   conf.files = conf.files.concat([
+      'node_modules/ng-midway-tester/src/ngMidwayTester.js',
+      'dist/bower_components/angular-mocks/angular-mocks.js',
       'app/scripts/controllers/*.js',
-      'test/spec/**/**/*.js'
+      'test/spec/unit/**/*.js',
+      'test/spec/midway/**/*.js'
     ]);
 
     // coverage reporter generates the coverage
@@ -27,8 +30,7 @@ module.exports = function(config) {
     conf.plugins = [
       'karma-jasmine',
       'karma-coverage',
-      'karma-chrome-launcher',
-      'karma-firefox-launcher',
+      'karma-chrome-launcher'
     ];
 
     config.set(conf);
