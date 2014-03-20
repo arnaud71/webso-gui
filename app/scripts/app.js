@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('websoApp', ['ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid']);
+angular.module('websoApp', ['ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination']);
 
 angular.module('websoApp')
   .config(['$routeProvider', function ($routeProvider) {

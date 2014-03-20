@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SolrCtrl', ['$scope', '$resource','cfg' ,function ($scope,$resource,cfg) {
+  .controller('SolrCtrl', ['$scope', '$resource','cfg','paginationConfig' ,function ($scope,$resource,cfg,paginationConfig) {
 
-    $scope.showFound        = false;
-    $scope.currentPage      = 1;
-    $scope.maxSize          = 5;
-    $scope.bigCurrentPage   = 1;
-
+    $scope.showFound              = false;
+    $scope.currentPage            = 1;
+    $scope.maxSize                = 5;
+    $scope.bigCurrentPage         = 1;
+    paginationConfig.nextText     = 'Suivant';
+    paginationConfig.previousText = 'Précédent';
+    paginationConfig.firstText    = 'Début';
+    paginationConfig.lastText     = 'Fin';
 
     // data for period menu
     $scope.myDataDate = [
