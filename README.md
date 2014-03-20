@@ -79,16 +79,16 @@ Run the tests
 
 4. Calculating the rate of code coverage
 
-	4.1 Before you begin generate the coverage, please install this module with NPM, if this is not done : 
+	5.1 Before you begin generate the coverage, please install this module with NPM, if this is not done : 
 
 		npm install karma-coverage
 
-	4.2 Run the karma-coverage
+	5.2 Run the karma-coverage
 
-		4.2.1 Start Karma-coverage :
+		5.2.1 Start Karma-coverage :
 
 			karma start karma.conf.js
 	
-		4.2.2 Run karma-coverage :	
+		5.2.2 Run karma-coverage :	
 
 			karma run karma.conf.js
