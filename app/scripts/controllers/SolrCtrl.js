@@ -11,16 +11,16 @@ angular.module('websoApp')
 
     // data for period menu
     $scope.myDataDate = [
-      {period: 'jour',fq:'date_dt:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
-      {period: 'semaine',fq:'date_dt:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
-      {period: 'mois',fq:'date_dt:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
+      {period: 'dernier jour',fq:'date_dt:[NOW/DAY-1DAY TO NOW/DAY+1DAY]'},
+      {period: 'dernière semaine',fq:'date_dt:[NOW/DAY-7DAY TO NOW/DAY+1DAY]'},
+      {period: 'dernier mois',fq:'date_dt:[NOW/DAY-30DAY TO NOW/DAY+1DAY]'},
       {period: 'tout',fq:''}
     ];
 
     // default values
 
     $scope.mySelectionsPeriod = [];
-    $scope.currentPeriod      = 'all';
+    $scope.currentPeriod      = 'tout';
     $scope.currentFq          = '';
 
     //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
@@ -49,14 +49,14 @@ angular.module('websoApp')
       headerRowHeight: 30,
 
       columnDefs: [
-        {visible:'true',field:'period', displayName: 'Dernier', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        {visible:'true',field:'period', displayName: 'Période', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
 
       ]
     };
 
 
     $scope.doSearch = function () {
-      if ($scope.searchTerm) {
+      //if ($scope.searchTerm) {
         $scope.currentPage      = 1;
         $scope.maxSize          = 5;
         $scope.bigCurrentPage   = 1;
@@ -68,12 +68,12 @@ angular.module('websoApp')
             //}
           }
         );
-      }
+      //}
     };
 
 
     $scope.doSearchFromPage = function () {
-      if ($scope.searchTerm) {
+      //if ($scope.searchTerm) {
         $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
           function () {
             $scope.totalItems     = $scope.solrResult.response.numFound;
@@ -82,7 +82,7 @@ angular.module('websoApp')
         );
         $scope.totalItems    = $scope.solrResult.response.numFound;
         $scope.bigTotalItems = $scope.solrResult.response.numFound;
-      }
+      //}
     };
 
 
@@ -95,6 +95,8 @@ angular.module('websoApp')
       $scope.currentPage = page;
       $scope.doSearchFromPage();
     };
+
+    $scope.doSearch();
   }]);
 
 

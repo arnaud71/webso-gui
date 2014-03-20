@@ -17,7 +17,7 @@
                     <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
                 </form>
                 <div solr-results-number ng-show="solrResult.response">
-                    Page: {{bigCurrentPage}} of {{solrResult.response.numFound}} results for <b>'{{solrResult.responseHeader.params.q}}'</b> query on last <b>{{currentPeriod}}</b> in {{solrResult.responseHeader.QTime}} ms
+                    Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> dans {{solrResult.responseHeader.QTime}} ms
                     <br>
                  </div>
 
@@ -27,7 +27,7 @@
                         <tr ng-repeat="doc in solrResult.response.docs">
                             <td>
                                 <table class="table table-striped">
-                                    <tr><td><a href="{{doc.url_page}}" target="_blank">{{doc.title_t}}</a></td></tr>
+                                    <tr><td><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a></td></tr>
 
                                     <div ng-controller="CollapseSolrCtrl">
                                         <tr><td>
@@ -44,7 +44,7 @@
                                         </td></tr>
                                     </div>
                                     <tr><td>{{doc.url_s}}</td></tr>
-                                    <tr><td>{{doc.date_dt|date:'yyyy-MM-dd'}}</td></tr>
+                                    <tr><td>{{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}</td></tr>
 
                                 </table>
                             </td>
