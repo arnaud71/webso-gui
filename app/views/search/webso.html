@@ -17,7 +17,7 @@
                     <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
                 </form>
                 <div solr-results-number ng-show="solrResult.response">
-                    Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> dans {{solrResult.responseHeader.QTime}} ms
+                    Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
                     <br>
                  </div>
 
@@ -33,7 +33,14 @@
                                         <tr><td>
                                             <div collapse="isCollapsed">
                                                 <span ng-click="isCollapsed = !isCollapsed">
-                                                {{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt;
+                                                <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
+                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+
+                                                    <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
+                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
+
+                                                   &gt;&gt;&gt;&gt;
+                                                    <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                 </span>
                                             </div>
                                             <div collapse="!isCollapsed">

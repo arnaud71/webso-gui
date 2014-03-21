@@ -24,11 +24,11 @@ angular.module('websoApp')
 
     $scope.mySelectionsPeriod = [];
     $scope.currentPeriod      = 'tout';
-    $scope.currentFq          = '';
+    $scope.currentFq          = 'type_s:document';
 
     //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
     $scope.solr             = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'json.wrf':'JSON_CALLBACK'},
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
     // http://albator.hesge.ch:8984/solr/collection1/select?q=*%3A*&wt=json&indent=true
@@ -45,7 +45,7 @@ angular.module('websoApp')
       afterSelectionChange: function () {
         angular.forEach($scope.mySelectionsPeriod, function ( item ) {
           $scope.currentPeriod = item.period;
-          $scope.currentFq = item.fq;
+          $scope.currentFq += ' '+item.fq;
         });
       },
 
@@ -100,6 +100,11 @@ angular.module('websoApp')
     };
 
     $scope.doSearch();
+
+    $scope.getSummary = function(id) {
+      //return $scope.solrResult.response.highlighting.{{id}}.content_en;
+    }
+
   }]);
 
 
