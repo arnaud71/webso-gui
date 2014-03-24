@@ -205,6 +205,12 @@ describe('Controller: SourceDataCtrl', function () {
   it('should have test function service in the controller SourceDataCtrl', function() {
     expect(scope.test).toBeDefined();
   });  
+
+  it('should have a working test function service in the controller SourceDataCtrl', function() {
+    var $id = 1;
+    var $url = "http://www.google.fr"; 
+    expect(scope.test($id, $url)).toBeTruthy;
+  });
 });
 /****************************************************************************************************/
 describe('Controller: WatchDataCtrl', function () {
@@ -254,33 +260,46 @@ describe('Controller: GoogleFeedCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    GoogleFeedCtrl = $controller('WatchDataCtrl', {
+    GoogleFeedCtrl = $controller('GoogleFeedCtrl', {
       $scope: scope
     });
   }));
 
+  it('should have correct initialisations in the controller addSurvCtrl', function() {
+    expect(scope.msgSelect).toBeDefined();
+    expect(scope.mySelections).toBeDefined();
+    expect(scope.foundRes).toBeDefined();
+    expect(scope.nameController).toBeDefined();
+    expect(scope.googleFeed).toBeDefined();
+  });
   it('should have doSearch function service in the controller GoogleFeedCtrl', function() {
     expect(scope.doSearch).toBeDefined();
   });
 
   it('should have a working doSearch function service in the controller GoogleFeedCtrl', function() {
-  	// a faire ...
+  	scope.doSearch();
+
+  	// cas passant et non passant à faire
   });
 
   it('should have selectAll function service in the controller GoogleFeedCtrl', function() {
-  	// a faire ...
+  	expect(scope.selectAll).toBeDefined();
   });
 
   it('should have a working selectAll function service in the controller GoogleFeedCtrl', function() {
-  	// a faire ...
+  	scope.selectAll();
+
+  	// cas passant et non passant à faire
   });
 
   it('should have createOPML function service in the controller GoogleFeedCtrl', function() {
-  	// a faire ...
+  	expect(scope.createOPML).toBeDefined();
   });
 
   it('should have a working createOPML function service in the controller GoogleFeedCtrl', function() {
-  	// a faire ...
+  	scope.createOPML();
+
+	// cas passant et non passant à faire
   });
 });
 /****************************************************************************************************/
@@ -295,29 +314,556 @@ describe('Controller: SolrCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    SolrCtrl = $controller('WatchDataCtrl', {
+    SolrCtrl = $controller('SolrCtrl', {
       $scope: scope
     });
   }));
+
+  it('should have correct initialisations in the controller reportCtrl', function() {
+    expect(scope.showFound).toBeDefined();
+    expect(scope.currentPage).toBeDefined();
+    expect(scope.maxSize).toBeDefined();
+    expect(scope.bigCurrentPage).toBeDefined();
+    expect(scope.myDataDate).toBeDefined();
+    expect(scope.mySelectionsPeriod).toBeDefined();
+    expect(scope.currentPeriod).toBeDefined();
+    expect(scope.currentFq).toBeDefined();
+    expect(scope.solr).toBeDefined();
+    expect(scope.gridOptionsPeriod).toBeDefined();
+  });
 
   it('should have doSearch function service in the controller SolrCtrl', function() {
     expect(scope.doSearch).toBeDefined();
   });
 
   it('should have a working doSearch function service in the controller SolrCtrl', function() {
-  	// a faire ...
+  	scope.doSearch();
+  	// cas passant et non passant à faire
   });
 
   it('should have doSearchFromPage function service in the controller SolrCtrl', function() {
-  	// a faire ...
+  	expect(scope.doSearchFromPage).toBeDefined();
   });
 
   it('should have a working doSearchFromPage function service in the controller SolrCtrl', function() {
-  	// a faire ...
+  	// cas passant et non passant à faire
+  });
+
+  it('should have pageChanged function service in the controller SolrCtrl', function() {
+  	expect(scope.pageChanged).toBeDefined();
   });
 
   it('should have a working pageChanged function service in the controller SolrCtrl', function() {
-  	// a faire ...
+  	// cas passant et non passant à faire
   });
+});
+/****************************************************************************************************/
+describe('Controller: BarletCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var BarletCtrl,
+  scope,
+  routeParams;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+	routeParams = {}; 
+		BarletCtrl = $controller('BarletCtrl', {
+		  $scope: scope,
+		  $routeParams : routeParams
+		});
+	}));
+
+  it('should have correct initialisations in the controller BarletCtrl', function() {
+    expect(scope.textArg).toBeDefined();
+    expect(scope.inputUrl).toBeDefined();
+    expect(scope.searchTerm).toBeDefined();
+  });
+
+	it('should enter in "id_url" condition if it specified as true', inject(function($controller) {
+	// a faire ...	
+	}));
+
+	it('should enter in "id_text" condition if it specified as true', inject(function($controller) {
+	// a faire ...	
+	}));
+
+	it('should enter in "id_selection" condition if it specified as true', inject(function($controller) {
+	// a faire ...	
+	}));
+});
+/****************************************************************************************************/
+describe('Controller: NLCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var NLCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		NLCtrl = $controller('NLCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller NLCtrl', function() {
+    expect(scope.emails).toBeDefined();
+  });
+
+  it('should have addItem function service in the controller NLCtrl', function() {
+    expect(scope.addItem).toBeDefined();
+  });
+
+  it('should have a working addItem function service in the controller NLCtrl', function() {
+  	// ajouter un email
+  	scope.addItem('test3@mail.com');
+  	// verifier que le mail a été bien ajouté dans l'array des mails
+  	expect(scope.emails).toContain('test3@mail.com');
+  });
+
+  it('should have removeItem function service in the controller NLCtrl', function() {
+    expect(scope.removeItem).toBeDefined();
+  });
+
+  it('should have a working removeItem function service in the controller NLCtrl', function() {
+  	// ajouter un email
+  	scope.addItem('test3@mail.com');
+  	// supprimer un Item
+  	scope.removeItem(2);
+  	// verifier que l'item selectionné a été bien supprimé
+  	expect(scope.emails).not.toContain('test3@mail.com');
+  });
+});
+/****************************************************************************************************/
+describe('Controller: DatepickerCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var DatepickerCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope, $timeout) {
+	scope = $rootScope.$new();
+		DatepickerCtrl = $controller('DatepickerCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller DatepickerCtrl', function() {
+    expect(scope.dateOptions).toBeDefined();
+    expect(scope.freq).toBeDefined();
+    expect(scope.options).toBeDefined();
+  });
+
+  it('should have today function service in the controller DatepickerCtrl', function() {
+    expect(scope.today).toBeDefined();
+  });
+
+  it('should have a working today function service in the controller DatepickerCtrl', function() {
+  	scope.today();
+  	expect(scope.dt).toBeDefined();
+  });
+
+  it('should have toggleWeeks function service in the controller DatepickerCtrl', function() {
+    expect(scope.toggleWeeks).toBeDefined();
+  });
+
+  it('should have a working toggleWeeks function service in the controller DatepickerCtrl', function() {
+  	scope.toggleWeeks();
+  	expect(scope.showWeeks).toBeDefined();
+  	expect(scope.showWeeks).toBe(false);
+  });
+
+  it('should have clear function service in the controller DatepickerCtrl', function() {
+    expect(scope.clear).toBeDefined();
+  });
+
+  it('should have a working clear function service in the controller DatepickerCtrl', function() {
+  	scope.clear();
+  	expect(scope.dt).toBeDefined();
+  });
+
+  it('should have disabled function service in the controller DatepickerCtrl', function() {
+    expect(scope.disabled).toBeDefined();
+  });
+
+  it('should have a working disabled function service in the controller DatepickerCtrl', function() {
+  	var date_1 = 3;
+  	var mode_1 = 'week';
+  	expect(scope.disabled(date_1, mode_1)).toBe(false);
+
+  	// cas non passant à faire
+  });
+
+  it('should have toggleMin function service in the controller DatepickerCtrl', function() {
+    expect(scope.toggleMin).toBeDefined();
+  });
+
+  it('should have a working toggleMin function service in the controller DatepickerCtrl', function() {
+  	scope.toggleMin();
+  	expect(scope.minDate).toBeDefined();
+
+  	// cas passant et non passant à faire
+  });
+
+  it('should have open function service in the controller DatepickerCtrl', function() {
+    expect(scope.open).toBeDefined();
+  });
+
+  it('should have a working open function service in the controller DatepickerCtrl', function() {
+  	scope.open();
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: reportCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var reportCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		reportCtrl = $controller('reportCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller reportCtrl', function() {
+    expect(scope.options).toBeDefined();
+    expect(scope.format).toBeDefined();
+    expect(scope.template).toBeDefined();
+    expect(scope.inputTitle).toBeDefined();
+    expect(scope.reportAdd).toBeDefined();
+  });
+
+  it('should have doAdd function service in the controller reportCtrl', function() {
+  	scope.doAdd();
+  	expect(scope.reportAddResult).toBeDefined();
+
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: UnderconstructionCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var UnderconstructionCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		UnderconstructionCtrl = $controller('UnderconstructionCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have open function service in the controller UnderconstructionCtrl', function() {
+  	expect(scope.open).toBeDefined();
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: informationOkCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var informationOkCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		informationOkCtrl = $controller('informationOkCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have open function service in the controller informationOkCtrl', function() {
+  	expect(scope.open).toBeDefined();
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: treeCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var treeCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		treeCtrl = $controller('treeCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have delete function service in the controller treeCtrl', function() {
+  	expect(scope.delete).toBeDefined();
+  	// cas passant et non passant à faire
+  });
+  it('should have add function service in the controller treeCtrl', function() {
+  	expect(scope.add).toBeDefined();
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: AccordionDemoCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var AccordionDemoCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		AccordionDemoCtrl = $controller('AccordionDemoCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have addItem function service in the controller AccordionDemoCtrl', function() {
+  	expect(scope.addItem).toBeDefined();
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: displayValidatedInfosCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var displayValidatedInfosCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		displayValidatedInfosCtrl = $controller('displayValidatedInfosCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have doSearch function service in the controller displayValidatedInfosCtrl', function() {
+  	expect(scope.doSearch).toBeDefined();
+  	expect(scope.informationResult).toBeDefined();
+
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: displayReportCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var displayReportCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		displayReportCtrl = $controller('displayReportCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have doSearch function service in the controller displayReportCtrl', function() {
+  	expect(scope.doSearch).toBeDefined();
+  	expect(scope.reportResult).toBeDefined();
+  	
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: displaySurveillanceCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var displaySurveillanceCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		displaySurveillanceCtrl = $controller('displaySurveillanceCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have doSearch function service in the controller displaySurveillanceCtrl', function() {
+  	expect(scope.doSearch).toBeDefined();
+  	scope.doSearch();
+  	expect(scope.surveillanceResult).toBeDefined();
+  	
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: getValidatedDataCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var getValidatedDataCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		getValidatedDataCtrl = $controller('getValidatedDataCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  	// cas passant et non passant à faire
+});
+/****************************************************************************************************/
+describe('Controller: menuCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var menuCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		menuCtrl = $controller('menuCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller reportCtrl', function() {
+    expect(scope.domains).toBeDefined();
+    expect(scope.activities).toBeDefined();
+    expect(scope.folderName).toBeDefined();
+    expect(scope.notifications).toBeDefined();
+    expect(scope.domain).toBeDefined();
+    expect(scope.activity).toBeDefined();
+    expect(scope.folder).toBeDefined();
+    expect(scope.notification).toBeDefined();
+  });
+
+  	// cas passant et non passant à faire
+});
+/****************************************************************************************************/
+describe('Controller: addInfoCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var addInfoCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		addInfoCtrl = $controller('addInfoCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller addInfoCtrl', function() {
+    expect(scope.inputLevel).toBeDefined();
+    expect(scope.inputUrl).toBeDefined();
+    expect(scope.inputTitle).toBeDefined();
+    expect(scope.inputDetail).toBeDefined();
+    expect(scope.inputComment).toBeDefined();
+    expect(scope.inputRefresh).toBeDefined();
+    expect(scope.informationAdd).toBeDefined();
+  });
+
+  it('should have doAdd function service in the controller addInfoCtrl', function() {
+  	expect(scope.doAdd).toBeDefined();
+  	scope.doAdd();
+  	expect(scope.informationAddResult).toBeDefined();
+  	
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: addSurvCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var addSurvCtrl,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		addSurvCtrl = $controller('addSurvCtrl', {
+		  $scope: scope
+		});
+	}));
+
+  it('should have correct initialisations in the controller addSurvCtrl', function() {
+    expect(scope.inputType).toBeDefined();
+    expect(scope.inputLevel).toBeDefined();
+    expect(scope.inputUser).toBeDefined();
+    expect(scope.inputUrl).toBeDefined();
+    expect(scope.inputTitle).toBeDefined();
+    expect(scope.inputDetail).toBeDefined();
+    expect(scope.inputComment).toBeDefined();
+
+    expect(scope.inputRefresh).toBeDefined();
+    expect(scope.inputTitle).toBeDefined();
+    expect(scope.inputTag).toBeDefined();
+    expect(scope.inputDomain).toBeDefined();
+    expect(scope.inputActivity).toBeDefined();
+    expect(scope.inputFrequency).toBeDefined();
+    expect(scope.surveillanceAdd).toBeDefined();
+  });
+
+  it('should have doAdd function service in the controller addSurvCtrl', function() {
+  	expect(scope.doAdd).toBeDefined();
+  	scope.doAdd();
+  	expect(scope.surveillanceAddResult).toBeDefined();
+  	
+  	// cas passant et non passant à faire
+  });
+});
+/****************************************************************************************************/
+describe('Controller: ngCkeditor', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var ngCkeditor,
+  scope;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+	scope = $rootScope.$new();
+		ngCkeditor = $controller('ngCkeditor', {
+		  $scope: scope
+		});
+	}));
+
+  	// cas passant et non passant à faire
 });
 /****************************************************************************************************/
