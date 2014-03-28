@@ -1,18 +1,19 @@
-var sharedConfig = require('./karma-shared.conf');
-module.exports = function(config) {
-    var conf = sharedConfig();
-    
-    conf.files = conf.files.concat([
-		'test/spec/e2e/controllers/*.js'
-    ]);
-    
-	conf.proxies = {
-		'/': 'http://localhost:9000/'
-	};
-	
-	conf.urlRoot = '/__karma__/';
+exports.config = {
+  // The address of a running selenium server.
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
-	conf.frameworks = ['ng-scenario'];
+  // Capabilities to be passed to the webdriver instance.
+  capabilities: {
+    'browserName': 'chrome'
+  },
 
-    config.set(conf);
+  // Spec patterns are relative to the current working directly when
+  // protractor is called.
+  specs: ['test/spec/e2e/controllers/*.js'],
+
+  // Options to be passed to Jasmine-node.
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 30000
+  }
 };
