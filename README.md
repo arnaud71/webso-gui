@@ -83,4 +83,4 @@ Run the tests
 
 	3.5 Run test :
 
-		protractor test/spec/e2e/e2e.conf.js
+		protractor karma-e2e.conf.js
