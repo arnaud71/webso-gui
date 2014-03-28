@@ -45,50 +45,42 @@ Run the tests
 
 	npm install karma@0.12.1
 
-	npm install ng-midway-tester
+1. Run unit tests - midway test and generate the rate of code coverage
 
-1. Run unit tests
-
-	2.1 Start Karma :
-
-		karma start karma-unit.conf.js
-	
-	2.2 Run test :	
-
-		karma run karma-unit.conf.js
-
-2. Run midway test
-
-	3.1 Start Karma :
-
-		karma start karma-midway.conf.js
-	
-	3.2 Run test :	
-
-		karma run karma-midway.conf.js
-
-3. Run e2e test
-
-	4.1 Start Karma :
-
-		karma start karma-e2e.conf.js
-	
-	4.2 Run test :	
-
-		karma run karma-e2e.conf.js
-
-4. Calculating the rate of code coverage
-
-	5.1 Before you begin generate the coverage, please install this module with NPM, if this is not done : 
+	2.1 Before you begin start and run, please install this module with NPM, if this is not done : 
 
 		npm install karma-coverage
 
-	5.2 Run the karma-coverage
+		npm install ng-midway-tester
 
-		5.2.1 Start Karma-coverage :
+	2.2 Start :
 
-			karma start karma.conf.js
+		karma start karma.conf.js
 	
-		5.2.2 Run karma-coverage :	
+	2.3 Run :	
 
-			karma run karma.conf.js
+		karma run karma.conf.js
+
+2. Run e2e test
+
+	3.1 Before you begin to run, please install this module with NPM, if this is not done : 
+	
+		npm install -g protractor
+
+	3.2 download "chromedriver" and "selenium" :
+		
+		here in Append X section : https://github.com/angular/protractor
+
+	3.3 Start Chrome driver :
+		
+		chmod +x path_to_chromedriver
+		
+		./path_to_chromedriver
+
+	3.4 Start Selenium server :
+
+		java -jar path_to_selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver="path_to_chromedriver"
+
+	3.5 Run test :
+
+		protractor test/spec/e2e/e2e.conf.js
