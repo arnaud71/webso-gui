@@ -60,6 +60,36 @@ describe('Controller: AddInformationCtrl', function () {
   	expect(scope.informationAddResult).toBeDefined();
   });
 });
+
+describe('Controller: AddInformationCtrl', function(){
+  var scope, resource, ctrl, httpBackendDoAdd;
+
+  beforeEach(module("websoApp"));
+
+  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    httpBackendDoAdd = $httpBackend;
+
+    scope = $rootScope.$new();
+    ctrl = $controller("AddInformationCtrl", { $scope: scope});
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_s=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org&user_s=user_0";
+    httpBackendDoAdd.whenJSONP(url).respond(mock_data);
+}));
+
+  it('should set informationAddResult on successful doAdd', function() {
+    scope.doAdd();
+    scope.$apply();
+    httpBackendDoAdd.flush();
+    expect(scope.informationAddResult.test[0].test).toBe("test");
+    expect(scope.informationAddResult.test[1]).toBeUndefined();
+  });
+});
+
 /****************************************************************************************************/
 describe('Controller: ValidationDataCtrl', function () {
   // load the controller's module
@@ -84,6 +114,34 @@ describe('Controller: ValidationDataCtrl', function () {
  	scope.doSearch();
   	expect(scope.validationResult).toBeDefined();
  });
+});
+
+describe('Controller: ValidationDataCtrl', function(){
+  var scope, resource, ctrl, httpBackendDoSearch;
+
+  beforeEach(module("websoApp"));
+
+  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    httpBackendDoSearch = $httpBackend;
+
+    scope = $rootScope.$new();
+    ctrl = $controller("ValidationDataCtrl", { $scope: scope});
+
+    var mock_data = {"test": 
+    					[{ 	test : "test"
+    					}]
+    				};
+	var url = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=validation&user_s=user_0";
+    httpBackendDoSearch.whenJSONP(url).respond(mock_data);
+  }));
+
+  it('should set validationResult on successful doSearch', function() {
+    scope.doSearch();
+    scope.$apply();
+    httpBackendDoSearch.flush();
+    expect(scope.validationResult.test[0].test).toBe("test");
+    expect(scope.validationResult.test[1]).toBeUndefined();
+  });
 });
 /****************************************************************************************************/
 describe('Controller: AddWatchCtrl', function () {
@@ -121,6 +179,7 @@ describe('Controller: AddWatchCtrl', function () {
   	expect(scope.sourceAddResult).toBeDefined();
   });
 });
+
 /****************************************************************************************************/
 describe('Controller: AddSourceCtrl', function () {
 
@@ -144,7 +203,7 @@ describe('Controller: AddSourceCtrl', function () {
 
   // exemple de test lors du click sur le bouton doAdd
   it('should have a working doAdd in the controller AddSourceCtrl', function() {
-	expect(scope.inputType).toBeDefined();
+    expect(scope.inputType).toBeDefined();
     expect(scope.inputRefresh).toBeDefined();
     expect(scope.inputLevel).toBeDefined();
     expect(scope.inputUser).toBeDefined(); 
@@ -154,6 +213,7 @@ describe('Controller: AddSourceCtrl', function () {
   });
 });
 /****************************************************************************************************/
+
 describe('Controller: SourceDataCtrl', function () {
 
   // load the controller's module
@@ -197,11 +257,6 @@ describe('Controller: SourceDataCtrl', function () {
     expect(scope.doDelete).toBeDefined();
   });
 
-  // exemple de test lors de la supprission d'une source
-  it('should have a working doDelete function service in the controller SourceDataCtrl', function() {
-	// supprimer une source
-    // verifier le resultat lors de la supprission de la source
-  });
   it('should have test function service in the controller SourceDataCtrl', function() {
     expect(scope.test).toBeDefined();
   });  
@@ -210,6 +265,45 @@ describe('Controller: SourceDataCtrl', function () {
     var $id = 1;
     var $url = "http://www.google.fr"; 
     expect(scope.test($id, $url)).toBeTruthy;
+  });
+});
+
+describe('Controller: SourceDataCtrl', function(){
+  var scope, resource, ctrl, httpBackendDoSearch, httpBackendDoDelete;
+
+  beforeEach(module("websoApp"));
+
+  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    httpBackendDoSearch = $httpBackend;
+    httpBackendDoDelete = $httpBackend;
+
+    scope = $rootScope.$new();
+    ctrl = $controller("SourceDataCtrl", { $scope: scope});
+
+        var mock_data = {"test": 
+    					[{ 	test : "test" 
+    					}]
+    				};
+    var url_1 = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=source&user_s=user_0";
+    var url_2 = "http://localhost/cgi-bin/webso-services/db/delete.pl?callback=JSON_CALLBACK&id=1";
+    httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
+    httpBackendDoDelete.whenJSONP(url_2).respond(mock_data);
+  }));
+
+  it('should set sourceResult on successful doSearch', function() {
+    scope.doSearch();
+    scope.$apply();
+    httpBackendDoSearch.flush();
+    expect(scope.sourceResult.test[0].test).toBe("test");
+    expect(scope.sourceResult.test[1]).toBeUndefined();
+  });
+
+  // exemple de test lors de la supprission d'une source
+  it('should have a working doDelete function service in the controller SourceDataCtrl', function() {
+    // supprimer une source et verifier le resultat lors de la supprission de la source
+    //  scope.doDelete(1, 1);
+    //  httpBackendDoDelete.flush();
+    //  expect(scope.sourceAddResult.id).toBe(1);
   });
 });
 /****************************************************************************************************/
@@ -277,9 +371,7 @@ describe('Controller: GoogleFeedCtrl', function () {
   });
 
   it('should have a working doSearch function service in the controller GoogleFeedCtrl', function() {
-  	scope.doSearch();
-
-  	// cas passant et non passant à faire
+  // cas passant et non passant à faire
   });
 
   it('should have selectAll function service in the controller GoogleFeedCtrl', function() {
@@ -287,9 +379,14 @@ describe('Controller: GoogleFeedCtrl', function () {
   });
 
   it('should have a working selectAll function service in the controller GoogleFeedCtrl', function() {
-  	scope.selectAll();
+    scope.selectAll();
+    expect(scope.msgSelect).toBe('Deselect All');
+  });
 
-  	// cas passant et non passant à faire
+  it('should have a working selectAll function service in the controller GoogleFeedCtrl', function() {
+    scope.msgSelect = 'Deselect All';
+    scope.selectAll();
+    expect(scope.msgSelect).toBe('Select All');
   });
 
   it('should have createOPML function service in the controller GoogleFeedCtrl', function() {
@@ -297,11 +394,10 @@ describe('Controller: GoogleFeedCtrl', function () {
   });
 
   it('should have a working createOPML function service in the controller GoogleFeedCtrl', function() {
-  	scope.createOPML();
-
-	// cas passant et non passant à faire
+    // cas passant et non passant à faire
   });
 });
+
 /****************************************************************************************************/
 describe('Controller: SolrCtrl', function () {
 
@@ -318,6 +414,10 @@ describe('Controller: SolrCtrl', function () {
       $scope: scope
     });
   }));
+
+  xit("can be declared 'xit'", function() {
+    expect(true).toBe(false);
+  });
 
   it('should have correct initialisations in the controller reportCtrl', function() {
     expect(scope.showFound).toBeDefined();
@@ -364,16 +464,13 @@ describe('Controller: BarletCtrl', function () {
   beforeEach(module('websoApp'));
 
   var BarletCtrl,
-  scope,
-  routeParams;
+  scope;
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope) {
 	scope = $rootScope.$new();
-	routeParams = {}; 
 		BarletCtrl = $controller('BarletCtrl', {
 		  $scope: scope,
-		  $routeParams : routeParams
 		});
 	}));
 
@@ -865,5 +962,56 @@ describe('Controller: ngCkeditor', function () {
 	}));
 
   	// cas passant et non passant à faire
+});
+/****************************************************************************************************/
+describe('Controller: SourceListCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var SourceListCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    SourceListCtrl = $controller('SourceListCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have correct initialisations in the controller addSurvCtrl', function() {
+    expect(scope.sourceList).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.totalServerItems).toBeDefined();
+    expect(scope.pagingOptions).toBeDefined();
+    expect(scope.gridOptionsSource).toBeDefined();
+  });
+
+  it('should have setPagingData function service in the controller SourceDataCtrl', function() {
+    expect(scope.setPagingData).toBeDefined();
+  });
+  it('should have a working setPagingData function service in the controller SourceDataCtrl', function() {
+  });
+
+  it('should have getPagedDataAsync function service in the controller SourceDataCtrl', function() {
+    expect(scope.getPagedDataAsync).toBeDefined();
+  });
+  it('should have a working getPagedDataAsync function service in the controller SourceDataCtrl', function() {
+  });
+
+  it('should have doSearch function service in the controller SourceDataCtrl', function() {
+    expect(scope.doSearch).toBeDefined();
+  });
+  it('should have a working doSearch function service in the controller SourceDataCtrl', function() {
+    scope.doSearch();
+  });
+
+  it('should have doDelete function service in the controller SourceDataCtrl', function() {
+    expect(scope.doDelete).toBeDefined();
+  });
+  it('should have a working doDelete function service in the controller SourceDataCtrl', function() {  
+    // cas passant et non passant à faire
+  });
 });
 /****************************************************************************************************/
