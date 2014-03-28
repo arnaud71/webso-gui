@@ -10,7 +10,7 @@
             <div class="control-group" >
                 <label class="control-label"> Source </label>
                 <div class="controls">
-                    <input type="text" >
+                    <input type="text" name ="source">
                 </div>
             </div>
             <div class="control-group" >
@@ -23,7 +23,7 @@
             <div class="control-group" >
                 <label class="control-label"> Dossier de surveillance </label>
                 <div class="controls">
-                    <button type="btn"><i class="icon-plus"></i></button>
+                    <button type="btn"><i class="icon-plus" name ="surveillanceButton"></i></button>
                 </div>
             </div>
 
@@ -48,8 +48,8 @@
             <div class="control-group" >
                 <label class="control-label"> Requête </label>
                 <div class="controls">
-                    <input type="text">
-                    <button type="btn">Tester</button>
+                    <input type="text" name ="requete">
+                    <button type="btn" name ="testButton">Tester</button>
                 </div>
             </div>
 
@@ -63,14 +63,14 @@
             <div class="control-group" >
                 <label class="control-label"> Notification </label>
                 <div class="controls">
-                    <input type="text" placeholder="choisir le type de notification: mail, rss, pas de notification">
+                    <input type="text" placeholder="choisir le type de notification: mail, rss, pas de notification" name ="notification">
                 </div>
             </div>
         </form>
 
 
 
-        <button class="btn btn-small" ng-click="doAdd()">Surveiller</button>
+        <button class="btn btn-small" ng-click="doAdd()" name ="surveiller">Surveiller</button>
     </div>
     </div>
 </div>

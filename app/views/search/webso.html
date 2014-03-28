@@ -14,7 +14,7 @@
             <div class="col-md-10">
                 <form class="form-horizontal" ng-submit="doSearch()">
                     <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                    <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
+                    <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Search</button>
                 </form>
                 <div solr-results-number ng-show="solrResult.response">
                     Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms

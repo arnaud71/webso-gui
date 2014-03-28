@@ -53,10 +53,10 @@
                             <td>{{source.user_s}}</td>
                             <td>{{source.IsWatched_b}}</td>
                             <td>
-                                <button type="button" class="btn btn-xs" ng-click="doDelete(source.id,index)">
+                                <button type="button" class="btn btn-xs" ng-click="doDelete(source.id,index)" name ="delete">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
-                                <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)">
+                                <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)" name ="testSource">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                             </td>
