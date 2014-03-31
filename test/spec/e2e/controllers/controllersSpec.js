@@ -159,9 +159,9 @@ describe("Integration/E2E Testing", function() {
     buttonOpenList.click(); 
     
     // choisir la date d'envoie c'est en format spécial
-    var inputEmail = element(by.name('date'));
-    inputEmail.clear();
-    inputEmail.sendKeys('30-06-2014');
+    var inputDate = element(by.name('date'));
+    inputDate.clear();
+    inputDate.sendKeys('30-06-2014');
 
     // choisir une frequence d'envoie. c'est un menu de choix
     /*
@@ -253,9 +253,9 @@ describe("Integration/E2E Testing", function() {
     inputPrenom.clear();
     inputPrenom.sendKeys('test prenom');
 
-    var inputPrenom = element(by.name('role'));
-    inputPrenom.clear();
-    inputPrenom.sendKeys('test role');
+    var inputRole = element(by.name('role'));
+    inputRole.clear();
+    inputRole.sendKeys('test role');
 
     var inputEmail = element(by.name('email'));
     inputEmail.clear();
