@@ -48,11 +48,21 @@ describe("Integration/E2E Testing", function() {
     button.click();
   });
 
-/*********************************************************************************************************/
+/********************************* Fonctionnel ************************************************************/
 
   it('pouvoir aller à la page Valider > Afficher informations validées', function() {
     browser.get('http://localhost:9000/#/validate/display');
-    // s'assurer des informations affichées
+    // s'assurer que l'informations ajoutée est bien ajoutée et affichée
+	element.all(by.repeater('validation in validationResult.success.response.docs')).then(function(results) {
+	    var lastTitle = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.title_s}}'));
+    	expect(lastTitle.getText()).toBe('test titre');
+
+	    var lastUrl = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.url_s}}'));
+    	expect(lastUrl.getText()).toBe('test lien');
+
+	    var lastUser = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.user_s}}'));
+    	expect(lastUser.getText()).toBe('user_0');
+	});
   });
 
 /********************************** Fonctionnel **********************************************************/
@@ -76,14 +86,23 @@ describe("Integration/E2E Testing", function() {
     button.click();
     
   });
+
 /********************************** Fonctionnel **********************************************************/
 
   it('pouvoir aller à la page Surveiller > Afficher les sources', function() {
     browser.get('http://localhost:9000/#/source/sourcesList');
-
-    // s'asurer des sources affichées
+    // s'assurer que la sources ajoutée est bien ajoutée et affichée
   });
 
+  it('pouvoir aller à la page Surveiller > Afficher les sources et supprimer une sources', function() {
+    browser.get('http://localhost:9000/#/source/sourcesList');
+    // s'assurer que la sources supprimée a été bien supprimée
+  });
+  
+  it('pouvoir aller à la page Surveiller > Afficher les sources et modifier une sources', function() {
+    browser.get('http://localhost:9000/#/source/sourcesList');
+    // s'assurer que la sources modifiée a été bien modifiée
+  });  
 /********************************** Fonctionnel **********************************************************/
 
   it('pouvoir aller à la page Surveiller > Ajouter une surveillance et ajouter une surveillance valide', function() {
@@ -91,7 +110,7 @@ describe("Integration/E2E Testing", function() {
     
     var inputSource = element(by.name('inputUrl'));
     inputSource.clear();
-    inputSource.sendKeys('test source');
+    inputSource.sendKeys('test surveillance source');
     
     var inputTitle = element(by.input('inputTitle'));
     inputTitle.clear();
@@ -136,10 +155,31 @@ describe("Integration/E2E Testing", function() {
   
   it('pouvoir aller à la page Surveiller > Afficher les surveillances', function() {
     browser.get('http://localhost:9000/#/watch/watchList');
+    // s'assurer de la surveillance ajoutée et affichée
+	element.all(by.repeater('watch in watchResult.success.response.docs')).then(function(results) {
+	    var lastTitle = element(by.repeater('watch in watchResult.success.response.docs').row(results.length-1).column('{{watch.title_t}}'));
+    	expect(lastTitle.getText()).toBe('test titre');
 
-    // s'assurer des surveillances affichées
+	    var lastUrl = element(by.repeater('watch in watchResult.success.response.docs').row(results.length-1).column('{{watch.url_s}}'));
+    	expect(lastUrl.getText()).toBe('test surveillance source');
+
+	    var lastName = element(by.repeater('watch in watchResult.success.response.docs').row(results.length-1).column('{{watch.folder_name_s}}'));
+    	expect(lastName.getText()).toBe('Dossier de Surveillance 3');
+
+	    var lastUser = element(by.repeater('watch in watchResult.success.response.docs').row(results.length-1).column('{{watch.user_s}}'));
+    	expect(lastUser.getText()).toBe('user_0');
+	});
+  });
+
+  it('pouvoir aller à la page Surveiller > Afficher les surveillances et supprimer une surveillance', function() {
+    browser.get('http://localhost:9000/#/watch/watchList');
+    // s'assurer que la surveillance supprimée a été bien supprimée
   });
   
+  it('pouvoir aller à la page Surveiller > Afficher les surveillances et modifier une surveillance', function() {
+    browser.get('http://localhost:9000/#/watch/watchList');
+    // s'assurer que la surveillance modifiée a été bien modifiée
+  });  
 /*********************************************************************************************************/
   it('pouvoir aller à la page Diffuser > Newsletter et diffuser une newsletter valide', function() {
     browser.get('http://localhost:9000/#/publish/newsletter');
