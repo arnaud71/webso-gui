@@ -28,7 +28,8 @@ angular.module('websoApp')
             templateUrl: 'views/information/validationList.html'
         })
         .when('/watch/add', {
-            templateUrl: 'views/watch/watchAdd.html'
+            templateUrl: 'views/watch/watchAdd.html',
+            controller:'AddWatchCtrl'
         })
         .when('/watch/sourceslist', {
             templateUrl: 'views/source/list.html'
@@ -120,7 +121,8 @@ angular.module('websoApp')
 
         })
         .when('/source/sourceAdd', {
-            templateUrl: 'views/source/sourceAdd.html'
+            templateUrl: 'views/source/sourceAdd.html' ,
+            controller:'AddSourceCtrl'
 
         })
 

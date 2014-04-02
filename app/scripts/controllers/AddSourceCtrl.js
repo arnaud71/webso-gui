@@ -4,18 +4,19 @@ angular.module('websoApp')
     .controller('AddSourceCtrl', function ($scope,$resource,cfg) {
 
         /*
-         Input fields - from sourceAdd & surveillanceAdd??
+         Input fields - from sourceAdd
          */
         $scope.inputUrl = 'http://www.apache.org';
         $scope.inputTags = 'server';
         $scope.inputTitle = 'Apache home page';
         $scope.inputDomain = 'Domaine 1';
         $scope.inputActivity = 'Activité 1';
-        $scope.inputCreationDate = Date.now();
+     //   $scope.inputCreationDate = Date.now();
+
 
 
         $scope.sourceAdd = $resource(cfg.urlServices+':action',
-            {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
+            {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'true',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 
@@ -25,12 +26,19 @@ angular.module('websoApp')
                 tags_s :    $scope.inputTags,
                 title_t:    $scope.inputTitle,
                 domain_s: $scope.inputDomain,
-                Activity_s: $scope.inputActivity,
+                activity_s: $scope.inputActivity,
                 creation_d: $scope.inputCreationDate
+
+
 
             });
 
+            var addWatch = alert('Source ajoutée');
+
         };
+
+
+
 
 
 
