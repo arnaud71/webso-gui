@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SourceListCtrl', function ($scope,$resource,cfg) {
+  .controller('SourceListCtrl', function ($scope,$resource,cfg,$modal) {
 
 
 /*
@@ -88,7 +88,7 @@ angular.module('websoApp')
         {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
 
       ]
     };
@@ -122,19 +122,40 @@ angular.module('websoApp')
       {get:{method:'JSONP'}});
 
     $scope.doDelete = function (sourceId,index) {
-      /*
-       Delete from Docs
-       */
-      $scope.sourceAddResult = $scope.sourceDelete.get({
-        id  :     sourceId
-      });
-      /*
-       Delete from table
-       */
-      $scope.myData.splice(index, 1);
+
+
+        /*
+         Confirm dialogs
+         */
+
+        var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
+        if (deleteSource) {
+            alert('Suppression confirmée');
+
+            /*
+             Delete from Docs
+             */
+            $scope.sourceAddResult = $scope.sourceDelete.get({
+                id  :     sourceId
+            });
+            /*
+             Delete from table
+             */
+            $scope.myData.splice(index, 1);
+        }
+
+        //  $('#myModal').modal('show');
+
+
+
       //$('.row').trigger('resize');
       //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+
+
+
     };
+
+
 
 
 

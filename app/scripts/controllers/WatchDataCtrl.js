@@ -25,16 +25,27 @@ angular.module('websoApp')
             {get:{method:'JSONP'}});
 
         $scope.doDelete = function (watchId,index) {
+
             /*
-             Delete from Docs
+             Confirm dialogs
              */
-            $scope.watchDeleteResult = $scope.watchDelete.get({
-                id  :     watchId
-            });
-            /*
-             Delete from table
-             */
-            $scope.watchResult.success.response.docs.splice(index, 1);
+
+            var deleteWatch = confirm('Etes vous sûr de vouloir supprimer cette surveillance?');
+            if (deleteWatch) {
+                alert('Suppression confirmée');
+
+                /*
+                 Delete
+                 */
+                $scope.watchDeleteResult = $scope.watchDelete.get({
+                    id  :     watchId
+                });
+                /*
+                 Delete from table
+                 */
+                $scope.watchResult.success.response.docs.splice(index, 1);
+            }
+
         };
 
         /*
