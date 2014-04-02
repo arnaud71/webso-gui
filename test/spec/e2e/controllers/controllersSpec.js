@@ -3,6 +3,10 @@
 //
 describe("Integration/E2E Testing", function() {
 
+  beforeEach(function() {
+    ptor = protractor.getInstance();
+  });
+
 /*********************************************************************************************************/
 
  it('pouvoir aller à la page de log in', function() {
@@ -22,87 +26,6 @@ describe("Integration/E2E Testing", function() {
     var button = element(by.name('Connexion'));
     button.click();
  });
-
- /********************************** fonctionnel (Ajout d'informations) ***********************************/
-
-  it('pouvoir aller à la page Valider > Ajouter information et ajouter une information valide', function() {
-    browser.get('http://localhost:9000/#/validate/add');
-
-    var inputTitle = element(by.input('inputTitle'));
-    inputTitle.clear();
-    inputTitle.sendKeys('test titre');
-
-    var inputUrl = element(by.input('inputUrl'));
-    inputUrl.clear();
-    inputUrl.sendKeys('test lien');
-
-    var inputTags = element(by.input('inputTags'));
-    inputTags.clear();
-    inputTags.sendKeys('test tag');
-
-    var inputDetails = element(by.textarea('inputDetails'));
-    inputDetails.clear();
-    inputDetails.sendKeys('test detail');
-
-    var button = element(by.name('validate'));
-    button.click();
-  });
-
-/*********************************** fonctionnel (Affichage des informations validées) *******************/
-
-  it('pouvoir aller à la page Valider > Afficher informations validées', function() {
-    browser.get('http://localhost:9000/#/validate/display');
-    // s'assurer que l'information ajoutée est bien ajoutée et affichée
-	element.all(by.repeater('validation in validationResult.success.response.docs')).then(function(results) {
-	    var lastTitle = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.title_s}}'));
-    	expect(lastTitle.getText()).toBe('test titre');
-
-	    var lastUrl = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.url_s}}'));
-    	expect(lastUrl.getText()).toBe('test lien');
-
-	    var lastUser = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.user_s}}'));
-    	expect(lastUser.getText()).toBe('user_0');
-	});
-  });
-
-/*********************************** fonctionnel (Ajouter une source) ************************************/
-
-  it('pouvoir aller à la page Surveiller > Ajouter une source et ajouter une source valide', function() {
-    browser.get('http://localhost:9000/#/source/sourceAdd');
-
-    var inputUrl = element(by.input('inputUrl'));
-    inputUrl.clear();
-    inputUrl.sendKeys('test source');
-
-    var inputTitle = element(by.input('inputTitle'));
-    inputTitle.clear();
-    inputTitle.sendKeys('test titre');
-
-    var inputTags = element(by.input('inputTags'));
-    inputTags.clear();
-    inputTags.sendKeys('test tag');
-    
-    var button = element(by.name('add'));
-    button.click();
-    
-  });
-
-/*********************************** fonctionnel (Affichage des sources) *********************************/
-
-  it('pouvoir aller à la page Surveiller > Afficher les sources', function() {
-    browser.get('http://localhost:9000/#/source/sourcesList');
-    // s'assurer que la sources ajoutée est bien ajoutée et affichée
-  });
-
-  it('pouvoir aller à la page Surveiller > Afficher les sources et supprimer une sources', function() {
-    browser.get('http://localhost:9000/#/source/sourcesList');
-    // s'assurer que la sources supprimée a été bien supprimée
-  });
-  
-  it('pouvoir aller à la page Surveiller > Afficher les sources et modifier une sources', function() {
-    browser.get('http://localhost:9000/#/source/sourcesList');
-    // s'assurer que la sources modifiée a été bien modifiée
-  });  
 
 /********************************** fonctionnel (Ajouter une surveillance) *******************************/
 
@@ -194,6 +117,87 @@ describe("Integration/E2E Testing", function() {
     // s'assurer que la surveillance modifiée a été bien modifiée
   });  
 
+/*********************************** fonctionnel (Ajout d'une source) ************************************/
+
+  it('pouvoir aller à la page Surveiller > Ajouter une source et ajouter une source valide', function() {
+    browser.get('http://localhost:9000/#/source/sourceAdd');
+
+    var inputUrl = element(by.input('inputUrl'));
+    inputUrl.clear();
+    inputUrl.sendKeys('test source');
+
+    var inputTitle = element(by.input('inputTitle'));
+    inputTitle.clear();
+    inputTitle.sendKeys('test titre');
+
+    var inputTags = element(by.input('inputTags'));
+    inputTags.clear();
+    inputTags.sendKeys('test tag');
+    
+    var button = element(by.name('add'));
+    button.click();
+    
+  });
+
+/*********************************** fonctionnel (Affichage des sources) *********************************/
+
+  it('pouvoir aller à la page Surveiller > Afficher les sources', function() {
+    browser.get('http://localhost:9000/#/source/sourcesList');
+    // s'assurer que la sources ajoutée est bien ajoutée et affichée
+  });
+
+  it('pouvoir aller à la page Surveiller > Afficher les sources et supprimer une sources', function() {
+    browser.get('http://localhost:9000/#/source/sourcesList');
+    // s'assurer que la sources supprimée a été bien supprimée
+  });
+  
+  it('pouvoir aller à la page Surveiller > Afficher les sources et modifier une sources', function() {
+    browser.get('http://localhost:9000/#/source/sourcesList');
+    // s'assurer que la sources modifiée a été bien modifiée
+  });  
+
+ /********************************** fonctionnel (Ajout d'informations) ***********************************/
+
+  it('pouvoir aller à la page Valider > Ajouter information et ajouter une information valide', function() {
+    browser.get('http://localhost:9000/#/validate/add');
+
+    var inputTitle = element(by.input('inputTitle'));
+    inputTitle.clear();
+    inputTitle.sendKeys('test titre');
+
+    var inputUrl = element(by.input('inputUrl'));
+    inputUrl.clear();
+    inputUrl.sendKeys('test lien');
+
+    var inputTags = element(by.input('inputTags'));
+    inputTags.clear();
+    inputTags.sendKeys('test tag');
+
+    var inputDetails = element(by.textarea('inputDetails'));
+    inputDetails.clear();
+    inputDetails.sendKeys('test detail');
+
+    var button = element(by.name('validate'));
+    button.click();
+  });
+
+/*********************************** fonctionnel (Affichage des informations validées) *******************/
+
+  it('pouvoir aller à la page Valider > Afficher informations validées', function() {
+    browser.get('http://localhost:9000/#/validate/display');
+    // s'assurer que l'information ajoutée est bien ajoutée et affichée
+	element.all(by.repeater('validation in validationResult.success.response.docs')).then(function(results) {
+	    var lastTitle = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.title_s}}'));
+    	expect(lastTitle.getText()).toBe('test titre');
+
+	    var lastUrl = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.url_s}}'));
+    	expect(lastUrl.getText()).toBe('test lien');
+
+	    var lastUser = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.user_s}}'));
+    	expect(lastUser.getText()).toBe('user_0');
+	});
+  });
+
 /*********************************************************************************************************/
   it('pouvoir aller à la page Diffuser > Newsletter et diffuser une newsletter valide', function() {
     browser.get('http://localhost:9000/#/publish/newsletter');
@@ -234,6 +238,7 @@ describe("Integration/E2E Testing", function() {
     buttonCreateNl.click();
   */
   });
+
 /*********************************************************************************************************/
 
   it('pouvoir aller à la page Diffuser > Rapport et diffuser un rapport valide', function() {
@@ -251,7 +256,7 @@ describe("Integration/E2E Testing", function() {
     /*
     var buttonSelectionFolder = element(by.name('openFolders'));
     SelectionFolder.click();
-  */
+  	*/
 
     var button = element(by.name('createReport'));
     button.click(); 
@@ -348,6 +353,8 @@ describe("Integration/E2E Testing", function() {
 
     var button = element(by.name('searchButton'));
     button.click();
+    ptor.waitForAngular();
+    ptor.sleep(2000);
   });
 
 /*********************************************************************************************************/
@@ -368,6 +375,8 @@ describe("Integration/E2E Testing", function() {
 
     var button = element(by.buttonText('Search'));
     button.click();
+    ptor.waitForAngular();
+    ptor.sleep(2000);
   });
 
 /*********************************************************************************************************/
