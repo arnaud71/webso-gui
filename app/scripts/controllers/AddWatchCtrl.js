@@ -48,6 +48,8 @@ angular.module('websoApp')
 
             });
 
+            var addWatch = alert('Surveillance ajoutée');
+
         };
 
 
