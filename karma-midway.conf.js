@@ -1,3 +1,5 @@
+// Karma configuration
+// http://karma-runner.github.io/0.10/config/configuration-file.html
 var sharedConfig = require('./karma-shared.conf');
 module.exports = function(config) {
   var conf = sharedConfig();
@@ -9,12 +11,6 @@ module.exports = function(config) {
     //test files
     'test/spec/midway/controllers/*.js'
   ]);
-
-  conf.proxies = {
-    '/': 'http://localhost:9000/'
-  };
-
-  conf.urlRoot = '/__karma__/';
 
   config.set(conf);
 };
