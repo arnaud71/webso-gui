@@ -14,10 +14,10 @@
             <div class="col-md-10">
                 <form class="form-horizontal" ng-submit="doSearch()">
                     <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                    <button class="btn" ng-click="doSearch()"><i class="icon-search"></i>Search</button>
+                    <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Search</button>
                 </form>
                 <div solr-results-number="" ng-show="solrResult.response">
-                    Page: {{bigCurrentPage}} of {{solrResult.response.numFound}} results for <b>'{{solrResult.responseHeader.params.q}}'</b> query on last <b>{{currentPeriod}}</b> in {{solrResult.responseHeader.QTime}} ms
+                    Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
                     <br>
                  </div>
 
@@ -27,13 +27,20 @@
                         <tr ng-repeat="doc in solrResult.response.docs">
                             <td>
                                 <table class="table table-striped">
-                                    <tr><td><a href="{{doc.url_page}}" target="_blank">{{doc.title_t}}</a></td></tr>
+                                    <tr><td><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a></td></tr>
 
                                     <div ng-controller="CollapseSolrCtrl">
                                         <tr><td>
                                             <div collapse="isCollapsed">
                                                 <span ng-click="isCollapsed = !isCollapsed">
-                                                {{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt;
+                                                <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
+                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+
+                                                    <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
+                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
+
+                                                   &gt;&gt;&gt;&gt;
+                                                    <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                 </span>
                                             </div>
                                             <div collapse="!isCollapsed">
@@ -44,7 +51,7 @@
                                         </td></tr>
                                     </div>
                                     <tr><td>{{doc.url_s}}</td></tr>
-                                    <tr><td>{{doc.date_dt|date:'yyyy-MM-dd'}}</td></tr>
+                                    <tr><td>{{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}</td></tr>
 
                                 </table>
                             </td>
