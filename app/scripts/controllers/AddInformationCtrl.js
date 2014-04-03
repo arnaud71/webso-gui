@@ -21,11 +21,11 @@ angular.module('websoApp')
             $scope.informationAddResult = $scope.informationAdd.get({
                 url_s  :     $scope.inputUrl,
                 tags_s : $scope.inputTags,
-                title_s: $scope.inputTitle,
+                title_t: $scope.inputTitle,
                 details_s: $scope.inputDetails
 
             });
-
+            var addInfo = alert('Information ajoutée');
         };
 
 

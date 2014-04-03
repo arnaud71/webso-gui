@@ -30,6 +30,7 @@ angular.module('websoApp')
             $scope.watchAddResult = $scope.watchAdd.get({
                 url_s  :     $scope.inputUrl,
                 title_t: $scope.inputTitle,
+                tags_s :    $scope.inputTags,
                 domain_s: $scope.inputDomain,
                 activity_s: $scope.inputActivity,
                 frequency_s: $scope.inputFrequency,

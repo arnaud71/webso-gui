@@ -22,10 +22,12 @@ angular.module('websoApp')
 
         })
         .when('/validate/add', {
-            templateUrl: 'views/information/validate.html'
+            templateUrl: 'views/information/validate.html' ,
+            controller : 'AddInformationCtrl'
         })
         .when('/validate/display', {
-            templateUrl: 'views/information/validationList.html'
+            templateUrl: 'views/information/validationList.html' ,
+            controller: 'ValidationListCtrl'
         })
         .when('/watch/add', {
             templateUrl: 'views/watch/watchAdd.html',
@@ -40,7 +42,8 @@ angular.module('websoApp')
         })
 
         .when('/watch/watchList', {
-            templateUrl: 'views/watch/watchList.html'
+            templateUrl: 'views/watch/watchList.html',
+            controller:'WatchListCtrl'
         })
         .when('/publish/newsletter', {
             templateUrl: 'views/report/createNL.html'
@@ -92,18 +95,19 @@ angular.module('websoApp')
         /*
           Booklet
          */
+
         .when('/url/:id_url', {
-            templateUrl: 'views/source/sourceAdd.html'  ,
-            controller: 'BarletCtrl'
+            templateUrl: 'views/source/sourceAdd.html',
+            controller: 'AddSourceCtrl'
         })
 
         .when('/text/:id_text', {
             templateUrl: 'views/source/searchNew.html',
-            controller: 'BarletCtrl'
+            controller: 'GoogleFeedCtrl'
         })
         .when('/validate/:id_selection', {
             templateUrl: 'views/information/validate.html',
-            controller: 'BarletCtrl'
+            controller: 'AddInformationCtrl'
         })
 
 

@@ -9,16 +9,22 @@
     <file path="/WatchDataCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396439363672" ignored="false" />
     <file path="/AddSourceCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396443270645" ignored="false" />
     <file path="/AddWatchCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396441418133" ignored="false" />
-    <file path="/app.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396443170056" ignored="false" />
+    <file path="/app.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396528056839" ignored="false" />
     <file path="/sourceAdd.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396442876305" ignored="false" />
     <file path="/addSurveillance.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396442984499" ignored="false" />
     <file path="/DummyFile.xpath" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396444624859" ignored="false" />
     <file path="/a.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396444742729" ignored="false" />
-    <file path="/validate.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396446966465" ignored="false" />
-    <file path="/index.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396506452900" ignored="false" />
+    <file path="/validate.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396527830307" ignored="false" />
+    <file path="/index.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396528079257" ignored="false" />
     <file path="/.gitignore" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396447924909" ignored="false" />
     <file path="/barlet.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396505939222" ignored="false" />
     <file path="/cfg.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396449181429" ignored="false" />
+    <file path="/barletLocal.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396510624193" ignored="false" />
+    <file path="/ValidationListCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396527003637" ignored="false" />
+    <file path="/validationList.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396527141182" ignored="false" />
+    <file path="/AddInformationCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396527932870" ignored="false" />
+    <file path="/watchList.html" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396528152293" ignored="false" />
+    <file path="/WatchListCtrl.js" changelist="746c131d-8cc8-4d2e-b315-8e35bc27edf4" time="1396528874895" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +47,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="13" selection-start="9673" selection-end="9673" vertical-scroll-proportion="-17.208334">
+            <state line="172" column="38" selection-start="9388" selection-end="9388" vertical-scroll-proportion="-5.24">
               <folding />
             </state>
           </provider>
@@ -50,81 +56,43 @@
       <file leaf-file-name="AddSourceCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddSourceCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="7" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.0">
+            <state line="35" column="53" selection-start="1116" selection-end="1156" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="barlet.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/barlet.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="40" selection-start="95648" selection-end="95648" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="barletLocal.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/barletLocal.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="48" selection-start="95525" selection-end="95525" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cfg.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="63" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="44" selection-start="2903" selection-end="2903" vertical-scroll-proportion="0.41130298">
+            <state line="113" column="96" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="searchNew.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/source/searchNew.html">
+      <file leaf-file-name="WatchListCtrl.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/scripts/controllers/WatchListCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="34" selection-start="247" selection-end="247" vertical-scroll-proportion="-3.125">
+            <state line="155" column="10" selection-start="6389" selection-end="6389" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="validate.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/information/validate.html">
+      <file leaf-file-name="AddWatchCtrl.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddWatchCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="73" selection-start="1644" selection-end="1644" vertical-scroll-proportion="-8.458333">
+            <state line="32" column="45" selection-start="1264" selection-end="1264" vertical-scroll-proportion="0.53582555">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddInformationCtrl.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddInformationCtrl.js">
+      <file leaf-file-name="watchList.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/watch/watchList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="71" selection-start="437" selection-end="437" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sourceAdd.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/source/sourceAdd.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="55" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0">
+            <state line="6" column="29" selection-start="249" selection-end="249" vertical-scroll-proportion="-3.75">
               <folding />
             </state>
           </provider>
@@ -140,30 +108,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/scripts/controllers/SolrCtrl.js" />
-        <option value="$PROJECT_DIR$/app/views/search/webso.html" />
-        <option value="$PROJECT_DIR$/app/views/source/sourceList.html" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/WatchDataCtrl.js" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/AddWatchCtrl.js" />
-        <option value="$PROJECT_DIR$/app/views/surveillance/addSurveillance.html" />
         <option value="$PROJECT_DIR$/app/views/watch/watchAdd.html" />
-        <option value="$PROJECT_DIR$/app/views/information/validate.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/views/source/sourceAdd.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/AddSourceCtrl.js" />
         <option value="$PROJECT_DIR$/app/scripts/cfg.js" />
-        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/barlet.js" />
+        <option value="$PROJECT_DIR$/app/barletLocal.js" />
+        <option value="$PROJECT_DIR$/app/views/information/validationList.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/ValidationListCtrl.js" />
+        <option value="$PROJECT_DIR$/app/views/information/validate.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/AddInformationCtrl.js" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
+        <option value="$PROJECT_DIR$/app/index.html" />
+        <option value="$PROJECT_DIR$/app/views/watch/watchList.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/WatchListCtrl.js" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/AddWatchCtrl.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="162" />
-    <option name="y" value="104" />
-    <option name="width" value="1368" />
-    <option name="height" value="783" />
+    <option name="x" value="25" />
+    <option name="y" value="215" />
+    <option name="width" value="1600" />
+    <option name="height" value="778" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -259,7 +227,91 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="watch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="information" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webso-gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -280,6 +332,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/scripts/controllers" />
       <recent name="$PROJECT_DIR$/app" />
     </key>
   </component>
@@ -341,13 +394,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="162" y="104" width="1368" height="783" extended-state="0" />
+    <frame x="25" y="215" width="1600" height="778" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20248538" sideWeight="0.78197676" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.223125" sideWeight="0.78197676" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21802326" sideWeight="0.25330225" order="7" side_tool="true" content_ui="tabs" />
@@ -430,104 +483,114 @@
     <find-history />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/source/formAdd.html">
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceDataCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/surveillance/addSurveillance.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="14" selection-start="20" selection-end="20" vertical-scroll-proportion="-1.7160494" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/source/sourceList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="7" selection-start="561" selection-end="561" vertical-scroll-proportion="0.5424528" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/watch/watchAdd.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="100" selection-start="3282" selection-end="3282" vertical-scroll-proportion="0.6462264" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddWatchCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="46" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.25502318" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/source/sourceAdd.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="55" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.67175573">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/ValidationListCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="6" selection-start="36" selection-end="36" vertical-scroll-proportion="0.06818182" />
+        <state line="96" column="31" selection-start="3456" selection-end="3456" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/cfg.js">
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/ValidationDataCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="63" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
+        <state line="18" column="74" selection-start="690" selection-end="690" vertical-scroll-proportion="0.41221374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/information/validationList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="34" selection-start="255" selection-end="255" vertical-scroll-proportion="0.14263074">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/source/sourceAdd.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="59" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.59587955">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddInformationCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="71" selection-start="437" selection-end="437" vertical-scroll-proportion="0.0">
+        <state line="27" column="45" selection-start="940" selection-end="940" vertical-scroll-proportion="0.63084114">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/information/validate.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="73" selection-start="1644" selection-end="1644" vertical-scroll-proportion="-8.458333">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/source/searchNew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="34" selection-start="247" selection-end="247" vertical-scroll-proportion="-3.125">
+        <state line="50" column="10" selection-start="1958" selection-end="1958" vertical-scroll-proportion="1.1885896">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="13" selection-start="9673" selection-end="9673" vertical-scroll-proportion="-17.208334">
+        <state line="172" column="38" selection-start="9388" selection-end="9388" vertical-scroll-proportion="-5.24">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/source/sourceList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="558" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/watch/watchList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="29" selection-start="249" selection-end="249" vertical-scroll-proportion="-3.75">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddSourceCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="7" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.0">
+        <state line="35" column="53" selection-start="1116" selection-end="1156" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/barletLocal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="48" selection-start="95525" selection-end="95525" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/barlet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="40" selection-start="95648" selection-end="95648" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="44" selection-start="2903" selection-end="2903" vertical-scroll-proportion="0.41130298">
+        <state line="113" column="96" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/WatchDataCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="53" selection-start="646" selection-end="1513" vertical-scroll-proportion="0.58778626">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/SourceListCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="79" selection-start="41" selection-end="41" vertical-scroll-proportion="0.046728972">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/WatchListCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="155" column="10" selection-start="6389" selection-end="6389" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/AddWatchCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="45" selection-start="1264" selection-end="1264" vertical-scroll-proportion="0.53582555">
           <folding />
         </state>
       </provider>
