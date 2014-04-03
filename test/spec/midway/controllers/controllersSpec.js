@@ -56,7 +56,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/information\/validate.html/);		
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /validate/display route is accessed', function(done) {
@@ -67,7 +66,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/information\/validationList.html/);
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /watch/add route is accessed', function(done) {
@@ -78,7 +76,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/watch\/watchAdd.html/);	
-	// to be continued ...
   });
 
  it('should load the templateUrl properly when /watch/sourceslist route is accessed', function(done) {
@@ -89,7 +86,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/source\/list.html/);	
-	// to be continued ...
   });
 
  it('should load the templateUrl properly when /source/sourcesList route is accessed', function(done) {
@@ -100,7 +96,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/source\/sourceList.html/);	
-	// to be continued ...
   });
 
  it('should load the templateUrl properly when /watch/watchList route is accessed', function(done) {
@@ -111,7 +106,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/watch\/watchList.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /publish/newsletter route is accessed', function(done) {
@@ -122,7 +116,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/report\/createNL.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /publish/report route is accessed', function(done) {
@@ -133,7 +126,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/report\/createReport.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/survfolder route is accessed', function(done) {
@@ -144,7 +136,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/organise.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/sourcesfolder route is accessed', function(done) {
@@ -155,7 +146,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/organise.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/templates route is accessed', function(done) {
@@ -166,7 +156,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/organise.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/collect route is accessed', function(done) {
@@ -177,7 +166,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/organise.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/profile route is accessed', function(done) {
@@ -188,7 +176,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/user\/userAdd.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/sources route is accessed', function(done) {
@@ -199,7 +186,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/sources\/list.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /organize/vfolder route is accessed', function(done) {
@@ -210,7 +196,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/report\/reportList.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /signin route is accessed', function(done) {
@@ -221,7 +206,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/signin.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /search/rss route is accessed', function(done) {
@@ -232,7 +216,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/source\/searchNew.html/);	
-	// to be continued ...
   });
 
   it('should load the templateUrl properly when /search/source route is accessed', function(done) {
@@ -243,41 +226,39 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/source\/sourceList.html/);	
-	// to be continued ...
   });
 
-  it('should load the BarletCtrl controller and templateUrl properly when /url/:id_url route is accessed', function(done) {
+  it('should load the AddSourceCtrl controller and templateUrl properly when /url/:id_url route is accessed', function(done) {
     tester.visit('/url/:id_url');
 	expect(tester.path()).toBe('/url/:id_url');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
-	expect(controller).toBe('BarletCtrl');
-	expect(template).toMatch(/views\/source\/formAdd.html/);		
-	// to be continued ...
+	expect(controller).toBe('AddSourceCtrl');
+	expect(template).toMatch(/views\/source\/sourceAdd.html/);		
   });
 
-  it('should load the BarletCtrl controller and templateUrl properly when /text/:id_text route is accessed', function(done) {
+  it('should load the GoogleFeedCtrl controller and templateUrl properly when /text/:id_text route is accessed', function(done) {
     tester.visit('/text/:id_text');
 	expect(tester.path()).toBe('/text/:id_text');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
-	expect(controller).toBe('BarletCtrl');
+	expect(controller).toBe('GoogleFeedCtrl');
 	expect(template).toMatch(/views\/source\/searchNew.html/);		
   });
 
-  it('should load the BarletCtrl controller and templateUrl properly when /validate/:id_selection route is accessed', function(done) {
+  it('should load the AddInformationCtrl controller and templateUrl properly when /validate/:id_selection route is accessed', function(done) {
     tester.visit('/validate/:id_selection');
 	expect(tester.path()).toBe('/validate/:id_selection');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
-	expect(controller).toBe('BarletCtrl');
-	expect(template).toMatch(/views\/validate.html/);
+	expect(controller).toBe('AddInformationCtrl');
+	expect(template).toMatch(/views\/information\/validate.html/);
   });
 
   it('should load the GoogleFeedCtrl controller and templateUrl properly when /source/searchNew route is accessed', function(done) {
@@ -310,7 +291,6 @@ describe("Midway: Testing Controllers", function() {
 	var scope = current.scope;
 	var template = current.templateUrl;
 	expect(template).toMatch(/views\/source\/sourceAdd.html/);		
-	// to be continued ...
   });
 
   it('should load the SolrCtrl controller and templateUrl properly when /search/webso route is accessed', function(done) {

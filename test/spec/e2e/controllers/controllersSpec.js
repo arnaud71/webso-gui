@@ -182,8 +182,10 @@ describe("Integration/E2E Testing", function() {
     inputDetails.clear();
     inputDetails.sendKeys('test detail');
 
-    var button = element(by.name('validate'));
-    button.click();
+    var button = element(by.name('add'));
+	button.click();
+
+	ptor.switchTo().alert().accept();
   });
 
 /*********************************** fonctionnel (Affichage des informations validées) *******************/
