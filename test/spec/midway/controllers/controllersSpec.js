@@ -2,100 +2,325 @@
 // test/midway/controllers/controllersSpec.js
 //
 describe("Midway: Testing Controllers", function() {
-  var tester, current;
+  var tester, current, module;
+
   beforeEach(function() {
+  	module = angular.module("websoApp");
     if(tester) {
       tester.destroy();
     }
     tester = ngMidwayTester('websoApp');
   });
 
-  it('pouvoir charger le controlleur "CarouselCtrl" proprement quand on accède à /home ', function(done) {
-    tester.visit('#/home', function() {
-      tester.path().should.eq('/home');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('CarouselCtrl');
-     done();
-    });
+  it("should have a module to test", function() {
+	expect(module).not.toBe(null);
   });
 
-  it('pouvoir charger le controlleur "AddInformationCtrl" proprement quand on accède à /validate/add ', function(done) {
-    tester.visit('#/validate/add', function() {
-      tester.path().should.eq('/validate/add');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('AddInformationCtrl');
-     done();
-    });
+  it('should load the SolrCtrl controller and templateUrl properly when / route is accessed', function(done) {
+    tester.visit('/');
+	expect(tester.path()).toBe('/');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('SolrCtrl');
+	expect(template).toMatch(/views\/comingsoon.html/);
   });
 
-  it('pouvoir charger le controlleur "ValidationDataCtrl" proprement quand on accède à /validate/display ', function(done) {
-    tester.visit('#/validate/display', function() {
-      tester.path().should.eq('/validate/display');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('ValidationDataCtrl');
-     done();
-    });
+  it('should load the templateUrl properly when /home route is accessed', function(done) {
+    tester.visit('/home');
+	expect(tester.path()).toBe('/home');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/main.html/);
   });
 
-  it('pouvoir charger le controlleur "AddWatchCtrl" proprement quand on accède à /watch/add ', function(done) {
-    tester.visit('#/watch/add', function() {
-      tester.path().should.eq('/watch/add');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('AddWatchCtrl');
-     done();
-    });
+  it('should load the SolrCtrl controller and templateUrl properly when /search route is accessed', function(done) {
+    tester.visit('/search');
+	expect(tester.path()).toBe('/search');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('SolrCtrl');
+	expect(template).toMatch(/views\/main.html/);	
   });
 
-  it('pouvoir charger le controlleur "AddSourceCtrl" proprement quand on accède à /source/sourceAdd ', function(done) {
-    tester.visit('#/source/sourceAdd', function() {
-      tester.path().should.eq('/source/AddSourceCtrl');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('AddSourceCtrl');
-     done();
-    });
+  it('should load the templateUrl properly when /validate/add route is accessed', function(done) {
+    tester.visit('/validate/add');
+	expect(tester.path()).toBe('/validate/add');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/information\/validate.html/);		
+	// to be continued ...
   });
 
- it('pouvoir charger le controlleur "SourceDataCtrl" proprement quand on accède à /source/sourcesList ', function(done) {
-    tester.visit('#/source/sourcesList', function() {
-      tester.path().should.eq('/source/sourcesList');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('SourceDataCtrl');
-     done();
-    });
+  it('should load the templateUrl properly when /validate/display route is accessed', function(done) {
+    tester.visit('/validate/display');
+	expect(tester.path()).toBe('/validate/display');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/information\/validationList.html/);
+	// to be continued ...
   });
 
- it('pouvoir charger le controlleur "WatchDataCtrl" proprement quand on accède à /watch/watchList ', function(done) {
-    tester.visit('#/watch/watchList', function() {
-      tester.path().should.eq('/watch/watchList');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-     expect(controller).to.eql('WatchDataCtrl');
-     done();
-    });
+  it('should load the templateUrl properly when /watch/add route is accessed', function(done) {
+    tester.visit('/watch/add');
+	expect(tester.path()).toBe('/watch/add');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/watch\/watchAdd.html/);	
+	// to be continued ...
   });
 
-  it('pouvoir charger le controlleur "SolrCtrl" proprement quand on accède à /search/webso ', function(done) {
-    tester.visit('#/search/webso', function() {
-      tester.path().should.eq('/search/webso');
-      var current = tester.inject('$route').current;
-      var controller = current.controller;
-      var scope = current.scope;
-      expect(controller).to.eql('SolrCtrl');
-      done();
-    });
+ it('should load the templateUrl properly when /watch/sourceslist route is accessed', function(done) {
+    tester.visit('/watch/sourceslist');
+	expect(tester.path()).toBe('/watch/sourceslist');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/list.html/);	
+	// to be continued ...
   });
 
+ it('should load the templateUrl properly when /source/sourcesList route is accessed', function(done) {
+    tester.visit('/source/sourcesList');
+	expect(tester.path()).toBe('/source/sourcesList');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/sourceList.html/);	
+	// to be continued ...
+  });
+
+ it('should load the templateUrl properly when /watch/watchList route is accessed', function(done) {
+    tester.visit('/watch/watchList');
+	expect(tester.path()).toBe('/watch/watchList');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/watch\/watchList.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /publish/newsletter route is accessed', function(done) {
+    tester.visit('/publish/newsletter');
+	expect(tester.path()).toBe('/publish/newsletter');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/report\/createNL.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /publish/report route is accessed', function(done) {
+    tester.visit('/publish/report');
+	expect(tester.path()).toBe('/publish/report');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/report\/createReport.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/survfolder route is accessed', function(done) {
+    tester.visit('/organize/survfolder');
+	expect(tester.path()).toBe('/organize/survfolder');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/organise.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/sourcesfolder route is accessed', function(done) {
+    tester.visit('/organize/sourcesfolder');
+	expect(tester.path()).toBe('/organize/sourcesfolder');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/organise.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/templates route is accessed', function(done) {
+    tester.visit('/organize/templates');
+	expect(tester.path()).toBe('/organize/templates');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/organise.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/collect route is accessed', function(done) {
+    tester.visit('/organize/collect');
+	expect(tester.path()).toBe('/organize/collect');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/organise.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/profile route is accessed', function(done) {
+    tester.visit('/organize/profile');
+	expect(tester.path()).toBe('/organize/profile');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/user\/userAdd.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/sources route is accessed', function(done) {
+    tester.visit('/organize/sources');
+	expect(tester.path()).toBe('/organize/sources');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/sources\/list.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /organize/vfolder route is accessed', function(done) {
+    tester.visit('/organize/vfolder');
+	expect(tester.path()).toBe('/organize/vfolder');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/report\/reportList.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /signin route is accessed', function(done) {
+    tester.visit('/signin');
+	expect(tester.path()).toBe('/signin');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/signin.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /search/rss route is accessed', function(done) {
+    tester.visit('/search/rss');
+	expect(tester.path()).toBe('/search/rss');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/searchNew.html/);	
+	// to be continued ...
+  });
+
+  it('should load the templateUrl properly when /search/source route is accessed', function(done) {
+    tester.visit('/search/source');
+	expect(tester.path()).toBe('/search/source');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/sourceList.html/);	
+	// to be continued ...
+  });
+
+  it('should load the BarletCtrl controller and templateUrl properly when /url/:id_url route is accessed', function(done) {
+    tester.visit('/url/:id_url');
+	expect(tester.path()).toBe('/url/:id_url');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('BarletCtrl');
+	expect(template).toMatch(/views\/source\/formAdd.html/);		
+	// to be continued ...
+  });
+
+  it('should load the BarletCtrl controller and templateUrl properly when /text/:id_text route is accessed', function(done) {
+    tester.visit('/text/:id_text');
+	expect(tester.path()).toBe('/text/:id_text');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('BarletCtrl');
+	expect(template).toMatch(/views\/source\/searchNew.html/);		
+  });
+
+  it('should load the BarletCtrl controller and templateUrl properly when /validate/:id_selection route is accessed', function(done) {
+    tester.visit('/validate/:id_selection');
+	expect(tester.path()).toBe('/validate/:id_selection');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('BarletCtrl');
+	expect(template).toMatch(/views\/validate.html/);
+  });
+
+  it('should load the GoogleFeedCtrl controller and templateUrl properly when /source/searchNew route is accessed', function(done) {
+    tester.visit('/source/searchNew');
+	expect(tester.path()).toBe('/source/searchNew');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('GoogleFeedCtrl');
+	expect(template).toMatch(/views\/source\/searchNew.html/);		
+  });
+
+  it('should load the SourceDataCtrl controller and templateUrl properly when /source/list route is accessed', function(done) {
+    tester.visit('/source/list');
+	expect(tester.path()).toBe('/source/list');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('SourceDataCtrl');
+	expect(template).toMatch(/views\/source\/list.html/);		
+  });
+
+  it('should load the templateUrl properly when /source/sourceAdd route is accessed', function(done) {
+    tester.visit('/source/sourceAdd');
+	expect(tester.path()).toBe('/source/sourceAdd');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/sourceAdd.html/);		
+	// to be continued ...
+  });
+
+  it('should load the SolrCtrl controller and templateUrl properly when /search/webso route is accessed', function(done) {
+    tester.visit('/search/webso');
+	expect(tester.path()).toBe('/search/webso');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('SolrCtrl');
+	expect(template).toMatch(/views\/search\/webso.html/);		
+  });
 });
