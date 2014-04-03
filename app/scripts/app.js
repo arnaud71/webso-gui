@@ -93,7 +93,7 @@ angular.module('websoApp')
           Booklet
          */
         .when('/url/:id_url', {
-            templateUrl: 'views/source/formAdd.html',
+            templateUrl: 'views/source/sourceAdd.html'  ,
             controller: 'BarletCtrl'
         })
 
@@ -102,7 +102,7 @@ angular.module('websoApp')
             controller: 'BarletCtrl'
         })
         .when('/validate/:id_selection', {
-            templateUrl: 'views/validate.html',
+            templateUrl: 'views/information/validate.html',
             controller: 'BarletCtrl'
         })
 

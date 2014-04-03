@@ -45,8 +45,20 @@
 
     myDoc.body.appendChild(booklet);
 
+    /*
+    en cours de test 'configuration
+     */
+    var configuration = {
+        cfg : 'scripts/cfg.js'
+    };
+    var request = $.ajax({
+        url: configuration.cfg,
+        type: 'GET'
+    });
 
-
+    /*
+    Test end
+     */
     var myBooklet = {
         $booklet : $("#booklet"),
 
@@ -124,16 +136,19 @@
     /*
      * RSS button
      */
-    $("#b1").on("click",function(){
+    $("#b1").on("click",function(){ //cfg.urlServices+
 
-        window.open("http://localhost:9000/#/text/"+getSelection());
-
+       // window.open("http://localhost:9000/#/text/"+getSelection());
+        window.open("http://albator.hesge.ch/web/webso-gui/#/text/"+getSelection());
+       // window.open(configuration.cfg.urlGui+"/#/text/"+getSelection());
+        //http://albator.hesge.ch/web/webso-gui/#/
         var s = "";
 
         s = getSelection();
         if (s == "") {
             var s = alert("Please select text");
         }
+       // console.log('Is it working?!!'+configuration.cfg.urlGui);
 
     });
 
@@ -146,7 +161,8 @@
        // window.open("http://localhost:9000/#/validate/"+getSelection());
         ///alert("En cours");
         //window.open("http://localhost:9000/#/validate/"+getSelection());
-        window.open('http://localhost:9000/#/validate/'+btoa(encodeURIComponent(location.href)));
+     window.open('http://albator.hesge.ch/web/webso-gui/#/validate/'+btoa(encodeURIComponent(location.href)));   //??
+       // window.open('http://localhost:9000/#/validate/'+btoa(encodeURIComponent(location.href)));
 
 
     });
@@ -157,7 +173,10 @@
 
     $('#b3').on("click",function(){
        // myUrl = document.location;
-        window.open('http://localhost:9000/#/url/'+btoa(encodeURIComponent(location.href)));
+       // window.open("http://albator.hesge.ch/web/webso-gui/#/url/");//+btoa(encodeURIComponent(location.href)));
+       window.open("http://albator.hesge.ch/web/webso-gui/#/url/"+btoa(encodeURIComponent(location.href)));
+        //window.open('http://localhost:9000/#/url/'+btoa(encodeURIComponent(location.href)));
+      //  console.log("---"+location.ref);
 
     });
 
