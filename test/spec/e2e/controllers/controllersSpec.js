@@ -73,6 +73,8 @@ describe("Integration/E2E Testing", function() {
 
     var button = element(by.name('surveiller'));
     button.click();
+
+    ptor.switchTo().alert().accept();
   });
 
 /********************************** fonctionnel (Afficher les surveillances) ******************************/
@@ -104,6 +106,8 @@ describe("Integration/E2E Testing", function() {
     element.all(by.repeater('watch in watchResult.success.response.docs')).then(function(results) {
     	numberOfResults = results.length;
 		element.all(by.repeater('watch in watchResult.success.response.docs')).get(numberOfResults-1).findElement(by.name('deleteSurveillance')).click();
+		ptor.switchTo().alert().accept();
+		ptor.switchTo().alert().accept();
 	});
 
     // s'assurer que la surveillance supprimée a été bien supprimée
@@ -136,7 +140,8 @@ describe("Integration/E2E Testing", function() {
     
     var button = element(by.name('add'));
     button.click();
-    
+
+    ptor.switchTo().alert().accept();
   });
 
 /*********************************** fonctionnel (Affichage des sources) *********************************/
