@@ -77,7 +77,7 @@ describe('Controller: AddInformationCtrl', function(){
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_s=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org&user_s=user_0";
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_t=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org&user_s=user_0";
     httpBackendDoAdd.whenJSONP(url).respond(mock_data);
 }));
 
