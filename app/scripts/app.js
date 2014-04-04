@@ -88,6 +88,10 @@ angular.module('websoApp')
             templateUrl: 'views/source/searchNew.html'
 
         })
+        .when('/settings/booklet', {
+          templateUrl: 'views/settings.html'
+
+        })
         .when('/search/source', {
           templateUrl: 'views/source/sourceList.html'
 
