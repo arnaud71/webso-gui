@@ -6,7 +6,7 @@ module.exports = function(config) {
   conf.files = conf.files.concat([
       'node_modules/ng-midway-tester/src/ngMidwayTester.js',
       'dist/bower_components/angular-mocks/angular-mocks.js',
-      'app/scripts/controllers/*.js',
+      'app/scripts/**/*.js',
       'test/spec/unit/**/*.js',
       'test/spec/midway/**/*.js'
     ]);
@@ -18,7 +18,7 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'app/scripts/controllers/*.js' : ['coverage']
+      'app/scripts/**/*.js' : ['coverage']
     };
 
     // optionally, configure the reporter
