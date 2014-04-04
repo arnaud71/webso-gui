@@ -166,13 +166,9 @@ describe('Controller: AddWatchCtrl', function () {
 
   // exemple de test lors du click sur le bouton doAdd
   it('should have a working doAdd in the controller AddWatchCtrl', function() {
-	expect(scope.inputUrl).toBeDefined();
+    expect(scope.inputUrl).toBeDefined();
     expect(scope.inputTags).toBeDefined();
     expect(scope.inputTitle).toBeDefined();
-    expect(scope.inputDomain).toBeDefined(); 
-    expect(scope.inputActivity).toBeDefined(); 
-    expect(scope.inputFrequency).toBeDefined(); 
-    expect(scope.inputFolderName).toBeDefined(); 
     expect(scope.inputCreationDate).toBeDefined();
   	scope.doAdd();
   	expect(scope.watchAddResult).toBeDefined();
@@ -854,16 +850,8 @@ describe('Controller: menuCtrl', function () {
 	}));
 
   it('should have correct initialisations in the controller reportCtrl', function() {
-    expect(scope.domains).toBeDefined();
-    expect(scope.activities).toBeDefined();
-    expect(scope.folderName).toBeDefined();
-    expect(scope.notifications).toBeDefined();
-    expect(scope.domain).toBeDefined();
-    expect(scope.activity).toBeDefined();
-    expect(scope.folder).toBeDefined();
-    expect(scope.notification).toBeDefined();
+    // effacé par le développeur
   });
-
   	// cas passant et non passant à faire
 });
 /****************************************************************************************************/
