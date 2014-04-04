@@ -9,10 +9,10 @@ angular.module('websoApp')
         $scope.inputUrl = 'http://www.apache.org';
         $scope.inputTags = 'server';
         $scope.inputTitle = 'Apache home page';
-        $scope.inputDomain = 'Domaine 1';
-        $scope.inputActivity = 'Activité 1';
-        $scope.inputFrequency = '1 semaine';
-        $scope.inputFolderName = 'Dossier de Surveillance 1';
+       // $scope.inputDomain = $scope.domain;
+        //$scope.inputActivity = 'Activité 1';
+      //  $scope.inputFrequency = '1 semaine';
+       // $scope.inputFolderName = 'Dossier de Surveillance 1';
         $scope.inputCreationDate = Date.now();
 
 
@@ -31,18 +31,19 @@ angular.module('websoApp')
                 url_s  :     $scope.inputUrl,
                 title_t: $scope.inputTitle,
                 tags_s :    $scope.inputTags,
-                domain_s: $scope.inputDomain,
-                activity_s: $scope.inputActivity,
-                frequency_s: $scope.inputFrequency,
-                folder_name_s: $scope.inputFolderName
+                domain_s: $scope.domain.name,
+                activity_s: $scope.activity.name,
+                frequency_s: $scope.frequency.option,
+                folder_name_s: $scope.folder.name,
+                notification_s:$scope.notification.option
 
             });
             $scope.sourceAddResult = $scope.sourceAdd.get({
                 url_s  :     $scope.inputUrl,
                 tags_s :    $scope.inputTags,
                 title_t:    $scope.inputTitle,
-                domain_s: $scope.inputDomain,
-                activity_s: $scope.inputActivity,
+                domain_s: $scope.domain.name,
+                activity_s: $scope.activity.name,
                 creation_d: $scope.inputCreationDate
 
 
@@ -53,48 +54,58 @@ angular.module('websoApp')
 
         };
 
+        /*
+         Domains menu
+         */
+        $scope.domains =  [
+            {name:'domaine 1'},
+            {name:'domaine 2'},
+            {name:'domaine 3'}
+        ] ;
+        $scope.domain = $scope.domains[2];
+        /*
+         Activities menu
+         */
+        $scope.activities =  [
+            {name:'Secteur dactivité 1'},
+            {name:'Secteur dactivité 2'},
+            {name:'Secteur dactivité 3'}
+        ] ;
+        $scope.activity = $scope.activities[2];
+
+        /*
+         Folders menu
+         */
+        $scope.folders =  [
+            {name:'Dossier 1'},
+            {name:'Dossier 2'},
+            {name:'Dossier 3'}
+        ] ;
+        $scope.folder = $scope.folders[2];
+
+        /*
+         Frequency menu
+         */
+        $scope.frequencies =  [
+            {option:'1 jour'},
+            {option:'1 semaine'},
+            {option:'1 mois'}
+
+        ] ;
+        $scope.frequency = $scope.frequencies[0];
+
+         /*
+         Notifications menu
+         */
+        $scope.notifications =  [
+            {option:'Pas de notification'},
+            {option:'email'}
+
+        ] ;
+        $scope.notification = $scope.notifications[0];
 
 
     });
 
-/*
-
- angular.module('websoApp')
- .controller('addInfoCtrl', function ($scope,$resource) {
-
- //  $scope.inputType    = 'rss';
- $scope.inputLevel   = 0;
- // $scope.inputUser    = 'user_1';
- $scope.inputUrl     ='';
- $scope.inputTitle   = '';
- $scope.inputDetail = '';
- $scope.inputComment= '';
- $scope.inputRefresh = 1440; // per day
-
-
- $scope.informationAdd = $resource('http://albator.hesge.ch/cgi-bin/webso/sources/:action',
- {action:'put_Information.json', source_user:'user_2' ,information_url:'',information_type:'information',information_title:'',information_detail:'',information_comment:'',information_level_sharing:'0',callback:"JSON_CALLBACK"},
- {get:{method:'JSONP'}});
-
- $scope.doAdd = function () {
-
- $scope.informationAddResult = $scope.informationAdd.get({
-
- information_url:     $scope.inputUrl,
- information_type:    $scope.inputType,
- //information_user:    $scope.inputUser,
- information_level_sharing:   $scope.inputLevel,
- information_title:   $scope.inputTitle,
- information_detail:   $scope.inputDetail,
- information_comment:   $scope.inputComment
- });
- };
-
-
-
-
- });
-
- */
 
 //http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1

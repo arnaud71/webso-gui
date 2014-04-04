@@ -331,44 +331,44 @@ angular.module('websoApp')
   .controller ("menuCtrl", function ($scope) {
   /*
   Domains menu
-   */
+
   $scope.domains =  [
     {name:'domaine 1'},
     {name:'domaine 2'},
     {name:'domaine 3'}
   ] ;
   $scope.domain = $scope.domains[2];
-
+   */
   /*
   Activities menu
-   */
+
   $scope.activities =  [
     {name:'Secteur dactivité 1'},
     {name:'Secteur dactivité 2'},
     {name:'Secteur dactivité 3'}
   ] ;
   $scope.activity = $scope.activities[2];
-
+   */
   /*
     Folders menu
-     */
+
     $scope.folderName =  [
         {name:'Dossier 1'},
         {name:'Dossier 2'},
         {name:'Dossier 3'}
     ] ;
     $scope.folder = $scope.folderName[2];
-
+   */
   /*
     Notifications menu
-   */
+
     $scope.notifications =  [
         {name:'Pas de notification'},
         {name:'email'}
 
     ] ;
     $scope.notification = $scope.notifications[0];
-
+   */
 });
 
 
