@@ -218,6 +218,16 @@ describe("Midway: Testing Controllers", function() {
 	expect(template).toMatch(/views\/source\/searchNew.html/);	
   });
 
+  it('should load the templateUrl properly when /settings/booklet route is accessed', function(done) {
+    tester.visit('/settings/booklet');
+	expect(tester.path()).toBe('/settings/booklet');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/settings.html/);
+  });
+
   it('should load the templateUrl properly when /search/source route is accessed', function(done) {
     tester.visit('/search/source');
 	expect(tester.path()).toBe('/search/source');
