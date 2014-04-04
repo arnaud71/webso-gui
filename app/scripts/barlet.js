@@ -45,20 +45,7 @@
 
     myDoc.body.appendChild(booklet);
 
-    /*
-    en cours de test 'configuration
-     */
-    var configuration = {
-        cfg : 'scripts/cfg.js'
-    };
-    var request = $.ajax({
-        url: configuration.cfg,
-        type: 'GET'
-    });
 
-    /*
-    Test end
-     */
     var myBooklet = {
         $booklet : $("#booklet"),
 
@@ -70,9 +57,9 @@
 
             var content = "";
             content += '<div id="buttons">';
-            content += '<button id="b1">Ajouter Surveillance</button>';
+            content += '<button id="b1">Surveiller</button>';
             content += '<button id="b2">Valider</button>';
-            content += '<button id="b3">Ajouter source</button>';
+            content += '<button id="b3"> Ajouter source</button>';
             content += '<button id="bclose">x</button>';
             content += '</div>';
 

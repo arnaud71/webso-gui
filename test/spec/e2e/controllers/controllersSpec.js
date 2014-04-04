@@ -45,16 +45,16 @@ describe("Integration/E2E Testing", function() {
     inputTags.sendKeys('test tag');
 
     // choisir le dossier de surveillance. c'est un menu de choix
-	var selectedDomain = element(by.xpath('//select[@name="inputDomain"]/option[text()="domaine 1"]')); 
-  	selectedDomain.click();
+    var selectedDomain = element(by.xpath('//select[@name="inputDomain"]/option[text()="domaine 1"]')); 
+    selectedDomain.click();
 
     // choisir le domaine de surveillance. c'est un menu de choix
-	var selectedActivity = element(by.xpath('//select[@id="inputActivity"]/option[text()="Secteur dactivité 2"]')); 
-  	selectedActivity.click();
+    var selectedActivity = element(by.xpath('//select[@id="inputActivity"]/option[text()="Secteur dactivité 2"]')); 
+    selectedActivity.click();
 
     // choisir le secteur d'activité pour la surveillance. c'est un menu de choix
-  	var selectedFolder = element(by.xpath('//select[@name="inputFolderName"]/option[text()="Dossier 3"]')); 
-  	selectedFolder.click();
+    var selectedFolder = element(by.xpath('//select[@name="inputFolderName"]/option[text()="Dossier 3"]')); 
+    selectedFolder.click();
 
     var inputRequete = element(by.name('requete'));
     inputRequete.clear();
@@ -64,12 +64,12 @@ describe("Integration/E2E Testing", function() {
     button.click();
     
     // choisir une frequence pour la surveillance. c'est un menu de choix
-  	var selectedFrequency = element(by.xpath('//select[@ng-model="freq"]/option[text()="1 mois"]')); 
-  	selectedFrequency.click();
+    var selectedFrequency = element(by.xpath('//select[@ng-model="frequency"]/option[text()="1 mois"]')); 
+    selectedFrequency.click();
 
     // choisir le mode de notification pour la surveillance. c'est un menu de choix
-  	var selectedSurveillance = element(by.xpath('//select[@ng-model="notification"]/option[text()="email"]')); 
-  	selectedSurveillance.click();
+    var selectedSurveillance = element(by.xpath('//select[@ng-model="notification"]/option[text()="email"]')); 
+    selectedSurveillance.click();
 
     var button = element(by.name('surveiller'));
     button.click();
@@ -80,7 +80,7 @@ describe("Integration/E2E Testing", function() {
 /********************************** fonctionnel (Afficher les surveillances) ******************************/
 //	Bug détecté : une surveillance a été ajoutée dans le dossier 3 							  	
 //	Resultat de l'affichage : la surveillance a été ajoutée dans le dossier 1
-																										  																			  
+																								  																			  
   it('pouvoir aller à la page Surveiller > Afficher les surveillances', function() {
     browser.get('http://localhost:9000/#/watch/watchList');
     // s'assurer de la surveillance ajoutée et affichée
@@ -104,7 +104,7 @@ describe("Integration/E2E Testing", function() {
     // supprimer une source
     var numberOfResults;
     element.all(by.repeater('watch in watchResult.success.response.docs')).then(function(results) {
-    	numberOfResults = results.length;
+   	numberOfResults = results.length;
 		element.all(by.repeater('watch in watchResult.success.response.docs')).get(numberOfResults-1).findElement(by.name('deleteSurveillance')).click();
 		ptor.switchTo().alert().accept();
 		ptor.switchTo().alert().accept();
@@ -121,7 +121,7 @@ describe("Integration/E2E Testing", function() {
     // s'assurer que la surveillance modifiée a été bien modifiée
   });  
 
-/*********************************** fonctionnel (Ajout d'une source) ************************************/
+  /*********************************** fonctionnel (Ajout d'une source) ************************************/
 
   it('pouvoir aller à la page Surveiller > Ajouter une source et ajouter une source valide', function() {
     browser.get('http://localhost:9000/#/source/sourceAdd');
@@ -182,8 +182,10 @@ describe("Integration/E2E Testing", function() {
     inputDetails.clear();
     inputDetails.sendKeys('test detail');
 
-    var button = element(by.name('validate'));
+    var button = element(by.name('add'));
     button.click();
+
+    ptor.switchTo().alert().accept();
   });
 
 /*********************************** fonctionnel (Affichage des informations validées) *******************/
@@ -191,16 +193,16 @@ describe("Integration/E2E Testing", function() {
   it('pouvoir aller à la page Valider > Afficher informations validées', function() {
     browser.get('http://localhost:9000/#/validate/display');
     // s'assurer que l'information ajoutée est bien ajoutée et affichée
-	element.all(by.repeater('validation in validationResult.success.response.docs')).then(function(results) {
-	    var lastTitle = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.title_s}}'));
-    	expect(lastTitle.getText()).toBe('test titre');
+    element.all(by.repeater('validation in validationResult.success.response.docs')).then(function(results) {
+      var lastTitle = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.title_s}}'));
+      expect(lastTitle.getText()).toBe('test titre');
 
-	    var lastUrl = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.url_s}}'));
-    	expect(lastUrl.getText()).toBe('test lien');
+      var lastUrl = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.url_s}}'));
+      expect(lastUrl.getText()).toBe('test lien');
 
-	    var lastUser = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.user_s}}'));
-    	expect(lastUser.getText()).toBe('user_0');
-	});
+      var lastUser = element(by.repeater('validation in validationResult.success.response.docs').row(results.length-1).column('{{validation.user_s}}'));
+      expect(lastUser.getText()).toBe('user_0');
+    });
   });
 
 /*********************************************************************************************************/
@@ -261,7 +263,7 @@ describe("Integration/E2E Testing", function() {
     /*
     var buttonSelectionFolder = element(by.name('openFolders'));
     SelectionFolder.click();
-  	*/
+    */
 
     var button = element(by.name('createReport'));
     button.click(); 
