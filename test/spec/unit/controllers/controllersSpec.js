@@ -272,7 +272,7 @@ describe('Controller: SourceDataCtrl', function(){
   beforeEach(inject(function($controller, $rootScope, $httpBackend) {
     httpBackendDoSearch = $httpBackend;
     httpBackendDoDelete = $httpBackend;
-
+    
     scope = $rootScope.$new();
     ctrl = $controller("SourceDataCtrl", { $scope: scope});
 
@@ -280,6 +280,7 @@ describe('Controller: SourceDataCtrl', function(){
     					[{ 	test : "test" 
     					}]
     				};
+
     var url_1 = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=source&user_s=user_0";
     var url_2 = "http://localhost/cgi-bin/webso-services/db/delete.pl?callback=JSON_CALLBACK&id=1";
     httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
@@ -297,9 +298,8 @@ describe('Controller: SourceDataCtrl', function(){
   // exemple de test lors de la supprission d'une source
   it('should have a working doDelete function service in the controller SourceDataCtrl', function() {
     // supprimer une source et verifier le resultat lors de la supprission de la source
-    //  scope.doDelete(1, 1);
-    //  httpBackendDoDelete.flush();
-    //  expect(scope.sourceAddResult.id).toBe(1);
+    // scope.doDelete(1, 1);
+    // expect(scope.sourceAddResult.id).toBe(1);
   });
 });
 /****************************************************************************************************/
@@ -335,6 +335,7 @@ describe('Controller: WatchDataCtrl', function () {
   // exemple de test lors de la supprission d'une source
   it('should have a working doDelete function service in the controller WatchDataCtrl', function() {
   	// supprimer une source
+    // scope.doDelete(1, 1); 
     // verifier le resultat lors de la supprission de la source
   });  
 });
@@ -463,7 +464,7 @@ describe('Controller: BarletCtrl', function () {
   scope;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
+	beforeEach(inject(function ($controller, $rootScope, $routeParams) {
 	scope = $rootScope.$new();
 		BarletCtrl = $controller('BarletCtrl', {
 		  $scope: scope,
@@ -613,6 +614,7 @@ describe('Controller: DatepickerCtrl', function () {
 
   it('should have a working open function service in the controller DatepickerCtrl', function() {
   	scope.open();
+    // expect(scope.opened).toBe(true);
   	// cas passant et non passant à faire
   });
 });
@@ -657,17 +659,41 @@ describe('Controller: UnderconstructionCtrl', function () {
   var UnderconstructionCtrl,
   scope;
 
+  var fakeModal = {
+    result: {
+        then: function(confirmCallback, cancelCallback) {
+            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+            this.confirmCallBack = confirmCallback;
+            this.cancelCallback = cancelCallback;
+        }
+    },
+    close: function( item ) {
+        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+        this.result.confirmCallBack( item );
+    },
+    dismiss: function( type ) {
+        //The user clicked cancel on the modal dialog, call the stored cancel callback
+        this.result.cancelCallback( type );
+    }
+};
+
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
-	scope = $rootScope.$new();
+	beforeEach(inject(function ($controller, $rootScope, $modal) {
+  scope = $rootScope.$new();
+
 		UnderconstructionCtrl = $controller('UnderconstructionCtrl', {
 		  $scope: scope
 		});
+
+  spyOn($modal, 'open').andReturn(fakeModal);
+    
 	}));
 
   it('should have open function service in the controller UnderconstructionCtrl', function() {
-  	expect(scope.open).toBeDefined();
-  	// cas passant et non passant à faire
+    expect(scope.selected).toBeUndefined();
+    scope.open(); // Open the modal
+    // scope.modalInstance.close("OK"); //Call close (simulating clicking the ok button on the modal)
+    // expect(scope.selected).toBe(true);
   });
 });
 /****************************************************************************************************/
@@ -679,17 +705,39 @@ describe('Controller: informationOkCtrl', function () {
   var informationOkCtrl,
   scope;
 
+  var fakeModal = {
+    result: {
+        then: function(confirmCallback, cancelCallback) {
+            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+            this.confirmCallBack = confirmCallback;
+            this.cancelCallback = cancelCallback;
+        }
+    },
+    close: function( item ) {
+        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+        this.result.confirmCallBack( item );
+    },
+    dismiss: function( type ) {
+        //The user clicked cancel on the modal dialog, call the stored cancel callback
+        this.result.cancelCallback( type );
+    }
+};
+
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
+	beforeEach(inject(function ($controller, $rootScope, $modal) {
 	scope = $rootScope.$new();
 		informationOkCtrl = $controller('informationOkCtrl', {
 		  $scope: scope
 		});
+
+  spyOn($modal, 'open').andReturn(fakeModal);
 	}));
 
   it('should have open function service in the controller informationOkCtrl', function() {
-  	expect(scope.open).toBeDefined();
-  	// cas passant et non passant à faire
+    expect(scope.selected).toBeUndefined();
+    scope.open(); // Open the modal
+    // scope.modalInstance.close("OK"); //Call close (simulating clicking the ok button on the modal)
+    // expect(scope.selected).toBe(true);
   });
 });
 /****************************************************************************************************/
@@ -699,14 +747,28 @@ describe('Controller: treeCtrl', function () {
   beforeEach(module('websoApp'));
 
   var treeCtrl,
-  scope;
+  scope,
+  httpBackendDelete,
+  httpBackendAdd,
+  mock_data;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
+	beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
 	scope = $rootScope.$new();
 		treeCtrl = $controller('treeCtrl', {
 		  $scope: scope
 		});
+
+    mock_data = {"nodes": 
+                        [{  node_test : "test"
+                        }]
+                };
+
+    httpBackendDelete = $httpBackend;            
+    httpBackendAdd = $httpBackend;
+
+    httpBackendDelete.when(scope.add).respond(mock_data);
+    httpBackendAdd.when(scope.delete).respond(mock_data);
 	}));
 
   it('should have delete function service in the controller treeCtrl', function() {
@@ -717,6 +779,18 @@ describe('Controller: treeCtrl', function () {
   	expect(scope.add).toBeDefined();
   	// cas passant et non passant à faire
   });
+  it('should have a working delete function service in the controller treeCtrl', function() {
+    expect(mock_data.nodes[0].node_test).toBeDefined();
+    scope.delete(mock_data);
+    expect(mock_data.nodes[0]).toBeUndefined();
+  });
+  it('should have a working add function service in the controller treeCtrl', function() {
+    expect(mock_data.nodes[0].node_test).toBeDefined();
+    expect(mock_data.nodes[1]).toBeUndefined();
+    scope.add(mock_data);
+    expect(mock_data.nodes[1].name).toBeDefined();
+    expect(mock_data.nodes[1].nodes).toBeDefined();
+  });
 });
 /****************************************************************************************************/
 describe('Controller: AccordionDemoCtrl', function () {
@@ -725,19 +799,34 @@ describe('Controller: AccordionDemoCtrl', function () {
   beforeEach(module('websoApp'));
 
   var AccordionDemoCtrl,
-  scope;
+  scope,
+  httpBackendItems,
+  mock_data;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
+	beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
 	scope = $rootScope.$new();
 		AccordionDemoCtrl = $controller('AccordionDemoCtrl', {
 		  $scope: scope
 		});
+
+    httpBackendItems = $httpBackend;
+    mock_data = {"items": 
+                        [{  item_test : "item"
+                        }]
+                };
+
+    httpBackendItems.when(scope.addItem).respond(mock_data);
+
 	}));
 
   it('should have addItem function service in the controller AccordionDemoCtrl', function() {
   	expect(scope.addItem).toBeDefined();
-  	// cas passant et non passant à faire
+  });
+
+  it('should have a working addItem function service in the controller AccordionDemoCtrl', function() {
+    // cas passant et non passant à faire
+    // scope.addItem();
   });
 });
 /****************************************************************************************************/
@@ -820,17 +909,26 @@ describe('Controller: getValidatedDataCtrl', function () {
   beforeEach(module('websoApp'));
 
   var getValidatedDataCtrl,
-  scope;
+  scope,
+  httpBackendJson,
+  mock_data;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope) {
+	beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
 	scope = $rootScope.$new();
 		getValidatedDataCtrl = $controller('getValidatedDataCtrl', {
 		  $scope: scope
 		});
-	}));
+  	httpBackendJson = $httpBackend;
+    mock_data = "data";
+    httpBackendJson.when('GET','/data/example.json').respond(mock_data);
+  }));
 
-  	// cas passant et non passant à faire
+  it('should have a working add function service in the controller treeCtrl', function() {
+    // cas passant et non passant à faire
+    // expect(scope.pages).toBe(mock_data);
+  });
+  	
 });
 /****************************************************************************************************/
 describe('Controller: menuCtrl', function () {
@@ -948,8 +1046,10 @@ describe('Controller: ngCkeditor', function () {
 		  $scope: scope
 		});
 	}));
-
-  	// cas passant et non passant à faire
+  it('should have a working function service in the controller ngCkeditor', function() {
+    expect(scope.editorOptions.language).toBe('ru');
+    expect(scope.editorOptions.uiColor).toBe('#000000');
+  });
 });
 /****************************************************************************************************/
 describe('Controller: SourceListCtrl', function () {
@@ -1003,3 +1103,57 @@ describe('Controller: SourceListCtrl', function () {
   });
 });
 /****************************************************************************************************/
+describe('Controller: WatchListCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var WatchListCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    WatchListCtrl = $controller('WatchListCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have correct initialisations in the controller WatchListCtrl', function() {
+    expect(scope.watchList).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.totalServerItems).toBeDefined();
+    expect(scope.setPagingData).toBeDefined();
+    expect(scope.getPagedDataAsync).toBeDefined();
+  });
+
+  it('should have a working watch function in controller WatchListCtrl', function() {
+  });
+ }); 
+/****************************************************************************************************/
+describe('Controller: ValidationListCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var ValidationListCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    ValidationListCtrl = $controller('ValidationListCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have correct initialisations in the controller ValidationListCtrl', function() {
+    expect(scope.validationList).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.totalServerItems).toBeDefined();
+    expect(scope.getPagedDataAsync).toBeDefined();
+    expect(scope.gridOptionsSource).toBeDefined();
+  });
+});
+/****************************************************************************************************/
+
