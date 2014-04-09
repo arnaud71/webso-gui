@@ -203,7 +203,6 @@ describe('Controller: AddSourceCtrl', function () {
     expect(scope.inputRefresh).toBeDefined();
     expect(scope.inputLevel).toBeDefined();
     expect(scope.inputUser).toBeDefined(); 
-
   	scope.doAdd();
   	expect(scope.sourceAddResult).toBeDefined();
   });
@@ -269,7 +268,8 @@ describe('Controller: SourceDataCtrl', function(){
 
   beforeEach(module("websoApp"));
 
-  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $resource, $httpBackend) {
     httpBackendDoSearch = $httpBackend;
     httpBackendDoDelete = $httpBackend;
     
@@ -286,6 +286,11 @@ describe('Controller: SourceDataCtrl', function(){
     httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
     httpBackendDoDelete.whenJSONP(url_2).respond(mock_data);
   }));
+
+  afterEach(function() {
+    httpBackendDoSearch.verifyNoOutstandingExpectation();
+    httpBackendDoSearch.verifyNoOutstandingRequest();
+  });
 
   it('should set sourceResult on successful doSearch', function() {
     scope.doSearch();
@@ -461,31 +466,34 @@ describe('Controller: BarletCtrl', function () {
   beforeEach(module('websoApp'));
 
   var BarletCtrl,
-  scope;
+  scope,
+  routeParams;
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope, $routeParams) {
 	scope = $rootScope.$new();
+	routeParams = {};
 		BarletCtrl = $controller('BarletCtrl', {
 		  $scope: scope,
-		});
+		  $routeParams : routeParams
+		});	
 	}));
 
-  it('should have correct initialisations in the controller BarletCtrl', function() {
-    expect(scope.textArg).toBeDefined();
-    expect(scope.inputUrl).toBeDefined();
-    expect(scope.searchTerm).toBeDefined();
-  });
+	it('should have correct initialisations in the controller BarletCtrl', function() {
+		expect(scope.textArg).toBeDefined();
+		expect(scope.inputUrl).toBeDefined();
+		expect(scope.searchTerm).toBeDefined();
+	});
 
-	it('should enter in "id_url" condition if it specified as true', inject(function($controller) {
+	it('should enter in "id_url" condition if it specified', inject(function($routeParams) {
 	// a faire ...	
 	}));
 
-	it('should enter in "id_text" condition if it specified as true', inject(function($controller) {
+	it('should enter in "id_text" condition if it specified', inject(function($controller) {
 	// a faire ...	
 	}));
 
-	it('should enter in "id_selection" condition if it specified as true', inject(function($controller) {
+	it('should enter in "id_selection" condition if it specified', inject(function($controller) {
 	// a faire ...	
 	}));
 });
@@ -541,11 +549,16 @@ describe('Controller: DatepickerCtrl', function () {
   beforeEach(module('websoApp'));
 
   var DatepickerCtrl,
-  scope;
+  scope, timeout, timeoutFun;
 
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope, $timeout) {
 	scope = $rootScope.$new();
+	timeout = $timeout;
+	timeoutFun = {
+  		$timeout: function() {}
+	};
+
 		DatepickerCtrl = $controller('DatepickerCtrl', {
 		  $scope: scope
 		});
@@ -590,11 +603,21 @@ describe('Controller: DatepickerCtrl', function () {
   });
 
   it('should have a working disabled function service in the controller DatepickerCtrl', function() {
-  	var date_1 = 3;
+  	var date_1 = new Date('1980-01-06');
+  	var mode_1 = 'day';
+  	expect(scope.disabled(date_1, mode_1)).toBe(true);
+  });
+
+  it('should have a working disabled function service in the controller DatepickerCtrl', function() {
+  	var date_1 = new Date('1980-01-02');
+  	var mode_1 = 'day';
+  	expect(scope.disabled(date_1, mode_1)).toBe(false);
+  });
+
+  it('should have a working disabled function service in the controller DatepickerCtrl', function() {
+  	var date_1 = new Date();
   	var mode_1 = 'week';
   	expect(scope.disabled(date_1, mode_1)).toBe(false);
-
-  	// cas non passant à faire
   });
 
   it('should have toggleMin function service in the controller DatepickerCtrl', function() {
@@ -604,8 +627,6 @@ describe('Controller: DatepickerCtrl', function () {
   it('should have a working toggleMin function service in the controller DatepickerCtrl', function() {
   	scope.toggleMin();
   	expect(scope.minDate).toBeDefined();
-
-  	// cas passant et non passant à faire
   });
 
   it('should have open function service in the controller DatepickerCtrl', function() {
@@ -614,8 +635,7 @@ describe('Controller: DatepickerCtrl', function () {
 
   it('should have a working open function service in the controller DatepickerCtrl', function() {
   	scope.open();
-    // expect(scope.opened).toBe(true);
-  	// cas passant et non passant à faire
+	timeout.flush();
   });
 });
 /****************************************************************************************************/
@@ -677,23 +697,32 @@ describe('Controller: UnderconstructionCtrl', function () {
     }
 };
 
-	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope, $modal) {
+beforeEach(inject(function($modal) {
+    spyOn($modal, 'open').andReturn(fakeModal);
+}));
+
+
+// Initialize the controller and a mock scope
+beforeEach(inject(function ($controller, $rootScope, _$modal_) {
   scope = $rootScope.$new();
+  UnderconstructionCtrl = $controller('UnderconstructionCtrl', {
+    $scope: scope,
+    $modal: _$modal_
+  });
+}));
 
-		UnderconstructionCtrl = $controller('UnderconstructionCtrl', {
-		  $scope: scope
-		});
-
-  spyOn($modal, 'open').andReturn(fakeModal);
-    
-	}));
-
-  it('should have open function service in the controller UnderconstructionCtrl', function() {
+  it('should have working confirm callBack button in modal service in the controller informationOkCtrl', function() {
     expect(scope.selected).toBeUndefined();
     scope.open(); // Open the modal
-    // scope.modalInstance.close("OK"); //Call close (simulating clicking the ok button on the modal)
-    // expect(scope.selected).toBe(true);
+    fakeModal.close("selectedItem"); //Call confirm (simulating clicking the ok button on the modal)
+    expect(scope.selected).toBe('selectedItem');
+  });
+
+  it('should have working cancel callBack button in modal service in the controller informationOkCtrl', function() {
+    expect(scope.selected).toBeUndefined();
+    scope.open(); // Open the modal
+    fakeModal.dismiss("selectedItem"); //Call cancel (simulating clicking the cancel button on the modal)
+    expect(scope.selected).toBeUndefined();
   });
 });
 /****************************************************************************************************/
@@ -723,21 +752,32 @@ describe('Controller: informationOkCtrl', function () {
     }
 };
 
-	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope, $modal) {
-	scope = $rootScope.$new();
-		informationOkCtrl = $controller('informationOkCtrl', {
-		  $scope: scope
-		});
-
-  spyOn($modal, 'open').andReturn(fakeModal);
+	beforeEach(inject(function($modal) {
+	    spyOn($modal, 'open').andReturn(fakeModal);
 	}));
 
-  it('should have open function service in the controller informationOkCtrl', function() {
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope, _$modal_) {
+	  scope = $rootScope.$new();
+	  informationOkCtrl = $controller('informationOkCtrl', {
+	    $scope: scope,
+	    $modal: _$modal_
+	  });
+	}));
+
+  it('should have working confirm callBack button in modal service in the controller informationOkCtrl', function() {
     expect(scope.selected).toBeUndefined();
     scope.open(); // Open the modal
-    // scope.modalInstance.close("OK"); //Call close (simulating clicking the ok button on the modal)
-    // expect(scope.selected).toBe(true);
+    fakeModal.close("selectedItem"); //Call confirm (simulating clicking the ok button on the modal)
+    expect(scope.selected).toBe('selectedItem');
+  });
+
+  it('should have working cancel callBack button in modal service in the controller informationOkCtrl', function() {
+    expect(scope.selected).toBeUndefined();
+    scope.open(); // Open the modal
+    fakeModal.dismiss("selectedItem"); //Call cancel (simulating clicking the cancel button on the modal)
+    expect(scope.selected).toBeUndefined();
   });
 });
 /****************************************************************************************************/
@@ -1154,6 +1194,29 @@ describe('Controller: ValidationListCtrl', function () {
     expect(scope.getPagedDataAsync).toBeDefined();
     expect(scope.gridOptionsSource).toBeDefined();
   });
+  it('should have a working setPagingData function in the controller ValidationListCtrl', function() {
+  });
 });
 /****************************************************************************************************/
 
+describe('Controller: CollapseSolrCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var CollapseSolrCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    CollapseSolrCtrl = $controller('CollapseSolrCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have a working CollapseSolrCtrl in the controller ValidationListCtrl', function() {
+  	expect(scope.isCollapsed).toBe(true);
+  });
+});
+/****************************************************************************************************/
