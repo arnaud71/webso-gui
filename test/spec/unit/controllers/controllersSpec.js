@@ -208,7 +208,6 @@ describe('Controller: AddSourceCtrl', function () {
   });
 });
 /****************************************************************************************************/
-
 describe('Controller: SourceDataCtrl', function () {
 
   // load the controller's module
@@ -472,7 +471,13 @@ describe('Controller: BarletCtrl', function () {
 	// Initialize the controller and a mock scope
 	beforeEach(inject(function ($controller, $rootScope, $routeParams) {
 	scope = $rootScope.$new();
-	routeParams = {};
+
+	var $url = encodeURI ("url");
+	var $text = encodeURI ("text");
+	var $selection = encodeURI ("selection");
+
+	routeParams = {id_url : $url, id_text : $text, id_selection : $selection};
+
 		BarletCtrl = $controller('BarletCtrl', {
 		  $scope: scope,
 		  $routeParams : routeParams
@@ -485,16 +490,80 @@ describe('Controller: BarletCtrl', function () {
 		expect(scope.searchTerm).toBeDefined();
 	});
 
-	it('should enter in "id_url" condition if it specified', inject(function($routeParams) {
-	// a faire ...	
+	it('should enter in "id_text" condition if it specified', inject(function($controller) {
+		expect(scope.textArg).toBe('selection');
+		expect(scope.searchTerm).toBe('text');
+		expect(scope.inputUrl).toBe('selection');
 	}));
+});
+/****************************************************************************************************/
+describe('Controller: BarletCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var BarletCtrl,
+  scope,
+  routeParams;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope, $routeParams) {
+	scope = $rootScope.$new();
+
+	var $url = encodeURI ("url");
+
+	routeParams = {id_url : $url};
+
+		BarletCtrl = $controller('BarletCtrl', {
+		  $scope: scope,
+		  $routeParams : routeParams
+		});	
+	}));
+
+	it('should have correct initialisations in the controller BarletCtrl', function() {
+		expect(scope.textArg).toBeDefined();
+		expect(scope.inputUrl).toBeDefined();
+		expect(scope.searchTerm).toBeDefined();
+	});
 
 	it('should enter in "id_text" condition if it specified', inject(function($controller) {
-	// a faire ...	
+		expect(scope.textArg).toBe('url');
+		expect(scope.inputUrl).toBe('url');
+	}));
+});
+/****************************************************************************************************/
+describe('Controller: BarletCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var BarletCtrl,
+  scope,
+  routeParams;
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope, $routeParams) {
+	scope = $rootScope.$new();
+
+	var $text = encodeURI ("text");
+
+	routeParams = {id_text : $text};
+
+		BarletCtrl = $controller('BarletCtrl', {
+		  $scope: scope,
+		  $routeParams : routeParams
+		});	
 	}));
 
-	it('should enter in "id_selection" condition if it specified', inject(function($controller) {
-	// a faire ...	
+	it('should have correct initialisations in the controller BarletCtrl', function() {
+		expect(scope.textArg).toBeDefined();
+		expect(scope.inputUrl).toBeDefined();
+		expect(scope.searchTerm).toBeDefined();
+	});
+
+	it('should enter in "id_text" condition if it specified', inject(function($controller) {
+		expect(scope.textArg).toBe('text');
+		expect(scope.searchTerm).toBe('text');
 	}));
 });
 /****************************************************************************************************/
