@@ -34,7 +34,7 @@
                                             <div collapse="isCollapsed">
                                                 <span ng-click="isCollapsed = !isCollapsed">
                                                 <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
-                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                                                    <span ng-if="solrResult.highlighting[doc.id].content[0]" ng-bind-html="solrResult.highlighting[doc.id].content[0]+'...'"></span>
 
                                                     <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
                                                     <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
