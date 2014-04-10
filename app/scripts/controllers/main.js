@@ -41,7 +41,9 @@ angular.module('websoApp')
     $scope.searchTerm ="";
 
     if ($routeParams.id_url) {
-      $scope.textArg = unescape(atob(decodeURIComponent($routeParams.id_url)));
+      var str = decodeURIComponent($routeParams.id_url);
+      var enc = window.btoa(str);
+      $scope.textArg = unescape(atob(enc));
       $scope.inputUrl = $scope.textArg;
     }
 
@@ -51,7 +53,9 @@ angular.module('websoApp')
     }
 
     if ($routeParams.id_selection) {
-      $scope.textArg = unescape(atob(decodeURIComponent($routeParams.id_selection)));
+      var str = decodeURIComponent($routeParams.id_selection);
+      var enc = window.btoa(str);
+      $scope.textArg = unescape(atob(enc));
       $scope.inputUrl = $scope.textArg;
     }
   });
