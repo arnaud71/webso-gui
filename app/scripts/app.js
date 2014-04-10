@@ -16,11 +16,9 @@ angular.module('websoApp')
             templateUrl: 'views/main.html'
 
         })
-        .when('/search', {
-            templateUrl: 'views/main.html',  // main.html --> dans solr // search.html --> dans google feed
-            controller: 'SolrCtrl'
 
-        })
+
+        // VALIDATE
         .when('/validate/add', {
             templateUrl: 'views/information/validate.html' ,
             controller : 'AddInformationCtrl'
@@ -29,28 +27,38 @@ angular.module('websoApp')
             templateUrl: 'views/information/validationList.html' ,
             controller: 'ValidationListCtrl'
         })
+
+
+        // WATCH
         .when('/watch/add', {
             templateUrl: 'views/watch/watchAdd.html',
             controller:'AddWatchCtrl'
         })
-        .when('/watch/sourceslist', {
-            templateUrl: 'views/source/list.html'
+        .when('/watch/list', {
+          templateUrl: 'views/watch/watchList.html',
+          controller:'WatchListCtrl'
         })
 
-        .when('/source/sourcesList', {
+        // SOURCE
+        .when('/source/list', {
           templateUrl: 'views/source/sourceList.html'
         })
 
-        .when('/watch/watchList', {
-            templateUrl: 'views/watch/watchList.html',
-            controller:'WatchListCtrl'
+        .when('/source/add', {
+          templateUrl: 'views/source/sourceAdd.html' ,
+          controller:'AddSourceCtrl'
+
         })
+
+        // PUBLISH
         .when('/publish/newsletter', {
             templateUrl: 'views/report/createNL.html'
         })
         .when('/publish/report', {
             templateUrl: 'views/report/createReport.html'
         })
+
+        // ORGANIZE
         .when('/organize/survfolder', {
             templateUrl: 'views/organise.html'
 
@@ -75,7 +83,7 @@ angular.module('websoApp')
             templateUrl: 'views/sources/list.html'
 
         })
-         .when('/organize/vfolder', {
+        .when('/organize/vfolder', {
             templateUrl: 'views/report/reportList.html'
 
         })
@@ -84,21 +92,34 @@ angular.module('websoApp')
             templateUrl: 'views/signin.html'
 
         })
-        .when('/search/rss', {
-            templateUrl: 'views/source/searchNew.html'
 
-        })
+        // SETTINGS
         .when('/settings/booklet', {
           templateUrl: 'views/settings.html'
 
         })
+
+        // SEARCH
+
         .when('/search/source', {
-          templateUrl: 'views/source/sourceList.html'
+          templateUrl: 'views/source/sourceList.html',
+          controller: 'AddSourceCtrl'
+        })
+
+        .when('/search/rss', {
+          templateUrl: 'views/source/searchNew.html',
+          controller: 'GoogleFeedCtrl'
+        })
+
+        .when('/search/webso', {
+          templateUrl: 'views/search/webso.html',
+          controller: 'SolrCtrl'
 
         })
-        /*
-          Booklet
-         */
+
+      /*
+        Booklet
+       */
 
         .when('/url/:id_url', {
             templateUrl: 'views/source/sourceAdd.html',
@@ -115,30 +136,11 @@ angular.module('websoApp')
         })
 
 
-        /*
-        Duplicates ? to check
-         */
-        .when('/source/searchNew', {
-            templateUrl: 'views/source/searchNew.html',
-            controller: 'GoogleFeedCtrl'
 
-        })
-        .when('/source/list', {
-            templateUrl: 'views/source/list.html',
-            controller: 'SourceDataCtrl'
 
-        })
-        .when('/source/sourceAdd', {
-            templateUrl: 'views/source/sourceAdd.html' ,
-            controller:'AddSourceCtrl'
 
-        })
 
-      .when('/search/webso', {
-        templateUrl: 'views/search/webso.html',
-        controller: 'SolrCtrl'
 
-      })
 
         .otherwise({
         redirectTo: '/'

@@ -33,8 +33,8 @@ angular.module('websoApp')
                 tags_s :        $scope.inputTags,
                 domain_s:       $scope.domain.name,
                 activity_s:     $scope.activity.name,
-                frequency_s:    $scope.frequency.option,
-                folder_name_s:  $scope.folder.name,
+                refresh_s:      $scope.frequency.option,
+                folder_s:       $scope.folder.name,
                 query_s:        $scope.inputQuery,
                 notification_s: $scope.notification.option
 
