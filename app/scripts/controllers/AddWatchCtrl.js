@@ -30,10 +30,9 @@ angular.module('websoApp')
             $scope.watchAddResult = $scope.watchAdd.get({
                 url_s  :        $scope.inputUrl,
                 title_t:        $scope.inputTitle,
-                tags_s :        $scope.inputTags,
+                tags_ss :       $scope.inputTags,
                 domain_s:       $scope.domain.name,
                 activity_s:     $scope.activity.name,
-                refresh_s:      $scope.frequency.option,
                 folder_s:       $scope.folder.name,
                 query_s:        $scope.inputQuery,
                 notification_s: $scope.notification.option
@@ -45,7 +44,7 @@ angular.module('websoApp')
                 title_t:        $scope.inputTitle,
                 domain_s:       $scope.domain.name,
                 activity_s:     $scope.activity.name,
-                creation_d:     $scope.inputCreationDate
+                refresh_s:      $scope.frequency.option
 
             });
 
@@ -86,12 +85,13 @@ angular.module('websoApp')
          Frequency menu
          */
         $scope.frequencies =  [
-            {option:'1 jour'},
-            {option:'1 semaine'},
-            {option:'1 mois'}
+            {option:'1h'},
+            {option:'12h'},
+            {option:'24h'},
+            {option:'48h'}
 
         ] ;
-        $scope.frequency = $scope.frequencies[0];
+        $scope.frequency = $scope.frequencies[1];
 
          /*
          Notifications menu

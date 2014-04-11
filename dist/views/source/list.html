@@ -1,80 +1,11 @@
-<div id="list-search">
-    <ol class="breadcrumb text-center">
-        <li><a href="#/home">Webso</a></li>
-        <li><a href="#">Surveiller</a></li>
-        <li class="active">Afficher les sources</li>
-    </ol>
-    <div ng-controller="SourceDataCtrl">
-        <div class="container">
-            <div calss="row">
-                <div class="col-md-2">
-
-                </div>
-                <div class="col-md-10">
-                    <div class="gridStyleSource" ng-grid="gridOptionsSource">
-
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <!--Sidebar content-->
-                </div>
-                <div class="col-md-10">
-                    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-
-                    <pre>Nombre de sources trouvées: {{sourceResult.success.response.numFound}}</pre>
-                    <pre>Page no: {{currentPage}}</pre>
-                    <table class="table table-bordered table-striped">
-
-                        <tr>
-                            <th>Source</th>
-                            <th>Nom</th>
-                            <th>Type</th>
-                            <th>Niveau de Partage</th>
-                            <th>Tag</th>
-                            <th>Domaine</th>
-                            <th>Auteur</th>
-                            <th>Surveillance</th>
-                            <th>Gérer</th>
-                            <!--
+<div id="list-search"><ol class="breadcrumb text-center"><li><a href="#/home">Webso</a></li><li><a href="#">Surveiller</a></li><li class="active">Afficher les sources</li></ol><div ng-controller="SourceDataCtrl"><div class="container"><div calss="row"><div class="col-md-2"></div><div class="col-md-10"><div class="gridStyleSource" ng-grid="gridOptionsSource"></div></div></div><div class="row"><div class="col-md-2"><!--Sidebar content--></div><div class="col-md-10"><pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination><pre>Nombre de sources trouvées: {{sourceResult.success.response.numFound}}</pre><pre>Page no: {{currentPage}}</pre><table class="table table-bordered table-striped"><tr><th>Source<th>Nom<th>Type<th>Niveau de Partage<th>Tag<th>Domaine<th>Auteur<th>Surveillance<th>Gérer<!--
                             <th>URL</th>
                             <th>Langue</th>
 
-                            -->
-                        </tr>
-                        <tr ng-repeat="source in sourceResult.success.response.docs |filter: (currentPage*itemsPerPage)">
-                            <td><a href="{{source.url_s}}">{{source.url_s}}</a></td>
-                            <td>{{source.title_t}}</td>
-                            <td>{{source.source_type_s}}</td>
-                            <td>{{source.level_sharing_i}}</td>
-                            <td>{{source.tags_s}}</td>
-                            <td>{{source.domain_s}}</td>
-                            <td>{{source.user_s}}</td>
-                            <td>{{source.IsWatched_b}}</td>
-                            <td>
-                                <button type="button" class="btn btn-xs" ng-click="doDelete(source.id,index)" name="delete">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                                <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)" name="testSource">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                            </td>
-                            <!--
+                            --><tr ng-repeat="source in sourceResult.success.response.docs |filter: (currentPage*itemsPerPage)"><td><a href="{{source.url_s}}">{{source.url_s}}</a><td>{{source.title_t}}<td>{{source.source_type_s}}<td>{{source.level_sharing_i}}<td>{{source.tags_s}}<td>{{source.domain_s}}<td>{{source.user_s}}<td>{{source.IsWatched_b}}<td><button type="button" class="btn btn-xs" ng-click="doDelete(source.id,index)" name="delete"><span class="glyphicon glyphicon-trash"></span></button> <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)" name="testSource"><span class="glyphicon glyphicon-pencil"></span></button><!--
                             filter:currentPage*itemsPerPage
                             |filter: currentPage*itemsPerPage
 
                             <td></td>
                             <td></td>
-                            -->
-                        </tr>
-                    </table>
-                    Nombre de sources trouvées: {{sourceResult.success.response.numFound}}
-                    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-                    <pre>Page: {{currentPage}} / {{numPages}}</pre>
-                    <pager total-items="totalItems" page="currentPage"></pager>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                            --></table>Nombre de sources trouvées: {{sourceResult.success.response.numFound}}<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination><pre>Page: {{currentPage}} / {{numPages}}</pre><pager total-items="totalItems" page="currentPage"></pager></div></div></div></div></div>

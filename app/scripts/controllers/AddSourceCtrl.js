@@ -6,12 +6,12 @@ angular.module('websoApp')
         /*
          Input fields - from sourceAdd
          */
-        $scope.inputUrl = 'http://www.apache.org';
-        $scope.inputTags = 'server';
-        $scope.inputTitle = 'Apache home page';
-        $scope.inputDomain = 'Domaine 1';
-        $scope.inputActivity = 'Activité 1';
-     //   $scope.inputCreationDate = Date.now();
+        $scope.inputUrl       = '';
+        $scope.inputTags      = '';
+        $scope.inputTitle     = '';
+        $scope.inputDomain    = 'Domaine 1';
+        $scope.inputActivity  = 'Activité 1';
+     //   $scope.inputCreationDate = Date.now();  NO NEED HERE, Done in webso-service
 
 
 
@@ -22,14 +22,13 @@ angular.module('websoApp')
 
         $scope.doAdd = function () {
             $scope.sourceAddResult = $scope.sourceAdd.get({
-                url_s  :     $scope.inputUrl,
-                tags_s :    $scope.inputTags,
-                title_t:    $scope.inputTitle,
-                domain_s: $scope.inputDomain,
-                activity_s: $scope.inputActivity,
-                creation_d: $scope.inputCreationDate
-
-
+                url_s  :          $scope.inputUrl,
+                tags_ss:          $scope.inputTags,
+                title_t:          $scope.inputTitle,
+                domain_s:         $scope.inputDomain,
+                refresh_s:        $scope.frequency.option
+              ,
+                activity_s:       $scope.inputActivity
 
             });
 
@@ -39,7 +38,14 @@ angular.module('websoApp')
 
 
 
+        $scope.frequencies =  [
+          {option:'1h'},
+          {option:'12h'},
+          {option:'24h'},
+          {option:'48h'}
 
+        ] ;
+        $scope.frequency = $scope.frequencies[1];
 
 
     });
