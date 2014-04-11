@@ -49,6 +49,8 @@ Run the tests
 
 	2.1 Before you begin start and run, please install this module with NPM, if this is not done : 
 
+		npm install grunt-karma
+
 		npm install karma-coverage
 
 		npm install ng-midway-tester
