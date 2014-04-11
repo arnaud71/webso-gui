@@ -1,22 +1,28 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddSourceCtrl', function ($scope,$resource,cfg) {
+    .controller('AddSourceCtrl', function ($scope,$resource,cfg, $modal,$log) {
+
+        /*
+        Globals
+         */
+        $scope.resultAdd = '';
+
 
         /*
          Input fields - from sourceAdd
          */
-        $scope.inputUrl = 'http://www.apache.org';
-        $scope.inputTags = 'server';
-        $scope.inputTitle = 'Apache home page';
-        $scope.inputDomain = 'Domaine 1';
-        $scope.inputActivity = 'Activité 1';
+        $scope.inputUrl = '';
+        $scope.inputTags = '';
+        $scope.inputTitle = '';
+        $scope.inputDomain = '';
+        $scope.inputActivity = '';
      //   $scope.inputCreationDate = Date.now();
 
 
 
         $scope.sourceAdd = $resource(cfg.urlServices+':action',
-            {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'true',callback:"JSON_CALLBACK"},
+            {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 
@@ -28,19 +34,31 @@ angular.module('websoApp')
                 domain_s: $scope.inputDomain,
                 activity_s: $scope.inputActivity,
                 creation_d: $scope.inputCreationDate
-
-
-
             });
 
-            var addWatch = alert('Source ajoutée');
+           // var addWatch = alert('Source ajoutée');
 
+            // Testing  Modal trigger
+            var modalInstance = $modal.open({
+                templateUrl: 'addSourceModal.html',
+                controller: ModalInstanceCtrl
+            });
         };
 
 
 
+        //  modal instance
 
+        var ModalInstanceCtrl = function ($scope, $modalInstance) {
 
+            $scope.ok = function () {
+                $modalInstance.close();//($scope.selected.item);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        };
 
     });
 

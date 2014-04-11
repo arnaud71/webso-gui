@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddWatchCtrl', function ($scope,$resource,cfg) {
+    .controller('AddWatchCtrl', function ($scope,$resource,cfg,$modal) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
@@ -50,8 +50,27 @@ angular.module('websoApp')
 
             });
 
-            var addWatch = alert('Surveillance ajoutée');
+           // var addWatch = alert('Surveillance ajoutée');
+            // Testing  Modal trigger
+            var modalInstance = $modal.open({
+                templateUrl: 'addWatchModal.html',
+                controller: ModalInstanceCtrl
+            });
 
+        };
+
+
+        //  modal instance
+
+        var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+            $scope.ok = function () {
+                $modalInstance.close();//($scope.selected.item);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         };
 
         /*
