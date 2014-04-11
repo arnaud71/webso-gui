@@ -28,25 +28,24 @@ angular.module('websoApp')
 
         $scope.doAdd = function () {
             $scope.watchAddResult = $scope.watchAdd.get({
-                url_s  :     $scope.inputUrl,
-                title_t: $scope.inputTitle,
-                tags_s :    $scope.inputTags,
-                domain_s: $scope.domain.name,
-                activity_s: $scope.activity.name,
-                frequency_s: $scope.frequency.option,
-                folder_name_s: $scope.folder.name,
-                notification_s:$scope.notification.option
+                url_s  :        $scope.inputUrl,
+                title_t:        $scope.inputTitle,
+                tags_s :        $scope.inputTags,
+                domain_s:       $scope.domain.name,
+                activity_s:     $scope.activity.name,
+                refresh_s:      $scope.frequency.option,
+                folder_s:       $scope.folder.name,
+                query_s:        $scope.inputQuery,
+                notification_s: $scope.notification.option
 
             });
             $scope.sourceAddResult = $scope.sourceAdd.get({
-                url_s  :     $scope.inputUrl,
-                tags_s :    $scope.inputTags,
-                title_t:    $scope.inputTitle,
-                domain_s: $scope.domain.name,
-                activity_s: $scope.activity.name,
-                creation_d: $scope.inputCreationDate
-
-
+                url_s  :        $scope.inputUrl,
+                tags_s :        $scope.inputTags,
+                title_t:        $scope.inputTitle,
+                domain_s:       $scope.domain.name,
+                activity_s:     $scope.activity.name,
+                creation_d:     $scope.inputCreationDate
 
             });
 

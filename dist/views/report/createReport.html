@@ -26,7 +26,7 @@
             <div class="control-group" ng-controller="UnderconstructionCtrl">
                 <label class="control-label"> Sélection - Dossiers de validation </label>
                 <div class="controls">
-                    <button type="btn" ng-click="open()"> <i class="icon-plus"> </i></button>
+                    <button type="btn" ng-click="open()" name="openFolders"> <i class="icon-plus"> </i></button>
                 </div>
                 <script type="text/ng-template" id="underconstruction.html">
                     <div class="modal-header">
@@ -36,7 +36,7 @@
                       Coming soon ...
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-warning" ng-click="close()">Fermer</button>
+                        <button class="btn btn-warning" ng-click="close()" name="close">Fermer</button>
                     </div>
                 </script>
             </div>
@@ -44,7 +44,7 @@
         </form>
 
 
-        <button ng-click="doAdd()">Créer rapport</button>
+        <button ng-click="doAdd()" name="createReport">Créer rapport</button>
 
     </div>
 </div>
