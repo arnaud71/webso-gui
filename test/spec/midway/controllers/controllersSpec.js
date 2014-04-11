@@ -37,17 +37,6 @@ describe("Midway: Testing Controllers", function() {
 	expect(template).toMatch(/views\/main.html/);
   });
 
-  it('should load the SolrCtrl controller and templateUrl properly when /search route is accessed', function(done) {
-    tester.visit('/search');
-	expect(tester.path()).toBe('/search');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('SolrCtrl');
-	expect(template).toMatch(/views\/main.html/);	
-  });
-
   it('should load the templateUrl properly when /validate/add route is accessed', function(done) {
     tester.visit('/validate/add');
 	expect(tester.path()).toBe('/validate/add');
@@ -55,6 +44,7 @@ describe("Midway: Testing Controllers", function() {
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
+	expect(controller).toBe('AddInformationCtrl');
 	expect(template).toMatch(/views\/information\/validate.html/);		
   });
 
@@ -65,6 +55,7 @@ describe("Midway: Testing Controllers", function() {
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
+	expect(controller).toBe('ValidationListCtrl');
 	expect(template).toMatch(/views\/information\/validationList.html/);
   });
 
@@ -75,22 +66,25 @@ describe("Midway: Testing Controllers", function() {
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
+	expect(controller).toBe('AddWatchCtrl');
 	expect(template).toMatch(/views\/watch\/watchAdd.html/);	
   });
 
- it('should load the templateUrl properly when /watch/sourceslist route is accessed', function(done) {
-    tester.visit('/watch/sourceslist');
-	expect(tester.path()).toBe('/watch/sourceslist');
+  it('should load the templateUrl properly when /watch/list route is accessed', function(done) {
+    tester.visit('/watch/list');
+	expect(tester.path()).toBe('/watch/list');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
-	expect(template).toMatch(/views\/source\/list.html/);	
+	expect(controller).toBe('WatchListCtrl');
+	expect(template).toMatch(/views\/watch\/watchList.html/);	
   });
 
- it('should load the templateUrl properly when /source/sourcesList route is accessed', function(done) {
-    tester.visit('/source/sourcesList');
-	expect(tester.path()).toBe('/source/sourcesList');
+
+  it('should load the templateUrl properly when /source/list route is accessed', function(done) {
+    tester.visit('/source/list');
+	expect(tester.path()).toBe('/source/list');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
@@ -98,14 +92,15 @@ describe("Midway: Testing Controllers", function() {
 	expect(template).toMatch(/views\/source\/sourceList.html/);	
   });
 
- it('should load the templateUrl properly when /watch/watchList route is accessed', function(done) {
-    tester.visit('/watch/watchList');
-	expect(tester.path()).toBe('/watch/watchList');
+  it('should load the templateUrl properly when /source/add route is accessed', function(done) {
+    tester.visit('/source/add');
+	expect(tester.path()).toBe('/source/add');
 	var current = tester.inject('$route').current;
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
-	expect(template).toMatch(/views\/watch\/watchList.html/);	
+	expect(controller).toBe('AddSourceCtrl');
+	expect(template).toMatch(/views\/source\/sourceAdd.html/);	
   });
 
   it('should load the templateUrl properly when /publish/newsletter route is accessed', function(done) {
@@ -208,16 +203,6 @@ describe("Midway: Testing Controllers", function() {
 	expect(template).toMatch(/views\/signin.html/);	
   });
 
-  it('should load the templateUrl properly when /search/rss route is accessed', function(done) {
-    tester.visit('/search/rss');
-	expect(tester.path()).toBe('/search/rss');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/source\/searchNew.html/);	
-  });
-
   it('should load the templateUrl properly when /settings/booklet route is accessed', function(done) {
     tester.visit('/settings/booklet');
 	expect(tester.path()).toBe('/settings/booklet');
@@ -235,9 +220,31 @@ describe("Midway: Testing Controllers", function() {
 	var controller = current.controller;
 	var scope = current.scope;
 	var template = current.templateUrl;
+	expect(controller).toBe('AddSourceCtrl');
 	expect(template).toMatch(/views\/source\/sourceList.html/);	
   });
 
+  it('should load the templateUrl properly when /search/rss route is accessed', function(done) {
+    tester.visit('/search/rss');
+	expect(tester.path()).toBe('/search/rss');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(template).toMatch(/views\/source\/searchNew.html/);	
+  });
+
+  it('should load the SolrCtrl controller and templateUrl properly when /search/webso route is accessed', function(done) {
+    tester.visit('/search/webso');
+	expect(tester.path()).toBe('/search/webso');
+	var current = tester.inject('$route').current;
+	var controller = current.controller;
+	var scope = current.scope;
+	var template = current.templateUrl;
+	expect(controller).toBe('SolrCtrl');
+	expect(template).toMatch(/views\/search\/webso.html/);		
+  });
+  
   it('should load the AddSourceCtrl controller and templateUrl properly when /url/:id_url route is accessed', function(done) {
     tester.visit('/url/:id_url');
 	expect(tester.path()).toBe('/url/:id_url');
@@ -271,46 +278,4 @@ describe("Midway: Testing Controllers", function() {
 	expect(template).toMatch(/views\/information\/validate.html/);
   });
 
-  it('should load the GoogleFeedCtrl controller and templateUrl properly when /source/searchNew route is accessed', function(done) {
-    tester.visit('/source/searchNew');
-	expect(tester.path()).toBe('/source/searchNew');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('GoogleFeedCtrl');
-	expect(template).toMatch(/views\/source\/searchNew.html/);		
-  });
-
-  it('should load the SourceDataCtrl controller and templateUrl properly when /source/list route is accessed', function(done) {
-    tester.visit('/source/list');
-	expect(tester.path()).toBe('/source/list');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('SourceDataCtrl');
-	expect(template).toMatch(/views\/source\/list.html/);		
-  });
-
-  it('should load the templateUrl properly when /source/sourceAdd route is accessed', function(done) {
-    tester.visit('/source/sourceAdd');
-	expect(tester.path()).toBe('/source/sourceAdd');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/source\/sourceAdd.html/);		
-  });
-
-  it('should load the SolrCtrl controller and templateUrl properly when /search/webso route is accessed', function(done) {
-    tester.visit('/search/webso');
-	expect(tester.path()).toBe('/search/webso');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('SolrCtrl');
-	expect(template).toMatch(/views\/search\/webso.html/);		
-  });
 });
