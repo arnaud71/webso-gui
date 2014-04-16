@@ -10,10 +10,11 @@ angular.module('websoApp')
          */
         .when('/', {
             templateUrl: 'views/comingsoon.html',
-            controller: 'SolrCtrl'
+            controller:''
         })
         .when('/home', {
-            templateUrl: 'views/main.html'
+            templateUrl: 'views/main.html',
+            controller:''
 
         })
 
@@ -41,7 +42,8 @@ angular.module('websoApp')
 
         // SOURCE
         .when('/source/list', {
-          templateUrl: 'views/source/sourceList.html'
+          templateUrl: 'views/source/sourceList.html' ,
+            controller:''
         })
 
         .when('/source/add', {
@@ -52,50 +54,61 @@ angular.module('websoApp')
 
         // PUBLISH
         .when('/publish/newsletter', {
-            templateUrl: 'views/report/createNL.html'
+            templateUrl: 'views/report/createNL.html' ,
+            controller:''
         })
         .when('/publish/report', {
-            templateUrl: 'views/report/createReport.html'
+            templateUrl: 'views/report/createReport.html' ,
+            controller:''
         })
 
         // ORGANIZE
         .when('/organize/survfolder', {
-            templateUrl: 'views/organise.html'
+            templateUrl: 'views/organise.html',
+            controller:''
 
         })
         .when('/organize/sourcesfolder', {
-            templateUrl: 'views/organise.html'
+            templateUrl: 'views/organise.html' ,
+            controller:''
 
         })
         .when('/organize/templates', {
-            templateUrl: 'views/organise.html'
+            templateUrl: 'views/organise.html' ,
+            controller:''
 
         })
         .when('/organize/collect', {
-            templateUrl: 'views/organise.html'
+            templateUrl: 'views/organise.html' ,
+            controller:''
 
         })
         .when('/organize/profile', {
-            templateUrl: 'views/user/userAdd.html'
+            templateUrl: 'views/user/userAdd.html' ,
+            controller:''
 
         })
         .when('/organize/sources', {
-            templateUrl: 'views/sources/list.html'
+            templateUrl: 'views/sources/list.html'  ,
+            controller:''
 
         })
         .when('/organize/vfolder', {
-            templateUrl: 'views/report/reportList.html'
+            templateUrl: 'views/report/reportList.html' ,
+            controller:''
 
         })
 
         .when('/signin', {
-            templateUrl: 'views/signin.html'
+            templateUrl: 'views/signin.html'  ,
+            controller:''
 
         })
 
         // SETTINGS
         .when('/settings/booklet', {
-          templateUrl: 'views/settings.html'
+          templateUrl: 'views/settings.html' ,
+            controller:''
 
         })
 

@@ -6,4 +6,4 @@ angular.module('websoApp').constant('cfg', {
   //urlDB : 'http://albator.hesge.ch:8983/',
   //urlServices : 'http://albator.hesge.ch/cgi-bin/webso-services/db/'
 
-})
+}) ;

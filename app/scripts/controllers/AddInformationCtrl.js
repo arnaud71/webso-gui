@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddInformationCtrl', function ($scope,$resource,cfg) {
+    .controller('AddInformationCtrl', function ($scope,$resource,cfg, $modal) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
@@ -25,10 +25,27 @@ angular.module('websoApp')
                 details_s: $scope.inputDetails
 
             });
-            var addInfo = alert('Information ajoutée');
+         //   var addInfo = alert('Information ajoutée');
+
+            // Testing  Modal trigger
+            var modalInstance = $modal.open({
+                templateUrl: 'validateModal.html',
+                controller: ModalInstanceCtrl
+            });
         };
 
+        //  modal instance
 
+        var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+            $scope.ok = function () {
+                $modalInstance.close();//($scope.selected.item);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        };
 
     });
 

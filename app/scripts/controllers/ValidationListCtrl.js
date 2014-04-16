@@ -3,6 +3,7 @@
 angular.module('websoApp')
   .controller('ValidationListCtrl', function ($scope,$resource,cfg,$modal) {
 
+        $scope.mySelections = [];
 
         /*
         Getting validation doc
@@ -81,7 +82,8 @@ angular.module('websoApp')
     $scope.gridOptionsSource = {
       data: 'myData',
       enablePaging: true,
-      enableRowSelection : false,
+      enableRowSelection : true,
+      multiSelect: false,
       showFooter: true,
       totalServerItems: 'totalServerItems',
       pagingOptions: $scope.pagingOptions,
@@ -89,7 +91,13 @@ angular.module('websoApp')
       showFilter: true,
 
       //selectWithCheckboxOnly: 'true',
-      //selectedItems: $scope.mySelections,
+      selectedItems: $scope.mySelections,
+        afterSelectionChange: function () {
+            $scope.selectedIDs = [];
+            angular.forEach($scope.mySelections, function ( item ) {
+                $scope.selectedIDs.push( item.details_s ) ;
+            });
+        },
       columnDefs: [
         {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
         {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
