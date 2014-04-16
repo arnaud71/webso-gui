@@ -18,11 +18,15 @@ Install
 
         npm install
 
-3. And reload dependancies (such as angular ones)
+3. Install the module grunt-karma for the tests
+
+		npm install grunt-karma        
+
+4. And reload dependancies (such as angular ones)
 
         bower install
 
-4. Run the web server
+5. Run the web server
 
         grunt server
 
@@ -43,13 +47,17 @@ Run the tests
 
 0. Before you begin testing, please install this modules with NPM, if this is not done : 
 
-	npm install karma@0.12.1
+	npm install karma
 
 1. Run unit tests - midway test and generate the rate of code coverage
 
 	2.1 Before you begin start and run, please install this module with NPM, if this is not done : 
 
 		npm install grunt-karma
+
+		npm install karma-jasmine
+
+		npm install karma-chrome-launcher 
 
 		npm install karma-coverage
 
@@ -70,15 +78,15 @@ Run the tests
 		here in Append X section : https://github.com/angular/protractor
 
 	3.3 Start Chrome driver :
+
+		java -jar path_to_selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver="path_to_chromedriver"
 		
+	3.4 Start Selenium server :
+
 		chmod +x path_to_chromedriver
 		
 		./path_to_chromedriver
 
-	3.4 Start Selenium server :
-
-		java -jar path_to_selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver="path_to_chromedriver"
-
 	3.5 Run test :
 
-		protractor karma-e2e.conf.js
+		protractor protractor-e2e.conf.js

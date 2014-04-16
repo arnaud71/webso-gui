@@ -45,7 +45,7 @@ angular.module('websoApp')
       afterSelectionChange: function () {
         angular.forEach($scope.mySelectionsPeriod, function ( item ) {
           $scope.currentPeriod = item.period;
-          $scope.currentFq += ' '+item.fq;
+          $scope.currentFq = item.fq;
         });
       },
 
@@ -83,8 +83,8 @@ angular.module('websoApp')
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
         );
-        $scope.totalItems    = $scope.solrResult.response.numFound;
-        $scope.bigTotalItems = $scope.solrResult.response.numFound;
+        //$scope.totalItems    = $scope.solrResult.response.numFound;
+        //$scope.bigTotalItems = $scope.solrResult.response.numFound;
       //}
     };
 

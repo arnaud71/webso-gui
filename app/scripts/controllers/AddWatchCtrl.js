@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddWatchCtrl', function ($scope,$resource,cfg,$modal) {
+    .controller('AddWatchCtrl', function ($scope,$resource,cfg,$modal,$log) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
@@ -13,7 +13,7 @@ angular.module('websoApp')
         //$scope.inputActivity = 'Activité 1';
       //  $scope.inputFrequency = '1 semaine';
        // $scope.inputFolderName = 'Dossier de Surveillance 1';
-        $scope.inputCreationDate = Date.now();
+        //$scope.inputCreationDate = Date.now();
 
 
 
@@ -27,6 +27,22 @@ angular.module('websoApp')
 
 
         $scope.doAdd = function () {
+
+
+            $scope.sourceAddResult = $scope.sourceAdd.get({
+              url_s  :        $scope.inputUrl,
+              tags_s :        $scope.inputTags,
+              title_t:        $scope.inputTitle,
+              //domain_s:       $scope.domain.name,
+              //activity_s:     $scope.activity.name,
+              refresh_s:      $scope.frequency.option
+
+            },function () {
+             $log.log('coucou 2');
+            });
+
+
+
             $scope.watchAddResult = $scope.watchAdd.get({
                 url_s  :        $scope.inputUrl,
                 title_t:        $scope.inputTitle,
@@ -35,18 +51,11 @@ angular.module('websoApp')
                 activity_s:     $scope.activity.name,
                 folder_s:       $scope.folder.name,
                 query_s:        $scope.inputQuery,
+                source_id_s:    $scope.sourceAddResult.id,
                 notification_s: $scope.notification.option
 
             });
-            $scope.sourceAddResult = $scope.sourceAdd.get({
-                url_s  :        $scope.inputUrl,
-                tags_s :        $scope.inputTags,
-                title_t:        $scope.inputTitle,
-                domain_s:       $scope.domain.name,
-                activity_s:     $scope.activity.name,
-                refresh_s:      $scope.frequency.option
 
-            });
 
            // var addWatch = alert('Surveillance ajoutée');
             // Testing  Modal trigger
@@ -54,6 +63,7 @@ angular.module('websoApp')
                 templateUrl: 'addWatchModal.html',
                 controller: ModalInstanceCtrl
             });
+
 
         };
 
