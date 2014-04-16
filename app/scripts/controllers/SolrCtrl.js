@@ -83,8 +83,8 @@ angular.module('websoApp')
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
         );
-        $scope.totalItems    = $scope.solrResult.response.numFound;
-        $scope.bigTotalItems = $scope.solrResult.response.numFound;
+        //$scope.totalItems    = $scope.solrResult.response.numFound;
+        //$scope.bigTotalItems = $scope.solrResult.response.numFound;
       //}
     };
 
