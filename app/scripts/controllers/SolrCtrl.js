@@ -11,6 +11,7 @@ angular.module('websoApp')
     paginationConfig.previousText = 'Précédent';
     paginationConfig.firstText    = 'Début';
     paginationConfig.lastText     = 'Fin';
+    $scope.isCollapsed            = true;
 
     // data for period menu
     $scope.myDataDate = [
@@ -44,8 +45,8 @@ angular.module('websoApp')
 
       afterSelectionChange: function () {
         angular.forEach($scope.mySelectionsPeriod, function ( item ) {
-          $scope.currentPeriod = item.period;
-          $scope.currentFq = item.fq;
+          $scope.currentPeriod  = item.period;
+          $scope.currentFq      = item.fq;
         });
       },
 
@@ -59,6 +60,7 @@ angular.module('websoApp')
 
 
     $scope.doSearch = function () {
+      $scope.isCollapsed = false;
       //if ($scope.searchTerm) {
         $scope.currentPage      = 1;
         $scope.maxSize          = 5;
@@ -76,6 +78,7 @@ angular.module('websoApp')
 
 
     $scope.doSearchFromPage = function () {
+      $scope.isCollapsed = true;
       //if ($scope.searchTerm) {
         $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
           function () {

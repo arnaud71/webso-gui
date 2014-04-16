@@ -1,9 +1,13 @@
 <div id="search">
-    <ol class="breadcrumb text-center">
-        <li><a href="#/home">Webso</a></li>
-        <li><a href="#">Rechercher</a></li>
-        <li class="active"> - </li>
-    </ol>
+    <div class="row">
+        <div class="col-md-12">
+        <ol class="breadcrumb text-center">
+            <li><a href="#/home">Webso</a></li>
+            <li><a href="#">Rechercher</a></li>
+            <li class="active"> - </li>
+        </ol>
+        </div>
+    </div>
     <div ng-controller="SolrCtrl">
         <div class="row">
             <div class="col-md-2">
@@ -12,59 +16,77 @@
                 </div>
             </div>
             <div class="col-md-10">
-                <form class="form-horizontal" ng-submit="doSearch()">
-                    <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                    <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Search</button>
-                </form>
-                <div solr-results-number ng-show="solrResult.response">
-                    Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
-                    <br>
-                 </div>
 
-                 <div solr-result ng-show="solrResult.response.numFound">
-                    <table class="table table-striped">
+                    <form class="form-horizontal" ng-submit="doSearch()">
+                        <input type="text" placeholder="Chercher" ng-model="searchTerm">
+                        <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Chercher</button>
+                    </form>
 
-                        <tr ng-repeat="doc in solrResult.response.docs">
-                            <td>
-                                <table class="table table-striped">
-                                    <tr><td><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a></td></tr>
-
-                                    <div ng-controller="CollapseSolrCtrl">
-                                        <tr><td>
-                                            <div collapse="isCollapsed">
-                                                <span ng-click="isCollapsed = !isCollapsed">
-                                                <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
-                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
-
-                                                    <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[0]=== \"undefined\"">{{ doc.content_en | limitTo:500 }} &gt;&gt;&gt;&gt;</span> -->
-
-                                                    <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
-                                                    <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
-
-                                                   &gt;&gt;&gt;&gt;
-                                                    <!-- <span ng-bind="getSummary(doc.id)"></span> -->
-                                                </span>
-
-
-
-                                            </div>
-                                            <div collapse="!isCollapsed">
-                                                <span ng-click="isCollapsed = !isCollapsed">
-                                                {{doc.content_en}} &lt;&lt;&lt;&lt;
-                                                </span>
-                                            </div>
-                                        </td></tr>
-                                    </div>
-                                    <tr><td>{{doc.url_s}}</td></tr>
-                                    <tr><td>{{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}</td></tr>
-
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <pagination on-select-page="pageChanged(page)" total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                <div id="numberFound">
+                    <div solr-results-number ng-show="solrResult.response">
+                        Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
+                        <br>
+                    </div>
                 </div>
+                <div id="docsFound">
+                    <div solr-result ng-show="solrResult.response.numFound">
+                        <table class="table table-striped">
 
+                            <tr ng-repeat="doc in solrResult.response.docs">
+                                <td>
+
+
+                                    <div id="titleFound">
+                                        <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a> 
+                                    </div>
+                                    <div id="contentFound">
+                                        <div ng-controller="CollapseSolrCtrl">
+
+                                                <div collapse="!isCollapsed">
+                                                    <span ng-click="isCollapsed = !isCollapsed">
+                                                    <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
+                                                        <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+
+                                                        <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[0]=== \"undefined\"">{{ doc.content_en | limitTo:500 }} &gt;&gt;&gt;&gt;</span> -->
+
+                                                        <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
+                                                        <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
+
+                                                       &gt;&gt;&gt;&gt;
+                                                        <!-- <span ng-bind="getSummary(doc.id)"></span> -->
+                                                    </span>
+
+
+
+                                                </div>
+                                                <div collapse="isCollapsed">
+                                                    <span ng-click="isCollapsed = !isCollapsed">
+                                                    {{doc.content_en}} &lt;&lt;&lt;&lt;
+                                                    </span>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="urlFound">
+                                        <span ng-if="doc.url_s.length<100">
+                                        {{doc.url_s}}
+                                        </span>
+                                        <span ng-if="doc.url_s.length>100">
+                                            {{doc.url_s| limitTo:100}}...
+                                        </span>
+
+                                    </div>
+                                    <div id="dateFound">
+                                        {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </table>
+                        <pagination on-select-page="pageChanged(page)" total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    </div>
+                </div>
             </div>
         </div>
 
