@@ -12,17 +12,17 @@ angular.module('websoApp')
         /*
          Input fields - from sourceAdd
          */
-        $scope.inputUrl = '';
-        $scope.inputTags = '';
-        $scope.inputTitle = '';
-        $scope.inputDomain = '';
-        $scope.inputActivity = '';
+        $scope.inputUrl       = '';
+        $scope.inputTags      = '';
+        $scope.inputTitle     = '';
+        $scope.inputDomain    = '';
+        $scope.inputActivity  = '';
      //   $scope.inputCreationDate = Date.now();
 
 
 
         $scope.sourceAdd = $resource(cfg.urlServices+':action',
-            {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
+            {action:'db/put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 

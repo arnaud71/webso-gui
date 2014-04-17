@@ -6,66 +6,121 @@ angular.module('websoApp')
         /*
          Input fields - from sourceAdd & surveillanceAdd??
          */
-        $scope.inputUrl = 'http://www.apache.org';
-        $scope.inputTags = 'server';
-        $scope.inputTitle = 'Apache home page';
+        $scope.inputUrl       = '';
+        $scope.inputTags      = '';
+        $scope.inputTitle     = '';
+        $scope.checkingSource = false;
+        $scope.sourcecheched  = false;
        // $scope.inputDomain = $scope.domain;
         //$scope.inputActivity = 'Activité 1';
       //  $scope.inputFrequency = '1 semaine';
        // $scope.inputFolderName = 'Dossier de Surveillance 1';
         //$scope.inputCreationDate = Date.now();
 
+        $scope.addResource = $resource(cfg.urlServices+'db/:action',
+            {action:'put.pl',user_s:'user_0', level_sharing_i:'1',callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}}
+        );
 
+        $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
+            {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+            {get:{method:'JSONP'}}
+        );
 
-        $scope.watchAdd = $resource(cfg.urlServices+':action',
-            {action:'put.pl', type_s:'watch',user_s:'user_0', level_sharing_i:'1',callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
-
-        $scope.sourceAdd = $resource(cfg.urlServices+':action',
+       /* $scope.sourceAddResource = $resource(cfg.urlServices+':action',
             {action:'put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'true',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
+*/
+
+        $scope.checkSourceResource = $resource(cfg.urlServices+'harvester/RSS/:action',
+            {action:'check_rss.pl',callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}}
+        );
 
 
-        $scope.doAdd = function () {
+
+        $scope.doAddSource = function () {
 
 
-            $scope.sourceAddResult = $scope.sourceAdd.get({
-              url_s  :        $scope.inputUrl,
-              tags_s :        $scope.inputTags,
-              title_t:        $scope.inputTitle,
+            $scope.sourceAddResult = $scope.addResource.get({
+              source_type_s   : 'rss',
+              type_s          : 'source',
+              url_s           : $scope.inputUrl,
+              tags_s          : $scope.inputTags,
+              title_t         : $scope.inputTitle,
               //domain_s:       $scope.domain.name,
               //activity_s:     $scope.activity.name,
-              refresh_s:      $scope.frequency.option
+              refresh_s       : $scope.frequency.option
 
             },function () {
-             $log.log('coucou 2');
-            });
-
-
-
-            $scope.watchAddResult = $scope.watchAdd.get({
-                url_s  :        $scope.inputUrl,
-                title_t:        $scope.inputTitle,
-                tags_ss :       $scope.inputTags,
-                domain_s:       $scope.domain.name,
-                activity_s:     $scope.activity.name,
-                folder_s:       $scope.folder.name,
-                query_s:        $scope.inputQuery,
-                source_id_s:    $scope.sourceAddResult.id,
-                notification_s: $scope.notification.option
 
             });
 
 
-           // var addWatch = alert('Surveillance ajoutée');
-            // Testing  Modal trigger
             var modalInstance = $modal.open({
-                templateUrl: 'addWatchModal.html',
-                controller: ModalInstanceCtrl
+              templateUrl: 'addSourceModal.html',
+              controller: ModalInstanceCtrl
             });
 
 
         };
+
+
+        $scope.doAddWatch = function () {
+
+
+          $scope.watchAddResult = $scope.addResource.get({
+            type_s:         'watch',
+            url_s  :        $scope.inputUrl,
+            title_t:        $scope.inputTitle,
+            tags_ss :       $scope.inputTags,
+            domain_s:       $scope.domain.name,
+            activity_s:     $scope.activity.name,
+            folder_s:       $scope.folder.name,
+            query_s:        $scope.inputQuery,
+            //source_id_s:    $scope.sourceAddResult.success.id,
+            notification_s: $scope.notification.option
+
+          });
+
+
+          // var addWatch = alert('Surveillance ajoutée');
+          // Testing  Modal trigger
+          var modalInstance = $modal.open({
+            templateUrl: 'addWatchModal.html',
+            controller: ModalInstanceCtrl
+          });
+
+
+    };
+
+    $scope.checkSourceUrl = function (){
+      //$scope.$emit('CHECKRSS');
+
+      if ($scope.inputUrl.length>5) {
+        $scope.checkingSource = true;
+        $scope.checkSourceResult = $scope.checkSourceResource.get({
+          url: $scope.inputUrl
+        }, function () {
+          if ($scope.checkSourceResult.title) {
+            $scope.inputTitle = $scope.checkSourceResult.title;
+          }
+          //$scope.$emit('UNCHECKRSS');
+          $scope.checkingSource = false;
+          $scope.sourceChecked = true;
+        });
+      }
+      else {
+        $scope.sourceChecked = false;
+      }
+
+    };
+
+  $scope.testWatch = function() {
+    $scope.solrResult       = $scope.solrResource.get({q:$scope.inputQuery}
+
+    );
+  }
 
 
         //  modal instance
@@ -132,7 +187,8 @@ angular.module('websoApp')
         ] ;
         $scope.notification = $scope.notifications[0];
 
-
+        //$scope.$on('CHECKRSS',function(){$scope.checkingSource=true});
+        //$scope.$on('UNCKECKRSS',function(){$scope.checkingSource=false});
     });
 
 

@@ -8,7 +8,7 @@ angular.module('websoApp')
      Getting source
      */
 
-    $scope.sourceList = $resource(cfg.urlServices+':action',
+    $scope.sourceList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl', type_s:'source',user_s:'user_0',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
