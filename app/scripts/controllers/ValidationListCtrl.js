@@ -8,7 +8,7 @@ angular.module('websoApp')
         /*
         Getting validation doc
          */
-        $scope.validationList = $resource(cfg.urlServices+':action',
+        $scope.validationList = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl', type_s:'validation',user_s:'user_0',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 

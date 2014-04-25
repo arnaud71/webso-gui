@@ -7,98 +7,118 @@
 <div ng-controller="AddWatchCtrl">
 
     <form name="sourceForm" class="form-horizontal" role="form">
+        <!-- source panel -->
         <div class="row">
             <div class="panel panel-default">
-            <div class="panel-body">
-            <div class="col-md-6">
+                <div class="panel-body">
+
+                    <tabset>
+                        <tab heading="{{tabs[0].title}}">
+                            <div class="col-md-6">
+                            <div class="form-group" >
+                                <label class="col-md-5 control-label required"> Source </label>
 
 
-                <div class="form-group" >
-                    <label class="col-md-5 control-label required"> Source </label>
+                                <div class="col-md-6">
+                                    <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
 
+                                </div>
+                                <div class="col-md-1">
 
-                    <div class="col-md-6">
-                        <input type="url" ng-blur="checkSourceUrl()" class="form-control" placeholder="Entrer URL" ng-model="inputUrl" id="inputUrl" name="inputUrl">
-
-                    </div>
-                    <div class="col-md-1">
-
-                        <span class="glyphicon glyphicon-repeat" ng-show="checkingSource"></span>
-                    </div>
-
-                </div>
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Nom de la source </label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
-                    </div>
-                </div>
-
-
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Fréquence de la source </label>
-                    <div class="col-md-7">
-                        <select ng-model="frequency" ng-options="frequency.option for frequency in frequencies"></select>
-                    </div>
-                </div>
-
-
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Tags </label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" placeholder="Entrer tags" ng-model="inputTags" id="inputTags" name="inputTags">
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-5 col-md-7">
-                        <button type="submit" class="btn btn-default" ng-click="doAddSource()" name ="watch">Ajouter source</button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-6" id="displaySample">
-                <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                    <div ng-show="sourceChecked">
-                        {{checkSourceResult.count}} élément(s) trouvé(s)
-                        <div ng-repeat="item in checkSourceResult.items">
-                            <div class row>
-
-                                <h5>{{item.title}}</h5>
-
-                                <p>{{item.description}}</p>
-
+                                    <span class="glyphicon glyphicon-repeat" ng-show="checkingSource"></span>
+                                </div>
 
                             </div>
+                            <div class="form-group" >
+                                <label class="col-md-5 control-label"> Nom de la source </label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" >
+                                <label class="col-md-5 control-label"> Fréquence de la source </label>
+                                <div class="col-md-7">
+                                    <select ng-model="frequency" ng-options="frequency.option for frequency in frequencies"></select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" >
+                                <label class="col-md-5 control-label"> Tags </label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" >
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Domaine </label>
+                                    <div  class="col-md-7">
+                                        <select id="inputDomain" name="inputDomain" ng-model="domain" ng-options="domain.name for domain in domains"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-5 control-label"> Secteur d'activité </label>
+                                <div class="col-md-7">
+                                    <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-5 col-md-7">
+                                    <button type="submit" class="btn btn-default" ng-click="doAddSource()" name ="watch">Ajouter source</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-md-6" id="displaySample">
+                            <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
+                                <div ng-show="sourceChecked">
+                                    {{checkSourceResult.count}} élément(s) trouvé(s)
+                                    <div ng-repeat="item in checkSourceResult.items">
+                                        <div class row>
+
+                                            <h5>{{item.title}}</h5>
+
+                                            <p>{{item.description}}</p>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </tab>
+
+                        <tab heading="{{tabs[1].title}}" select="doSearchSource()">
+                            <div class="col-md-12">
+                            <div class="gridStyleSourceSmall" ng-grid="gridOptionsSource">
+
+                            </div>
+                            </div>
+                        </tab>
+                    </tabset>
+
+
                 </div>
             </div>
-            </div>
-            </div>
         </div>
+
+        <!-- watch panel -->
         <div class="row">
             <div class="panel panel-default">
             <div class="panel-body">
+            <div ng-show="model.inputUrl">
+                Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
+            </div>
             <div class="col-md-6">
 
-                <div class="form-group" >
-                    <div class="form-group" >
-                        <label class="col-md-5 control-label"> Domaine </label>
-                        <div  class="col-md-7">
-                            <select id="inputDomain" name="inputDomain" ng-model="domain" ng-options="domain.name for domain in domains"></select>
-                        </div>
-                    </div>
-                </div>
 
-
-                <div class="form-group">
-                    <label class="col-md-5 control-label"> Secteur d'activité </label>
-                    <div class="col-md-7">
-                        <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select>
-                    </div>
-                </div>
                 <div class="form-group" >
                     <label class="col-md-5 control-label"> Dossier </label>
                     <div  class="col-md-7">
@@ -110,7 +130,7 @@
                 <div class="form-group" >
                     <label class="col-md-5 control-label"> Requête </label>
                     <div class="col-md-7">
-                        <input type="text" name ="inputQuery" id="inputQuery" ng-model="inputQuery">
+                        <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
                         <button type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
                     </div>
                 </div>
@@ -160,7 +180,7 @@
             <h3> Ajout de Surveillance</h3>
         </div>
         <div class="modal-body">
-            Surveillance ajoutée  avec succès
+            Surveillance ajoutée avec succès
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
@@ -172,10 +192,12 @@
     <script type="text/ng-template" id="addSourceModal.html">
         <div class="modal-header">
             <h3> Ajout de Source</h3>
+
         </div>
         <div class="modal-body">
-            Source ajoutée  avec succès
+            Source ajoutée avec succès
         </div>
+
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
 

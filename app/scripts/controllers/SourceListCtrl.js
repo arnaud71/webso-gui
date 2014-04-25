@@ -15,9 +15,8 @@ angular.module('websoApp')
     $scope.filterOptions = {
       filterText: "",
       useExternalFilter: false
-
-
     };
+
     $scope.totalServerItems = 0;
     $scope.pagingOptions = {
       pageSizes: [10,100,1000],
@@ -117,7 +116,7 @@ angular.module('websoApp')
      Deleting source
      */
 
-    $scope.sourceDelete = $resource(cfg.urlServices+':action',
+    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
