@@ -215,13 +215,13 @@ angular.module('websoApp')
     // add documents in db
     $scope.AddDocuments = function(){
 
-      jsonParams =
-      $http.post($resource(cfg.urlDB+'solr/update', jsonParams ).success(function(result) {
+     // jsonParams =
+     // $http.post($resource(cfg.urlDB+'solr/update', jsonParams ).success(function(result) {
 
-        $scope.resultAddDocument = result;
-        }).error(function() {
+     //   $scope.resultAddDocument = result;
+     //   }).error(function() {
         //console.log("error");
-      }));
+     // }));
     };
 
 
