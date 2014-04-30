@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddWatchCtrl', function ($scope,$resource,cfg,$modal,$log) {
+    .controller('AddWatchCtrl', function ($scope,$resource,cfg,$modal,$log,$http) {
 
     $scope.filterOptions = {
       filterText        : "",
@@ -26,6 +26,7 @@ angular.module('websoApp')
     };
 
 
+    // options for grid of sources
 
     $scope.gridOptionsSource = {
       data                : 'myData',
@@ -68,35 +69,46 @@ angular.module('websoApp')
       { title:"Sélectionner source"}
     ];
 
-
-
     $scope.checkingSource = false;
     $scope.sourceChecked  = false;
 
+    //***************************
+    // resources definition
 
-
+    // to list the available sources
     $scope.sourceList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl', type_s:'source',user_s:'user_0',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+    // to add an object to the db
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
         {action:'put.pl',user_s:'user_0', level_sharing_i:'1',callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}}
     );
 
+    // to query solr as a search engine
     $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
         {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
         {get:{method:'JSONP'}}
     );
 
-
-
+    // to check a rss source
     $scope.checkSourceResource = $resource(cfg.urlServices+'harvester/RSS/:action',
         {action:'check_rss.pl',callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}}
     );
 
-        $scope.doSearchSource = function () {
+    // to delete a specific source
+    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
+      {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
+
+
+    // ***************************************************************
+    // doSearchSource
+    // list the available sources
+    $scope.doSearchSource = function () {
           $scope.sourceResult = $scope.sourceList.get({type_s:'source'},
           function() {        //call back function for asynchronous
             if (typeof $scope.sourceResult.success.response === "undefined") {}
@@ -108,12 +120,13 @@ angular.module('websoApp')
           }
           );
 
-
         };
 
+
+    // ***************************************************************
+    // doAddSource
+    // add a source in the DB
     $scope.doAddSource = function () {
-
-
         $scope.sourceAddResult = $scope.addResource.get({
           source_type_s   : 'rss',
           type_s          : 'source',
@@ -140,9 +153,11 @@ angular.module('websoApp')
     };
 
 
+
+    // ***************************************************************
+    // doAddWatch
+    // add a watch in the DB
     $scope.doAddWatch = function () {
-
-
       $scope.watchAddResult = $scope.addResource.get({
         type_s:         'watch',
         url_s  :        $scope.model.inputUrl,
@@ -168,6 +183,9 @@ angular.module('websoApp')
 
     };
 
+    // ***************************************************************
+    // checkSourceUrl
+    // check if the rss exist and get the content in checkSourceResult
     $scope.checkSourceUrl = function (){
       //$scope.$emit('CHECKRSS');
 
@@ -191,15 +209,34 @@ angular.module('websoApp')
 
     };
 
+
+    // ***************************************************************
+    // AddDocuments
+    // add documents in db
+    $scope.AddDocuments = function(){
+
+      jsonParams =
+      $http.post($resource(cfg.urlDB+'solr/update', jsonParams ).success(function(result) {
+
+        $scope.resultAddDocument = result;
+        }).error(function() {
+        //console.log("error");
+      }));
+    };
+
+
+
+    // ***************************************************************
+    // testWatch
+    // test the current watch with a query
     $scope.testWatch = function() {
       $scope.solrResult       = $scope.solrResource.get({q:$scope.inputQuery}
 
       );
     }
 
-
+    //  ***************************************
     //  modal instance
-
     var ModalInstanceCtrl = function ($scope, $modalInstance) {
 
         $scope.ok = function () {
@@ -211,10 +248,9 @@ angular.module('websoApp')
         };
     };
 
-    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
-      {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
-      {get:{method:'JSONP'}});
-
+    // ***************************************************************
+    // sourceDelete
+    // to delete a source from the DB
     $scope.doDelete = function (sourceId,index) {
       var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
       if (deleteSource) {
@@ -291,10 +327,7 @@ angular.module('websoApp')
 
 
 
-
         //$scope.$on('CHECKRSS',function(){$scope.checkingSource=true});
         //$scope.$on('UNCKECKRSS',function(){$scope.checkingSource=false});
   });
 
-
-//http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1
