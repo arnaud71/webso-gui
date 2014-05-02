@@ -19,6 +19,7 @@
 
     <!-- endbuild -->
 </head>
+
 <body ng-app="websoApp">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -35,96 +36,86 @@
 <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
 
+<!-- NAVIGATION -->
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#">WebSo</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li data-match-route="/home" ><a ui-sref="home">Home</a></li>
+        <li data-match-route="/login" ><a ui-sref="login">Connexion</a></li>
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/register"><a ui-sref="register">Enregistrement de compte</a></li>
+                <li data-match-route="/counts"><a ui-sref="counts">Comptes des utilisateurs</a></li>
+            </ul>
+        </li>    
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/validate/add" >
+                    <a ui-sref="/validate/add">Ajouter information</a></li>
+                <li data-match-route="/validate/display" >
+                    <a ui-sref="/validate/display">Afficher informations validées</a></li>
+            </ul>
+        </li>
 
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/watch/add" ><a ui-sref="/watch/add">Ajouter une surveillance</a></li>
+                <li data-match-route="/source/add" >
+                    <a ui-sref="/source/add">Ajouter une source</a></li>
+                <li data-match-route="/source/list" >
+                    <a ui-sref="/source/list">Afficher les sources</a></li>
+                <li data-match-route="/watch/list" >
+                    <a ui-sref="/watch/list">Afficher les surveillances</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/createNL"><a ui-sref="/publish/newsletter">Newsletter</a></li>
+                <li data-match-route="/createReport"><a ui-sref="/publish/report">Rapport</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/organize"><a ui-sref="/organize">Dossiers de surveillance</a></li>
+                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder">Dossiers de validation</a></li>
+                <li data-match-route="/organize"><a ui-sref="/organize">Templates</a></li>
+                <li data-match-route="/organize"><a ui-sref="/organize">Collectes webso</a></li>
+                <li data-match-route="/organize"><a ui-sref="/organize">Packages de sources</a></li>
+                <li data-match-route="/organize/profile"><a ui-sref="/organize/profile">Profils</a></li>
+            </ul>
+        </li>
+        <li data-match-route="/dashboard" ><a ui-sref="/dashboard">Tableau de bord</a></li>
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/"><a ui-sref="#">Dossiers</a></li>
+                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Collectes webso</a></li>
+                <li data-match-route="/search/source"><a ui-sref="/search/source">Sources</a></li>
+                <li data-match-route="/search/rss"><a ui-sref="/search/rss">Flux RSS</a></li>
+            </ul>
+        </li>
+        <li class="dropdown"><a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/settings/booklet"><a ui-sref="/settings/booklet">Booklet</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
 <div class="container">
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="navbar navbar-inverse" style="position: static;">
-                <div class="navbar-inner">
-                    <div class="navbar-container">
-                        <a class="navbar-brand" href="#/home">Webso</a>
-                        <div class="collapse navbar-collapse navbar-inverse-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li data-match-route="/validate/add"><a href="#/validate/add">Ajouter information</a></li>
-                                        <li data-match-route="/validate/display"><a href="#/validate/display">Afficher informations validées</a></li>
-
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li data-match-route="/watch/add"><a href="#/watch/add">Ajouter une surveillance</a></li>
-                                        <li data-match-route="/source/add"><a href="#/source/add">Ajouter une source</a></li>
-                                        <!-- <li data-match-route="/watch/sourceslist"><a href="#/watch/sourceslist">Afficher les sources</a></li> -->
-                                        <li data-match-route="/source/list"><a href="#/source/list">Afficher les sources</a></li>
-                                        <li data-match-route="/watch/list"><a href="#/watch/list">Afficher les surveillances</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li data-match-route="/createNL"><a href="#/publish/newsletter">Newsletter</a></li>
-                                        <li data-match-route="/createReport"><a href="#/publish/report">Rapport</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li data-match-route="/organize"><a href="#/organize">Dossiers de surveillance</a></li>
-                                        <li data-match-route="/organize/vfolder"><a href="#/organize/vfolder">Dossiers de validation</a></li>
-                                        <li data-match-route="/organize"><a href="#/organize">Templates</a></li>
-                                        <li data-match-route="/organize"><a href="#/organize">Collectes webso</a></li>
-                                        <li data-match-route="/organize"><a href="#/organize">Packages de sources</a></li>
-                                        <li data-match-route="/organize/profile"><a href="#/organize/profile">Profils</a></li>
-                                    </ul>
-                                </li>
-                                <li data-match-route="/dashboard"><a href="#/dashboard">Tableau de bord</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li data-match-route="/"><a href="#/">Dossiers</a></li>
-                                        <li data-match-route="/search/webso"><a href="#/search/webso">Collectes webso</a></li>
-                                        <li data-match-route="/search/source"><a href="#/search/source">Sources</a></li>
-                                        <li data-match-route="/search/rss"><a href="#/search/rss">Flux RSS</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li data-match-route="/settings/booklet"><a href="#/settings/booklet">Booklet</a></li>
-
-                                    </ul>
-                                </li>
-
-
-
-                            </ul>
-
-                            <ul class="nav pull-right">
-                                <li data-match-route="/signin"><a href="#/signin">Connexion</a></li>
-
-                            </ul>
-
-                        </div><!-- /.nav-collapse -->
-                    </div>
-                </div><!-- /navbar-inner -->
-            </div>
-        </div><!-- /navbar -->
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id='center' ng-view=""></div>
-        </div>
-    </div>
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div ui-view></div>
 </div>
+
+
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -140,11 +131,12 @@
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 
-<script src="bower_components/ng-grid/ng-grid-2.0.11.debug.js"></script>
+<script src="bower_components/ng-grid/ng-grid-2.0.7.debug.js"></script>
 
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
+<script src="bower_components/ng-grid/ng-grid-2.0.7.debug.js"></script>
 
 <!-- build:js scripts/plugins.js -->
 <script src="bower_components/bootstrap-sass/js/affix.js"></script>
@@ -163,14 +155,21 @@
 
 <!-- build:js scripts/modules.js -->
 <script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
-
+<!-- build:js({.tmp,app}) scripts/scripts.js (scripts of authentification)-->
 <script src="scripts/app.js"></script>
 <script src="scripts/cfg.js"></script>
+<script src="scripts/controllers/LoginCtrl.js"></script>
+<script src="scripts/controllers/LogoutCtrl.js"></script>
+<script src="scripts/controllers/RegisterCtrl.js"></script>
+<script src="scripts/controllers/UsersCtrl.js"></script>
+<!-- endbuild -->
+<!-- (scripts of webso app)-->
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/GoogleFeedCtrl.js"></script>
 <script src="scripts/controllers/SolrCtrl.js"></script>
@@ -188,9 +187,8 @@
 <script src="scripts/controllers/AddSourceCtrl.js"></script>
 <script src="scripts/barlet.js"></script>
 
+<script src="scripts/controllers/NavigationCtrl.js"></script>
+<script src="scripts/controllers/services.js"></script>
 
-
-
-<!-- endbuild -->
 </body>
 </html>
