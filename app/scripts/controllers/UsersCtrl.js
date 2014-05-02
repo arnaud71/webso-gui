@@ -66,6 +66,8 @@ angular.module('websoApp')
             }
         }, true);
 
+	    $scope.roles =  ['administrateur', 'veilleur', 'lecteur'];
+	    $scope.userRole = $scope.roles[2];
 
         $scope.gridOptionsSource = {
             data: 'myData',
@@ -83,8 +85,9 @@ angular.module('websoApp')
                 {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
                 {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'*',field:'user_s', displayName:  'Utilisateur',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
-                {width:'*',field:'role_s', displayName:  'Rôle',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
-                {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
+                {width:'*',field:'role_s', displayName:  'Rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+                {width:'*',field:'', displayName:  'Modification du rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()"> <select data-ng-model="userRole" ng-options="userRole for userRole in roles"></select><button type="button" class="btn btn-xs" ng-click="modifyRole(row.getProperty(\'id\'), userRole, row.rowIndex)" ><span class="glyphicon glyphicon-refresh"></span></button></div>' },
+                {width:'*',field:'', displayName:  'Suppression de l\'utilisateur', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
 
             ]
         };
@@ -124,4 +127,21 @@ angular.module('websoApp')
             $scope.userResult.success.response.docs.splice(index, 1);
         }
     };
+
+// modification du role de l'utilisateur
+        $scope.roleModify = $resource(cfg.urlServices+':action',
+          {action:'update.pl', id:'',callback:"JSON_CALLBACK"},
+          {get:{method:'JSONP'}});
+
+    $scope.modifyRole = function (userId, role, index) {
+            /*
+             modify from Docs
+             */
+            $scope.roleModify.get({ id : userId, role_s : role});
+
+            /*
+             modify from ng-grid table
+             */
+            $scope.gridOptionsSource.loadData(myData);
+    };    
 });
