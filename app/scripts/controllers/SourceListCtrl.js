@@ -1,22 +1,23 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SourceListCtrl', function ($scope,$resource,cfg,$modal) {
+  .controller('SourceListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal) {
 
-
+        var $username = $cookieStore.get('username');     
 /*
      Getting source
      */
 
     $scope.sourceList = $resource(cfg.urlServices+'db/:action',
-      {action:'get.pl', type_s:'source',user_s:'user_0',callback:"JSON_CALLBACK"},
+      {action:'get.pl', type_s:'source',user_s:$username, callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
     $scope.filterOptions = {
       filterText: "",
       useExternalFilter: false
-    };
 
+
+    };
     $scope.totalServerItems = 0;
     $scope.pagingOptions = {
       pageSizes: [10,100,1000],
@@ -116,7 +117,7 @@ angular.module('websoApp')
      Deleting source
      */
 
-    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
+    $scope.sourceDelete = $resource(cfg.urlServices+':action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 

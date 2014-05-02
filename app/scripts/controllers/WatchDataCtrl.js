@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('WatchDataCtrl', function ($scope,$resource,cfg) {
+    .controller('WatchDataCtrl', function ($cookieStore, $scope,$resource,cfg) {
+
+        var $username = $cookieStore.get('username');
 
         /*
          $scope.sourceData = $resource('http://albator.hesge.ch/cgi-bin/webso/sources/:action',
@@ -9,7 +11,7 @@ angular.module('websoApp')
          {get:{method:'JSONP'}});
          */
         $scope.watchData = $resource(cfg.urlServices+':action',
-            {action:'get.pl', type_s:'watch',user_s:'user_0',callback:"JSON_CALLBACK"},
+            {action:'get.pl', type_s:'watch',user_s:$username, callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
         $scope.doSearch = function () {

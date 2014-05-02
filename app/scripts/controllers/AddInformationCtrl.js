@@ -1,19 +1,19 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddInformationCtrl', function ($scope, $resource, cfg, $modal) {
+    .controller('AddInformationCtrl', function ($cookieStore, $scope,$resource,cfg, $modal) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
          */
-        $scope.inputUrl     = '';
-        $scope.inputTags    = '';
-        $scope.inputTitle   = '';
+        $scope.inputUrl = 'http://www.apache.org';
+        $scope.inputTags = 'server';
+        $scope.inputTitle = 'Apache home page';
         $scope.inputDetails = '';
+        var $username = $cookieStore.get('username');      
 
-
-        $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
-            {action:'put.pl', type_s:'validation',user_s:'user_0', level_sharing_i:'1',callback:"JSON_CALLBACK"},
+        $scope.informationAdd = $resource(cfg.urlServices+':action',
+            {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 

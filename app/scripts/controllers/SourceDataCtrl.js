@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SourceDataCtrl', function ($scope,$resource,cfg) {
+  .controller('SourceDataCtrl', function ($cookieStore, $scope,$resource,cfg) {
 
         $scope.totalItems = 30;
         $scope.currentPage = 2;
         $scope.maxSize = 15;
         $scope.itemsPerPage = 10;
+        var $username = $cookieStore.get('username');        
 
         $scope.setPage = function (pageNo) {
             $scope.currentPage = pageNo;
@@ -20,7 +21,7 @@ angular.module('websoApp')
          */
 
         $scope.sourceData = $resource(cfg.urlServices+':action',
-            {action:'get.pl', type_s:'source',user_s:'user_0',callback:"JSON_CALLBACK"},
+            {action:'get.pl', type_s:'source',user_s:$username,callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 

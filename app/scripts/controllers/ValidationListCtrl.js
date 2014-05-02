@@ -1,15 +1,16 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('ValidationListCtrl', function ($scope,$resource,cfg,$modal) {
+  .controller('ValidationListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal) {
 
         $scope.mySelections = [];
+        var $username = $cookieStore.get('username');
 
         /*
         Getting validation doc
          */
-        $scope.validationList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'validation',user_s:'user_0',callback:"JSON_CALLBACK"},
+        $scope.validationList = $resource(cfg.urlServices+':action',
+            {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
         $scope.doSearch = function () {
