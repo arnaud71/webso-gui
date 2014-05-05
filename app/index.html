@@ -43,11 +43,17 @@
     </div>
     <ul class="nav navbar-nav">
         <li data-match-route="/home" ><a ui-sref="home">Home</a></li>
-        <li data-match-route="/login" ><a ui-sref="login">Connexion</a></li>
+        <li class="dropdown" >
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-match-route="/userRegister" ><a ui-sref="userRegister">Enregistrement</a></li> 
+                <li data-match-route="/login" ><a ui-sref="login">Connexion</a></li>
+            </ul>
+        </li>            
         <li class="dropdown" >
             <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li data-match-route="/register"><a ui-sref="register">Enregistrement de compte</a></li>
+                <li data-match-route="/register"><a ui-sref="register">Enregistrement</a></li>
                 <li data-match-route="/counts"><a ui-sref="counts">Comptes des utilisateurs</a></li>
             </ul>
         </li>    
@@ -167,6 +173,7 @@
 <script src="scripts/controllers/LoginCtrl.js"></script>
 <script src="scripts/controllers/LogoutCtrl.js"></script>
 <script src="scripts/controllers/RegisterCtrl.js"></script>
+<script src="scripts/controllers/userRegisterCtrl.js"></script>
 <script src="scripts/controllers/UsersCtrl.js"></script>
 <!-- endbuild -->
 <!-- (scripts of webso app)-->
