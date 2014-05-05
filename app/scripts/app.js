@@ -229,6 +229,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['administrateur', 'veilleur']
 			}                        
         })
+        .state('/404', {
+            url: '/404',       
+            templateUrl: '404.html'  
+        })
         
         $urlRouterProvider.otherwise('/login');
 });
@@ -248,7 +252,7 @@ websoApp.run(function ($rootScope, $location, $state, $cookieStore) {
 	return false;
 	};
 
-$rootScope.$on('$stateChangeStart', function (event, next, current) {
+$rootScope.$on('$stateChangeStart', function (event, next) {
 	userRole = $cookieStore.get('userRole');
 	username = $cookieStore.get('username');
     var authorizedRoles = next.data.authorizedRoles;
@@ -261,7 +265,7 @@ $rootScope.$on('$stateChangeStart', function (event, next, current) {
 			event.preventDefault(); 
 		// s'il essai d'entrer dans un lien non autorisé alors
 		}else{
-			alert('error non authorized !');			
+			$state.transitionTo('/404');
 			event.preventDefault();
 		}
 	// si l'utilisateur est connecté	
@@ -272,7 +276,7 @@ $rootScope.$on('$stateChangeStart', function (event, next, current) {
 			event.preventDefault(); 	
 		}else{	
 		// s'il essai d'entrer dans un lien non autorisé alors
-			alert('error non authorized !');
+			$state.transitionTo('/404');
 			event.preventDefault();
 		}		
 	}
