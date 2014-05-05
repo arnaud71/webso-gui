@@ -21,6 +21,14 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['public']
 			}            
         })
+        .state('userRegister', {
+            url: '/userRegister',
+            templateUrl:'views/userRegister.html',
+            controller: 'userRegisterCtrl',
+            data: {
+                authorizedRoles: ['public']
+            }
+        })
         .state('register', {
             url: '/register',
             templateUrl:'views/register.html',
