@@ -4,9 +4,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="gridStyleSource" ng-grid="gridOptionsSource">
-
                 </div>
             </div>
         </div>
-
+		<div class="alert alert-success" ng-show="isSuccess">
+			<strong>Succès :&nbsp;</strong><span>{{message}}</span>
+		</div>
     </div>
