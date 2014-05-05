@@ -3,6 +3,7 @@
 angular.module('websoApp')
     .controller('UsersCtrl', function ($scope,$resource,cfg,$modal) {
 
+        $scope.isSuccess = false;
 
         /*
          Getting watch   List
@@ -138,10 +139,7 @@ angular.module('websoApp')
              modify from Docs
              */
             $scope.roleModify.get({ id : userId, role_s : role});
-
-            /*
-             modify from ng-grid table
-             */
-            $scope.gridOptionsSource.loadData(myData);
+            $scope.isSuccess = true;
+            $scope.message = 'Le rôle a été modifié avec succès';
     };    
 });
