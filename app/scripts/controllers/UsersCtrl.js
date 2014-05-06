@@ -111,7 +111,6 @@ angular.module('websoApp')
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
-        alert(username);
         /*
          Confirm dialogs
          */
