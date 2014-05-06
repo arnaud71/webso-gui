@@ -35,86 +35,6 @@
 
 <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
-
-<!-- NAVIGATION -->
-<nav class="navbar navbar-inverse" role="navigation">
-    <div class="navbar-header">
-        <a class="navbar-brand" ui-sref="#">WebSo</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li data-match-route="/home" ><a ui-sref="home">Home</a></li>
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/userRegister" ><a ui-sref="userRegister">Enregistrement</a></li> 
-                <li data-match-route="/login" ><a ui-sref="login">Connexion</a></li>
-            </ul>
-        </li>            
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/register"><a ui-sref="register">Enregistrement</a></li>
-                <li data-match-route="/counts"><a ui-sref="counts">Comptes des utilisateurs</a></li>
-            </ul>
-        </li>    
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/validate/add" >
-                    <a ui-sref="/validate/add">Ajouter information</a></li>
-                <li data-match-route="/validate/display" >
-                    <a ui-sref="/validate/display">Afficher informations validées</a></li>
-            </ul>
-        </li>
-
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/watch/add" ><a ui-sref="/watch/add">Ajouter une surveillance</a></li>
-                <li data-match-route="/source/add" >
-                    <a ui-sref="/source/add">Ajouter une source</a></li>
-                <li data-match-route="/source/list" >
-                    <a ui-sref="/source/list">Afficher les sources</a></li>
-                <li data-match-route="/watch/list" >
-                    <a ui-sref="/watch/list">Afficher les surveillances</a></li>
-            </ul>
-        </li>
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/createNL"><a ui-sref="/publish/newsletter">Newsletter</a></li>
-                <li data-match-route="/createReport"><a ui-sref="/publish/report">Rapport</a></li>
-            </ul>
-        </li>
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/organize"><a ui-sref="/organize">Dossiers de surveillance</a></li>
-                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder">Dossiers de validation</a></li>
-                <li data-match-route="/organize"><a ui-sref="/organize">Templates</a></li>
-                <li data-match-route="/organize"><a ui-sref="/organize">Collectes webso</a></li>
-                <li data-match-route="/organize"><a ui-sref="/organize">Packages de sources</a></li>
-                <li data-match-route="/organize/profile"><a ui-sref="/organize/profile">Profils</a></li>
-            </ul>
-        </li>
-        <li data-match-route="/dashboard" ><a ui-sref="/dashboard">Tableau de bord</a></li>
-        <li class="dropdown" >
-            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/"><a ui-sref="#">Dossiers</a></li>
-                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Collectes webso</a></li>
-                <li data-match-route="/search/source"><a ui-sref="/search/source">Sources</a></li>
-                <li data-match-route="/search/rss"><a ui-sref="/search/rss">Flux RSS</a></li>
-            </ul>
-        </li>
-        <li class="dropdown"><a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li data-match-route="/settings/booklet"><a ui-sref="/settings/booklet">Booklet</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
-
 <!-- MAIN CONTENT -->
 <div class="container">
     <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
@@ -170,6 +90,7 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js (scripts of authentification)-->
 <script src="scripts/app.js"></script>
 <script src="scripts/cfg.js"></script>
+
 <script src="scripts/controllers/LoginCtrl.js"></script>
 <script src="scripts/controllers/LogoutCtrl.js"></script>
 <script src="scripts/controllers/RegisterCtrl.js"></script>
@@ -184,7 +105,8 @@
 <script src="scripts/controllers/SourceListCtrl.js"></script>
 <script src="scripts/controllers/ValidationListCtrl.js"></script>
 <script src="scripts/controllers/WatchListCtrl.js"></script>
-
+<script src="scripts/controllers/serviceRestrictions.js"></script>
+<script src="scripts/controllers/headerCtrl.js"></script>
 
 <script src="scripts/controllers/AddWatchCtrl.js"></script>
 <script src="scripts/controllers/ValidationDataCtrl.js"></script>
@@ -196,6 +118,7 @@
 
 <script src="scripts/controllers/NavigationCtrl.js"></script>
 <script src="scripts/controllers/services.js"></script>
+
 
 </body>
 </html>
