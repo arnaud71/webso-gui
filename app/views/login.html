@@ -1,3 +1,7 @@
+<div ng-controller="headerCtrl">
+  <div ng-include src="template.url"></div>
+</div>
+
 <div ng-controller="LoginCtrl">
   <form ng-show="!isAuthenticated" ng-submit="login()" name="loginForm" role="form" class="form-horizontal">
     <h1>Connexion</h1>
@@ -24,8 +28,4 @@
   </div>
 
   </form>
-  <div ng-show="isAuthenticated">
-    {{message}} <br>
-    <a href="#" class="btn btn-danger btn-mini" ng-click="logout()">Déconnexion</a>
-  </div>
 </div>
