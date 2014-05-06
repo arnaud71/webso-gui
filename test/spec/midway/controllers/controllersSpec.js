@@ -20,22 +20,22 @@ describe("Midway: Testing Controllers", function() {
   });
 
   it('should respond to URL #/home', function() {
-  	var state = 'home';
+  	var state = '/home';
     expect($state.href(state)).toEqual('#/home');
   });
 
   it('should respond to URL #/login', function() {
-  	var state = 'login';
+  	var state = '/login';
     expect($state.href(state)).toEqual('#/login');
   });
 
   it('should respond to URL #/register', function() {
-  	var state = 'register';
+  	var state = '/register';
     expect($state.href(state)).toEqual('#/register');
   });
 
   it('should respond to URL #/counts', function() {
-  	var state = 'counts';
+  	var state = '/counts';
     expect($state.href(state)).toEqual('#/counts');
   });
 
