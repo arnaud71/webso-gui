@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('UsersCtrl', function ($scope,$resource,cfg,$modal) {
+    .controller('UsersCtrl', function ($cookieStore, $location, $scope,$resource,cfg,$modal) {
 
         $scope.isSuccess = false;
 
@@ -88,7 +88,7 @@ angular.module('websoApp')
                 {width:'*',field:'user_s', displayName:  'Utilisateur',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
                 {width:'*',field:'role_s', displayName:  'Rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
                 {width:'*',field:'', displayName:  'Modification du rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()"> <select data-ng-model="userRole" ng-options="userRole for userRole in roles"></select><button type="button" class="btn btn-xs" ng-click="modifyRole(row.getProperty(\'id\'), userRole, row.rowIndex)" ><span class="glyphicon glyphicon-refresh"></span></button></div>' },
-                {width:'*',field:'', displayName:  'Suppression de l\'utilisateur', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
+                {width:'*',field:'user_s', displayName:  'Suppression de l\'utilisateur', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'), row.getProperty(col.field), row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
 
             ]
         };
@@ -110,7 +110,8 @@ angular.module('websoApp')
           {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
-    $scope.deleteCount = function (userId, index) {
+    $scope.deleteCount = function (userId, username, index) {
+        alert(username);
         /*
          Confirm dialogs
          */
@@ -126,6 +127,17 @@ angular.module('websoApp')
              Delete from ng-grid table
              */
             $scope.userResult.success.response.docs.splice(index, 1);
+
+            var usernameCookie = $cookieStore.get('username');
+            var userRoleCookie = $cookieStore.get('userRole');
+
+            if(usernameCookie === username && userRoleCookie === 'administrateur'){
+                $cookieStore.remove('Authenticated');
+                $cookieStore.remove('username');
+                $cookieStore.remove('password');
+                $cookieStore.remove('userRole');
+                $location.path('/home');
+            }
         }
     };
 
