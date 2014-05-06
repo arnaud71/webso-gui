@@ -1,19 +1,18 @@
+'use strict';
 // app.js
 var websoApp = angular.module('websoApp', ['ngCookies', 'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
 
-'use strict';
-
     $stateProvider
-        .state('home', {
+        .state('/home', {
             url: '/home',
             templateUrl: 'views/main.html',
 			data: {
 				authorizedRoles: ['public']
 			}
         })
-        .state('login', {
+        .state('/login', {
             url: '/login',
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl',
@@ -21,7 +20,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['public']
 			}            
         })
-        .state('userRegister', {
+        .state('/userRegister', {
             url: '/userRegister',
             templateUrl:'views/userRegister.html',
             controller: 'userRegisterCtrl',
@@ -29,7 +28,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
                 authorizedRoles: ['public']
             }
         })
-        .state('register', {
+        .state('/register', {
             url: '/register',
             templateUrl:'views/register.html',
             controller: 'RegisterCtrl',
@@ -37,7 +36,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['administrateur']
 			}
         })
-        .state('counts', {
+        .state('/counts', {
             url: '/counts',
             templateUrl: 'views/counts.html',
             controller: 'UsersCtrl',
@@ -293,7 +292,7 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 	if(!username && !userRole){
 		// s'il essai d'entrer dans un lien autorisé alors
 		if(arrayContain(next.data.authorizedRoles, 'public')){	
-			$state.transitionTo('#'+next.url);
+			$state.transitionTo(next.url);
 			event.preventDefault(); 
 		// s'il essai d'entrer dans un lien non autorisé alors
 		}else{
@@ -304,13 +303,13 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 	}else if(username && userRole){ 
 		// s'il essai d'entrer dans un lien autorisé alors
 		if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userRole)){
-			$state.transitionTo('#'+next.url);
+			$state.transitionTo(next.url);
 			event.preventDefault(); 	
 		}else{	
 		// s'il essai d'entrer dans un lien non autorisé alors
 			$state.transitionTo('/404');
 			event.preventDefault();
-		}		
+		}	
 	}
  });
 });
