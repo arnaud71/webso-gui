@@ -1,7 +1,10 @@
  'use strict';
 angular.module('websoApp')
 	.controller('headerCtrl',function($scope, serviceRestrictions, $cookieStore, $location, $resource, cfg){
-	
+
+	var $user = $cookieStore.get('username');
+	var $role = $cookieStore.get('userRole');
+
 	$scope.isPublic = true;
 	$scope.isLecteurVeilleurAdmin = false;
 	$scope.isPublicNotAuthenticated = true;
@@ -18,6 +21,11 @@ angular.module('websoApp')
 	$scope.isPublicNotAuthenticated = restrictions[3];
 
 	$scope.template = $scope.templates[0];
+
+	if(!$scope.isPublicNotAuthenticated){
+		$scope.username = $user; 
+		$scope.userRole = $role; 
+	}
 
 /****************** procedure de deconnexion *******************/  
   $scope.verifyLogout = $resource(cfg.urlServices+':action',
