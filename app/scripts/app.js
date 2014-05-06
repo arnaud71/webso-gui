@@ -237,9 +237,8 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
 });
 
-
 // le run time de l'app est de la façon suivante sur le lien suivant : 
-websoApp.run(function ($rootScope, $location, $state, $cookieStore) {
+websoApp.run(function ($window, $rootScope, $location, $state, $cookieStore, serviceRestrictions) {
 	var username, userRole;
 	var arrayContain = function (array, element) {
 		var $i = 0;
@@ -252,9 +251,42 @@ websoApp.run(function ($rootScope, $location, $state, $cookieStore) {
 	return false;
 	};
 
-$rootScope.$on('$stateChangeStart', function (event, next) {
+    var calculRestriction = function(userRole, username){
+        var booleansRestrictions = [];
+        var isPublicNotAuthenticated, isLecteurVeilleurAdmin, isVeilleurAdmin, isAdmin;
+
+        if(!userRole && !username){
+            isLecteurVeilleurAdmin = false;
+            isPublicNotAuthenticated = true;
+        }else if(userRole && username){
+            isLecteurVeilleurAdmin = true;
+            isPublicNotAuthenticated = false;
+            if(userRole === 'administrateur'){
+                isVeilleurAdmin = true;
+                isAdmin = true;
+            }else if(userRole === 'lecteur'){
+                isVeilleurAdmin = false;
+                isAdmin = false;
+            }else if(userRole === 'veilleur'){
+                isVeilleurAdmin = true;
+                isAdmin = false;
+            }
+        }
+
+        booleansRestrictions[0] = isLecteurVeilleurAdmin;
+        booleansRestrictions[1] = isVeilleurAdmin;
+        booleansRestrictions[2] = isAdmin;
+        booleansRestrictions[3] = isPublicNotAuthenticated;
+
+
+        return booleansRestrictions;
+    };
+
+$rootScope.$on('$stateChangeStart', function (event, next) {   
 	userRole = $cookieStore.get('userRole');
 	username = $cookieStore.get('username');
+    var arrayOfrestrictions = calculRestriction(userRole, username);
+    serviceRestrictions.setRestrictions(arrayOfrestrictions);
     var authorizedRoles = next.data.authorizedRoles;
 
 	// si l'utilisateur n'est pas connecté 
@@ -269,7 +301,7 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 			event.preventDefault();
 		}
 	// si l'utilisateur est connecté	
-	}else if(username && userRole){
+	}else if(username && userRole){ 
 		// s'il essai d'entrer dans un lien autorisé alors
 		if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userRole)){
 			$state.transitionTo('#'+next.url);
