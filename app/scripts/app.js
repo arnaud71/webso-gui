@@ -295,7 +295,6 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 			$state.transitionTo(next.url);
 		// s'il essai d'entrer dans un lien non autorisé alors
 		}else{
-			event.preventDefault();
 			$state.transitionTo('/404');
 		}
 	// si l'utilisateur est connecté	
@@ -305,9 +304,9 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 			$state.transitionTo(next.url);
 		}else{	
 		// s'il essai d'entrer dans un lien non autorisé alors
-			event.preventDefault();
 			$state.transitionTo('/404');
 		}	
 	}
+	event.preventDefault();
  });
 });
