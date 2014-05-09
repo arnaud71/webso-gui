@@ -44,6 +44,12 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['administrateur']
 			}
         })
+        .state('/deconnexion', {
+            url: '/deconnexion',
+            data: {
+                authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+            }
+        })
         // VALIDATE
         .state('/validate/add', {
             url: '/validate/add',
@@ -233,7 +239,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '404.html'  
         })
         
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/home');
 });
 
 // le run time de l'app est de la façon suivante : 
