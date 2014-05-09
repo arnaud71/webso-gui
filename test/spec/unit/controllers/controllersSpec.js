@@ -104,13 +104,18 @@ describe('Controller: AddInformationCtrl', function(){
 
 	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_t=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org";            
     httpBackendDoAdd.whenJSONP(url).respond(mock_data);
+    httpBackendDoAdd.when('GET','views/main.html').respond(mock_data);
 }));
   
+afterEach(function() {
+    httpBackendDoAdd.verifyNoOutstandingExpectation();
+    httpBackendDoAdd.verifyNoOutstandingRequest();
+});
+
   it('should set informationAddResult on successful doAdd', function() {
     scope.doAdd();
     scope.$apply();
     httpBackendDoAdd.flush();
-    fakeModal.close("selectedItem"); //Call confirm (simulating clicking the ok button on the modal)    
     expect(scope.informationAddResult.test[0].test).toBe("test");
     expect(scope.informationAddResult.test[1]).toBeUndefined();
   });
@@ -159,6 +164,7 @@ describe('Controller: ValidationDataCtrl', function(){
     				};
 	var url = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=validation";
     httpBackendDoSearch.whenJSONP(url).respond(mock_data);
+    httpBackendDoSearch.when('GET','views/main.html').respond(mock_data);
   }));
 
   it('should set validationResult on successful doSearch', function() {
@@ -316,6 +322,7 @@ describe('Controller: SourceDataCtrl', function(){
                 
     httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
     httpBackendDoDelete.whenJSONP(url_2).respond(mock_data);
+    httpBackendDoSearch.when('GET','views/main.html').respond(mock_data);
   }));
 
   afterEach(function() {
@@ -650,10 +657,11 @@ describe('Controller: DatepickerCtrl', function () {
   beforeEach(module('websoApp'));
 
   var DatepickerCtrl,
-  scope, timeout, timeoutFun;
+  scope, timeout, timeoutFun, httpBackend;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope, $timeout) {
+	beforeEach(inject(function ($controller, $rootScope, $httpBackend, $timeout) {
+  httpBackend = $httpBackend;
 	scope = $rootScope.$new();
 	timeout = $timeout;
 	timeoutFun = {
@@ -663,6 +671,13 @@ describe('Controller: DatepickerCtrl', function () {
 		DatepickerCtrl = $controller('DatepickerCtrl', {
 		  $scope: scope
 		});
+
+   var mock_data = {"test": 
+              [{  test : "main.html", 
+              }]
+            };
+
+    httpBackend.when('GET','views/main.html').respond(mock_data);
 	}));
 
   it('should have correct initialisations in the controller DatepickerCtrl', function() {
