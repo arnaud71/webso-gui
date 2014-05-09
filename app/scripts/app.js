@@ -236,7 +236,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
 });
 
-// le run time de l'app est de la façon suivante sur le lien suivant : 
+// le run time de l'app est de la façon suivante : 
 websoApp.run(function ($window, $rootScope, $location, $state, $cookieStore, serviceRestrictions) {
 	var username, userRole;
 	var arrayContain = function (array, element) {
