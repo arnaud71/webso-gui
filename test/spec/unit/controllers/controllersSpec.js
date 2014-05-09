@@ -1336,3 +1336,160 @@ describe('Controller: CollapseSolrCtrl', function () {
   });
 });
 /****************************************************************************************************/
+describe('Controller: userRegisterCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var userRegisterCtrl, httpBackendRegister, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendRegister = $httpBackend;
+  
+  scope = $rootScope.$new();
+    userRegisterCtrl = $controller('userRegisterCtrl', {
+      $scope: scope
+    });
+
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&compteur_sessions_s=0&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+    httpBackendRegister.whenJSONP(url).respond(mock_data);
+    httpBackendRegister.when('GET','views/main.html').respond(mock_data);
+  }));
+
+  it('should have a working userRegisterCtrl controller ', function() {
+  	expect(scope.register).toBeDefined();
+  	expect(scope.isSuccess).toBeDefined();
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.informationAdd).toBeDefined();
+  	scope.register();
+    scope.$apply();
+    httpBackendRegister.flush();
+  	expect(scope.isSuccess).toBe(true);
+  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
+  	expect(scope.username).toBe("");
+  	expect(scope.password).toBe("");
+  });
+});
+/****************************************************************************************************/
+describe('Controller: RegisterCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var RegisterCtrl, httpBackendRegister, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendRegister = $httpBackend;  	
+  scope = $rootScope.$new();
+    RegisterCtrl = $controller('RegisterCtrl', {
+      $scope: scope
+    });
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&compteur_sessions_s=0&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+    httpBackendRegister.whenJSONP(url).respond(mock_data);
+    httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
+  }));
+
+  it('should have a working RegisterCtrl controller ', function() {
+  	var $roles = ['administrateur', 'veilleur', 'lecteur'];
+  	expect(scope.register).toBeDefined();
+  	expect(scope.isSuccess).toBeDefined();
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.informationAdd).toBeDefined();
+  	expect(scope.roles).toBeDefined();
+  	expect(scope.userRole).toBe($roles[2]);
+  	scope.register();
+    scope.$apply();
+    httpBackendRegister.flush();
+  	expect(scope.isSuccess).toBe(true);
+  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
+  	expect(scope.username).toBe("");
+  	expect(scope.password).toBe("");
+  });
+});
+/****************************************************************************************************/
+describe('Controller: LoginCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var LoginCtrl, httpBackendlogin, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendlogin = $httpBackend;  	
+  scope = $rootScope.$new();
+    LoginCtrl = $controller('LoginCtrl', {
+      $scope: scope
+    });
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/login.pl?callback=JSON_CALLBACK";            
+    httpBackendlogin.whenJSONP(url).respond(mock_data);
+    httpBackendlogin.when('GET','views/main.html').respond(mock_data);    
+  }));
+
+  it('should have a working LoginCtrl controller ', function() {
+  	expect(scope.isError).toBeDefined();
+  	expect(scope.verifyLogin).toBeDefined();
+  	scope.login();
+    scope.$apply();
+    httpBackendlogin.flush();
+  	expect(scope.verifyLogin).toBeDefined();
+  	// ajouter le cas passant et non passant en mockant les cookies
+  });
+});
+/****************************************************************************************************/
+describe('Controller: UsersCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var UsersCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    UsersCtrl = $controller('UsersCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have correct initialisations in the controller UsersCtrl', function() {
+    expect(scope.isSuccess).toBe(false);
+    expect(scope.userList).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.totalServerItems).toBe(0);
+    expect(scope.pagingOptions).toBeDefined();
+    expect(scope.setPagingData).toBeDefined();
+    expect(scope.getPagedDataAsync).toBeDefined();
+    expect(scope.$watch).toBeDefined();
+    expect(scope.roles).toBeDefined();
+    expect(scope.userRole).toBe('lecteur');
+    expect(scope.gridOptionsSource).toBeDefined();
+    expect(scope.userResult).toBeDefined();
+    expect(scope.countDelete).toBeDefined();
+    expect(scope.deleteCount).toBeDefined();
+    expect(scope.roleModify).toBeDefined();
+    expect(scope.modifyRole).toBeDefined();
+  });
+});
+/****************************************************************************************************/
