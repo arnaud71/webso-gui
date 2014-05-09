@@ -7,21 +7,21 @@
 	    <ul class="nav navbar-nav">
 	        <li data-match-route="/home" ng-show="isPublic"><a ui-sref="/home">Home</a></li>
 	        <li class="dropdown" ng-show="isPublicNotAuthenticated">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/userRegister" ><a ui-sref="/userRegister">Enregistrement</a></li> 
 	                <li data-match-route="/login" ><a ui-sref="/login">Connexion</a></li>
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/register"><a ui-sref="/register">Enregistrement</a></li>
 	                <li data-match-route="/counts"><a ui-sref="/counts">Comptes des utilisateurs</a></li>
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/validate/add" ng-show="isVeilleurAdmin">
 	                    <a ui-sref="/validate/add">Ajouter information</a></li>
@@ -30,7 +30,7 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
 	                	<a ui-sref="/watch/add">Ajouter une surveillance</a>
@@ -47,7 +47,7 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/createNL">
 	                	<a ui-sref="/publish/newsletter">Newsletter</a>
@@ -58,7 +58,7 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/organize"><a ui-sref="/organize">Dossiers de surveillance</a></li>
 	                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder">Dossiers de validation</a></li>
@@ -72,7 +72,7 @@
 	        	<a ui-sref="/dashboard">Tableau de bord</a>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/"><a ui-sref="#">Dossiers</a></li>
 	                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Collectes webso</a></li>
@@ -81,7 +81,7 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	        	<a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/settings/booklet"><a ui-sref="/settings/booklet">Booklet</a></li>
 	            </ul>
