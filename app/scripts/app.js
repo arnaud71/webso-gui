@@ -292,21 +292,20 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 	if(!username && !userRole){
 		// s'il essai d'entrer dans un lien autorisé alors
 		if(arrayContain(next.data.authorizedRoles, 'public')){	
-			$state.transitionTo(next.url);
+			$location.path(next.url);
 		// s'il essai d'entrer dans un lien non autorisé alors
 		}else{
-			$state.transitionTo('/404');
+			$location.path('/404');
 		}
 	// si l'utilisateur est connecté	
 	}else if(username && userRole){ 
 		// s'il essai d'entrer dans un lien autorisé alors
 		if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userRole)){
-			$state.transitionTo(next.url);
+			$location.path(next.url);
 		}else{	
 		// s'il essai d'entrer dans un lien non autorisé alors
-			$state.transitionTo('/404');
+			$location.path('/404');
 		}	
 	}
-	event.preventDefault();
  });
 });
