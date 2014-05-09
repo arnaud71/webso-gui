@@ -49,6 +49,7 @@ angular.module('websoApp')
 				$cookieStore.remove('username');
 				$cookieStore.remove('password');
 				$cookieStore.remove('userRole');
+				$cookieStore.remove('Authenticated');
 				$scope.message = '';
 				$location.path('/home');
 			}
