@@ -11,7 +11,7 @@ describe("Integration/E2E Testing", function() {
 /********************************** fonctionnel (Enregistrement) *******************************/
 
  it('pouvoir aller à la page d\'enregistrement', function() {
-    browser.get('http://localhost:9000/#/userRegister');
+    browser.get('http://localhost:9000/#/publicRegister');
     
     var inputNomUser = element(by.name('username'));
     inputNomUser.clear();

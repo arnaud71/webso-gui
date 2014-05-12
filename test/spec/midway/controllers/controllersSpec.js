@@ -29,9 +29,14 @@ describe("Midway: Testing Controllers", function() {
     expect($state.href(state)).toEqual('#/login');
   });
 
-  it('should respond to URL #/register', function() {
-  	var state = '/register';
-    expect($state.href(state)).toEqual('#/register');
+  it('should respond to URL #/publicRegister', function() {
+  	var state = '/publicRegister';
+    expect($state.href(state)).toEqual('#/publicRegister');
+  });
+
+  it('should respond to URL #/administratorRegister', function() {
+    var state = '/administratorRegister';
+    expect($state.href(state)).toEqual('#/administratorRegister');
   });
 
   it('should respond to URL #/counts', function() {

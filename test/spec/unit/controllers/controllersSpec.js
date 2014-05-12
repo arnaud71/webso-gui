@@ -1336,19 +1336,19 @@ describe('Controller: CollapseSolrCtrl', function () {
   });
 });
 /****************************************************************************************************/
-describe('Controller: userRegisterCtrl', function () {
+describe('Controller: publicRegisterCtrl', function () {
 
   // load the controller's module
   beforeEach(module('websoApp'));
 
-  var userRegisterCtrl, httpBackendRegister, scope;
+  var publicRegisterCtrl, httpBackendRegister, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
   httpBackendRegister = $httpBackend;
   
   scope = $rootScope.$new();
-    userRegisterCtrl = $controller('userRegisterCtrl', {
+    publicRegisterCtrl = $controller('publicRegisterCtrl', {
       $scope: scope
     });
 
@@ -1364,7 +1364,7 @@ describe('Controller: userRegisterCtrl', function () {
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);
   }));
 
-  it('should have a working userRegisterCtrl controller ', function() {
+  it('should have a working publicRegisterCtrl controller ', function() {
   	expect(scope.register).toBeDefined();
   	expect(scope.isSuccess).toBeDefined();
   	expect(scope.isSuccess).toBe(false);
@@ -1379,18 +1379,18 @@ describe('Controller: userRegisterCtrl', function () {
   });
 });
 /****************************************************************************************************/
-describe('Controller: RegisterCtrl', function () {
+describe('Controller: administratorRegisterCtrl', function () {
 
   // load the controller's module
   beforeEach(module('websoApp'));
 
-  var RegisterCtrl, httpBackendRegister, scope;
+  var administratorRegisterCtrl, httpBackendRegister, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
   httpBackendRegister = $httpBackend;  	
   scope = $rootScope.$new();
-    RegisterCtrl = $controller('RegisterCtrl', {
+    administratorRegisterCtrl = $controller('administratorRegisterCtrl', {
       $scope: scope
     });
 
@@ -1404,7 +1404,7 @@ describe('Controller: RegisterCtrl', function () {
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
   }));
 
-  it('should have a working RegisterCtrl controller ', function() {
+  it('should have a working administratorRegisterCtrl controller ', function() {
   	var $roles = ['administrateur', 'veilleur', 'lecteur'];
   	expect(scope.register).toBeDefined();
   	expect(scope.isSuccess).toBeDefined();
