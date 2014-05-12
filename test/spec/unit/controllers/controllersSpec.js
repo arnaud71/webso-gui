@@ -1358,7 +1358,8 @@ describe('Controller: userRegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&compteur_sessions_s=0&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=veilleur&type_s=enregistrement"; 
+
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);
   }));
@@ -1398,7 +1399,7 @@ describe('Controller: RegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&compteur_sessions_s=0&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
   }));
