@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('RegisterCtrl', function ($scope, $resource, cfg) {
+    .controller('administratorRegisterCtrl', function ($scope, $resource, cfg) {
 
     $scope.isSuccess = false;
     /*
