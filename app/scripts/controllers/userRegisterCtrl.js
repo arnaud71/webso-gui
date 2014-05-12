@@ -13,7 +13,7 @@ angular.module('websoApp')
         $scope.informationAddResult = $scope.informationAdd.get({
             user_s  : $scope.username,
             password_s : $scope.password,
-            role_s : 'lecteur'
+            role_s : 'veilleur'
         });
 
         $scope.isSuccess = true;
