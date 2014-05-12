@@ -30,7 +30,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('/administratorRegister', {
             url: '/administratorRegister',
-            templateUrl:'views/administratorRegisterCtrl',
+            templateUrl:'views/administratorRegister.html',
             controller: 'administratorRegisterCtrl',
 			data: {
 				authorizedRoles: ['administrateur']
