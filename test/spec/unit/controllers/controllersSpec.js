@@ -64,22 +64,53 @@ describe('Controller: AddInformationCtrl', function () {
 describe('Controller: AddInformationCtrl', function(){
   var scope, resource, ctrl, httpBackendDoAdd;
 
+  var fakeModal = {
+    result: {
+        then: function(confirmCallback, cancelCallback) {
+            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+            this.confirmCallBack = confirmCallback;
+            this.cancelCallback = cancelCallback;
+        }
+    },
+    close: function( item ) {
+        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+        this.result.confirmCallBack( item );
+    },
+    dismiss: function( type ) {
+        //The user clicked cancel on the modal dialog, call the stored cancel callback
+        this.result.cancelCallback( type );
+    }
+};
+
   beforeEach(module("websoApp"));
 
-  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+  beforeEach(inject(function($modal) {
+      spyOn($modal, 'open').andReturn(fakeModal);
+  }));
+
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend, _$modal_) {
     httpBackendDoAdd = $httpBackend;
 
     scope = $rootScope.$new();
-    ctrl = $controller("AddInformationCtrl", { $scope: scope});
+    ctrl = $controller("AddInformationCtrl", {
+      $scope: scope,
+      $modal: _$modal_
+    });
 
     var mock_data = {"test": 
     					[{ 	test : "test", 
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_t=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org&user_s=user_0";
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_t=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org";            
     httpBackendDoAdd.whenJSONP(url).respond(mock_data);
+    httpBackendDoAdd.when('GET','views/main.html').respond(mock_data);
 }));
+  
+afterEach(function() {
+    httpBackendDoAdd.verifyNoOutstandingExpectation();
+    httpBackendDoAdd.verifyNoOutstandingRequest();
+});
 
   it('should set informationAddResult on successful doAdd', function() {
     scope.doAdd();
@@ -131,8 +162,9 @@ describe('Controller: ValidationDataCtrl', function(){
     					[{ 	test : "test"
     					}]
     				};
-	var url = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=validation&user_s=user_0";
+	var url = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=validation";
     httpBackendDoSearch.whenJSONP(url).respond(mock_data);
+    httpBackendDoSearch.when('GET','views/main.html').respond(mock_data);
   }));
 
   it('should set validationResult on successful doSearch', function() {
@@ -160,8 +192,11 @@ describe('Controller: AddWatchCtrl', function () {
     });
   }));
 
-  it('should have doAdd function service in the controller AddWatchCtrl', function() {
-    expect(scope.doAdd).toBeDefined();
+  it('should have functions services in the controller AddWatchCtrl', function() {
+    expect(scope.doAddSource).toBeDefined();
+    expect(scope.doAddWatch).toBeDefined();
+    expect(scope.checkSourceUrl).toBeDefined();
+    expect(scope.testWatch).toBeDefined();
   });
 
   // exemple de test lors du click sur le bouton doAdd
@@ -169,10 +204,12 @@ describe('Controller: AddWatchCtrl', function () {
     expect(scope.inputUrl).toBeDefined();
     expect(scope.inputTags).toBeDefined();
     expect(scope.inputTitle).toBeDefined();
-    expect(scope.inputCreationDate).toBeDefined();
-  	scope.doAdd();
+    expect(scope.checkingSource).toBeDefined();
+    expect(scope.sourcecheched).toBeDefined();
+  	scope.doAddSource();
+    expect(scope.sourceAddResult).toBeDefined();
+    scope.doAddWatch();
   	expect(scope.watchAddResult).toBeDefined();
-  	expect(scope.sourceAddResult).toBeDefined();
   });
 });
 
@@ -280,10 +317,12 @@ describe('Controller: SourceDataCtrl', function(){
     					}]
     				};
 
-    var url_1 = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=source&user_s=user_0";
+    var url_1 = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=source";
     var url_2 = "http://localhost/cgi-bin/webso-services/db/delete.pl?callback=JSON_CALLBACK&id=1";
+                
     httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
     httpBackendDoDelete.whenJSONP(url_2).respond(mock_data);
+    httpBackendDoSearch.when('GET','views/main.html').respond(mock_data);
   }));
 
   afterEach(function() {
@@ -618,10 +657,11 @@ describe('Controller: DatepickerCtrl', function () {
   beforeEach(module('websoApp'));
 
   var DatepickerCtrl,
-  scope, timeout, timeoutFun;
+  scope, timeout, timeoutFun, httpBackend;
 
 	// Initialize the controller and a mock scope
-	beforeEach(inject(function ($controller, $rootScope, $timeout) {
+	beforeEach(inject(function ($controller, $rootScope, $httpBackend, $timeout) {
+  httpBackend = $httpBackend;
 	scope = $rootScope.$new();
 	timeout = $timeout;
 	timeoutFun = {
@@ -631,6 +671,13 @@ describe('Controller: DatepickerCtrl', function () {
 		DatepickerCtrl = $controller('DatepickerCtrl', {
 		  $scope: scope
 		});
+
+   var mock_data = {"test": 
+              [{  test : "main.html", 
+              }]
+            };
+
+    httpBackend.when('GET','views/main.html').respond(mock_data);
 	}));
 
   it('should have correct initialisations in the controller DatepickerCtrl', function() {
@@ -1286,6 +1333,164 @@ describe('Controller: CollapseSolrCtrl', function () {
 
   it('should have a working CollapseSolrCtrl in the controller ValidationListCtrl', function() {
   	expect(scope.isCollapsed).toBe(true);
+  });
+});
+/****************************************************************************************************/
+describe('Controller: publicRegisterCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var publicRegisterCtrl, httpBackendRegister, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendRegister = $httpBackend;
+  
+  scope = $rootScope.$new();
+    publicRegisterCtrl = $controller('publicRegisterCtrl', {
+      $scope: scope
+    });
+
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=veilleur&type_s=enregistrement"; 
+
+    httpBackendRegister.whenJSONP(url).respond(mock_data);
+    httpBackendRegister.when('GET','views/main.html').respond(mock_data);
+  }));
+
+  it('should have a working publicRegisterCtrl controller ', function() {
+  	expect(scope.register).toBeDefined();
+  	expect(scope.isSuccess).toBeDefined();
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.informationAdd).toBeDefined();
+  	scope.register();
+    scope.$apply();
+    httpBackendRegister.flush();
+  	expect(scope.isSuccess).toBe(true);
+  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
+  	expect(scope.username).toBe("");
+  	expect(scope.password).toBe("");
+  });
+});
+/****************************************************************************************************/
+describe('Controller: administratorRegisterCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var administratorRegisterCtrl, httpBackendRegister, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendRegister = $httpBackend;  	
+  scope = $rootScope.$new();
+    administratorRegisterCtrl = $controller('administratorRegisterCtrl', {
+      $scope: scope
+    });
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+    httpBackendRegister.whenJSONP(url).respond(mock_data);
+    httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
+  }));
+
+  it('should have a working administratorRegisterCtrl controller ', function() {
+  	var $roles = ['administrateur', 'veilleur', 'lecteur'];
+  	expect(scope.register).toBeDefined();
+  	expect(scope.isSuccess).toBeDefined();
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.informationAdd).toBeDefined();
+  	expect(scope.roles).toBeDefined();
+  	expect(scope.userRole).toBe($roles[2]);
+  	scope.register();
+    scope.$apply();
+    httpBackendRegister.flush();
+  	expect(scope.isSuccess).toBe(true);
+  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
+  	expect(scope.username).toBe("");
+  	expect(scope.password).toBe("");
+  });
+});
+/****************************************************************************************************/
+describe('Controller: LoginCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var LoginCtrl, httpBackendlogin, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  httpBackendlogin = $httpBackend;  	
+  scope = $rootScope.$new();
+    LoginCtrl = $controller('LoginCtrl', {
+      $scope: scope
+    });
+
+    var mock_data = {"test": 
+    					[{ 	test : "test", 
+    					}]
+    				};
+
+	var url = "http://localhost/cgi-bin/webso-services/db/login.pl?callback=JSON_CALLBACK";            
+    httpBackendlogin.whenJSONP(url).respond(mock_data);
+    httpBackendlogin.when('GET','views/main.html').respond(mock_data);    
+  }));
+
+  it('should have a working LoginCtrl controller ', function() {
+  	expect(scope.isError).toBeDefined();
+  	expect(scope.verifyLogin).toBeDefined();
+  	scope.login();
+    scope.$apply();
+    httpBackendlogin.flush();
+  	expect(scope.verifyLogin).toBeDefined();
+  	// ajouter le cas passant et non passant en mockant les cookies
+  });
+});
+/****************************************************************************************************/
+describe('Controller: UsersCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var UsersCtrl,
+  scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+  scope = $rootScope.$new();
+    UsersCtrl = $controller('UsersCtrl', {
+      $scope: scope
+    });
+  }));
+
+  it('should have correct initialisations in the controller UsersCtrl', function() {
+    expect(scope.isSuccess).toBe(false);
+    expect(scope.userList).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.totalServerItems).toBe(0);
+    expect(scope.pagingOptions).toBeDefined();
+    expect(scope.setPagingData).toBeDefined();
+    expect(scope.getPagedDataAsync).toBeDefined();
+    expect(scope.$watch).toBeDefined();
+    expect(scope.roles).toBeDefined();
+    expect(scope.userRole).toBe('lecteur');
+    expect(scope.gridOptionsSource).toBeDefined();
+    expect(scope.userResult).toBeDefined();
+    expect(scope.countDelete).toBeDefined();
+    expect(scope.deleteCount).toBeDefined();
+    expect(scope.roleModify).toBeDefined();
+    expect(scope.modifyRole).toBeDefined();
   });
 });
 /****************************************************************************************************/

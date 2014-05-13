@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddSourceCtrl', function ($scope,$resource,cfg, $modal,$log) {
+    .controller('AddSourceCtrl', function ($cookieStore, $scope,$resource,cfg, $modal,$log) {
 
         /*
         Globals
@@ -17,12 +17,14 @@ angular.module('websoApp')
         $scope.inputTitle     = '';
         $scope.inputDomain    = '';
         $scope.inputActivity  = '';
+        var $username = $cookieStore.get('username');
+
      //   $scope.inputCreationDate = Date.now();
 
 
 
         $scope.sourceAdd = $resource(cfg.urlServices+':action',
-            {action:'db/put.pl', type_s:'source',user_s:'user_0', level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
+            {action:'db/put.pl', type_s:'source',user_s:$username,level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 

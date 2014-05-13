@@ -1,15 +1,16 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('WatchListCtrl', function ($scope,$resource,cfg,$modal) {
+    .controller('WatchListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal) {
 
+        var $username = $cookieStore.get('username');
 
         /*
          Getting watch   List
          */
 
         $scope.watchList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'watch',user_s:'user_0',callback:"JSON_CALLBACK"},
+            {action:'get.pl', type_s:'watch',user_s:$username,callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
         $scope.filterOptions = {

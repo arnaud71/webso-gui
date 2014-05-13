@@ -1,281 +1,157 @@
 //
 // test/midway/controllers/controllersSpec.js
 //
+
 describe("Midway: Testing Controllers", function() {
-  var tester, current, module;
+
+  var $rootScope, $state, $injector, myServiceMock;
 
   beforeEach(function() {
-  	module = angular.module("websoApp");
-    if(tester) {
-      tester.destroy();
-    }
-    tester = ngMidwayTester('websoApp');
+
+    module('websoApp', function($provide) {
+      $provide.value('myService', myServiceMock = {});
+    });
+
+    inject(function(_$rootScope_, _$state_, _$injector_, $templateCache) {
+      $rootScope = _$rootScope_;
+      $state = _$state_;
+      $injector = _$injector_;
+    })
   });
 
-  it("should have a module to test", function() {
-	expect(module).not.toBe(null);
+  it('should respond to URL #/home', function() {
+  	var state = '/home';
+    expect($state.href(state)).toEqual('#/home');
   });
 
-  it('should load the SolrCtrl controller and templateUrl properly when / route is accessed', function(done) {
-    tester.visit('/');
-	expect(tester.path()).toBe('/');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('SolrCtrl');
-	expect(template).toMatch(/views\/comingsoon.html/);
+  it('should respond to URL #/login', function() {
+  	var state = '/login';
+    expect($state.href(state)).toEqual('#/login');
   });
 
-  it('should load the templateUrl properly when /home route is accessed', function(done) {
-    tester.visit('/home');
-	expect(tester.path()).toBe('/home');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/main.html/);
+  it('should respond to URL #/publicRegister', function() {
+  	var state = '/publicRegister';
+    expect($state.href(state)).toEqual('#/publicRegister');
   });
 
-  it('should load the templateUrl properly when /validate/add route is accessed', function(done) {
-    tester.visit('/validate/add');
-	expect(tester.path()).toBe('/validate/add');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddInformationCtrl');
-	expect(template).toMatch(/views\/information\/validate.html/);		
+  it('should respond to URL #/administratorRegister', function() {
+    var state = '/administratorRegister';
+    expect($state.href(state)).toEqual('#/administratorRegister');
   });
 
-  it('should load the templateUrl properly when /validate/display route is accessed', function(done) {
-    tester.visit('/validate/display');
-	expect(tester.path()).toBe('/validate/display');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('ValidationListCtrl');
-	expect(template).toMatch(/views\/information\/validationList.html/);
+  it('should respond to URL #/counts', function() {
+  	var state = '/counts';
+    expect($state.href(state)).toEqual('#/counts');
   });
 
-  it('should load the templateUrl properly when /watch/add route is accessed', function(done) {
-    tester.visit('/watch/add');
-	expect(tester.path()).toBe('/watch/add');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddWatchCtrl');
-	expect(template).toMatch(/views\/watch\/watchAdd.html/);	
+  it('should respond to URL #/validate/add', function() {
+  	var state = '/validate/add';
+    expect($state.href(state)).toEqual('#/validate/add');
   });
 
-  it('should load the templateUrl properly when /watch/list route is accessed', function(done) {
-    tester.visit('/watch/list');
-	expect(tester.path()).toBe('/watch/list');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('WatchListCtrl');
-	expect(template).toMatch(/views\/watch\/watchList.html/);	
+  it('should respond to URL #/validate/display', function() {
+  	var state = '/validate/display';
+    expect($state.href(state)).toEqual('#/validate/display');
   });
 
-
-  it('should load the templateUrl properly when /source/list route is accessed', function(done) {
-    tester.visit('/source/list');
-	expect(tester.path()).toBe('/source/list');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/source\/sourceList.html/);	
+  it('should respond to URL #/watch/add', function() {
+  	var state = '/watch/add';
+    expect($state.href(state)).toEqual('#/watch/add');
   });
 
-  it('should load the templateUrl properly when /source/add route is accessed', function(done) {
-    tester.visit('/source/add');
-	expect(tester.path()).toBe('/source/add');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddSourceCtrl');
-	expect(template).toMatch(/views\/source\/sourceAdd.html/);	
+  it('should respond to URL #/watch/list', function() {
+  	var state = '/watch/list';
+    expect($state.href(state)).toEqual('#/watch/list');
   });
 
-  it('should load the templateUrl properly when /publish/newsletter route is accessed', function(done) {
-    tester.visit('/publish/newsletter');
-	expect(tester.path()).toBe('/publish/newsletter');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/report\/createNL.html/);	
+  it('should respond to URL #/source/list', function() {
+  	var state = '/source/list';
+    expect($state.href(state)).toEqual('#/source/list');
   });
 
-  it('should load the templateUrl properly when /publish/report route is accessed', function(done) {
-    tester.visit('/publish/report');
-	expect(tester.path()).toBe('/publish/report');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/report\/createReport.html/);	
+  it('should respond to URL #/source/add', function() {
+  	var state = '/source/add';
+    expect($state.href(state)).toEqual('#/source/add');
   });
 
-  it('should load the templateUrl properly when /organize/survfolder route is accessed', function(done) {
-    tester.visit('/organize/survfolder');
-	expect(tester.path()).toBe('/organize/survfolder');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/organise.html/);	
+  it('should respond to URL #/publish/newsletter', function() {
+  	var state = '/publish/newsletter';
+    expect($state.href(state)).toEqual('#/publish/newsletter');
   });
 
-  it('should load the templateUrl properly when /organize/sourcesfolder route is accessed', function(done) {
-    tester.visit('/organize/sourcesfolder');
-	expect(tester.path()).toBe('/organize/sourcesfolder');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/organise.html/);	
+  it('should respond to URL #/publish/report', function() {
+  	var state = '/publish/report';
+    expect($state.href(state)).toEqual('#/publish/report');
   });
 
-  it('should load the templateUrl properly when /organize/templates route is accessed', function(done) {
-    tester.visit('/organize/templates');
-	expect(tester.path()).toBe('/organize/templates');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/organise.html/);	
+  it('should respond to URL #/organize/survfolder', function() {
+  	var state = '/organize/survfolder';
+    expect($state.href(state)).toEqual('#/organize/survfolder');
   });
 
-  it('should load the templateUrl properly when /organize/collect route is accessed', function(done) {
-    tester.visit('/organize/collect');
-	expect(tester.path()).toBe('/organize/collect');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/organise.html/);	
+  it('should respond to URL #/organize/sourcesfolder', function() {
+  	var state = '/organize/sourcesfolder';
+    expect($state.href(state)).toEqual('#/organize/sourcesfolder');
   });
 
-  it('should load the templateUrl properly when /organize/profile route is accessed', function(done) {
-    tester.visit('/organize/profile');
-	expect(tester.path()).toBe('/organize/profile');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/user\/userAdd.html/);	
+  it('should respond to URL #/organize/templates', function() {
+  	var state = '/organize/templates';
+    expect($state.href(state)).toEqual('#/organize/templates');
   });
 
-  it('should load the templateUrl properly when /organize/sources route is accessed', function(done) {
-    tester.visit('/organize/sources');
-	expect(tester.path()).toBe('/organize/sources');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/sources\/list.html/);	
+  it('should respond to URL #/organize/collect', function() {
+  	var state = '/organize/collect';
+    expect($state.href(state)).toEqual('#/organize/collect');
   });
 
-  it('should load the templateUrl properly when /organize/vfolder route is accessed', function(done) {
-    tester.visit('/organize/vfolder');
-	expect(tester.path()).toBe('/organize/vfolder');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/report\/reportList.html/);	
+  it('should respond to URL #/organize/profile', function() {
+  	var state = '/organize/profile';
+    expect($state.href(state)).toEqual('#/organize/profile');
   });
 
-  it('should load the templateUrl properly when /signin route is accessed', function(done) {
-    tester.visit('/signin');
-	expect(tester.path()).toBe('/signin');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/signin.html/);	
+  it('should respond to URL #/organize/sources', function() {
+  	var state = '/organize/sources';
+    expect($state.href(state)).toEqual('#/organize/sources');
   });
 
-  it('should load the templateUrl properly when /settings/booklet route is accessed', function(done) {
-    tester.visit('/settings/booklet');
-	expect(tester.path()).toBe('/settings/booklet');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/settings.html/);
+  it('should respond to URL #/organize/vfolder', function() {
+  	var state = '/organize/vfolder';
+    expect($state.href(state)).toEqual('#/organize/vfolder');
   });
 
-  it('should load the templateUrl properly when /search/source route is accessed', function(done) {
-    tester.visit('/search/source');
-	expect(tester.path()).toBe('/search/source');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddSourceCtrl');
-	expect(template).toMatch(/views\/source\/sourceList.html/);	
+  it('should respond to URL #/settings/booklet', function() {
+  	var state = '/settings/booklet';
+    expect($state.href(state)).toEqual('#/settings/booklet');
   });
 
-  it('should load the templateUrl properly when /search/rss route is accessed', function(done) {
-    tester.visit('/search/rss');
-	expect(tester.path()).toBe('/search/rss');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(template).toMatch(/views\/source\/searchNew.html/);	
+  it('should respond to URL #/search/source', function() {
+  	var state = '/search/source';
+    expect($state.href(state)).toEqual('#/search/source');
   });
 
-  it('should load the SolrCtrl controller and templateUrl properly when /search/webso route is accessed', function(done) {
-    tester.visit('/search/webso');
-	expect(tester.path()).toBe('/search/webso');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('SolrCtrl');
-	expect(template).toMatch(/views\/search\/webso.html/);		
-  });
-  
-  it('should load the AddSourceCtrl controller and templateUrl properly when /url/:id_url route is accessed', function(done) {
-    tester.visit('/url/:id_url');
-	expect(tester.path()).toBe('/url/:id_url');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddSourceCtrl');
-	expect(template).toMatch(/views\/source\/sourceAdd.html/);		
+  it('should respond to URL #/search/rss', function() {
+  	var state = '/search/rss';
+    expect($state.href(state)).toEqual('#/search/rss');
   });
 
-  it('should load the GoogleFeedCtrl controller and templateUrl properly when /text/:id_text route is accessed', function(done) {
-    tester.visit('/text/:id_text');
-	expect(tester.path()).toBe('/text/:id_text');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('GoogleFeedCtrl');
-	expect(template).toMatch(/views\/source\/searchNew.html/);		
+  it('should respond to URL #/search/webso', function() {
+  	var state = '/search/webso';
+    expect($state.href(state)).toEqual('#/search/webso');
   });
 
-  it('should load the AddInformationCtrl controller and templateUrl properly when /validate/:id_selection route is accessed', function(done) {
-    tester.visit('/validate/:id_selection');
-	expect(tester.path()).toBe('/validate/:id_selection');
-	var current = tester.inject('$route').current;
-	var controller = current.controller;
-	var scope = current.scope;
-	var template = current.templateUrl;
-	expect(controller).toBe('AddInformationCtrl');
-	expect(template).toMatch(/views\/information\/validate.html/);
+  it('should respond to URL #/url/:id_url', function() {
+  	var state = '/url/:id_url';
+    expect($state.href(state)).toEqual('#/url/');
+  });
+
+  it('should respond to URL #/text/:id_text', function() {
+  	var state = '/text/:id_text';
+    expect($state.href(state)).toEqual('#/text/');
+  });
+
+  it('should respond to URL #/validate/:id_selection', function() {
+  	var state = '/validate/:id_selection';
+    expect($state.href(state)).toEqual('#/validate/');
   });
 
 });
