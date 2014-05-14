@@ -45,6 +45,10 @@ describe("Integration/E2E Testing", function() {
     button.click();
     ptor.waitForAngular();
 
+    // fonctionnel (deconnection)
+    element(by.css('.navbar-inverse ul li:nth-child(11)')).click();
+    ptor.waitForAngular();
+
     expect(ptor.getLocationAbsUrl()).toBe('http://localhost:9000/#/home');
  });
 /********************************************************************************************************************/
