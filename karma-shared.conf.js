@@ -42,7 +42,7 @@ module.exports = function() {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['Chrome','Firefox', 'Opera'],
 
 
     // Continuous Integration mode
