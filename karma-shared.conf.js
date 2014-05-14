@@ -14,7 +14,7 @@ module.exports = function() {
         'app/bower_components/angular/angular.js',
         'app/bower_components/angular-resource/*.js',
         'app/bower_components/angular-sanitize/*.js',
-        'app/bower_components/ng-grid/lib/jquery-1.9.1.js',
+        'app/bower_components/jquery/dist/jquery.js',
         'app/bower_components/ng-grid/build/ng-grid.debug.js',  
         'dist/bower_components/angular-route/angular-route.js', 
         'app/bower_components/angular-bootstrap/ui-bootstrap.js',
