@@ -5,7 +5,7 @@ angular.module('websoApp')
 
     $scope.isSuccess = false;
 
-    $scope.informationAdd = $resource(cfg.urlServices+':action',
+    $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
         {action:'put.pl', type_s:'enregistrement', jeton_s : false, 
         //compteur_sessions_s : 0
         callback:"JSON_CALLBACK"},

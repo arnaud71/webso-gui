@@ -13,7 +13,7 @@ angular.module('websoApp')
 	}
 
 /****************** procedure de connexion ***********************/  
-  $scope.verifyLogin = $resource(cfg.urlServices+':action',
+  $scope.verifyLogin = $resource(cfg.urlServices+'db/:action',
       {action:'login.pl', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
