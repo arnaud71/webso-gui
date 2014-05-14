@@ -1494,3 +1494,16 @@ describe('Controller: UsersCtrl', function () {
   });
 });
 /****************************************************************************************************/
+describe("Service : serviceRestrictions", function() {
+  beforeEach(module('websoApp'));
+
+  it('should have a working serviceRestrictions service',
+    inject(['serviceRestrictions',function($serviceRestrictions) {
+    var restrictions = [true, true, true];
+    expect($serviceRestrictions.setRestrictions(restrictions));
+    expect($serviceRestrictions.getRestrictions()).toBeDefined();
+    expect($serviceRestrictions.getRestrictions()).toBe(restrictions);
+  }]));
+
+});
+/****************************************************************************************************/
