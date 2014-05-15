@@ -1507,3 +1507,39 @@ describe("Service : serviceRestrictions", function() {
 
 });
 /****************************************************************************************************/
+describe('Controller: headerCtrl', function () {
+
+  // load the controller's module
+  beforeEach(module('websoApp'));
+
+  var headerCtrl, getDataMock, scope, restrictions;
+  
+  var serviceRestrictionsMocked1 = {
+  			getRestrictions : function() {return [true, true, true, true]}
+		};
+
+  var serviceRestrictionsMocked2 = {
+        getRestrictions : function() {return [true, true, true, false]}
+    };
+
+  beforeEach(module(function ($provide) {
+      $provide.value('serviceRestrictions', serviceRestrictionsMocked1);
+      $provide.value('serviceRestrictions', serviceRestrictionsMocked2);
+  }));
+
+	// Initialize the controller and a mock scope
+	beforeEach(inject(function ($controller, $rootScope) {
+		scope = $rootScope.$new();
+
+		headerCtrl = $controller('headerCtrl', {
+		  $scope: scope
+		});
+	}));
+
+	it('should call requestPeople on the people service when init is called', function() {
+    spyOn(serviceRestrictionsMocked1, 'getRestrictions');
+    spyOn(serviceRestrictionsMocked2, 'getRestrictions');
+    scope.logout();
+	});
+});
+/****************************************************************************************************/
