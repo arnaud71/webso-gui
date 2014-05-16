@@ -1536,7 +1536,7 @@ describe('Controller: headerCtrl', function () {
 		});
 	}));
 
-	it('should call requestPeople on the people service when init is called', function() {
+	it('should have a working headerCtrl controller', function() {
     spyOn(serviceRestrictionsMocked1, 'getRestrictions');
     spyOn(serviceRestrictionsMocked2, 'getRestrictions');
     scope.logout();
