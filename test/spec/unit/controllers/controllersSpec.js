@@ -1429,12 +1429,29 @@ describe('Controller: LoginCtrl', function () {
 
   var LoginCtrl, httpBackendlogin, scope;
 
+
+
+  var headerCtrl, getDataMock, scope, restrictions,cookieStoreMocked;
+  
+  var cookieStoreMocked = {
+        get : function(cookie) {
+          if(cookie === 'username'){
+            return 'name';
+          }else if(cookie === 'password'){
+            return 'password';
+          }else if (cookie === 'Authenticated'){
+            return true;
+          }
+        }
+    };
+
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend, $cookieStore) {
   httpBackendlogin = $httpBackend;  	
   scope = $rootScope.$new();
     LoginCtrl = $controller('LoginCtrl', {
-      $scope: scope
+      $scope: scope,
+      $cookieStore : cookieStoreMocked
     });
 
     var mock_data = {"test": 
@@ -1442,7 +1459,7 @@ describe('Controller: LoginCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/login.pl?callback=JSON_CALLBACK";            
+	var url = "http://localhost/cgi-bin/webso-services/db/login.pl?callback=JSON_CALLBACK&password_s=password&user_s=name";            
     httpBackendlogin.whenJSONP(url).respond(mock_data);
     httpBackendlogin.when('GET','views/main.html').respond(mock_data);    
   }));
@@ -1450,11 +1467,11 @@ describe('Controller: LoginCtrl', function () {
   it('should have a working LoginCtrl controller ', function() {
   	expect(scope.isError).toBeDefined();
   	expect(scope.verifyLogin).toBeDefined();
+    spyOn(cookieStoreMocked, 'get');
+    scope.isAuthenticated = cookieStoreMocked.get('Authenticated');
   	scope.login();
     scope.$apply();
     httpBackendlogin.flush();
-  	expect(scope.verifyLogin).toBeDefined();
-  	// ajouter le cas passant et non passant en mockant les cookies
   });
 });
 /****************************************************************************************************/
@@ -1492,6 +1509,11 @@ describe('Controller: UsersCtrl', function () {
     expect(scope.roleModify).toBeDefined();
     expect(scope.modifyRole).toBeDefined();
   });
+
+  it('should have correct modifyRole function in the controller UsersCtrl', function() {
+    scope.modifyRole(1, 'veilleur', 1);
+  });
+
 });
 /****************************************************************************************************/
 describe("Service : serviceRestrictions", function() {
