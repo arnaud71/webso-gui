@@ -6,13 +6,13 @@ angular.module('websoApp')
         /*
          Input fields - from sourceAdd & surveillanceAdd??
          */
-        $scope.inputUrl = 'http://www.apache.org';
-        $scope.inputTags = 'server';
-        $scope.inputTitle = 'Apache home page';
+        $scope.inputUrl     = '';
+        $scope.inputTags    = '';
+        $scope.inputTitle   = '';
         $scope.inputDetails = '';
         var $username = $cookieStore.get('username');      
 
-        $scope.informationAdd = $resource(cfg.urlServices+':action',
+        $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
             {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
