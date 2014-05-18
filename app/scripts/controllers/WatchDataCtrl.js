@@ -10,7 +10,7 @@ angular.module('websoApp')
          {action:'get.json', source_user:'user_1',callback:"JSON_CALLBACK"},
          {get:{method:'JSONP'}});
          */
-        $scope.watchData = $resource(cfg.urlServices+':action',
+        $scope.watchData = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl', type_s:'watch',user_s:$username, callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
@@ -22,7 +22,7 @@ angular.module('websoApp')
          Deleting source
          */
 
-        $scope.watchDelete = $resource(cfg.urlServices+':action',
+        $scope.watchDelete = $resource(cfg.urlServices+'db/:action',
             {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 

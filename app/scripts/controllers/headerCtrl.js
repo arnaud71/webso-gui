@@ -28,7 +28,7 @@ angular.module('websoApp')
 	}
 
 /****************** procedure de deconnexion *******************/  
-  $scope.verifyLogout = $resource(cfg.urlServices+':action',
+  $scope.verifyLogout = $resource(cfg.urlServices+'db/:action',
       {action:'logout.pl', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 

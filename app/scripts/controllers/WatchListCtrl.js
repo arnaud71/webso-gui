@@ -119,7 +119,7 @@ angular.module('websoApp')
          Deleting source
          */
 
-        $scope.sourceDelete = $resource(cfg.urlServices+':action',
+        $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
             {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
@@ -129,7 +129,7 @@ angular.module('websoApp')
          Deleting source
          */
 
-        $scope.watchDelete = $resource(cfg.urlServices+':action',
+        $scope.watchDelete = $resource(cfg.urlServices+'db/:action',
             {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 

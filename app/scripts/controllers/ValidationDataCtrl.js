@@ -9,7 +9,7 @@ angular.module('websoApp')
          {action:'get.json', source_user:'user_1',callback:"JSON_CALLBACK"},
          {get:{method:'JSONP'}});
          */
-        $scope.validationData = $resource(cfg.urlServices+':action',
+        $scope.validationData = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 

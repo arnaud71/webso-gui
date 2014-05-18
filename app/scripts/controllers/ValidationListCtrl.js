@@ -144,7 +144,7 @@ angular.module('websoApp')
      Deleting source
      */
 
-    $scope.sourceDelete = $resource(cfg.urlServices+':action',
+    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 

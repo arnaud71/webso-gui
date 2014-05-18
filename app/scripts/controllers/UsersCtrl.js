@@ -9,7 +9,7 @@ angular.module('websoApp')
          Getting watch   List
          */
 
-        $scope.userList = $resource(cfg.urlServices+':action',
+        $scope.userList = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl', type_s:'enregistrement',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
@@ -106,7 +106,7 @@ angular.module('websoApp')
     );
 
 // suppression d'un utilisateur
-        $scope.countDelete = $resource(cfg.urlServices+':action',
+        $scope.countDelete = $resource(cfg.urlServices+'db/:action',
           {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
@@ -141,7 +141,7 @@ angular.module('websoApp')
     };
 
 // modification du role de l'utilisateur
-        $scope.roleModify = $resource(cfg.urlServices+':action',
+        $scope.roleModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'',callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
