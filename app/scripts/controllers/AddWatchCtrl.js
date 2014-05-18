@@ -3,6 +3,8 @@
 angular.module('websoApp')
   .controller('AddWatchCtrl', function ($cookieStore, $scope,$resource,cfg,$modal,$log,$http) {
 
+    var $username = $cookieStore.get('username');
+
     $scope.filterOptions = {
       filterText        : "",
       useExternalFilter : false
@@ -78,12 +80,12 @@ angular.module('websoApp')
 
     // to list the available sources
     $scope.sourceList = $resource(cfg.urlServices+'db/:action',
-      {action:'get.pl', type_s:'source',user_s:'user_0',callback:"JSON_CALLBACK"},
+      {action:'get.pl', type_s:'source',user_s:$username,callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
     // to add an object to the db
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
-      {action:'put.pl',user_s:'user_0', level_sharing_i:'1',callback:"JSON_CALLBACK"},
+      {action:'put.pl',user_s:$username, level_sharing_i:'1',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}}
     );
 
