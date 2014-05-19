@@ -315,49 +315,72 @@ angular.module('websoApp')
       };
     };
 
+
+
     // ***************************************************************
     // sourceDelete
-    // to delete a source from the DB
+    // to delete a watch from the DB
     $scope.sourceDelete = function (dbId,index) {
-      var dbSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
-      if (dbSource) {
-        alert('Suppression confirmée');
 
-        /*
-         Delete from Docs
-         */
+      $scope.dbId   = dbId;
+      $scope.index  = index;
+      var modalInstance = $modal.open({
+        templateUrl: 'deleteSourceModal.html',
+        controller: ModalInstanceDeleteCtrl
+      });
+
+
+      modalInstance.result.then(function () {
         $scope.sourceAddResult = $scope.dbDelete.get({
-          id  :     dbId
+          id  :     $scope.dbId
         });
-        /*
-         Delete from table
-         */
-        $scope.myDataSource.splice(index, 1);
-      }
+        $scope.myDataSource.splice($scope.index, 1);
 
+
+      });
 
     };
+
+
+
+
 
     // ***************************************************************
     // watchDelete
     // to delete a watch from the DB
     $scope.watchDelete = function (dbId,index) {
-      var dbSource = confirm('Etes vous sûr de vouloir supprimer cette surveillance?');
-      if (dbSource) {
-        alert('Suppression confirmée');
 
-        /*
-         Delete from Docs
-         */
+      $scope.dbId   = dbId;
+      $scope.index  = index;
+      var modalInstance = $modal.open({
+          templateUrl: 'deleteWatchModal.html',
+          controller: ModalInstanceDeleteCtrl
+      });
+
+
+      modalInstance.result.then(function () {
         $scope.sourceAddResult = $scope.dbDelete.get({
-          id  :     dbId
+          id  :     $scope.dbId
         });
-        /*
-         Delete from table
-         */
-        $scope.myDataWatch.splice(index, 1);
-      }
+        $scope.myDataWatch.splice($scope.index, 1);
 
+      });
+
+    };
+
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
 
     };
 
