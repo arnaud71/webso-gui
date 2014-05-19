@@ -19,7 +19,7 @@
 
 (function() {
 
-
+     var urlBookmarklet = 'http://localhost:9000';
 
     /**********************************
      * Variables
@@ -126,7 +126,7 @@
     $("#b1").on("click",function(){ //cfg.urlServices+
 
        // window.open("http://localhost:9000/#/text/"+getSelection());
-        window.open("http://albator.hesge.ch/web/webso-gui/#/text/"+getSelection());
+        window.open(urlBookmarklet+"/#/text/"+getSelection());
        // window.open(configuration.cfg.urlGui+"/#/text/"+getSelection());
         //http://albator.hesge.ch/web/webso-gui/#/
         var s = "";
@@ -148,7 +148,7 @@
        // window.open("http://localhost:9000/#/validate/"+getSelection());
         ///alert("En cours");
         //window.open("http://localhost:9000/#/validate/"+getSelection());
-     window.open('http://albator.hesge.ch/web/webso-gui/#/validate/'+btoa(encodeURIComponent(location.href)));   //??
+     window.open(urlBookmarklet+'/#/validate/'+btoa(encodeURIComponent(location.href)));   //??
        // window.open('http://localhost:9000/#/validate/'+btoa(encodeURIComponent(location.href)));
 
 
@@ -161,7 +161,7 @@
     $('#b3').on("click",function(){
        // myUrl = document.location;
        // window.open("http://albator.hesge.ch/web/webso-gui/#/url/");//+btoa(encodeURIComponent(location.href)));
-       window.open("http://albator.hesge.ch/web/webso-gui/#/url/"+btoa(encodeURIComponent(location.href)));
+       window.open(urlBookmarklet+"/#/url/"+btoa(encodeURIComponent(location.href)));
         //window.open('http://localhost:9000/#/url/'+btoa(encodeURIComponent(location.href)));
       //  console.log("---"+location.ref);
 

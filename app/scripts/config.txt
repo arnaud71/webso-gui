@@ -1,0 +1,30 @@
+{
+  "service_host"    : "",
+  "solr_host"       : "albator.hesge.ch",
+  "solr_port"       : "8984",
+  "solr_nt_host"    : "albator.hesge.ch",
+  "solr_nt_port"    : "8981",
+  "use_proxy"       : "true",
+  "proxy"           : "http://zzrodin:as789HGI1@proxyem1.etat-ge.ch:80",
+  "drupal_root"     : "/var/www/drupal/",
+  "drupal_host"     : "http://albator.hesge.ch/resipi/",
+  "owl_dir"         : "/var/www/drupal/sites/albator.hesge.ch.resipi/files/domain/",
+  "log_file"		: "/var/log/resipi/error.log",
+  "tmp_dir"			: "/var/www/drupal/sites/albator.hesge.ch.resipi/files/tmp/",
+  "resipi_db"       : {
+    	"db_name"       : "resipi",
+    	"port"          : "3306",
+    	"host"          : "localhost",
+    	"username"      : "resipi",
+    	"password"      : "resipi2011",
+    	"db_type"       : "mysql"
+  },
+  "crawler_db"          : {
+    	"db_name"       : "crawler",
+    	"port"          : "3306",
+    	"host"          : "localhost",
+    	"username"      : "resipi",
+    	"password"      : "resipi2011",
+    	"db_type"       : "mysql"
+  }
+}

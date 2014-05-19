@@ -31,7 +31,7 @@ angular.module('websoApp')
     // options for grid of sources
 
     $scope.gridOptionsSource = {
-      data                : 'myData',
+      data                : 'myDataSource',
       selectedItems       : $scope.model.mySourceSelections,
       afterSelectionChange: function () {
         angular.forEach($scope.model.mySourceSelections, function ( item ) {
@@ -61,15 +61,61 @@ angular.module('websoApp')
         {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
 
       ]
     };
 
-    $scope.tabs = [
+
+    $scope.gridOptionsWatch = {
+      data                : 'myDataWatch',
+      selectedItems       : $scope.model.myWatchSelections,
+      afterSelectionChange: function () {
+        angular.forEach($scope.model.mySourceSelections, function ( item ) {
+          $scope.model.inputTitle = item.title_t;
+          $scope.model.inputUrl   = item.url_s;
+          $scope.model.inputTags  = item.tags_s;
+
+        });
+      },
+      enablePaging        : true,
+      enableRowSelection  : true,
+      multiSelect         : false,
+      showFooter          : true,
+      totalServerItems    : 'totalServerItems',
+      pagingOptions       : $scope.pagingOptions,
+      filterOptions       : $scope.filterOptions,
+      showFilter          : true,
+
+      //selectWithCheckboxOnly: 'true',
+      //selectedItems: $scope.mySelections,
+      columnDefs: [
+        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+        {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
+        {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'query_s', displayName:  'Requête', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="watchDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
+
+      ]
+    };
+
+
+    $scope.tabsSource = [
       { title:"Ajouter source"},
       { title:"Sélectionner source"}
     ];
+
+    $scope.tabsWatch = [
+      { title:"Ajouter surveillance"},
+      { title:"Sélectionner surveillance"}
+    ];
+
 
     $scope.checkingSource = false;
     $scope.sourceChecked  = false;
@@ -79,9 +125,10 @@ angular.module('websoApp')
     // resources definition
 
     // to list the available sources
-    $scope.sourceList = $resource(cfg.urlServices+'db/:action',
-      {action:'get.pl', type_s:'source',user_s:$username,callback:"JSON_CALLBACK"},
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
+
 
     // to add an object to the db
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
@@ -102,7 +149,7 @@ angular.module('websoApp')
     );
 
     // to delete a specific source
-    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
+    $scope.dbDelete = $resource(cfg.urlServices+'db/:action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
@@ -112,11 +159,11 @@ angular.module('websoApp')
     // doSearchSource
     // list the available sources
     $scope.doSearchSource = function () {
-      $scope.sourceResult = $scope.sourceList.get({type_s:'source'},
+      $scope.sourceResult = $scope.dbList.get({type_s:'source'},
         function() {        //call back function for asynchronous
           if (typeof $scope.sourceResult.success.response === "undefined") {}
           else {
-            $scope.myData = $scope.sourceResult.success.response.docs;
+            $scope.myDataSource = $scope.sourceResult.success.response.docs;
 
             $('.row').trigger('resize');
           }
@@ -125,6 +172,23 @@ angular.module('websoApp')
 
     };
 
+
+    // ***************************************************************
+    // doSearchWatch
+    // list the available sources
+    $scope.doSearchWatch = function () {
+      $scope.watchResult = $scope.dbList.get({type_s:'watch'},
+        function() {        //call back function for asynchronous
+          if (typeof $scope.sourceResult.success.response === "undefined") {}
+          else {
+            $scope.myDataWatch = $scope.watchResult.success.response.docs;
+
+            $('.row').trigger('resize');
+          }
+        }
+      );
+
+    };
 
     // ***************************************************************
     // doAddSource
@@ -254,21 +318,44 @@ angular.module('websoApp')
     // ***************************************************************
     // sourceDelete
     // to delete a source from the DB
-    $scope.doDelete = function (sourceId,index) {
-      var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
-      if (deleteSource) {
+    $scope.sourceDelete = function (dbId,index) {
+      var dbSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
+      if (dbSource) {
         alert('Suppression confirmée');
 
         /*
          Delete from Docs
          */
-        $scope.sourceAddResult = $scope.sourceDelete.get({
-          id  :     sourceId
+        $scope.sourceAddResult = $scope.dbDelete.get({
+          id  :     dbId
         });
         /*
          Delete from table
          */
-        $scope.myData.splice(index, 1);
+        $scope.myDataSource.splice(index, 1);
+      }
+
+
+    };
+
+    // ***************************************************************
+    // watchDelete
+    // to delete a watch from the DB
+    $scope.watchDelete = function (dbId,index) {
+      var dbSource = confirm('Etes vous sûr de vouloir supprimer cette surveillance?');
+      if (dbSource) {
+        alert('Suppression confirmée');
+
+        /*
+         Delete from Docs
+         */
+        $scope.sourceAddResult = $scope.dbDelete.get({
+          id  :     dbId
+        });
+        /*
+         Delete from table
+         */
+        $scope.myDataWatch.splice(index, 1);
       }
 
 

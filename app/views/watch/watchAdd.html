@@ -17,7 +17,7 @@
                 <div class="panel-body">
 
                     <tabset>
-                        <tab heading="{{tabs[0].title}}">
+                        <tab heading="{{tabsSource[0].title}}">
                             <div class="col-md-6">
                             <div class="form-group" >
                                 <label class="col-md-5 control-label required"> Source </label>
@@ -99,7 +99,7 @@
                         </div>
                         </tab>
 
-                        <tab heading="{{tabs[1].title}}" select="doSearchSource()">
+                        <tab heading="{{tabsSource[1].title}}" select="doSearchSource()">
                             <div class="col-md-12">
                             <div class="gridStyleSourceSmall" ng-grid="gridOptionsSource">
 
@@ -116,65 +116,75 @@
         <!-- watch panel -->
         <div class="row">
             <div class="panel panel-default">
-            <div class="panel-body">
-            <div ng-show="model.inputUrl">
-                Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
-            </div>
-            <div class="col-md-6">
-
-
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Dossier </label>
-                    <div  class="col-md-7">
-                        <select id="inputFolderName" name="inputFolderName" ng-model="folder" ng-options="folder.name for folder in folders"></select>
+                <div class="panel-body">
+                    <div ng-show="model.inputUrl">
+                        Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
                     </div>
-                </div>
+                    <tabset>
+                        <tab heading="{{tabsWatch[0].title}}">
+                            <div class="col-md-6">
 
 
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Requête </label>
-                    <div class="col-md-7">
-                        <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
-                        <button type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
-                    </div>
-                </div>
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Dossier </label>
+                                    <div  class="col-md-7">
+                                        <select id="inputFolderName" name="inputFolderName" ng-model="folder" ng-options="folder.name for folder in folders"></select>
+                                    </div>
+                                </div>
 
 
-                <div class="form-group" >
-                    <label class="col-md-5 control-label"> Notification </label>
-
-                    <div class="col-md-7">
-                    <select id="inputNotification" ng-model="notification" ng-options="notification.option for notification in notifications"></select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-5 col-md-7">
-                    <button type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" id="displaySolrTest">
-                <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                    <div ng-show="solrResult.response.numFound">
-                        {{solrResult.response.numFound}} documents(s) trouvé(s)
-                        <div ng-repeat="doc in solrResult.response.docs">
-                            <div class row>
-
-                                </p><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-
-                                <p><span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
-                                </p>
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Requête </label>
+                                    <div class="col-md-7">
+                                        <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
+                                        <button type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
+                                    </div>
+                                </div>
 
 
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Notification </label>
+
+                                    <div class="col-md-7">
+                                        <select id="inputNotification" ng-model="notification" ng-options="notification.option for notification in notifications"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-5 col-md-7">
+                                        <button type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="col-md-6" id="displaySolrTest">
+                                <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
+                                    <div ng-show="solrResult.response.numFound">
+                                        {{solrResult.response.numFound}} documents(s) trouvé(s)
+                                        <div ng-repeat="doc in solrResult.response.docs">
+                                            <div class row>
+
+                                                </p><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+
+                                                <p><span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="{{tabsWatch[1].title}}" select="doSearchWatch()">
+                            <div class="col-md-12">
+                                <div class="gridStyleWatchSmall" ng-grid="gridOptionsWatch">
+
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
                 </div>
             </div>
-            </div>
-            </div>
-
         </div>
     </form>
 
