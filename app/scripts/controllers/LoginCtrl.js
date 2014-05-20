@@ -17,6 +17,8 @@ angular.module('websoApp')
       {action:'login.pl', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+
+
   $scope.login = function () {
     // envoi d'informations de login au service pour valider l'authentification  
 	$scope.verifyLogin.get({user_s : $scope.username, password_s : $scope.password}).$promise.then(function(user) {
@@ -37,4 +39,10 @@ angular.module('websoApp')
 		}
 	});
   };
+
+
+  $scope.releaseError = function() {
+    $scope.isError = false;
+
+  }
 });
