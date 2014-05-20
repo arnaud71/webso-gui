@@ -10,7 +10,7 @@ angular.module('websoApp')
          */
 
         $scope.userList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'enregistrement',callback:"JSON_CALLBACK"},
+            {action:'get.pl', type_s:'user',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
         $scope.filterOptions = {
@@ -94,7 +94,7 @@ angular.module('websoApp')
         };
 
 
-    $scope.userResult = $scope.userList.get({type_s:'enregistrement'},
+    $scope.userResult = $scope.userList.get({type_s:'user'},
         function() {        //call back function for asynchronous
             if (typeof $scope.userResult.success.response === "undefined") {}
             else {

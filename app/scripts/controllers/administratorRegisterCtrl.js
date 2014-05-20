@@ -11,7 +11,7 @@ angular.module('websoApp')
     $scope.userRole = $scope.roles[2];
 
     $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
-        {action:'put.pl', type_s:'enregistrement', jeton_s : false
+        {action:'put.pl', type_s:'user', jeton_s : false
         //, compteur_sessions_s : 0
         , callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});
