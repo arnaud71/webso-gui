@@ -1,0 +1,37 @@
+<div ng-controller="headerCtrl">
+  <div ng-include src="template.url"></div>
+</div>
+
+<div ng-controller="DashboardViewCtrl">
+<h1>{{dashboardTitle}}</h1>
+
+  <div ng-show="!haveElements">
+    <center>
+      <font size="4">
+        <br>Aucun élément sur le tableau de bord<br>
+        Cliquez ici pour ajouter des éléments<br>
+      </font>
+      <button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
+        <i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign">
+      </button>             
+    </center>
+    <!-- Modal for add objects in the dashboard -->
+    <script type="text/ng-template" id="validateModal.html">
+        <div class="modal-header">
+            <h3> Ajout d&apos;éléments sur le tableau de bord</h3>
+        </div>
+        <div class="modal-body">
+            Sélectionner des éléments existants :
+            <li data-ng-repeat="element in elements">{{element}}</li>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="valider()">Valider</button>
+            <button class="btn btn-warning" ng-click="annuler()">Annuler</button>
+        </div>
+    </script>
+  </div>
+
+  <div ng-show="haveElements">
+    Afficher le dashboard
+  </div>
+</div>
