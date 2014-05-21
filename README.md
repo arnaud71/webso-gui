@@ -52,11 +52,11 @@ Run the tests
 		
 		here in Append X section : https://github.com/angular/protractor
 
-	2.2 Start Chrome driver :
+	2.2 Start Selenium server :
 
 		java -jar path_to_selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver="path_to_chromedriver"
 		
-	2.3 Start Selenium server :
+	2.3 Start Chrome driver  :
 
 		chmod +x path_to_chromedriver
 		
