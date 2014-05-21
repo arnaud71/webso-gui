@@ -1,6 +1,6 @@
 'use strict';
 // app.js
-var websoApp = angular.module('websoApp', ['ngCookies', 'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
+var websoApp = angular.module('websoApp', ['checklist-model', 'ngCookies', 'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
 
