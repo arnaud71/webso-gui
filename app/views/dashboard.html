@@ -12,7 +12,7 @@
         Cliquez ici pour ajouter des éléments<br>
       </font>
       <button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
-        <i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign">
+        <i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign"></span>
       </button>             
     </center>
     <!-- Modal for add objects in the dashboard -->
@@ -21,12 +21,16 @@
             <h3> Ajout d&apos;éléments sur le tableau de bord</h3>
         </div>
         <div class="modal-body">
-            Sélectionner des éléments existants :
-            <li data-ng-repeat="element in elements">{{element}}</li>
+          Sélectionner des éléments existants : <br>
+          <label ng-repeat="element in elements">
+            <br><input type="checkbox" checklist-model="object.elements" checklist-value="element">{{element}}
+          </label>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="valider()">Valider</button>
-            <button class="btn btn-warning" ng-click="annuler()">Annuler</button>
+            <button class="btn btn-primary" ng-click="checkAll()">Selectionner tout</button>
+            <button class="btn btn-primary" ng-click="uncheckAll()">Déselectionner tout</button>
+            <button class="btn btn-primary" ng-click="Ajouter()">Ajouter</button>
+            <button class="btn btn-warning" ng-click="Annuler()">Annuler</button>
         </div>
     </script>
   </div>

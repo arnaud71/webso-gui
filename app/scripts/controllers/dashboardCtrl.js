@@ -6,7 +6,6 @@ angular.module('websoApp')
     $scope.dashboardTitle = 'Tableau de bord';
     $scope.haveElements = false;
 
-
     $scope.addElements = function () {
       // affichage de la fenetre modal pour selectionner des éléments
       var modalInstance = $modal.open({
@@ -17,13 +16,30 @@ angular.module('websoApp')
 
     //  Instance du modal
     var ModalInstanceCtrl = function ($scope, $modalInstance) {
-      $scope.elements = ['Affichage d\'une source','Affichage d\'une surveillance','Affichage d\'un dossier de surveillance','Affichage d\'un flux twitter en temps réel'];
+      $scope.elements = [
+        'Affichage d\'une source',
+        'Affichage d\'une surveillance',
+        'Affichage d\'un dossier de surveillance',
+        'Affichage d\'un flux twitter en temps réel'
+      ]; 
 
-      $scope.valider = function () {
+      $scope.object = {
+        elements: []
+      };
+
+      $scope.checkAll = function() {
+        $scope.object.elements = angular.copy($scope.elements);
+      };
+
+      $scope.uncheckAll = function() {
+        $scope.object.elements = [];
+      };
+
+      $scope.Ajouter = function () {
         $modalInstance.close();
       };
 
-      $scope.annuler = function () {
+      $scope.Annuler = function () {
         $modalInstance.dismiss('cancel');
       };
     };
