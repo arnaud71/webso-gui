@@ -175,6 +175,15 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				authorizedRoles: ['administrateur', 'veilleur']
 			}                        
         })
+        // DASHBOARD
+        .state('/dashboard', {
+            url: '/dashboard',       
+            templateUrl: 'views/dashboard.html' ,
+            controller:'',
+            data: {
+                authorizedRoles: ['administrateur', 'veilleur']
+            }                        
+        })        
         // SETTINGS
         .state('/settings/booklet', {
             url: '/settings/booklet',       
