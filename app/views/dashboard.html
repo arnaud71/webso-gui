@@ -3,39 +3,45 @@
 </div>
 
 <div ng-controller="DashboardViewCtrl">
-<h1>{{dashboardTitle}}</h1>
+	<h1>{{dashboardTitle}}</h1>
 
-  <div ng-show="!haveElements">
-    <center>
-      <font size="4">
-        <br>Aucun élément sur le tableau de bord<br>
-        Cliquez ici pour ajouter des éléments<br>
-      </font>
-      <button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
-        <i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign"></span>
-      </button>             
-    </center>
-    <!-- Modal for add objects in the dashboard -->
-    <script type="text/ng-template" id="validateModal.html">
-        <div class="modal-header">
-            <h3> Ajout d&apos;éléments sur le tableau de bord</h3>
-        </div>
-        <div class="modal-body">
-          Sélectionner des éléments existants : <br>
-          <label ng-repeat="element in elements">
-            <br><input type="checkbox" checklist-model="object.elements" checklist-value="element">{{element}}
-          </label>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="checkAll()">Selectionner tout</button>
-            <button class="btn btn-primary" ng-click="uncheckAll()">Déselectionner tout</button>
-            <button class="btn btn-primary" ng-click="Ajouter()">Ajouter</button>
-            <button class="btn btn-warning" ng-click="Annuler()">Annuler</button>
-        </div>
-    </script>
-  </div>
+	<div ng-show="haveElements">
+		<button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
+			<i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign"></span>
+		</button>             
+		<br><br>voici votre liste de vos widgets : <br><br>
+		<label ng-repeat="widget in widgets">
+			<pre>{{widget}}</pre>
+		</label>
+	</div>
 
-  <div ng-show="haveElements">
-    Afficher le dashboard
-  </div>
+	<div ng-show="notHaveElements">
+		<center>
+		  <font size="4">
+		    <br>Aucun élément sur le tableau de bord<br>
+		    Cliquez ici pour ajouter des éléments<br>
+		  </font>
+		  <button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
+		    <i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign"></span>
+		  </button>             
+		</center>
+		<!-- Modal for add objects in the dashboard -->
+		<script type="text/ng-template" id="validateModal.html">
+		    <div class="modal-header">
+		        <h3> Ajout d&apos;éléments sur le tableau de bord</h3>
+		    </div>
+		    <div class="modal-body">
+		      <b>Sélectionner des éléments existants : </b><br><br>
+		      <label ng-repeat="element in elements">
+				<pre><input type="checkbox" checklist-model="object.elements" checklist-value="element.text">{{element.text}}<br></pre>
+		      </label>
+		    </div>
+		    <div class="modal-footer">
+		        <button class="btn btn-primary" ng-click="checkAll()">Selectionner tout</button>
+		        <button class="btn btn-primary" ng-click="uncheckAll()">Déselectionner tout</button>
+		        <button class="btn btn-primary" ng-click="Add()">Ajouter</button>
+		        <button class="btn btn-warning" ng-click="Cancel()">Annuler</button>
+		    </div>
+		</script>
+	</div>
 </div>
