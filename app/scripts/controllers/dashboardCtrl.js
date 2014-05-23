@@ -117,8 +117,8 @@ websoApp.controller('DashboardViewCtrl', function ($scope, $cookieStore, $modal,
                   }
                   $i++;
                 }
+                setDashboardInformations(userInformations[0]);
           });
-        setDashboardInformations(userInformations[0]);
         $modalInstance.close();
       };
 
