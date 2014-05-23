@@ -8,8 +8,8 @@
 	<div ng-show="haveElements">
 		<button type="submit" class="btn btn-primary" ng-click="addElements()" name="addElements">
 			<i class="icon-user icon-white"></i> <span class="glyphicon glyphicon-plus-sign"></span>
-		</button>             
-		<br><br>voici votre liste de vos widgets : <br><br>
+		</button>
+		<br><br>voici la liste de vos widgets : <br><br>
 		<label ng-repeat="widget in widgets">
 			<pre>{{widget}}</pre>
 		</label>
