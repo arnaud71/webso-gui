@@ -313,7 +313,7 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
     var authorizedRoles = next.data.authorizedRoles;
 
     // si l'utilisateur n'est pas connecté 
-    if((userInformations[0] === 'undefined') && (userInformations[1] === 'undefined')){
+    if((!userInformations[0]) && (!userInformations[1])){
         console.log('je suis public');
         // s'il essai d'entrer dans un lien autorisé alors
         if(arrayContain(next.data.authorizedRoles, 'public')){  
