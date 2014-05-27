@@ -102,7 +102,7 @@ describe('Controller: AddInformationCtrl', function(){
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=server&title_t=Apache+home+page&type_s=validation&url_s=http:%2F%2Fwww.apache.org";            
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&details_s=&level_sharing_i=1&tags_s=&title_t=&type_s=validation&url_s=";            
     httpBackendDoAdd.whenJSONP(url).respond(mock_data);
     httpBackendDoAdd.when('GET','views/main.html').respond(mock_data);
 }));
@@ -201,15 +201,14 @@ describe('Controller: AddWatchCtrl', function () {
 
   // exemple de test lors du click sur le bouton doAdd
   it('should have a working doAdd in the controller AddWatchCtrl', function() {
-    expect(scope.inputUrl).toBeDefined();
-    expect(scope.inputTags).toBeDefined();
-    expect(scope.inputTitle).toBeDefined();
-    expect(scope.checkingSource).toBeDefined();
-    expect(scope.sourcecheched).toBeDefined();
-  	scope.doAddSource();
-    expect(scope.sourceAddResult).toBeDefined();
-    scope.doAddWatch();
-  	expect(scope.watchAddResult).toBeDefined();
+    expect(scope.filterOptions).toBeDefined();
+    expect(scope.pagingOptions).toBeDefined();
+    expect(scope.model).toBeDefined();
+    expect(scope.gridOptionsSource).toBeDefined();
+    expect(scope.tabsSource).toBeDefined();
+    expect(scope.tabsWatch).toBeDefined();
+    expect(scope.checkingSource).toBe(false);
+    expect(scope.sourceChecked).toBe(false);
   });
 });
 
@@ -1358,7 +1357,7 @@ describe('Controller: publicRegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=veilleur&type_s=enregistrement"; 
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=veilleur&type_s=user"; 
 
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);
@@ -1399,7 +1398,7 @@ describe('Controller: administratorRegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=lecteur&type_s=enregistrement";            
+	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=lecteur&type_s=user";            
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
   }));
