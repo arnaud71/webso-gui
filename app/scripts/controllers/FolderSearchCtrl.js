@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('SolrCtrl', ['$scope', '$resource','cfg','paginationConfig' ,function ($scope,$resource,cfg,paginationConfig) {
+  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore) {
+
+    var $username                 = $cookieStore.get('username');
 
     $scope.showFound              = false;
     $scope.currentPage            = 1;
@@ -53,7 +55,7 @@ angular.module('websoApp')
       headerRowHeight: 30,
 
       columnDefs: [
-        {visible:'true',field:'period', displayName: 'Période', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        {visible:'true',field:'period', displayName: 'Période', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' }
 
       ]
     };
@@ -62,17 +64,18 @@ angular.module('websoApp')
     $scope.doSearch = function () {
       $scope.isCollapsed = false;
       //if ($scope.searchTerm) {
-        $scope.currentPage      = 1;
-        $scope.maxSize          = 5;
-        $scope.bigCurrentPage   = 1;
-        $scope.solrResult       = $scope.solr.get({q:$scope.searchTerm,start:$scope.currentPage-1,fq:$scope.currentFq},
-          function () {
-            //if ($scope.solrResult.response.numFound) {
-            $scope.totalItems     = $scope.solrResult.response.numFound;
-            $scope.bigTotalItems  = $scope.solrResult.response.numFound;
-            //}
+      $scope.currentPage      = 1;
+      $scope.maxSize          = 5;
+      $scope.bigCurrentPage   = 1;
+      $scope.solrResult       = $scope.solr.get({q:$scope.searchTerm,start:$scope.currentPage-1,fq:$scope.currentFq+' +type_s:document +user_s:'+$username},
+        function () {
+          if (typeof solrResult !== 'undefined') {
+          //if ($scope.solrResult.response.numFound !== 'undefined') {
+          $scope.totalItems     = $scope.solrResult.response.numFound;
+          $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
-        );
+        }
+      );
       //}
     };
 
@@ -80,14 +83,17 @@ angular.module('websoApp')
     $scope.doSearchFromPage = function () {
       $scope.isCollapsed = true;
       //if ($scope.searchTerm) {
-        $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
-          function () {
+      $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
+        function () {
+          if (typeof solrResult !== 'undefined') {
             $scope.totalItems     = $scope.solrResult.response.numFound;
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
-        );
-        //$scope.totalItems    = $scope.solrResult.response.numFound;
-        //$scope.bigTotalItems = $scope.solrResult.response.numFound;
+
+        }
+      );
+      //$scope.totalItems    = $scope.solrResult.response.numFound;
+      //$scope.bigTotalItems = $scope.solrResult.response.numFound;
       //}
     };
 
@@ -108,14 +114,20 @@ angular.module('websoApp')
       //return $scope.solrResult.response.highlighting.{{id}}.content_en;
     }
 
+
+    $scope.pathValidate = function(url){
+      var path = '/validate/add/'+url ; //dont need the '#'
+      $location.path(path);
+    }
+
   }]);
 
 
 // http://albator.hesge.ch:8587/solr/collection1/select?q='+query+'&wt=json&json.wrf=?&callback=?'
 
 /*
-Controller for Collapsing solr results
-*/
+ Controller for Collapsing solr results
+ */
 angular.module('websoApp')
   .controller('CollapseSolrCtrl', ['$scope', function ($scope) {
     $scope.isCollapsed = true;

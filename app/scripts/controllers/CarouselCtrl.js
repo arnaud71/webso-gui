@@ -14,8 +14,8 @@ angular.module('websoApp')
         $scope.addSlide = function() {
             //var newWidth = 600 + slides.length;
             slides.push({
-                image: 'images/definition_veille.jpg',
-                text: ['Webso','Recherche','Validation','Diffusion'][slides.length % 4]
+                image: 'images/technology-2.jpg',
+                text: ['WebSo : la plateforme de veille pour tous','Recherche Avancée','Validation de l\'information pertinente','Diffusion par newsletter et rapport'][slides.length % 4]
             });
         };
         for (var i=0; i<4; i++) {

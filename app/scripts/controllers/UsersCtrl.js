@@ -106,38 +106,58 @@ angular.module('websoApp')
     );
 
 // suppression d'un utilisateur
-        $scope.countDelete = $resource(cfg.urlServices+'db/:action',
+    $scope.countDelete = $resource(cfg.urlServices+'db/:action',
           {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
-        /*
-         Confirm dialogs
-         */
-        var deleteSource = confirm('Etes vous sûr de vouloir supprimer cet utilisateur ?');
-        if (deleteSource) {
-            /*
-             Delete from Docs
-             */
-            $scope.sourceAddResult = $scope.countDelete.get({
-                id  :     userId
-            });
-            /*
-             Delete from ng-grid table
-             */
-            $scope.userResult.success.response.docs.splice(index, 1);
+      $scope.userId   = userId;
+      $scope.index    = index;
+      $scope.username = username;
 
-            var usernameCookie = $cookieStore.get('username');
-            var userRoleCookie = $cookieStore.get('userRole');
+      var modalInstance = $modal.open({
+        templateUrl: 'deleteUserModal.html',
+        controller: ModalInstanceCtrl
+      });
 
-            if(usernameCookie === username && userRoleCookie === 'administrateur'){
-                $cookieStore.remove('Authenticated');
-                $cookieStore.remove('username');
-                $cookieStore.remove('password');
-                $cookieStore.remove('userRole');
-                $location.path('/home');
-            }
+
+      modalInstance.result.then(function () {
+        $scope.sourceAddResult = $scope.countDelete.get({
+          id  :     $scope.userId
+        });
+
+
+        $scope.userResult.success.response.docs.splice($scope.index, 1);
+
+        var usernameCookie = $cookieStore.get('username');
+        var userRoleCookie = $cookieStore.get('userRole');
+
+        if(usernameCookie === username && userRoleCookie === 'administrateur'){
+          $cookieStore.remove('Authenticated');
+          $cookieStore.remove('username');
+          $cookieStore.remove('password');
+          $cookieStore.remove('userRole');
+          $location.path('/home');
         }
+
+      });
+
+    };
+
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+
     };
 
 // modification du role de l'utilisateur
@@ -152,5 +172,9 @@ angular.module('websoApp')
             $scope.roleModify.get({ id : userId, role_s : role});
             $scope.isSuccess = true;
             $scope.message = 'Le rôle a été modifié avec succès';
-    };    
+    };
+
+
+
+
 });

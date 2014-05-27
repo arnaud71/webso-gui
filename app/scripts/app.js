@@ -8,17 +8,17 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         .state('/home', {
             url: '/home',
             templateUrl: 'views/main.html',
-			data: {
-				authorizedRoles: ['public']
-			}
+			      data: {
+				      authorizedRoles: ['public']
+			      }
         })
         .state('/login', {
             url: '/login',
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl',
-			data: {
-				authorizedRoles: ['public']
-			}            
+			      data: {
+				      authorizedRoles: ['public']
+		  	    }
         })
         .state('/publicRegister', {
             url: '/publicRegister',
@@ -32,17 +32,17 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/administratorRegister',
             templateUrl:'views/administratorRegister.html',
             controller: 'administratorRegisterCtrl',
-			data: {
-				authorizedRoles: ['administrateur']
-			}
+			      data: {
+				      authorizedRoles: ['administrateur']
+			      }
         })
         .state('/counts', {
             url: '/counts',
             templateUrl: 'views/counts.html',
             controller: 'UsersCtrl',
-			data: {
-				authorizedRoles: ['administrateur']
-			}
+			      data: {
+				      authorizedRoles: ['administrateur']
+			      }
         })
         .state('/deconnexion', {
             url: '/deconnexion',
@@ -55,185 +55,193 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/validate/add',
             templateUrl: 'views/information/validate.html' ,
             controller : 'AddInformationCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}            
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/validate/display', {
             url: '/validate/display',            
             templateUrl: 'views/information/validationList.html' ,
             controller: 'ValidationListCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
         })
         // WATCH
         .state('/watch/add', {
             url: '/watch/add',            
             templateUrl: 'views/watch/watchAdd.html',
             controller:'AddWatchCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/watch/list', {
             url: '/watch/list',            
             templateUrl: 'views/watch/watchList.html',
             controller:'WatchListCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
         })
         // SOURCE
         .state('/source/list', {
             url: '/source/list',       
             templateUrl: 'views/source/sourceList.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
         })
         .state('/source/add', {
             url: '/source/add',       
             templateUrl: 'views/source/sourceAdd.html' ,
             controller:'AddSourceCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })        
         // PUBLISH
         .state('/publish/newsletter', {
             url: '/publish/newsletter',       
             templateUrl: 'views/report/createNL.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/publish/report', {
             url: '/publish/report',       
             templateUrl: 'views/report/createReport.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         // ORGANIZE
         .state('/organize/survfolder', {
             url: '/organize/survfolder',       
             templateUrl: 'views/organise.html',
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/sourcesfolder', {
             url: '/organize/sourcesfolder',       
             templateUrl: 'views/organise.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/templates', {
             url: '/organize/templates',       
             templateUrl: 'views/organise.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/collect', {
             url: '/organize/collect',       
             templateUrl: 'views/organise.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/profile', {
             url: '/organize/profile',       
             templateUrl: 'views/user/userAdd.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/sources', {
             url: '/organize/sources',                   
             templateUrl: 'views/sources/list.html'  ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/organize/vfolder', {
             url: '/organize/vfolder',       
             templateUrl: 'views/report/reportList.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         // SETTINGS
         .state('/settings/booklet', {
             url: '/settings/booklet',       
             templateUrl: 'views/settings.html' ,
             controller:'',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			        data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         // SEARCH
-        .state('/search/source', {
+        /* .state('/search/source', {
             url: '/search/source',       
             templateUrl: 'views/source/sourceList.html',
             controller: 'AddSourceCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
-        })
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
+         })*/
         .state('/search/rss', {
             url: '/search/rss',       
             templateUrl: 'views/source/searchNew.html',
             controller: 'GoogleFeedCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
         })
         .state('/search/webso', {
-            url: '/search/webso',       
-            templateUrl: 'views/search/webso.html',
-            controller: 'SolrCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			}                        
+            url: '/search/webso',
+            templateUrl: 'views/search/folder.html',
+            controller: 'FolderSearchCtrl',
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+			      }
+        })
+        .state('/search/folder', {
+            url: '/search/folder',
+            templateUrl: 'views/search/folder.html',
+            controller: 'FolderSearchCtrl',
+            data: {
+              authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+            }
         })
         //  Booklet
         .state('/url/:id_url', {
             url: '/url/:id_url',       
             templateUrl: 'views/source/sourceAdd.html',
             controller: 'AddSourceCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
         .state('/text/:id_text', {
             url: '/text/:id_text',       
             templateUrl: 'views/source/searchNew.html',
             controller: 'GoogleFeedCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
         })
-        .state('/validate/:id_selection', {
-            url: '/validate/:id_selection',       
+/*        .state('/validate/add/:id_selection', {
+            url: '/validate/add/:id_selection',
             templateUrl: 'views/information/validate.html',
             controller: 'AddInformationCtrl',
-			data: {
-				authorizedRoles: ['administrateur', 'veilleur']
-			}                        
-        })
+			      data: {
+				      authorizedRoles: ['administrateur', 'veilleur']
+			      }
+        }) */
         .state('/404', {
             url: '/404',       
             templateUrl: '404.html'  

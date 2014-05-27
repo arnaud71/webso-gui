@@ -1,14 +1,26 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('GoogleFeedCtrl', function ($scope,$resource) {
-    $scope.msgSelect = 'Select All';
-    $scope.mySelections = [];
-    $scope.foundRes = 0;
+  .controller('GoogleFeedCtrl', function ($scope,$resource,cfg,$cookieStore,$modal) {
+
+    var $username = $cookieStore.get('username');
+
+    $scope.msgSelect      = 'Selectionner tout';
+    $scope.msgAdd         = 'Ajouter';
+    $scope.mySelections   = [];
+    $scope.foundRes       = 0;
     $scope.nameController = 'GoogleFeedCtrl';
+
     $scope.googleFeed = $resource('https://ajax.googleapis.com/ajax/services/feed/:action',
       {action:'find', v:'1.0',q:'technology', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
+
+    // to add an object to the db
+    $scope.addRss = $resource(cfg.urlServices+'db/:action',
+      {action:'put.pl',user_s:$username, level_sharing_i:'1',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}}
+    );
+
 
 
 //        $scope.myData = [{name: "Moroni", age: 50},
@@ -21,6 +33,7 @@ angular.module('websoApp')
       data: 'myData',
       //selectWithCheckboxOnly: 'true',
       selectedItems: $scope.mySelections,
+      showSelectionCheckbox: true,
       columnDefs: [
 
         {field:'url', displayName: 'Source', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
@@ -41,11 +54,9 @@ angular.module('websoApp')
             //$scope.myData  =  myData;
             if (typeof $scope.googleFeedResult.responseData === "undefined") {}
             else {
-              $scope.myData = $scope.googleFeedResult.responseData.entries;
+              $scope.myData   = $scope.googleFeedResult.responseData.entries;
               $scope.foundRes = $scope.googleFeedResult.responseData.entries.length;
               $('.row').trigger('resize');
-
-
 
             }
             //$scope.gridOptions = { data : 'myData' };
@@ -58,6 +69,12 @@ angular.module('websoApp')
         );
       }
     };
+
+
+    $scope.$watch('myData', function() {
+      $('.row').trigger('resize');
+
+    });
 
     $scope.selectAll = function(){
       angular.forEach($scope.myData, function(data, index){
@@ -80,6 +97,56 @@ angular.module('websoApp')
 
     };
 
+    // ***************************************************************
+    // doAddSource
+    // add a source in the DB
+    $scope.doAddRss = function () {
+
+
+
+      $.each($scope.mySelections, function(index, element) {
+
+
+        $scope.rssAddResult = $scope.addRss.get({
+          source_type_s : 'rss',
+          type_s :        'source',
+          url_s :         this.url,
+          tags_s:         '',
+          title_t:        this.title,
+          domain_s:       '',
+          activity_s:     '',
+          //domain_s:       $scope.domain.name,
+          //activity_s:     $scope.activity.name,
+          refresh_s:      '12h'
+
+        }, function () {
+
+        });
+
+      });
+      var modalInstance = $modal.open({
+        templateUrl: 'addSourceModal.html',
+        controller: ModalInstanceCtrl
+      });
+
+
+    };
+
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+    };
+
   });
+
 
 //https://ajax.googleapis.com/ajax/services/feed/find?v=1.0&q=Official%20Google%20Blog&userip=INSERT-USER-IP"

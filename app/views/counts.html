@@ -3,15 +3,32 @@
 </div>
 
 <h1>Compte des utilisateurs enregistrés</h1>
-    <div ng-controller="UsersCtrl">
+<div ng-controller="UsersCtrl">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="gridStyleSource" ng-grid="gridOptionsSource">
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="gridStyleSource" ng-grid="gridOptionsSource">
             </div>
         </div>
-		<div class="alert alert-success" ng-show="isSuccess">
-			<strong>Succès :&nbsp;</strong><span>{{message}}</span>
-		</div>
     </div>
+    <div class="alert alert-success" ng-show="isSuccess">
+        <strong>Succès :&nbsp;</strong><span>{{message}}</span>
+    </div>
+</div>
+
+<script type="text/ng-template" id="deleteUserModal.html">
+    <div class="modal-header">
+        <h3> Effacement d'un utilisateur</h3>
+
+    </div>
+    <div class="modal-body">
+        Etes vous sûr de vouloir effacer cet utilisateur?
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+
+        <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+    </div>
+</script>
