@@ -3,14 +3,25 @@
 </div>
 
 <div id="search-new-feeds">
+
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb text-center">
+                <li><a href="#/home">Webso</a></li>
+                <li><a href="#">Rechercher</a></li>
+                <li class="active"> - </li>
+            </ol>
+        </div>
+    </div>
     <div ng-controller="GoogleFeedCtrl">
 
-            <div class="row">
+        <div class="row">
+            <div class="col-md-12">
                 <form class="form-horizontal" ng-submit="doSearch()">
                     <input type="text" placeholder="Chercher" ng-model="searchTerm" name ="searchTerm">
                     <button class="btn" ng-click="doSearch()" name ="searchButton"><i class="icon-search"></i>Search</button>
                 </form>
-                <div solr-results_number ng-show="googleFeedResult.responseData">
+                <div solr-results_number ng-show="googleFeedResult.res">
                     Found: {{foundRes}} rss
 
                     <div class="gridStyle" ng-grid="gridOptions">
@@ -22,10 +33,10 @@
 
                     <button ng-click="doAddRss()" name ="addRss">{{msgAdd}}</button>
 
-                    <div class="selectedItems">{{mySelections}}</div>
+                    <!-- <div class="selectedItems">{{mySelections}}</div> -->
                 </div>
-
             </div>
+        </div>
 
     </div>
 </div>
