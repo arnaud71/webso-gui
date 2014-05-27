@@ -21,9 +21,7 @@ module.exports = function(config) {
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
       'app/scripts/controllers/*.js' : ['coverage'],
-      'app/scripts/cfg.js' : ['coverage'],
-      'app/scripts/app.js' : ['coverage']
-
+      'app/scripts/cfg.js' : ['coverage']
     };
 
     // optionally, configure the reporter
@@ -35,9 +33,12 @@ module.exports = function(config) {
     conf.plugins = [
       'karma-jasmine',
       'karma-coverage',
-      'karma-chrome-launcher',
+      'karma-chrome-launcher'
+/*
+      ,
       'karma-firefox-launcher',
       'karma-opera-launcher'
+*/      
     ];
 
     config.set(conf);
