@@ -24,7 +24,6 @@ angular.module('websoApp')
       inputTags           : '',
       inputTitle          : '',
       inputQuery          : '',
-      inputTestQuery      : '',
       sourceId            : 0,
       watchId             : 0,
       mySourceSelections  : [],
@@ -63,7 +62,7 @@ angular.module('websoApp')
       //selectedItems: $scope.mySelections,
       columnDefs: [
         {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-        {visible:true,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -102,8 +101,8 @@ angular.module('websoApp')
       //selectedItems: $scope.mySelections,
       columnDefs: [
         {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-        {visible:true,width:'100px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {visible:true,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'100px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -311,7 +310,7 @@ angular.module('websoApp')
     // test the current watch with a query
     $scope.testWatch = function() {
       $scope.solrResult       = $scope.solrResource.get({
-                                    q   : $scope.model.inputTestQuery,
+                                    q   : $scope.model.inputQuery,
                                     fq  : '+source_id_ss:'+$scope.model.sourceId+' +type_s:document'
 
       }
@@ -368,7 +367,7 @@ angular.module('websoApp')
       $scope.dbId   = dbId;
       $scope.index  = index;
       var modalInstance = $modal.open({
-          templateUrl: 'deleteWatchModal.html',
+          templateUrl: 'views/watch/deleteWatchModal.html',
           controller: ModalInstanceDeleteCtrl
       });
 

@@ -18,23 +18,28 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="form-horizontal" ng-submit="doSearch()">
-                    <input type="text" placeholder="Chercher" ng-model="searchTerm" name ="searchTerm">
+                    <input type="text" placeholder="Chercher" ng-model="model.searchTerm" name ="searchTerm">
                     <button class="btn" ng-click="doSearch()" name ="searchButton"><i class="icon-search"></i>Search</button>
                 </form>
-                <div solr-results_number ng-show="googleFeedResult.res">
-                    Found: {{foundRes}} rss
+                <!-- <div solr-results_number ng-show="model.foundRes"> -->
+                     Found: {{model.foundRes}} rss
 
                     <div class="gridStyle" ng-grid="gridOptions">
 
+
+
                     </div>
-                    <button ng-click="selectAll()" name ="msgSelect">{{msgSelect}}</button>
+
+                    <!-- <button ng-click="selectAll()" name ="msgSelect">{{msgSelect}}</button> -->
 
                     <!-- <button ng-click="createOPML()" name ="createOpml">Create OPML</button> -->
 
-                    <button ng-click="doAddRss()" name ="addRss">{{msgAdd}}</button>
+                    <button ng-click="doAddRss()" name ="addRss">{{model.msgAdd}}</button>
 
                     <!-- <div class="selectedItems">{{mySelections}}</div> -->
-                </div>
+
+<!--                    <button ng-click="fixGridRendering()" name ="fixGrid">fixGrid</button>
+                </div> -->
             </div>
         </div>
 

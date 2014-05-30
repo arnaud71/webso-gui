@@ -2,6 +2,7 @@ node_modules
 .tmp
 .sass-cache
 .idea/*
+dist
 app/bower_components
 code_coverage/*
 *.log

@@ -13,11 +13,12 @@
 
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/ng-grid.css">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <!--wysiwyg-->
-
     <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css">
+
+
+    <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
+
 </head>
 
 <body ng-app="websoApp">
@@ -53,16 +54,13 @@
     ga('send', 'pageview');
 </script>
 
+<!-- build:js scripts/modules.js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
-
 <script src="bower_components/ng-grid/ng-grid-2.0.11.debug.js"></script>
-
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-
-<!-- build:js scripts/plugins.js -->
 <script src="bower_components/bootstrap-sass/js/affix.js"></script>
 <script src="bower_components/bootstrap-sass/js/alert.js"></script>
 <script src="bower_components/bootstrap-sass/js/dropdown.js"></script>
@@ -76,8 +74,6 @@
 <script src="bower_components/bootstrap-sass/js/scrollspy.js"></script>
 <script src="bower_components/bootstrap-sass/js/collapse.js"></script>
 <script src="bower_components/bootstrap-sass/js/tab.js"></script>
-
-<!-- build:js scripts/modules.js -->
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -85,16 +81,16 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) scripts/scripts.js (scripts of authentification)-->
+
+<!-- (scripts of webso app)-->
+
+<!-- build:js scripts/main.js -->
 <script src="scripts/app.js"></script>
-<script src="scripts/cfg.js"></script>
 
 <script src="scripts/controllers/LoginCtrl.js"></script>
 <script src="scripts/controllers/administratorRegisterCtrl.js"></script>
 <script src="scripts/controllers/publicRegisterCtrl.js"></script>
 <script src="scripts/controllers/UsersCtrl.js"></script>
-<!-- endbuild -->
-<!-- (scripts of webso app)-->
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/GoogleFeedCtrl.js"></script>
 <script src="scripts/controllers/FolderSearchCtrl.js"></script>
@@ -104,7 +100,6 @@
 <script src="scripts/controllers/WatchListCtrl.js"></script>
 <script src="scripts/controllers/serviceRestrictions.js"></script>
 <script src="scripts/controllers/headerCtrl.js"></script>
-
 <script src="scripts/controllers/AddWatchCtrl.js"></script>
 <script src="scripts/controllers/ValidationDataCtrl.js"></script>
 <script src="scripts/controllers/WatchDataCtrl.js"></script>
@@ -112,7 +107,8 @@
 <script src="scripts/controllers/AddInformationCtrl.js"></script>
 <script src="scripts/controllers/AddSourceCtrl.js"></script>
 <script src="scripts/barlet.js"></script>
+<!-- endbuild -->
+<script src="scripts/cfg.js"></script>
 <script src="scripts/config.js"></script>
-
 </body>
 </html>
