@@ -11,9 +11,7 @@ angular.module('websoApp')
     $scope.userRole = $scope.roles[2];
 
     $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
-        {action:'put.pl', type_s:'user', jeton_s : false
-        //, compteur_sessions_s : 0
-        , callback:"JSON_CALLBACK"},
+        {action:'register.pl', callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});
 
     $scope.register = function() {
@@ -21,11 +19,23 @@ angular.module('websoApp')
             user_s  : $scope.username,
             password_s : $scope.password,
             role_s : $scope.userRole
+        }).$promise.then(function(user) {
+                if(user.error){
+                    $scope.isError = true;
+                    $scope.errorMessage = user.error;
+                }
+                else {
+                    if(user.success){
+                        $scope.isSuccess = true;
+                        $scope.message = "Le compte a été enregistré avec succès";
+                        $scope.username = "";
+                        $scope.password = "";                    
+                    }
+                }
         });
-
-        $scope.isSuccess = true;
-		$scope.message = "Le compte a été enregistré avec succès";
-        $scope.username = "";
-        $scope.password = "";
     };
+    
+    $scope.releaseError = function() {
+        $scope.isError = false;
+    }    
 });
