@@ -16,6 +16,16 @@
     <link rel="stylesheet" href="styles/ng-grid.css">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <!--wysiwyg-->
+    <!-- font awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- build:css css/sample.min.css -->
+    <!-- Bootstrap core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- dashboard style -->
+    <link href="scripts/controllers/dashboard-framework/src/styles/main.css" rel="stylesheet">
+    <!-- endbuild -->
 
     <!-- endbuild -->
 </head>
@@ -54,6 +64,14 @@
 </script>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
+
+<!-- build:js js/jquery.ui.sortable.min.js -->
+    <script src="bower_components/jquery-ui/ui/jquery.ui.core.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery.ui.widget.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery.ui.mouse.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery.ui.sortable.js"></script>
+<!-- endbuild -->
+
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 
@@ -116,6 +134,24 @@
 <script src="scripts/controllers/AddSourceCtrl.js"></script>
 <script src="scripts/barlet.js"></script>
 <script src="scripts/config.js"></script>
+
+<!-- scripts for dashbard -->
+    <script src="scripts/controllers/dashboard-framework/src/scripts/adf.js"></script>
+    <script src="scripts/controllers/dashboard-framework/src/scripts/provider.js"></script>
+    <script src="scripts/controllers/dashboard-framework/src/scripts/sortable.js"></script>
+    <script src="scripts/controllers/dashboard-framework/src/scripts/widget-content.js"></script>
+    <script src="scripts/controllers/dashboard-framework/src/scripts/widget.js"></script>
+    <script src="scripts/controllers/dashboard-framework/src/scripts/dashboard.js"></script>
+<!-- structures of dashboard -->
+    <script src="scripts/controllers/dashboard-framework/src/scripts/structuresWidgets.js"></script>
+    
+    <!-- widgets -->
+    <script src="scripts/controllers/widgets/affichageSource/affichageSource.js"></script>
+    <script src="scripts/controllers/widgets/affichageSurveillance/affichageSurveillance.js"></script>
+    <script src="scripts/controllers/widgets/affichageFluxTwitter/affichageFluxTwitter.js"></script>
+    <script src="scripts/controllers/widgets/affichageDossiersValidation/affichageDossiersValidation.js"></script>
+    <script src="scripts/controllers/widgets/affichageDossiersSurveillance/affichageDossiersSurveillance.js"></script>
+    <script src="scripts/controllers/widgets/affichageCollectesMultisources/affichageCollectesMultisources.js"></script>
 
 </body>
 </html>

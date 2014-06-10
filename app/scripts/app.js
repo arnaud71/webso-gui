@@ -1,9 +1,12 @@
 'use strict';
 // app.js
-var websoApp = angular.module('websoApp', ['checklist-model', 'ngCookies', 'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
+var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sample.widgets.affichageSurveillance', 
+    'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
+    'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter', 'adf', 'checklist-model', 'ngCookies', 
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
-
+    
     $stateProvider
         .state('/home', {
             url: '/home',
@@ -179,7 +182,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         .state('/dashboard', {
             url: '/dashboard',       
             templateUrl: 'views/dashboard.html' ,
-            controller:'',
+            controller:'dashboardCtrl',
             data: {
                 authorizedRoles: ['administrateur', 'veilleur']
             }                        
@@ -314,7 +317,6 @@ $rootScope.$on('$stateChangeStart', function (event, next) {
 
     // si l'utilisateur n'est pas connecté 
     if((!userInformations[0]) && (!userInformations[1])){
-        console.log('je suis public');
         // s'il essai d'entrer dans un lien autorisé alors
         if(arrayContain(next.data.authorizedRoles, 'public')){  
             $location.path(next.url);
