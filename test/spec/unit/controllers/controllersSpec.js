@@ -1357,7 +1357,7 @@ describe('Controller: publicRegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=veilleur&type_s=user"; 
+	var url = "http://localhost/cgi-bin/webso-services/db/register.pl?callback=JSON_CALLBACK&role_s=veilleur"; 
 
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);
@@ -1368,13 +1368,14 @@ describe('Controller: publicRegisterCtrl', function () {
   	expect(scope.isSuccess).toBeDefined();
   	expect(scope.isSuccess).toBe(false);
   	expect(scope.informationAdd).toBeDefined();
+    expect(scope.verifyLogin).toBeDefined();
   	scope.register();
     scope.$apply();
     httpBackendRegister.flush();
-  	expect(scope.isSuccess).toBe(true);
-  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
-  	expect(scope.username).toBe("");
-  	expect(scope.password).toBe("");
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.message).toBeUndefined();
+  	expect(scope.username).toBeUndefined();
+  	expect(scope.password).toBeUndefined();
   });
 });
 /****************************************************************************************************/
@@ -1398,7 +1399,7 @@ describe('Controller: administratorRegisterCtrl', function () {
     					}]
     				};
 
-	var url = "http://localhost/cgi-bin/webso-services/db/put.pl?callback=JSON_CALLBACK&jeton_s=false&role_s=lecteur&type_s=user";            
+	var url = "http://localhost/cgi-bin/webso-services/db/register.pl?callback=JSON_CALLBACK&role_s=lecteur";            
     httpBackendRegister.whenJSONP(url).respond(mock_data);
     httpBackendRegister.when('GET','views/main.html').respond(mock_data);    
   }));
@@ -1414,10 +1415,10 @@ describe('Controller: administratorRegisterCtrl', function () {
   	scope.register();
     scope.$apply();
     httpBackendRegister.flush();
-  	expect(scope.isSuccess).toBe(true);
-  	expect(scope.message).toBe("Le compte a été enregistré avec succès");
-  	expect(scope.username).toBe("");
-  	expect(scope.password).toBe("");
+  	expect(scope.isSuccess).toBe(false);
+  	expect(scope.message).toBeUndefined();
+  	expect(scope.username).toBeUndefined();
+  	expect(scope.password).toBeUndefined();
   });
 });
 /****************************************************************************************************/
