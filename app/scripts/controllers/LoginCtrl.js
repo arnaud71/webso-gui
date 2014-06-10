@@ -22,7 +22,7 @@ angular.module('websoApp')
   $scope.login = function () {
     // envoi d'informations de login au service pour valider l'authentification  
 	$scope.verifyLogin.get({user_s : $scope.username, password_s : $scope.password}).$promise.then(function(user) {
-				
+
 		if(user.error){
 			$scope.isError = true;
 			$scope.errorMessage = user.error;
