@@ -137,6 +137,7 @@ angular.module('websoApp')
                 $cookieStore.remove('userRole');
                 $location.path('/home');
             }
+            window.location.reload();
         }
     };
 
@@ -151,6 +152,6 @@ angular.module('websoApp')
              */
             $scope.roleModify.get({ id : userId, role_s : role});
             $scope.isSuccess = true;
-            $scope.message = 'Le rôle a été modifié avec succès';
+            window.location.reload();
     };    
 });
