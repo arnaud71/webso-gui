@@ -60,6 +60,7 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
                     while(nbWidgetsCourant < array[$j]){
                       widgets[$i] = widg.success.response.docs[$i].widgetName_s;
                       w = {
+                        title: widg.success.response.docs[$i].widgetTitle_s,
                         type: widgets[$i],
                         id: widg.success.response.docs[$i].id
                       };

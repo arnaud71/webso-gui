@@ -40,20 +40,36 @@
 angular.module('adf')
   .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, cfg){
 
- function giveIdToWidget(widgets){
-  var ident = 0;
-  if(widgets.length === 0){
-    console.log(ident);
-    return ident;
-  }else{
-    var $i = 0;
-    while($i < widgets.length){
-      if(!widgets[$i + 1]){
-        console.log($i + 1);
-        return $i + 1;
-      }
-      $i++;
+ function giveTitleToWidget(widget){
+    var title;
+    switch (widget) {
+        case 'affichageCollectesMultisources':
+            title = 'Collectes multisources';
+            break;
+        case 'affichageDossiersSurveillance':
+            title = 'Dossiers de surveillances';
+            break;
+        case 'affichageDossiersValidation':
+            title = 'Dossiers de validation';
+            break;
+        case 'affichageFluxTwitter':
+            title = 'Flux twitter';
+            break;
+        case 'affichageSource':
+            title = 'Sources';
+            break;
+        case 'affichageSurveillance':
+            title = 'Surveillances';
+            break;
     }
+    return title;
+ };
+
+ function giveIdToWidget(widgets){
+  if(widgets.length === 0){
+    return 1;
+  }else{
+    return parseInt(widgets[widgets.length - 1].id) + 1;
   }
  };
   
@@ -64,15 +80,14 @@ angular.module('adf')
     return informations;
   };
 
-  function addWidgetToSolr(widgetName, isEnable, widgetWeight, userWidgetId, widgetId){
-      var listWidgets;
-
+  function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
           {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
         $rootScope.widgetAdd.get({
             widgetName_s  : widgetName,
+            widgetTitle_s  : widgetTitle,
             widgetEnable_s : isEnable,
             widgetWeight_s : widgetWeight,
             userWidgetId_s : userWidgetId,
@@ -124,13 +139,12 @@ angular.module('adf')
       }
     }
     
-    function createConfiguration(type, id){
+    function createConfiguration(type){
       var cfg = {};
       var config = dashboard.widgets[type].config;
       if (config){
         cfg = angular.copy(config);
       }
-      cfg['id'] = id;
       return cfg;
     }
 
@@ -219,7 +233,7 @@ angular.module('adf')
         // add widget dialog
         $scope.addWidgetDialog = function(){
           var userInformations = getUserCookies();          
-          var userId;
+          var userId, widgetName;
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
@@ -248,9 +262,11 @@ angular.module('adf')
                   // ajout du widget au dashboard
                   addScope.model.rows[0].columns[0].widgets.unshift(w);
                   // id du widget
-                  widgetId = addScope.model.rows[0].columns[0].widgets[0].id;                  
+                  widgetId = addScope.model.rows[0].columns[0].widgets[0].id;
+                  // titre du widget
+                  widgetName = giveTitleToWidget(widget); 
                   // ajout du widget a la base Solr
-                  addWidgetToSolr(widget, true, 1, userId, widgetId);                  
+                  addWidgetToSolr(widget, widgetName, true, 1, userId, widgetId);
                 }
                   // fermeture du la fenetre modal
                   instance.close();
