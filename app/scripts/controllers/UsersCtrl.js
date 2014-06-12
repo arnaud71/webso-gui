@@ -141,17 +141,13 @@ angular.module('websoApp')
         }
     };
 
-// modification du role de l'utilisateur
-        $scope.roleModify = $resource(cfg.urlServices+'db/:action',
-          {action:'update.pl', id:'',callback:"JSON_CALLBACK"},
-          {get:{method:'JSONP'}});
+    // modification du role de l'utilisateur
+    $scope.roleModify = $resource(cfg.urlServices+'db/:action',
+        {action:'update.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
+        {get:{method:'JSONP'}});
 
-    $scope.modifyRole = function (userId, role, index) {
-            /*
-             modify from Docs
-             */
-            $scope.roleModify.get({ id : userId, role_s : role});
-            $scope.isSuccess = true;
-            window.location.reload();
-    };    
+    $scope.modifyRole = function (userId, role) {
+        $scope.roleModify.get({ id : userId, role_s : role});
+        window.location.reload();
+    };
 });
