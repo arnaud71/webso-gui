@@ -31,8 +31,6 @@ angular.module('adf')
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
-        
-        console.log(title + ' --- ' + ident);
 
         $rootScope.widgetModify.get({widgetTitle_s : title, id : ident});
     };
@@ -120,7 +118,7 @@ angular.module('adf')
           };
 
           var instance = $modal.open(opts);
-          editScope.closeDialog = function() {
+          editScope.valideDialog = function() {
             var definition = $scope.definition;
             if (definition) {
               var column = $scope.col;
@@ -141,6 +139,10 @@ angular.module('adf')
             // charger les modifications du widget dans la base solr
             modifyWidget(definition.title, widgetId);
           };
+          editScope.closeDialog = function(){
+            instance.close();
+            editScope.$destroy();            
+          }
         };
       } else {
         $log.debug('widget not found');

@@ -39,5 +39,88 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         }
       });
   }).controller('sourceCtrl', function($scope, config){
-  }).controller('sourceEditCtrl', function($scope){
-  });
+  }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope,$resource,cfg,$modal){
+
+        $scope.mySelections = [];
+        var usernameCookie = $cookieStore.get('username');
+
+        $scope.sourcesList = $resource(cfg.urlServices+'db/:action',
+            {action:'get.pl', type_s:'source', user_s: usernameCookie, callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+
+        $scope.filterOptions = {
+            filterText: "",
+            useExternalFilter: false
+        };
+
+        $scope.totalServerItems = 0;
+        $scope.pagingOptions = {
+            pageSizes: [10,100,1000],
+            pageSize: 10,
+            currentPage: 1
+        };
+
+        $scope.setPagingData = function(data, page, pageSize){
+            $scope.totalServerItems = data.success.response.numFound;
+            data = data.success.response.docs;
+            $scope.myData = data;
+            if($rootScope.$$phase !== '$digest'){
+              $rootScope.$digest(); 
+            }
+        };
+
+        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+            // setTimeout(function () {
+            var data;
+            $scope.watchResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
+                function() {        //call back function for asynchronous
+                    if (typeof $scope.watchResult.success.response === "undefined") {}
+                    else {
+                        data = $scope.watchResult;
+                        $scope.setPagingData(data,page,pageSize);
+                        //$('.row').trigger('resize');
+                    }
+                }
+            );
+            //}, 100);
+        };
+
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+
+        $scope.$watch('pagingOptions', function (newVal, oldVal) {
+            if ((newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) || (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize)) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            }
+        }, true);
+
+        $scope.$watch('filterOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            }
+        }, true);
+
+    $scope.gridOptionsSource = { 
+            data: 'myData',
+            enablePaging: true,
+            enableRowSelection : true,
+            multiSelect: true,
+            showFooter: true,
+            totalServerItems: 'totalServerItems',
+            pagingOptions: $scope.pagingOptions,
+            filterOptions: $scope.filterOptions,
+            showFilter: true,
+            selectedItems: $scope.mySelections,
+            columnDefs: [
+                {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+                {visible:true,width:'*',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'*',field:'title_t', displayName:  'Titre de la source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' }
+            ],
+        beforeSelectionChange: function (rowItem) { return true; },
+        afterSelectionChange: function () {
+            $scope.selectedIDs = [];
+            angular.forEach($scope.mySelections, function ( item ) {
+                $scope.selectedIDs.push( item.id ) ;
+            });
+        }             
+    };
+});
