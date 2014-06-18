@@ -107,10 +107,12 @@ angular.module('websoApp')
 
 // suppression d'un utilisateur
         $scope.countDelete = $resource(cfg.urlServices+'db/:action',
-          {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
+          {action:'delete.pl', id:'', type_s:'user_s', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
+            var usernameCookie = $cookieStore.get('username');
+            var userRoleCookie = $cookieStore.get('userRole');
         /*
          Confirm dialogs
          */
@@ -120,15 +122,13 @@ angular.module('websoApp')
              Delete from Docs
              */
             $scope.sourceAddResult = $scope.countDelete.get({
-                id  :     userId
+                id  :     userId,
+                user_s : username
             });
             /*
              Delete from ng-grid table
              */
             $scope.userResult.success.response.docs.splice(index, 1);
-
-            var usernameCookie = $cookieStore.get('username');
-            var userRoleCookie = $cookieStore.get('userRole');
 
             if(usernameCookie === username && userRoleCookie === 'administrateur'){
                 $cookieStore.remove('Authenticated');
@@ -137,7 +137,7 @@ angular.module('websoApp')
                 $cookieStore.remove('userRole');
                 $location.path('/home');
             }
-            window.location.reload();
+//            window.location.reload();
         }
     };
 
