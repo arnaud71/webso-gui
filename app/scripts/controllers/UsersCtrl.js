@@ -137,7 +137,7 @@ angular.module('websoApp')
                 $cookieStore.remove('userRole');
                 $location.path('/home');
             }
-//            window.location.reload();
+            window.location.reload();
         }
     };
 
