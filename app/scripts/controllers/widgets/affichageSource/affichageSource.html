@@ -1,3 +1,8 @@
-<div>
-Contenu du widget : "Affichage d'une source"
+<div class="text-center">
+	<div class="alert alert-info" ng-if="!data">
+    	Sélectionnez un ID de source dans la configuration du widget
+  	</div>
+  	<div ng-if="data">
+    	<h4>{{data}}</h4>
+  	</div>
 </div>

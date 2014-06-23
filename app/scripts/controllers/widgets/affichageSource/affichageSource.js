@@ -32,14 +32,21 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         description: 'Sources',
         controller: 'sourceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageSource/affichageSource.html',
+        resolve: {
+          data: function(config){
+            if (config.sourceContent){
+              return config.sourceContent;
+            }
+          }
+        },
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageSource/edit.html',
-          reload: false,
           controller: 'sourceEditCtrl'
         }
       });
-  }).controller('sourceCtrl', function($scope, config){
-  }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope,$resource,cfg,$modal){
+  }).controller('sourceCtrl', function($scope, data){
+    $scope.data = data;
+  }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
         $scope.mySelections = [];
         var usernameCookie = $cookieStore.get('username');
@@ -99,11 +106,11 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
             }
         }, true);
 
-    $scope.gridOptionsSource = { 
+    $scope.gridOptionsSource = {
             data: 'myData',
             enablePaging: true,
             enableRowSelection : true,
-            multiSelect: true,
+            multiSelect: false,
             showFooter: true,
             totalServerItems: 'totalServerItems',
             pagingOptions: $scope.pagingOptions,
@@ -117,9 +124,8 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
             ],
         beforeSelectionChange: function (rowItem) { return true; },
         afterSelectionChange: function () {
-            $scope.selectedIDs = [];
             angular.forEach($scope.mySelections, function ( item ) {
-                $scope.selectedIDs.push( item.id ) ;
+                $scope.config.sourceContent = item.id;
             });
         }             
     };
