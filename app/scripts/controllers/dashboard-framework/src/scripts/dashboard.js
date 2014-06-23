@@ -91,7 +91,7 @@ angular.module('adf')
             widgetEnable_s 	: isEnable,
             widgetWeight_s 	: widgetWeight,
             userWidgetId_s 	: userWidgetId,
-            widgetId_s 		: widgetId,
+            widgetId_s 		  : widgetId,
             widgetContent_s : ''
         })
   };

@@ -26,6 +26,12 @@
 
 angular.module('adf')
   .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard) {
+    function getUserCookies(){
+      var informations = [];
+      informations[0] = $cookieStore.get('username');
+      informations[1] = $cookieStore.get('userRole');
+      return informations;
+    };
 
     function modifyWidget(title, ident, widgetContent){
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
@@ -45,7 +51,6 @@ angular.module('adf')
             definition.title = w.title;
             definition.content = w.content;
           }
-
           // pass edit mode
           $scope.editMode = $attr.editMode;
 
@@ -61,12 +66,26 @@ angular.module('adf')
           } else {
             config = {};
           }
-
           // pass config to scope
           $scope.config = config;
-          
-          // collapse
-          $scope.isCollapsed = false;
+          // retourner l'etat du widget (activé ou desactivé)
+          $scope.informations = $resource(cfg.urlServices+'db/:action',
+            {action:'get.pl',callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+            // Interroger Solr pour avoir l'etat du widget
+            $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
+              if(widg.success.response.numFound > 0){
+                var isCollapsed;
+                if(widg.success.response.docs[0].widgetEnable_s === "true"){
+                  isCollapsed = false;
+                }else{
+                  isCollapsed = true;
+                }
+                $scope.isCollapsed = isCollapsed;
+              }else{
+                $scope.isCollapsed = false;
+              }
+            });
         } else {
           $log.warn('could not find widget ' + type);
         }
@@ -145,6 +164,37 @@ angular.module('adf')
             editScope.$destroy();            
           }
         };
+        // activer un widget
+        $scope.activateWidget = function() {
+          var column = $scope.col;
+          if (column) {
+            var index = column.widgets.indexOf(definition);
+            var title = column.widgets[index].title;
+            var type = column.widgets[index].type;
+            var widgetId = column.widgets[index].id;
+            $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
+              {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
+              {get:{method:'JSONP'}});
+            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
+            $scope.isCollapsed = false;
+          }
+        };
+        // desactiver un widget
+        $scope.desactivateWidget = function() {
+          var column = $scope.col;
+          if (column) {
+            var index = column.widgets.indexOf(definition);
+            var title = column.widgets[index].title;
+            var type = column.widgets[index].type;
+            var widgetId = column.widgets[index].id;
+            $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
+              {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
+              {get:{method:'JSONP'}});
+            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
+            $scope.isCollapsed = true;
+          }
+        };
+
       } else {
         $log.debug('widget not found');
       }
