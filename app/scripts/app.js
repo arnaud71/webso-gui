@@ -2,7 +2,8 @@
 // app.js
 var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sample.widgets.affichageSurveillance', 
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
-    'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter', 'adf', 'checklist-model', 'ngCookies', 
+    'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
+    'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
     'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
