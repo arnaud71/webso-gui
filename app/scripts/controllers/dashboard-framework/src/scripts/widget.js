@@ -27,12 +27,12 @@
 angular.module('adf')
   .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard) {
 
-    function modifyWidget(title, ident){
+    function modifyWidget(title, ident, widgetContent){
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
-        $rootScope.widgetModify.get({widgetTitle_s : title, id : ident});
+        $rootScope.widgetModify.get({widgetTitle_s : title, id : ident, widgetContent_s : widgetContent});
     };
 
     function preLink($scope, $element, $attr){
@@ -41,8 +41,9 @@ angular.module('adf')
         var w = dashboard.widgets[definition.type];
         if (w) {
           // pass title
-          if (!definition.title){
+          if (!definition.title && !definition.content){
             definition.title = w.title;
+            definition.content = w.content;
           }
 
           // pass edit mode
@@ -137,7 +138,7 @@ angular.module('adf')
               $scope.$broadcast('widgetConfigChanged');
             }
             // charger les modifications du widget dans la base solr
-            modifyWidget(definition.title, widgetId);
+            modifyWidget(definition.title, widgetId, definition.config.sourceContent);
           };
           editScope.closeDialog = function(){
             instance.close();

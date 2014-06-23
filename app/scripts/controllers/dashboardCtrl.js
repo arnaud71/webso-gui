@@ -58,11 +58,14 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
                   while($i < widg.success.response.numFound){
                     // boucle s'arretant quand tous les widgets sont positionnés dans une colonne
                     while(nbWidgetsCourant < array[$j]){
+                      var conf = {};
                       widgets[$i] = widg.success.response.docs[$i].widgetName_s;
+                      conf['sourceContent'] = widg.success.response.docs[$i].widgetContent_s;
                       w = {
                         title: widg.success.response.docs[$i].widgetTitle_s,
                         type: widgets[$i],
-                        id: widg.success.response.docs[$i].id
+                        id: widg.success.response.docs[$i].id,
+                        config: conf
                       };
                       if(widg.success.response.docs[$i]){
                           // ajouter le widget sur la colonne j
@@ -84,7 +87,7 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
     });
   };
     var model = {
-      title: "Dashboard",
+      title: "Tableau de bord",
       structure: "4-8",
       // ligne 1
       rows: [{
@@ -92,31 +95,22 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
         columns: [{
           styleClass: "col-md-4",
           widgets: [{
-          	type:'',
-            id:''
           }]
         // colonne 2
         },{
           styleClass: "col-md-4",
           widgets: [{
-            type:'',
-            id:''
           }]
         // colonne 3  
         },{
           styleClass: "col-md-4",
           widgets: [{
-            type:'',
-            id:''
           }]
         }]
       }]
     };
     // masquer les widgets affichés par defaut
-	var w = {
-		type: '',
-    id:''
-	};
+	var w;
 	model.rows[0].columns[0].widgets.shift(w);
   model.rows[0].columns[1].widgets.shift(w);
   model.rows[0].columns[2].widgets.shift(w);  

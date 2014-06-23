@@ -86,12 +86,13 @@ angular.module('adf')
           {get:{method:'JSONP'}});
 
         $rootScope.widgetAdd.get({
-            widgetName_s  : widgetName,
-            widgetTitle_s  : widgetTitle,
-            widgetEnable_s : isEnable,
-            widgetWeight_s : widgetWeight,
-            userWidgetId_s : userWidgetId,
-            widgetId_s : widgetId
+            widgetName_s  	: widgetName,
+            widgetTitle_s  	: widgetTitle,
+            widgetEnable_s 	: isEnable,
+            widgetWeight_s 	: widgetWeight,
+            userWidgetId_s 	: userWidgetId,
+            widgetId_s 		: widgetId,
+            widgetContent_s : ''
         })
   };
 
@@ -268,7 +269,7 @@ angular.module('adf')
                   // ajout du widget a la base Solr
                   addWidgetToSolr(widget, widgetName, true, 1, userId, widgetId);
                 }
-                  // fermeture du la fenetre modal
+                  // fermeture de la fenetre modal
                   instance.close();
                   addScope.$destroy();
                 };
