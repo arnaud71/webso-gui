@@ -175,7 +175,7 @@ angular.module('adf')
             $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
               {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
               {get:{method:'JSONP'}});
-            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
+            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : true, widgetTitle_s : title});
             $scope.isCollapsed = false;
           }
         };
@@ -190,7 +190,7 @@ angular.module('adf')
             $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
               {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
               {get:{method:'JSONP'}});
-            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
+            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : false, widgetTitle_s : title});
             $scope.isCollapsed = true;
           }
         };
