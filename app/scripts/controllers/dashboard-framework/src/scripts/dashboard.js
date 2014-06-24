@@ -38,47 +38,7 @@
 'use strict';
 
 angular.module('adf')
-  .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, cfg){
-
- function giveTitleToWidget(widget){
-    var title;
-    switch (widget) {
-        case 'affichageCollectesMultisources':
-            title = 'Collectes multisources';
-            break;
-        case 'affichageDossiersSurveillance':
-            title = 'Dossiers de surveillances';
-            break;
-        case 'affichageDossiersValidation':
-            title = 'Dossiers de validation';
-            break;
-        case 'affichageFluxTwitter':
-            title = 'Flux twitter';
-            break;
-        case 'affichageSource':
-            title = 'Sources';
-            break;
-        case 'affichageSurveillance':
-            title = 'Surveillances';
-            break;
-    }
-    return title;
- };
-
- function giveIdToWidget(widgets){
-  if(widgets.length === 0){
-    return 1;
-  }else{
-    return parseInt(widgets[widgets.length - 1].id) + 1;
-  }
- };
-  
-  function getUserCookies(){
-    var informations = [];
-    informations[0] = $cookieStore.get('username');
-    informations[1] = $cookieStore.get('userRole');
-    return informations;
-  };
+  .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, serviceWidgets, cfg){
 
   function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
@@ -233,7 +193,7 @@ angular.module('adf')
 
         // add widget dialog
         $scope.addWidgetDialog = function(){
-          var userInformations = getUserCookies();          
+          var userInformations = serviceWidgets.getUserIdents();
           var userId, widgetName;
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
@@ -256,7 +216,7 @@ angular.module('adf')
                 }else{
                 var widgetId;
                   var w = {
-                    id: giveIdToWidget(widg.success.response.docs),
+                    id: serviceWidgets.getIdWidget(widg.success.response.docs),
                     type: widget,
                     config: createConfiguration(widget)
                   };
@@ -265,7 +225,7 @@ angular.module('adf')
                   // id du widget
                   widgetId = addScope.model.rows[0].columns[0].widgets[0].id;
                   // titre du widget
-                  widgetName = giveTitleToWidget(widget); 
+                  widgetName = serviceWidgets.getTitleWidget(widget); 
                   // ajout du widget a la base Solr
                   addWidgetToSolr(widget, widgetName, true, 1, userId, widgetId);
                 }
