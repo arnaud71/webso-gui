@@ -111,70 +111,43 @@ angular.module('websoApp')
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
-      $scope.userId   = userId;
-      $scope.index    = index;
-      $scope.username = username;
-
-      var modalInstance = $modal.open({
-        templateUrl: 'deleteUserModal.html',
-        controller: ModalInstanceCtrl
-      });
-
-
-      modalInstance.result.then(function () {
-        $scope.sourceAddResult = $scope.countDelete.get({
-          id  :     $scope.userId
-        });
-
-
-        $scope.userResult.success.response.docs.splice($scope.index, 1);
-
-        var usernameCookie = $cookieStore.get('username');
-        var userRoleCookie = $cookieStore.get('userRole');
-
-        if(usernameCookie === username && userRoleCookie === 'administrateur'){
-          $cookieStore.remove('Authenticated');
-          $cookieStore.remove('username');
-          $cookieStore.remove('password');
-          $cookieStore.remove('userRole');
-          $location.path('/home');
-        }
-
-      });
-
-    };
-
-
-    //  ***************************************
-    //  modal instance
-    var ModalInstanceCtrl = function ($scope, $modalInstance) {
-
-      $scope.ok = function () {
-
-        $modalInstance.close();//($scope.selected.item);
-      };
-
-      $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-      };
-
-    };
-
-// modification du role de l'utilisateur
-        $scope.roleModify = $resource(cfg.urlServices+'db/:action',
-          {action:'update.pl', id:'',callback:"JSON_CALLBACK"},
-          {get:{method:'JSONP'}});
-
-    $scope.modifyRole = function (userId, role, index) {
+            var usernameCookie = $cookieStore.get('username');
+            var userRoleCookie = $cookieStore.get('userRole');
+        /*
+         Confirm dialogs
+         */
+        var deleteSource = confirm('Etes vous sûr de vouloir supprimer cet utilisateur ?');
+        if (deleteSource) {
             /*
-             modify from Docs
+             Delete from Docs
              */
-            $scope.roleModify.get({ id : userId, role_s : role});
-            $scope.isSuccess = true;
-            $scope.message = 'Le rôle a été modifié avec succès';
+            $scope.sourceAddResult = $scope.countDelete.get({
+                id  :     userId,
+                user_s : username
+            });
+            /*
+             Delete from ng-grid table
+             */
+            $scope.userResult.success.response.docs.splice(index, 1);
+
+            if(usernameCookie === username && userRoleCookie === 'administrateur'){
+                $cookieStore.remove('Authenticated');
+                $cookieStore.remove('username');
+                $cookieStore.remove('password');
+                $cookieStore.remove('userRole');
+                $location.path('/home');
+            }
+            window.location.reload();
+        }
     };
 
+    // modification du role de l'utilisateur
+    $scope.roleModify = $resource(cfg.urlServices+'db/:action',
+        {action:'update.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
+        {get:{method:'JSONP'}});
 
-
-
+    $scope.modifyRole = function (userId, role) {
+        $scope.roleModify.get({ id : userId, role_s : role});
+        window.location.reload();
+    };
 });

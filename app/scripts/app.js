@@ -1,9 +1,13 @@
 'use strict';
 // app.js
-var websoApp = angular.module('websoApp', ['ngCookies', 'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router']);
+var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sample.widgets.affichageSurveillance', 
+    'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
+    'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
+    'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
-
+    
     $stateProvider
         .state('/home', {
             url: '/home',
@@ -175,6 +179,15 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
+        // DASHBOARD
+        .state('/dashboard', {
+            url: '/dashboard',       
+            templateUrl: 'views/dashboard.html' ,
+            controller:'dashboardCtrl',
+            data: {
+                authorizedRoles: ['administrateur', 'veilleur']
+            }                        
+        })        
         // SETTINGS
         .state('/settings/booklet', {
             url: '/settings/booklet',       
@@ -251,8 +264,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 // le run time de l'app est de la façon suivante : 
-websoApp.run(function ($window, $rootScope, $location, $state, $cookieStore, serviceRestrictions) {
-	var username, userRole;
+websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions) {
 	var arrayContain = function (array, element) {
 		var $i = 0;
 			while($i < array.length){
@@ -264,7 +276,7 @@ websoApp.run(function ($window, $rootScope, $location, $state, $cookieStore, ser
 	return false;
 	};
 
-    var calculRestriction = function(userRole, username){
+    var calculRestriction = function(username, userRole){
         var booleansRestrictions = [];
         var isPublicNotAuthenticated, isLecteurVeilleurAdmin, isVeilleurAdmin, isAdmin;
 
@@ -295,31 +307,41 @@ websoApp.run(function ($window, $rootScope, $location, $state, $cookieStore, ser
         return booleansRestrictions;
     };
 
-$rootScope.$on('$stateChangeStart', function (event, next) {   
-	userRole = $cookieStore.get('userRole');
-	username = $cookieStore.get('username');
-    var arrayOfrestrictions = calculRestriction(userRole, username);
+  // fonction qui renvoie le 'username' et le 'userRole' en cookies de l'utilisateur
+  var getUserCookies = function(){
+    var informations = [];
+    informations[0] = $cookieStore.get('username');
+    informations[1] = $cookieStore.get('userRole');
+    return informations;
+  };
+
+$rootScope.$on('$stateChangeStart', function (event, next) {
+    // renvoyer des informations de l'utilisateur en cours de session
+    var userInformations = getUserCookies();
+
+    // calculer les restrictions aux fonctionnalités par rapport au role de l'utilisateur
+    var arrayOfrestrictions = calculRestriction(userInformations[0], userInformations[1]);
     serviceRestrictions.setRestrictions(arrayOfrestrictions);
     var authorizedRoles = next.data.authorizedRoles;
 
-	// si l'utilisateur n'est pas connecté 
-	if(!username && !userRole){
-		// s'il essai d'entrer dans un lien autorisé alors
-		if(arrayContain(next.data.authorizedRoles, 'public')){	
-			$location.path(next.url);
-		// s'il essai d'entrer dans un lien non autorisé alors
-		}else{
-			$location.path('/404');
-		}
-	// si l'utilisateur est connecté	
-	}else if(username && userRole){ 
-		// s'il essai d'entrer dans un lien autorisé alors
-		if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userRole)){
-			$location.path(next.url);
-		}else{	
-		// s'il essai d'entrer dans un lien non autorisé alors
-			$location.path('/404');
-		}	
-	}
+    // si l'utilisateur n'est pas connecté 
+    if((!userInformations[0]) && (!userInformations[1])){
+        // s'il essai d'entrer dans un lien autorisé alors
+        if(arrayContain(next.data.authorizedRoles, 'public')){  
+            $location.path(next.url);
+        // s'il essai d'entrer dans un lien non autorisé alors
+        }else{
+            $location.path('/404');
+        }
+    // si l'utilisateur est connecté    
+    }else if(userInformations[0] && userInformations[1]){ 
+        // s'il essai d'entrer dans un lien autorisé alors
+        if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userInformations[1])){
+            $location.path(next.url);
+        }else{  
+        // s'il essai d'entrer dans un lien non autorisé alors
+            $location.path('/404');
+        }   
+    }
  });
 });

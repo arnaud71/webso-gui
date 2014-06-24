@@ -18,6 +18,10 @@ module.exports = function() {
         'app/bower_components/ng-grid/build/ng-grid.debug.js',  
         'dist/bower_components/angular-route/angular-route.js', 
         'app/bower_components/angular-bootstrap/ui-bootstrap.js',
+        'app/bower_components/checklist-model/checklist-model.js',
+        'app/bower_components/angular-local-storage/angular-local-storage.js',
+        'app/bower_components/highcharts/highcharts.js',
+        'app/bower_components/highcharts-ng/dist/highcharts-ng.js',
 
         //App-specific Code
         'app/scripts/app.js',
@@ -42,7 +46,11 @@ module.exports = function() {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome','Firefox', 'Opera'],
+    browsers: ['Chrome'
+/*
+    ,'Firefox', 'Opera'
+*/
+    ],
 
 
     // Continuous Integration mode
