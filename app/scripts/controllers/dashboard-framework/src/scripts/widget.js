@@ -33,12 +33,16 @@ angular.module('adf')
       return informations;
     };
 
-    function modifyWidget(title, ident, widgetContent){
+    function modifyWidget(title, ident, widgetContent, isEnable){
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
-        $rootScope.widgetModify.get({widgetTitle_s : title, id : ident, widgetContent_s : widgetContent});
+        $rootScope.widgetModify.get({widgetTitle_s : title, 
+        	id : ident, 
+        	widgetContent_s : widgetContent,
+        	widgetEnable_s : isEnable
+        });
     };
 
     function preLink($scope, $element, $attr){
@@ -166,34 +170,14 @@ angular.module('adf')
         };
         // activer un widget
         $scope.activateWidget = function() {
-          var column = $scope.col;
-          if (column) {
-            var index = column.widgets.indexOf(definition);
-            var title = column.widgets[index].title;
-            var type = column.widgets[index].type;
-            var widgetId = column.widgets[index].id;
-            $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
-              {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
-              {get:{method:'JSONP'}});
-            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
-            $scope.isCollapsed = false;
-          }
+			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
+			$scope.isCollapsed = false;
         };
         // desactiver un widget
         $scope.desactivateWidget = function() {
-          var column = $scope.col;
-          if (column) {
-            var index = column.widgets.indexOf(definition);
-            var title = column.widgets[index].title;
-            var type = column.widgets[index].type;
-            var widgetId = column.widgets[index].id;
-            $scope.widgetActivate = $resource(cfg.urlServices+'db/:action',
-              {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
-              {get:{method:'JSONP'}});
-            $scope.widgetActivate.get({id : widgetId, widgetEnable_s : $scope.isCollapsed, widgetTitle_s : title});
-            $scope.isCollapsed = true;
-          }
-        };
+			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
+			$scope.isCollapsed = true;
+		};
 
       } else {
         $log.debug('widget not found');
