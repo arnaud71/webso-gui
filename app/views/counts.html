@@ -14,21 +14,23 @@
     <div class="alert alert-success" ng-show="isSuccess">
         <strong>Succès :&nbsp;</strong><span>{{message}}</span>
     </div>
+
+
+	<script type="text/ng-template" id="deleteUserModal.html">
+	    <div class="modal-header">
+	        <h3> Effacement d''un utilisateur</h3>
+
+	    </div>
+	    <div class="modal-body">
+	        Etes vous sûr de vouloir effacer cet utilisateur ?
+	    </div>
+
+	    <div class="modal-footer">
+	        <button class="btn btn-primary" ng-click="ok()">OK</button>
+	        <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+
+	        <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+	    </div>
+	</script>
+	
 </div>
-
-<script type="text/ng-template" id="deleteUserModal.html">
-    <div class="modal-header">
-        <h3> Effacement d'un utilisateur</h3>
-
-    </div>
-    <div class="modal-body">
-        Etes vous sûr de vouloir effacer cet utilisateur?
-    </div>
-
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
-
-        <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
-    </div>
-</script>

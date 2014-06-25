@@ -105,40 +105,38 @@ angular.module('websoApp')
         }
     );
 
+//  modal instance
+    var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close();
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+    };
+
 // suppression d'un utilisateur
     $scope.countDelete = $resource(cfg.urlServices+'db/:action',
           {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
-            var usernameCookie = $cookieStore.get('username');
-            var userRoleCookie = $cookieStore.get('userRole');
-        /*
-         Confirm dialogs
-         */
-        var deleteSource = confirm('Etes vous sûr de vouloir supprimer cet utilisateur ?');
-        if (deleteSource) {
-            /*
-             Delete from Docs
-             */
-            $scope.sourceAddResult = $scope.countDelete.get({
+      $scope.userId   = userId;
+      $scope.index  = index;
+      var modalInstance = $modal.open({
+        templateUrl: 'deleteUserModal.html',
+        controller: ModalInstanceDeleteCtrl
+      });
+
+      modalInstance.result.then(function () {
+        $scope.userDeleteResult = $scope.countDelete.get({
                 id  :     userId,
                 user_s : username
-            });
-            /*
-             Delete from ng-grid table
-             */
-            $scope.userResult.success.response.docs.splice(index, 1);
-
-            if(usernameCookie === username && userRoleCookie === 'administrateur'){
-                $cookieStore.remove('Authenticated');
-                $cookieStore.remove('username');
-                $cookieStore.remove('password');
-                $cookieStore.remove('userRole');
-                $location.path('/home');
-            }
-            window.location.reload();
-        }
+        });
+        $scope.myData.splice($scope.index, 1);
+      });
     };
 
     // modification du role de l'utilisateur
