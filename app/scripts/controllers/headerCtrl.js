@@ -11,7 +11,7 @@ angular.module('websoApp')
 
 	$scope.templates = [{
 	    name: 'head.html',
-	    url: '../../views/head.html'}];
+	    url: 'views/head.html'}];
 
 	var restrictions = serviceRestrictions.getRestrictions();
 

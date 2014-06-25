@@ -20,11 +20,14 @@ angular.module('websoApp')
 
     // use this type of declaration to avoid scope problem (between tabs)
     $scope.model = {
-      inputUrl    : '',
-      inputTags   : '',
-      inputTitle  : '',
-      inputQuery  : '',
-      mySourceSelections : []
+      inputUrl            : '',
+      inputTags           : '',
+      inputTitle          : '',
+      inputQuery          : '',
+      sourceId            : 0,
+      watchId             : 0,
+      mySourceSelections  : [],
+      myWatchSelections   : []
     };
 
 
@@ -38,11 +41,16 @@ angular.module('websoApp')
           $scope.model.inputTitle = item.title_t;
           $scope.model.inputUrl   = item.url_s;
           $scope.model.inputTags  = item.tags_s;
-
+          $scope.domain.name      = item.domain_s;
+          $scope.activity.name    = item.activity_s;
+          $scope.frequency.option = item.refresh_s;
+          $scope.model.sourceId   = item.id;
         });
+        $scope.doSearchWatch();
       },
       enablePaging        : true,
       enableRowSelection  : true,
+      enableColumnResize  : true,
       multiSelect         : false,
       showFooter          : true,
       totalServerItems    : 'totalServerItems',
@@ -71,10 +79,12 @@ angular.module('websoApp')
       data                : 'myDataWatch',
       selectedItems       : $scope.model.myWatchSelections,
       afterSelectionChange: function () {
-        angular.forEach($scope.model.mySourceSelections, function ( item ) {
-          $scope.model.inputTitle = item.title_t;
-          $scope.model.inputUrl   = item.url_s;
-          $scope.model.inputTags  = item.tags_s;
+        angular.forEach($scope.model.myWatchSelections, function ( item ) {
+
+          $scope.model.inputQuery     = item.query_s;
+          $scope.folder.name          = item.folder_s;
+          $scope.notification.option  = item.notification_s;
+          $scope.model.watchId        = item.id;
 
         });
       },
@@ -91,7 +101,8 @@ angular.module('websoApp')
       //selectedItems: $scope.mySelections,
       columnDefs: [
         {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-        {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'100px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -119,7 +130,7 @@ angular.module('websoApp')
 
     $scope.checkingSource = false;
     $scope.sourceChecked  = false;
-    var $username = $cookieStore.get('username');
+
 
     //***************************
     // resources definition
@@ -177,7 +188,7 @@ angular.module('websoApp')
     // doSearchWatch
     // list the available sources
     $scope.doSearchWatch = function () {
-      $scope.watchResult = $scope.dbList.get({type_s:'watch'},
+      $scope.watchResult = $scope.dbList.get({type_s:'watch',source_id_s:$scope.model.sourceId},
         function() {        //call back function for asynchronous
           if (typeof $scope.sourceResult.success.response === "undefined") {}
           else {
@@ -202,12 +213,13 @@ angular.module('websoApp')
         title_t         : $scope.model.inputTitle,
         domain_s        : $scope.domain.name,
         activity_s      : $scope.activity.name,
-        //domain_s:       $scope.domain.name,
-        //activity_s:     $scope.activity.name,
         refresh_s       : $scope.frequency.option
 
       },function () {
-
+          if (typeof $scope.sourceAddResult.success === "undefined") {}
+          else {
+            $scope.model.sourceId = sourceAddResult.success.id;
+          }
       });
 
 
@@ -234,6 +246,7 @@ angular.module('websoApp')
         activity_s:     $scope.activity.name,
         folder_s:       $scope.folder.name,
         query_s:        $scope.model.inputQuery,
+        source_id_s:    $scope.model.sourceId,
         //source_id_s:    $scope.sourceAddResult.success.id,
         notification_s: $scope.notification.option
 
@@ -263,7 +276,6 @@ angular.module('websoApp')
         }, function () {
           if ($scope.checkSourceResult.title) {
             $scope.model.inputTitle = $scope.checkSourceResult.title;
-
           }
           //$scope.$emit('UNCHECKRSS');
           $scope.checkingSource = false;
@@ -297,7 +309,11 @@ angular.module('websoApp')
     // testWatch
     // test the current watch with a query
     $scope.testWatch = function() {
-      $scope.solrResult       = $scope.solrResource.get({q:$scope.inputQuery}
+      $scope.solrResult       = $scope.solrResource.get({
+                                    q   : $scope.model.inputQuery,
+                                    fq  : '+source_id_ss:'+$scope.model.sourceId+' +type_s:document'
+
+      }
 
       );
     }
@@ -343,8 +359,6 @@ angular.module('websoApp')
 
 
 
-
-
     // ***************************************************************
     // watchDelete
     // to delete a watch from the DB
@@ -353,7 +367,7 @@ angular.module('websoApp')
       $scope.dbId   = dbId;
       $scope.index  = index;
       var modalInstance = $modal.open({
-          templateUrl: 'deleteWatchModal.html',
+          templateUrl: 'views/watch/deleteWatchModal.html',
           controller: ModalInstanceDeleteCtrl
       });
 

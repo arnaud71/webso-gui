@@ -1,10 +1,10 @@
 
-<script>
+<!-- <script>
     tinymce.init({selector:'wysiwyg'});
-</script>
+</script> -->
 
 <div ng-controller="headerCtrl">
-  <div ng-include src="template.url"></div>
+    <div ng-include src="template.url"></div>
 </div>
 
 <ol class="breadcrumb text-center">
@@ -13,7 +13,10 @@
     <li class="active">Ajouter une information</li>
 </ol>
 
+
 <div class="hero-unit-bis" ng-controller="AddInformationCtrl">
+
+
 
     <form class="form-horizontal" role="form">
 
@@ -60,7 +63,7 @@
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="validateModal.html">
         <div class="modal-header">
-            <h3> Ajout de Source</h3>
+            <h3> Ajout de Source </h3>
         </div>
         <div class="modal-body">
             Validation réussie

@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddInformationCtrl', function ($cookieStore, $scope,$resource,cfg, $modal) {
+    .controller('AddInformationCtrl', function ($cookieStore, $scope, $resource, cfg, $modal) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
          */
-        $scope.inputUrl     = '';
+        $scope.inputUrl     = ''; //$routeParameter.id_selection;
         $scope.inputTags    = '';
         $scope.inputTitle   = '';
         $scope.inputDetails = '';
@@ -19,9 +19,9 @@ angular.module('websoApp')
 
         $scope.doAdd = function () {
             $scope.informationAddResult = $scope.informationAdd.get({
-                url_s  :     $scope.inputUrl,
-                tags_s : $scope.inputTags,
-                title_t: $scope.inputTitle,
+                url_s  :      $scope.inputUrl,
+                tags_s :      $scope.inputTags,
+                title_t:      $scope.inputTitle,
                 details_s: $scope.inputDetails
 
             });

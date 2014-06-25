@@ -1,15 +1,15 @@
 <div ng-controller="headerCtrl">
-  <div ng-include src="template.url"></div>
+    <div ng-include src="template.url"></div>
 </div>
 
 <div id="search">
     <div class="row">
         <div class="col-md-12">
-        <ol class="breadcrumb text-center">
-            <li><a href="#/home">Webso</a></li>
-            <li><a href="#">Rechercher</a></li>
-            <li class="active"> - </li>
-        </ol>
+            <ol class="breadcrumb text-center">
+                <li><a href="#/home">Webso</a></li>
+                <li><a href="#">Rechercher</a></li>
+                <li class="active"> - </li>
+            </ol>
         </div>
     </div>
     <div ng-controller="FolderSearchCtrl">
@@ -21,10 +21,10 @@
             </div>
             <div class="col-md-10">
 
-                    <form class="form-horizontal" ng-submit="doSearch()">
-                        <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                        <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Chercher</button>
-                    </form>
+                <form class="form-horizontal" ng-submit="doSearch()">
+                    <input type="text" placeholder="Chercher" ng-model="searchTerm">
+                    <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Chercher</button>
+                </form>
 
                 <div id="numberFound">
                     <div solr-results-number ng-show="solrResult.response">
@@ -46,7 +46,7 @@
                                     <div id="contentFound">
                                         <div ng-controller="CollapseSolrCtrl">
 
-                                                <div collapse="!isCollapsed">
+                                            <div collapse="!isCollapsed">
                                                     <span ng-click="isCollapsed = !isCollapsed">
                                                     <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
                                                         <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
@@ -62,12 +62,12 @@
 
 
 
-                                                </div>
-                                                <div collapse="isCollapsed">
+                                            </div>
+                                            <div collapse="isCollapsed">
                                                     <span ng-click="isCollapsed = !isCollapsed">
                                                     {{doc.content_en}} &lt;&lt;&lt;&lt;
                                                     </span>
-                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -84,21 +84,21 @@
                                         {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                         <div id="actionList">
                                             <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></div></button>
-                                        </div>
                                     </div>
-
-
-
-                                </td>
-                            </tr>
-                        </table>
-                        <pagination on-select-page="pageChanged(page)" total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                     </div>
+
+
+
+                    </td>
+                    </tr>
+                    </table>
+                    <pagination on-select-page="pageChanged(page)" total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
 </div>
 
 
