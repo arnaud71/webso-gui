@@ -37,7 +37,6 @@
     "ng-midway-tester":"~2.0.5",
     "karma":"~0.12.14",
     "protractor":"~0.22.0",
-    
     "grunt-filerev":"~0.2.0",
     "grunt-ngdocs":"~0.1.7",
     "grunt-contrib-nodeunit":"~0.2.0",
