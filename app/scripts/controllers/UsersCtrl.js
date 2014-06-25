@@ -123,6 +123,9 @@ angular.module('websoApp')
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {
+        var usernameCookie = $cookieStore.get('username');
+        var userRoleCookie = $cookieStore.get('userRole');
+
       $scope.userId   = userId;
       $scope.index  = index;
       var modalInstance = $modal.open({
@@ -136,6 +139,14 @@ angular.module('websoApp')
                 user_s : username
         });
         $scope.myData.splice($scope.index, 1);
+
+        if(usernameCookie === username && userRoleCookie === 'administrateur'){
+            $cookieStore.remove('Authenticated');
+            $cookieStore.remove('username');
+            $cookieStore.remove('password');
+            $cookieStore.remove('userRole');
+            $location.path('/home');
+        }
       });
     };
 
