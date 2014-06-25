@@ -317,17 +317,10 @@ describe('Controller: SourceDataCtrl', function(){
     				};
 
     var url_1 = "http://localhost/cgi-bin/webso-services/db/get.pl?callback=JSON_CALLBACK&type_s=source";
-    var url_2 = "http://localhost/cgi-bin/webso-services/db/delete.pl?callback=JSON_CALLBACK&id=1";
                 
     httpBackendDoSearch.whenJSONP(url_1).respond(mock_data);
-    httpBackendDoDelete.whenJSONP(url_2).respond(mock_data);
     httpBackendDoSearch.when('GET','views/main.html').respond(mock_data);
   }));
-
-  afterEach(function() {
-    httpBackendDoSearch.verifyNoOutstandingExpectation();
-    httpBackendDoSearch.verifyNoOutstandingRequest();
-  });
 
   it('should set sourceResult on successful doSearch', function() {
     scope.doSearch();
@@ -399,10 +392,6 @@ describe('Controller: GoogleFeedCtrl', function () {
   }));
 
   it('should have correct initialisations in the controller addSurvCtrl', function() {
-    expect(scope.msgSelect).toBeDefined();
-    expect(scope.mySelections).toBeDefined();
-    expect(scope.foundRes).toBeDefined();
-    expect(scope.nameController).toBeDefined();
     expect(scope.googleFeed).toBeDefined();
   });
   it('should have doSearch function service in the controller GoogleFeedCtrl', function() {
@@ -414,18 +403,12 @@ describe('Controller: GoogleFeedCtrl', function () {
   });
 
   it('should have selectAll function service in the controller GoogleFeedCtrl', function() {
-  	expect(scope.selectAll).toBeDefined();
   });
 
   it('should have a working selectAll function service in the controller GoogleFeedCtrl', function() {
-    scope.selectAll();
-    expect(scope.msgSelect).toBe('Deselect All');
   });
 
   it('should have a working selectAll function service in the controller GoogleFeedCtrl', function() {
-    scope.msgSelect = 'Deselect All';
-    scope.selectAll();
-    expect(scope.msgSelect).toBe('Select All');
   });
 
   it('should have createOPML function service in the controller GoogleFeedCtrl', function() {
@@ -437,65 +420,6 @@ describe('Controller: GoogleFeedCtrl', function () {
   });
 });
 
-/****************************************************************************************************/
-describe('Controller: SolrCtrl', function () {
-
-  // load the controller's module
-  beforeEach(module('websoApp'));
-
-  var SolrCtrl,
-  scope;
-
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    SolrCtrl = $controller('SolrCtrl', {
-      $scope: scope
-    });
-  }));
-
-  xit("can be declared 'xit'", function() {
-    expect(true).toBe(false);
-  });
-
-  it('should have correct initialisations in the controller reportCtrl', function() {
-    expect(scope.showFound).toBeDefined();
-    expect(scope.currentPage).toBeDefined();
-    expect(scope.maxSize).toBeDefined();
-    expect(scope.bigCurrentPage).toBeDefined();
-    expect(scope.myDataDate).toBeDefined();
-    expect(scope.mySelectionsPeriod).toBeDefined();
-    expect(scope.currentPeriod).toBeDefined();
-    expect(scope.currentFq).toBeDefined();
-    expect(scope.solr).toBeDefined();
-    expect(scope.gridOptionsPeriod).toBeDefined();
-  });
-
-  it('should have doSearch function service in the controller SolrCtrl', function() {
-    expect(scope.doSearch).toBeDefined();
-  });
-
-  it('should have a working doSearch function service in the controller SolrCtrl', function() {
-  	scope.doSearch();
-  	// cas passant et non passant à faire
-  });
-
-  it('should have doSearchFromPage function service in the controller SolrCtrl', function() {
-  	expect(scope.doSearchFromPage).toBeDefined();
-  });
-
-  it('should have a working doSearchFromPage function service in the controller SolrCtrl', function() {
-  	// cas passant et non passant à faire
-  });
-
-  it('should have pageChanged function service in the controller SolrCtrl', function() {
-  	expect(scope.pageChanged).toBeDefined();
-  });
-
-  it('should have a working pageChanged function service in the controller SolrCtrl', function() {
-  	// cas passant et non passant à faire
-  });
-});
 /****************************************************************************************************/
 describe('Controller: BarletCtrl', function () {
 

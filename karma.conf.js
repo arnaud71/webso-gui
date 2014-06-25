@@ -7,7 +7,7 @@ module.exports = function(config) {
       'node_modules/ng-midway-tester/src/ngMidwayTester.js',
       'app/bower_components/angular-cookies/angular-cookies.min.js',
       'app/bower_components/angular-ui-router/release/angular-ui-router.min.js',
-      'dist/bower_components/angular-mocks/angular-mocks.js',
+      'app/bower_components/angular-mocks/angular-mocks.js',
       'app/scripts/**/*.js',
       'test/spec/unit/**/*.js',
       'test/spec/midway/**/*.js'

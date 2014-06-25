@@ -6,7 +6,7 @@ module.exports = function(config) {
     
     conf.files = conf.files.concat([
         //necessary moduls
-        'dist/bower_components/angular-mocks/angular-mocks.js',
+        'app/bower_components/angular-mocks/angular-mocks.js',
         //Test-specific Code        
         'test/spec/unit/controllers/*.js'
     ]);
