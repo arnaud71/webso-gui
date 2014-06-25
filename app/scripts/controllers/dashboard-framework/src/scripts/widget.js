@@ -161,7 +161,8 @@ angular.module('adf')
               $scope.$broadcast('widgetConfigChanged');
             }
             // charger les modifications du widget dans la base solr
-            modifyWidget(definition.title, widgetId, definition.config.sourceContent);
+            modifyWidget(definition.title, widgetId, definition.config.sourceContent, true);
+
           };
           editScope.closeDialog = function(){
             instance.close();
