@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('AddWatchCtrl', function ($cookieStore, $scope,$resource,cfg,$modal,$log,$http) {
+  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard) {
 
     var $username = $cookieStore.get('username');
 
@@ -165,6 +165,59 @@ angular.module('websoApp')
       {get:{method:'JSONP'}});
 
 
+    // add a widget to Solr
+    function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId, titleSource){
+          $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
+            {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+
+          $scope.widgetAdd.get({
+              widgetName_s    : widgetName,
+              widgetTitle_s   : widgetTitle,
+              widgetEnable_s  : isEnable,
+              widgetWeight_s  : widgetWeight,
+              userWidgetId_s  : userWidgetId,
+              widgetId_s      : widgetId,
+              widgetContent_s : titleSource
+          })
+    };
+
+    // add widget : principal function
+    function addWidget(nameWidget, titleSource){
+      var userInformations = serviceWidgets.getUserIdents();
+      var userId, widgetName;
+      $scope.informations = $resource(cfg.urlServices+'db/:action',
+        {action:'get.pl',callback:"JSON_CALLBACK"},
+        {get:{method:'JSONP'}});
+
+      // Request Solr to get the current user id    
+      $scope.informations.get({user_s : userInformations[0], type_s:'user'}).$promise.then(function(user) {
+            userId = user.success.response.docs[0].id;
+        // Request Solr to know if the current user have some widgets on the dashboard
+        $scope.informations.get({userWidgetId_s : userId, type_s:'widget'}).$promise.then(function(widg) {
+            var addScope = $scope.$new();
+            addScope.widgets = dashboard.widgets;
+
+            if(widg.success.response.docs.length >= 10){
+              alert('nombre de widgets maximum atteint');
+            }else{
+                var widgetId;
+                var w = {
+                  id: serviceWidgets.getIdWidget(widg.success.response.docs),
+                  type: nameWidget,
+                  config: serviceWidgets.getWidgetConfiguration(nameWidget)
+                };
+                // id du widget
+                widgetId = serviceWidgets.getIdWidget(widg.success.response.docs);
+                // titre du widget
+                widgetName = serviceWidgets.getTitleWidget(nameWidget); 
+                // ajout du widget a la base Solr
+                addWidgetToSolr(nameWidget, widgetName, true, 1, userId, widgetId, titleSource);
+            }
+            addScope.$destroy();
+        });
+      });
+    };
 
     // ***************************************************************
     // doSearchSource
@@ -220,6 +273,10 @@ angular.module('websoApp')
           else {
             $scope.model.sourceId = sourceAddResult.success.id;
           }
+      },function(){
+          if($scope.model.valueCheckBoxSource === true){
+            addWidget('affichageSource', $scope.model.inputTitle);
+          }
       });
 
 
@@ -250,6 +307,10 @@ angular.module('websoApp')
         //source_id_s:    $scope.sourceAddResult.success.id,
         notification_s: $scope.notification.option
 
+      }, function(){
+          if($scope.model.valueCheckBoxWatch === true){
+            addWidget('affichageSurveillance', $scope.model.inputTitle);
+          }
       });
 
 
