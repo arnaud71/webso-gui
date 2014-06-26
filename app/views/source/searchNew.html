@@ -4,6 +4,7 @@
 
 <div id="search-new-feeds">
 
+
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb text-center">
@@ -13,8 +14,11 @@
             </ol>
         </div>
     </div>
-    <div ng-controller="GoogleFeedCtrl">
 
+    <div ng-controller="GoogleFeedCtrl">
+        <div class="alert alert-danger" ng-show="isError">
+            <strong>&nbsp;</strong><span>{{errorMessage}}</span>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <form class="form-horizontal" ng-submit="doSearch()">

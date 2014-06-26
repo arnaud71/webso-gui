@@ -50,7 +50,14 @@ angular.module('websoApp')
 				$location.path('/home');				
 			}
 		}
-	});
+	},
+    //error
+    function () {
+      $scope.errorMessage = cfg.errorConnect;
+      $scope.isError = true;
+
+    }
+  );
   };
 
 

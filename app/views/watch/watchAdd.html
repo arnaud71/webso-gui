@@ -9,6 +9,9 @@
 </ol>
 
 <div ng-controller="AddWatchCtrl">
+    <div class="alert alert-danger" ng-show="isError">
+        <strong>&nbsp;</strong><span>{{errorMessage}}</span>
+    </div>
 
     <form name="sourceForm" class="form-horizontal" role="form">
         <!-- source panel -->

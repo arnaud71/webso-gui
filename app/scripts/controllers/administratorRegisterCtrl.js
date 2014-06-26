@@ -32,7 +32,14 @@ angular.module('websoApp')
                         $scope.password = "";                    
                     }
                 }
-        });
+        },
+          //error
+          function () {
+            $scope.errorMessage = cfg.errorConnect;
+            $scope.isError = true;
+
+          }
+        );
     };
     
     $scope.releaseError = function() {

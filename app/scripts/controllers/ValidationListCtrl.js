@@ -6,6 +6,8 @@ angular.module('websoApp')
         $scope.mySelections = [];
         var $username = $cookieStore.get('username');
         var $userRole = $cookieStore.get('userRole');
+        $scope.isError                = false;
+        $scope.errorMessage           = cfg.errorConnect;
 
         /*
         Getting validation doc
@@ -60,12 +62,25 @@ angular.module('websoApp')
         var data;
         $scope.validationResult = $scope.validationList.get({rows:pageSize,start:(page*pageSize-pageSize)},
           function() {        //call back function for asynchronous
-            if (typeof $scope.validationResult.success.response === "undefined") {}
-            else {
-              data = $scope.validationResult;
-              $scope.setPagingData(data,page,pageSize);
-              //$('.row').trigger('resize');
+            $scope.isError = false;
+            if (typeof $scope.validationResult.success !== "undefined") {
+              if (typeof $scope.validationResult.success.response === "undefined") {
+              }
+              else {
+                data = $scope.validationResult;
+                $scope.setPagingData(data, page, pageSize);
+                //$('.row').trigger('resize');
+              }
             }
+            else {
+                $scope.isError = true;
+            }
+
+          },
+          //error
+          function () {
+            $scope.isError = true;
+
           }
         );
 
@@ -121,19 +136,21 @@ angular.module('websoApp')
     };
 
 
-
-
-
-
     $scope.doSearch = function () {
       $scope.sourceResult = $scope.sourceList.get({type_s:'source'},
         function() {        //call back function for asynchronous
+          $scope.isError = false;
           if (typeof $scope.sourceResult.success.response === "undefined") {}
           else {
             $scope.myData = $scope.sourceResult.success.response.docs;
 
             $('.row').trigger('resize');
           }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
         }
       );
 

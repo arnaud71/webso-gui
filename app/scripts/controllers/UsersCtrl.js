@@ -4,6 +4,8 @@ angular.module('websoApp')
     .controller('UsersCtrl', function ($cookieStore, $location, $scope,$resource,cfg,$modal) {
 
         $scope.isSuccess = false;
+        $scope.isError                = false;
+        $scope.errorMessage           = cfg.errorConnect;
 
         /*
          Getting watch   List
@@ -41,13 +43,25 @@ angular.module('websoApp')
             var data;
             $scope.watchResult = $scope.userList.get({rows:pageSize,start:(page*pageSize-pageSize)},
                 function() {        //call back function for asynchronous
-                    if (typeof $scope.watchResult.success.response === "undefined") {}
-                    else {
+                    if (typeof $scope.userResult.success !== "undefined") {
+                      if (typeof $scope.watchResult.success.response === "undefined") {
+                      }
+                      else {
                         data = $scope.watchResult;
-                        $scope.setPagingData(data,page,pageSize);
+                        $scope.setPagingData(data, page, pageSize);
                         //$('.row').trigger('resize');
+                      }
                     }
-                }
+                    else {
+                      $scope.isError = true;
+                    }
+                },
+                //error
+              function () {
+                $scope.isError = true;
+
+              }
+
             );
 
             //}, 100);
@@ -96,13 +110,26 @@ angular.module('websoApp')
 
     $scope.userResult = $scope.userList.get({type_s:'user'},
         function() {        //call back function for asynchronous
-            if (typeof $scope.userResult.success.response === "undefined") {}
-            else {
+            $scope.isError = false;
+            if (typeof $scope.userResult.success !== "undefined") {
+              if (typeof $scope.userResult.success.response === "undefined") {
+              }
+              else {
                 $scope.myData = $scope.userResult.success.response.docs;
 
                 $('.row').trigger('resize');
+              }
             }
+            else {
+              $scope.isError = true;
+            }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
         }
+
     );
 
 //  modal instance

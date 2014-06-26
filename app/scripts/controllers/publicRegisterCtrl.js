@@ -37,7 +37,14 @@ angular.module('websoApp')
                     login($scope.username, $scope.password);
                 }
             }
-        });
+        },
+          //error
+          function () {
+            $scope.errorMessage = cfg.errorConnect;
+            $scope.isError = true;
+
+          }
+        );
     };
 
     $scope.releaseError = function() {

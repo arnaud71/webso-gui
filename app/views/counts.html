@@ -4,7 +4,9 @@
 
 <h1>Compte des utilisateurs enregistrés</h1>
 <div ng-controller="UsersCtrl">
-
+    <div class="alert alert-danger" ng-show="isError">
+        <strong>&nbsp;</strong><span>{{errorMessage}}</span>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="gridStyleSource" ng-grid="gridOptionsSource">

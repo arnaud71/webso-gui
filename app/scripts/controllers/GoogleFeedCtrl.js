@@ -10,9 +10,12 @@ angular.module('websoApp')
       msgAdd              : 'Ajouter',
       foundRes            : 0,
       searchTerm          : '',
-      mySelections        : []
+      mySelections        : [],
+
     };
 
+    $scope.isError                = false;
+    $scope.errorMessage           = cfg.errorConnect;
 
 
    /* $scope.googleFeed = $resource('https://ajax.googleapis.com/ajax/services/feed/:action',
@@ -82,6 +85,11 @@ angular.module('websoApp')
             //sleep(3000);
             //$('.row').trigger('resize');
 
+
+          },
+          //error
+          function () {
+            $scope.isError = true;
 
           }
 

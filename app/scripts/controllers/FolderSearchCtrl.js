@@ -14,6 +14,8 @@ angular.module('websoApp')
     paginationConfig.firstText    = 'Début';
     paginationConfig.lastText     = 'Fin';
     $scope.isCollapsed            = true;
+    $scope.isError                = false;
+    $scope.errorMessage           = cfg.errorConnect;
 
     // data for period menu
     $scope.myDataDate = [
@@ -63,17 +65,24 @@ angular.module('websoApp')
 
     $scope.doSearch = function () {
       $scope.isCollapsed = false;
+
       //if ($scope.searchTerm) {
       $scope.currentPage      = 1;
       $scope.maxSize          = 5;
       $scope.bigCurrentPage   = 1;
       $scope.solrResult       = $scope.solr.get({q:$scope.searchTerm,start:$scope.currentPage-1,fq:$scope.currentFq+' +type_s:document +user_s:'+$username},
         function () {
+          $scope.isError = false;
           if (typeof solrResult !== 'undefined') {
           //if ($scope.solrResult.response.numFound !== 'undefined') {
           $scope.totalItems     = $scope.solrResult.response.numFound;
           $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
         }
       );
       //}
@@ -81,14 +90,20 @@ angular.module('websoApp')
 
 
     $scope.doSearchFromPage = function () {
-      $scope.isCollapsed = true;
+      $scope.isCollapsed = false;
       //if ($scope.searchTerm) {
       $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
         function () {
+          $scope.isError = true;
           if (typeof solrResult !== 'undefined') {
             $scope.totalItems     = $scope.solrResult.response.numFound;
             $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
+
+        },
+        //error
+        function () {
+          $scope.isError = true;
 
         }
       );

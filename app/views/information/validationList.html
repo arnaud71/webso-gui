@@ -9,6 +9,9 @@
         <li class="active">Afficher informations validées</li>
     </ol>
     <div ng-controller="ValidationListCtrl">
+        <div class="alert alert-danger" ng-show="isError">
+            <strong>&nbsp;</strong><span>{{errorMessage}}</span>
+        </div>
         <!-- <div class="selectedItems">Items: {{mySelections}}</div><br><br> -->
         <div class="selectedItems">Aperçu: {{selectedIDs}}</div><br><br>
 

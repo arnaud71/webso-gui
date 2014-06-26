@@ -5,6 +5,9 @@ angular.module('websoApp')
 
     var $username = $cookieStore.get('username');
 
+    $scope.isError                = false;
+    $scope.errorMessage           = cfg.errorConnect;
+
     $scope.filterOptions = {
       filterText        : "",
       useExternalFilter : false
@@ -225,13 +228,26 @@ angular.module('websoApp')
     $scope.doSearchSource = function () {
       $scope.sourceResult = $scope.dbList.get({type_s:'source'},
         function() {        //call back function for asynchronous
-          if (typeof $scope.sourceResult.success.response === "undefined") {}
-          else {
-            $scope.myDataSource = $scope.sourceResult.success.response.docs;
+          $scope.isError = false;
+          if (typeof $scope.sourceResult.success !== "undefined") {
+            if (typeof $scope.sourceResult.success.response === "undefined") {
+            }
+            else {
+              $scope.myDataSource = $scope.sourceResult.success.response.docs;
 
-            $('.row').trigger('resize');
+              $('.row').trigger('resize');
+            }
           }
+          else {
+            $scope.isError = true;
+          }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
         }
+
       );
 
     };
@@ -241,14 +257,28 @@ angular.module('websoApp')
     // doSearchWatch
     // list the available sources
     $scope.doSearchWatch = function () {
+      $scope.isError = false;
       $scope.watchResult = $scope.dbList.get({type_s:'watch',source_id_s:$scope.model.sourceId},
         function() {        //call back function for asynchronous
-          if (typeof $scope.sourceResult.success.response === "undefined") {}
-          else {
-            $scope.myDataWatch = $scope.watchResult.success.response.docs;
 
-            $('.row').trigger('resize');
+          $scope.isError = false;
+          if (typeof $scope.watchResult.success !== "undefined") {
+            if (typeof $scope.watchResult.success.response === "undefined") {
+            }
+            else {
+              $scope.myDataWatch = $scope.watchResult.success.response.docs;
+
+              $('.row').trigger('resize');
+            }
           }
+          else {
+            $scope.isError = true;
+          }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
         }
       );
 
@@ -373,6 +403,11 @@ angular.module('websoApp')
       $scope.solrResult       = $scope.solrResource.get({
                                     q   : $scope.model.inputQuery,
                                     fq  : '+source_id_ss:'+$scope.model.sourceId+' +type_s:document'
+
+      },
+      //error
+      function () {
+          $scope.isError = true;
 
       }
 
