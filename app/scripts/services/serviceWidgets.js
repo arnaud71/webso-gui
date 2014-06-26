@@ -1,5 +1,6 @@
  'use strict';
-angular.module('websoApp').factory('serviceWidgets',function($cookieStore){
+angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashboard){
+
 	function giveTitleToWidget(widget){
 	    var title;
 	    switch (widget) {
@@ -39,6 +40,17 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore){
 		informations[1] = $cookieStore.get('userRole');
 		return informations;
 	}
+
+    // create the widget configuration
+    function createConfiguration(type){
+      var cfg = {};
+      var config = dashboard.widgets[type].config;
+      if (config){
+        cfg = angular.copy(config);
+      }
+      return cfg;
+    }
+
     return {
         getTitleWidget:function(widget){
             return giveTitleToWidget(widget);
@@ -48,6 +60,9 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore){
         },
         getUserIdents:function(){
         	return getUserCookies();
+        },
+        getWidgetConfiguration:function(type){
+        	return createConfiguration(type);
         }
     };
 });
