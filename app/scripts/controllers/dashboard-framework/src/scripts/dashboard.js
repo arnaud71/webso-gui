@@ -100,15 +100,6 @@ angular.module('adf')
       }
     }
     
-    function createConfiguration(type){
-      var cfg = {};
-      var config = dashboard.widgets[type].config;
-      if (config){
-        cfg = angular.copy(config);
-      }
-      return cfg;
-    }
-
     return {
       replace: true,
       restrict: 'EA',
@@ -218,7 +209,7 @@ angular.module('adf')
                   var w = {
                     id: serviceWidgets.getIdWidget(widg.success.response.docs),
                     type: widget,
-                    config: createConfiguration(widget)
+                    config: serviceWidgets.getWidgetConfiguration(widget)
                   };
                   // ajout du widget au dashboard
                   addScope.model.rows[0].columns[0].widgets.unshift(w);
