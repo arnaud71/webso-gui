@@ -25,14 +25,9 @@
 'use strict';
 
 angular.module('adf')
-  .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard) {
-    function getUserCookies(){
-      var informations = [];
-      informations[0] = $cookieStore.get('username');
-      informations[1] = $cookieStore.get('userRole');
-      return informations;
-    };
+  .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
 
+  	// modify a widget's informations
     function modifyWidget(title, ident, widgetContent, isEnable){
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
@@ -72,11 +67,11 @@ angular.module('adf')
           }
           // pass config to scope
           $scope.config = config;
-          // retourner l'etat du widget (activé ou desactivé)
+          // get a widget's state (activated ou desactivated)
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-            // Interroger Solr pour avoir l'etat du widget
+          	// set the widget's state in front-end
             $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
               if(widg.success.response.numFound > 0){
                 var isCollapsed;
@@ -109,7 +104,7 @@ angular.module('adf')
             var index = column.widgets.indexOf(definition);
             var type = column.widgets[index].type;
             var widgetId = column.widgets[index].id;
-            // suppression d'un widget
+            // delete the corresponding widget
             $scope.widgetDelete = $resource(cfg.urlServices+'db/:action',
               {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
               {get:{method:'JSONP'}});
@@ -160,7 +155,7 @@ angular.module('adf')
               // reload content after edit dialog is closed
               $scope.$broadcast('widgetConfigChanged');
             }
-            // charger les modifications du widget dans la base solr
+            // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.sourceContent, true);
 
           };
@@ -169,12 +164,12 @@ angular.module('adf')
             editScope.$destroy();            
           }
         };
-        // activer un widget
+        // activate a widget
         $scope.activateWidget = function() {
 			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
 			$scope.isCollapsed = false;
         };
-        // desactiver un widget
+        // desactivate a widget
         $scope.desactivateWidget = function() {
 			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
 			$scope.isCollapsed = true;

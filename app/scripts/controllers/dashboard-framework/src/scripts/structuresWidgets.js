@@ -3,7 +3,7 @@
 websoApp.config(function(dashboardProvider){
   
   dashboardProvider
-    // 1 lignes : aura 2 colonnes de taille 6 chacune
+    // 1 line : 2 columns with 6 of size
     .structure('6-6', {
       rows: [{
         columns: [{
@@ -13,7 +13,7 @@ websoApp.config(function(dashboardProvider){
         }]
       }]
     })
-    // 1 lignes : aura 3 colonnes de taille 4
+    // 1 line : 3 colums with 6 of size
     .structure('4-4-4', {
       rows: [{
         columns: [{
@@ -28,9 +28,9 @@ websoApp.config(function(dashboardProvider){
         }]
       }]
     })
-    // 2 lignes :
-      // la 1ere aura 1 colonne de taille 12
-      // la 2eme aura 3 collonnes de taille 4 chacune
+    // 2 lines :
+      // the first line : 	1 column with 12 of size
+      // the second line : 	3 column with 4 of size
     .structure('12/4-4-4', {
       rows: [{
         columns: [{
@@ -46,9 +46,9 @@ websoApp.config(function(dashboardProvider){
         }]
       }]
     })
-    // 2 lignes :
-      // la 1ere aura 1 colonne de taille 12
-      // la 2eme aura 2 collonnes de taille 6 chacune
+    // 2 lines :
+      // the first :  1 column with 12 of size
+      // the second : 2 column with 6 of size
     .structure('12/6-6', {
       rows: [{
         columns: [{
@@ -62,10 +62,10 @@ websoApp.config(function(dashboardProvider){
         }]
       }]
     })
-    // 3 lignes :
-      // la 1ere aura 1 colonne de taille 12
-      // la 2eme aura 2 collonnes de taille 6 chacune
-      // la 3eme aura 1 collone de taille 12
+    // 3 lines :
+      // the first : 	1 column with 12 of size
+      // the second : 	2 column with 6 of size
+      // the third : 	1 column with 12 of size
     .structure('12/6-6/12', {
       rows: [{
         columns: [{

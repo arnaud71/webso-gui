@@ -40,6 +40,7 @@
 angular.module('adf')
   .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, serviceWidgets, cfg){
 
+  // add a widget to Solr
   function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
           {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
@@ -90,7 +91,8 @@ angular.module('adf')
       });
       return columns;
     }
-            
+    
+    // change dashboard's structure
     function changeStructure(model, structure){
       var columns = readColumns(model);
       model.rows = structure.rows;
@@ -189,10 +191,11 @@ angular.module('adf')
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-          // Interroger Solr pour avoir l'identifiant de l'utilisateur en cours de session       
+          // Request to Solt to get the current user's ID     
           $scope.informations.get({user_s : userInformations[0], type_s:'user'}).$promise.then(function(user) {
                 userId = user.success.response.docs[0].id;
-            // Interroger Solr pour savoir si l'utilisateur en cours a des widgets sur son dashboard  
+            // Request to Solr to know if the current user have some widgets on his dashboard
+            // and add the widget
             $scope.informations.get({userWidgetId_s : userId, type_s:'widget'}).$promise.then(function(widg) { 
                 var addScope = $scope.$new();
                 addScope.widgets = dashboard.widgets;
@@ -211,16 +214,16 @@ angular.module('adf')
                     type: widget,
                     config: serviceWidgets.getWidgetConfiguration(widget)
                   };
-                  // ajout du widget au dashboard
+                  // add the widget to the front-end dashboard
                   addScope.model.rows[0].columns[0].widgets.unshift(w);
-                  // id du widget
+                  // widget's ID
                   widgetId = addScope.model.rows[0].columns[0].widgets[0].id;
-                  // titre du widget
+                  // widget's title
                   widgetName = serviceWidgets.getTitleWidget(widget); 
-                  // ajout du widget a la base Solr
+                  // add the widget to Solr
                   addWidgetToSolr(widget, widgetName, true, 1, userId, widgetId);
                 }
-                  // fermeture de la fenetre modal
+                  // close the modal frame
                   instance.close();
                   addScope.$destroy();
                 };
