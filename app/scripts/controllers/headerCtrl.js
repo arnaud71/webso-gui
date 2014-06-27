@@ -33,17 +33,19 @@ angular.module('websoApp')
       {get:{method:'JSONP'}});
 
   $scope.logout = function () {
+  	$scope.loading = true;
     // envoi d'informations de login au service pour valider la deconnexion
-	
 	var $user = $cookieStore.get('username');
 	var $pass = $cookieStore.get('password');
 	$scope.verifyLogout.get({user_s : $user, password_s : $pass}).$promise.then(function(user) {
 		if(user.error){
+			$scope.loading = false;
 			$scope.message = user.error;
 			$location.path('/login');
 		}
 		else {
 			if(user.success){
+				$scope.loading = false;
 				$cookieStore.put('Authenticated', false);
 				$scope.isAuthenticated = false;
 				$cookieStore.remove('username');

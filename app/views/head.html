@@ -91,8 +91,12 @@
 	        </li>
 	    </ul>
 	</nav>
+	<center>
+		<div ng-show="loading" class="loading">
+			<img src="../images/loader.gif">
+		</div>
+	</center>
     <div ng-show="!isPublicNotAuthenticated" class="pull-right">Bienvenue&nbsp;<strong>{{ username }}&nbsp;</strong>
         <span data-ng-class="{&quot;label-success&quot;: userRole}" class="label">{{ userRole }}</span>
     </div>
-
 </div>

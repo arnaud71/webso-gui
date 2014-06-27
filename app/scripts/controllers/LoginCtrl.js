@@ -29,15 +29,18 @@ angular.module('websoApp')
 
 
   $scope.login = function () {
+  	$scope.loading = true;
     // envoi d'informations de login au service pour valider l'authentification  
 	$scope.verifyLogin.get({user_s : $scope.username, password_s : $scope.password}).$promise.then(function(user) {
 
 		if(user.error){
+			$scope.loading = false;
 			$scope.isError = true;
 			$scope.errorMessage = user.error;
 		}
 		else {
 			if(user.success){
+				$scope.loading = false;
 				if($scope.valueCheckBox === true){
 					localStorageService.set('username', $scope.username);
 					localStorageService.set('password', $scope.password);
