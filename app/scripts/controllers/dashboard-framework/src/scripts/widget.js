@@ -99,26 +99,39 @@ angular.module('adf')
       if (definition) {
         // bind close function
         $scope.close = function() {
-          var column = $scope.col;
-          if (column) {
+          var editScope = $scope.$new();
+          
+          var opts = {
+            scope: editScope,
+            templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-delete.html'
+          };
+          var instance = $modal.open(opts);
 
-            var index = column.widgets.indexOf(definition);
-            var widgetId = column.widgets[index].id;
-            // delete the corresponding widget
-            $scope.widgetDelete = $resource(cfg.urlServices+'db/:action',
-              {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
-              {get:{method:'JSONP'}});
-              var deleteWidget = confirm('Etes vous sûr de vouloir supprimer ce widget ?');
-              if (deleteWidget) {
-                  $scope.widgetDeleteResult = $scope.widgetDelete.get({
-                      id  : widgetId
-                  });
+          editScope.valideDialog = function() {
+			instance.close();
+			editScope.$destroy();
+			var column = $scope.col;
+	          if (column) {
+	            var index = column.widgets.indexOf(definition);
+	            var widgetId = column.widgets[index].id;
+	            // delete the corresponding widget
+	            $scope.widgetDelete = $resource(cfg.urlServices+'db/:action',
+	              {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
+	              {get:{method:'JSONP'}});
+					$scope.widgetDeleteResult = $scope.widgetDelete.get({
+					  id  : widgetId
+					});
 
-                  if (index >= 0) {
-                    column.widgets.splice(index, 1);
-                  }
-                  $element.remove();
-              }
+					if (index >= 0) {
+					column.widgets.splice(index, 1);
+					}
+					$element.remove();
+	          }
+          };
+
+          editScope.closeDialog = function(){
+            instance.close();
+            editScope.$destroy();            
           }
         };
         
