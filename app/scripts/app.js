@@ -155,14 +155,6 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
-        .state('/organize/profile', {
-            url: '/organize/profile',       
-            templateUrl: 'views/user/userAdd.html' ,
-            controller:'',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur']
-			      }
-        })
         .state('/organize/sources', {
             url: '/organize/sources',                   
             templateUrl: 'views/sources/list.html'  ,
