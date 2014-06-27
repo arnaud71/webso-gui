@@ -41,19 +41,19 @@ angular.module('adf')
   .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, serviceWidgets, cfg){
 
   // add a widget to Solr
-  function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId){
+  function addWidgetToSolr(widgetId, widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
           {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
         $rootScope.widgetAdd.get({
-            widgetName_s  	: widgetName,
-            widgetTitle_s  	: widgetTitle,
-            widgetEnable_s 	: isEnable,
-            widgetWeight_s 	: widgetWeight,
-            userWidgetId_s 	: userWidgetId,
-            widgetId_s 		  : widgetId,
-            widgetContent_s : ''
+        	id 				: widgetId,
+            widget_type_s  	: widgetType,
+            title_t  		: widgetTitle,
+            enable_s 		: isEnable,
+            weight_s	 	: widgetWeight,
+            user_s		 	: userWidget,
+            query_s 		: ''
         })
   };
 
@@ -187,16 +187,15 @@ angular.module('adf')
         // add widget dialog
         $scope.addWidgetDialog = function(){
           var userInformations = serviceWidgets.getUserIdents();
-          var userId, widgetName;
+          var userName, widgetTitle;
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-          // Request to Solt to get the current user's ID     
-          $scope.informations.get({user_s : userInformations[0], type_s:'user'}).$promise.then(function(user) {
-                userId = user.success.response.docs[0].id;
+
             // Request to Solr to know if the current user have some widgets on his dashboard
             // and add the widget
-            $scope.informations.get({userWidgetId_s : userId, type_s:'widget'}).$promise.then(function(widg) { 
+            $scope.informations.get({user_s : userInformations[0], type_s:'widget'}).$promise.then(function(widg) {
+            	userName = userInformations[0];
                 var addScope = $scope.$new();
                 addScope.widgets = dashboard.widgets;
                 var opts = {
@@ -219,9 +218,9 @@ angular.module('adf')
                   // widget's ID
                   widgetId = addScope.model.rows[0].columns[0].widgets[0].id;
                   // widget's title
-                  widgetName = serviceWidgets.getTitleWidget(widget); 
+                  widgetTitle = serviceWidgets.getTitleWidget(widget); 
                   // add the widget to Solr
-                  addWidgetToSolr(widget, widgetName, true, 1, userId, widgetId);
+                  addWidgetToSolr(widgetId, widget, widgetTitle, true, 1, userName);
                 }
                   // close the modal frame
                   instance.close();
@@ -232,7 +231,6 @@ angular.module('adf')
                   addScope.$destroy();
                 };
           });
-        });
       };
     },
       link: function ($scope, $element, $attr) {

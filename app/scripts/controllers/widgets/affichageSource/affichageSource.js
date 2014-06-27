@@ -34,8 +34,8 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         templateUrl: 'scripts/controllers/widgets/affichageSource/affichageSource.html',
         resolve: {
           data: function(config){
-            if (config.sourceContent){
-              return config.sourceContent;
+            if (config.content){
+              return config.content;
             }
           }
         },
@@ -125,7 +125,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         beforeSelectionChange: function (rowItem) { return true; },
         afterSelectionChange: function () {
             angular.forEach($scope.mySelections, function ( item ) {
-                $scope.config.sourceContent = item.id;
+                $scope.config.content = item.id;
             });
         }             
     };

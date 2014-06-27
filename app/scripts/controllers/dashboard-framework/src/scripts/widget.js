@@ -33,10 +33,11 @@ angular.module('adf')
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
-        $rootScope.widgetModify.get({widgetTitle_s : title, 
-        	id : ident, 
-        	widgetContent_s : widgetContent,
-        	widgetEnable_s : isEnable
+        $rootScope.widgetModify.get({
+        	title_t 		: title,
+        	id 				: ident, 
+        	query_s 		: widgetContent,
+        	enable_s 		: isEnable
         });
     };
 
@@ -75,7 +76,7 @@ angular.module('adf')
             $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
               if(widg.success.response.numFound > 0){
                 var isCollapsed;
-                if(widg.success.response.docs[0].widgetEnable_s === "true"){
+                if(widg.success.response.docs[0].enable_s === "true"){
                   isCollapsed = false;
                 }else{
                   isCollapsed = true;
@@ -102,7 +103,6 @@ angular.module('adf')
           if (column) {
 
             var index = column.widgets.indexOf(definition);
-            var type = column.widgets[index].type;
             var widgetId = column.widgets[index].id;
             // delete the corresponding widget
             $scope.widgetDelete = $resource(cfg.urlServices+'db/:action',
@@ -156,7 +156,7 @@ angular.module('adf')
               $scope.$broadcast('widgetConfigChanged');
             }
             // load the widget's modifications in Solr
-            modifyWidget(definition.title, widgetId, definition.config.sourceContent, true);
+            modifyWidget(definition.title, widgetId, definition.config.content, true);
 
           };
           editScope.closeDialog = function(){
@@ -166,12 +166,12 @@ angular.module('adf')
         };
         // activate a widget
         $scope.activateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
+			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
 			$scope.isCollapsed = false;
         };
         // desactivate a widget
         $scope.desactivateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.sourceContent, $scope.isCollapsed);
+			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
 			$scope.isCollapsed = true;
 		};
 

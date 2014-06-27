@@ -119,7 +119,7 @@ angular.module('websoApp')
 
 // suppression d'un utilisateur
     $scope.countDelete = $resource(cfg.urlServices+'db/:action',
-          {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
+          {action:'delete.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
     $scope.deleteCount = function (userId, username, index) {

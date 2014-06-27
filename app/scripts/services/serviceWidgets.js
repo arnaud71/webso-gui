@@ -28,6 +28,9 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
 	        case 'affichageSurveillance':
 	            title = 'Surveillances';
 	            break;
+	        case 'defaultWidget':
+	            title = 'widget par defaut';
+	            break;
 	    }
 	    return title;
 	}
