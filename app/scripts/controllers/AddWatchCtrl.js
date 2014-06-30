@@ -302,16 +302,19 @@ angular.module('websoApp')
           else {
             $scope.model.sourceId = sourceAddResult.success.id;
           }
+      },function(){
+          if($scope.model.valueCheckBoxSource === true){
+            addWidget('affichageSource', $scope.model.inputTitle);
+          }
       });
 
-      if($scope.model.valueCheckBoxSource === true){
-        addWidget('affichageSource');
-      }
 
       var modalInstance = $modal.open({
         templateUrl: 'addSourceModal.html',
         controller: ModalInstanceCtrl
       });
+
+
     };
 
 
@@ -333,11 +336,12 @@ angular.module('websoApp')
         //source_id_s:    $scope.sourceAddResult.success.id,
         notification_s: $scope.notification.option
 
+      }, function(){
+          if($scope.model.valueCheckBoxWatch === true){
+            addWidget('affichageSurveillance', $scope.model.inputTitle);
+          }
       });
 
-      if($scope.model.valueCheckBoxWatch === true){
-        addWidget('affichageSurveillance');
-      }
 
       // var addWatch = alert('Surveillance ajoutée');
       // Testing  Modal trigger
@@ -345,6 +349,8 @@ angular.module('websoApp')
         templateUrl: 'addWatchModal.html',
         controller: ModalInstanceCtrl
       });
+
+
     };
 
     // ***************************************************************
