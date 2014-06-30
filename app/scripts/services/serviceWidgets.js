@@ -1,6 +1,12 @@
- 'use strict';
+/*
+------------------
+Widgets's services
+------------------
+*/
+'use strict';
 angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashboard){
 
+	// give a title to a widget
 	function giveTitleToWidget(widget){
 	    var title;
 	    switch (widget) {
@@ -22,10 +28,14 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
 	        case 'affichageSurveillance':
 	            title = 'Surveillances';
 	            break;
+	        case 'defaultWidget':
+	            title = 'widget par defaut';
+	            break;
 	    }
 	    return title;
 	}
 
+	// give an ID to a widget
 	function giveIdToWidget(widgets){
 		if(widgets.length === 0){
 			return 1;
@@ -33,7 +43,8 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
 			return parseInt(widgets[widgets.length - 1].id) + 1;
 		}
 	}
-  
+
+	// get a current user's login
 	function getUserCookies(){
 		var informations = [];
 		informations[0] = $cookieStore.get('username');
@@ -41,7 +52,7 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
 		return informations;
 	}
 
-    // create the widget configuration
+    // create a widget's configuration
     function createConfiguration(type){
       var cfg = {};
       var config = dashboard.widgets[type].config;

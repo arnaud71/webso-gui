@@ -27,7 +27,7 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
         if(mod === 2){
           array[0] = div + 1;
           array[1] = div + 1;
-          array[2] = div;               
+          array[2] = div;
         }
     }
   }
@@ -38,19 +38,15 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
   // et les place sur le dashboard selon le format suivant :
   // 1 ligne et 3 colonnes : chaque colonne sera de taille col-md-4
 	var getWidgetsUser = function(username, model){
-    var userId, widgets = [];
-    var numberWidgetsInCurrentColumn = 0;
-    var widgetsCount = 0;
+    var widgets = [];
 
     // requete de renvois d'informations
     $scope.informations = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
-    // Interroger Solr pour avoir l'identifiant de l'utilisateur en cours de session       
-    $scope.informations.get({user_s : username, type_s:'user'}).$promise.then(function(user) {
-        userId = user.success.response.docs[0].id;
+
         // Interroger Solr pour savoir si l'utilisateur en cours a des widgets sur son dashboard  
-        $scope.informations.get({userWidgetId_s : userId, type_s:'widget'}).$promise.then(function(widg) {
+        $scope.informations.get({user_s : username, type_s:'widget'}).$promise.then(function(widg) {
             if(widg.success.response.numFound > 0){
               var array = nbWidgetsMaxInWichColumn(widg.success.response.numFound);
               var $j = 0, $i = 0, nbWidgetsCourant = 0;
@@ -59,10 +55,10 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
                     // boucle s'arretant quand tous les widgets sont positionnés dans une colonne
                     while(nbWidgetsCourant < array[$j]){
                       var conf = {};
-                      widgets[$i] = widg.success.response.docs[$i].widgetName_s;
-                      conf['sourceContent'] = widg.success.response.docs[$i].widgetContent_s;
+                      widgets[$i] = widg.success.response.docs[$i].widget_type_s;
+                      conf['content'] = widg.success.response.docs[$i].query_s;
                       w = {
-                        title: widg.success.response.docs[$i].widgetTitle_s,
+                        title: widg.success.response.docs[$i].title_t,
                         type: widgets[$i],
                         id: widg.success.response.docs[$i].id,
                         config: conf
@@ -84,7 +80,6 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
               }
               $scope.model = model;
 		    });
-    });
   };
     var model = {
       title: "Tableau de bord",

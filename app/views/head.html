@@ -66,7 +66,6 @@
 	                <li data-match-route="/organize"><a ui-sref="/organize">Templates</a></li>
 	                <li data-match-route="/organize"><a ui-sref="/organize">Collectes webso</a></li>
 	                <li data-match-route="/organize"><a ui-sref="/organize">Packages de sources</a></li>
-	                <li data-match-route="/organize/profile"><a ui-sref="/organize/profile">Profils</a></li>
 	            </ul>
 	        </li>
 	        <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
@@ -92,8 +91,12 @@
 	        </li>
 	    </ul>
 	</nav>
+	<center>
+		<div ng-show="loading" class="loading">
+			<img src="../images/loader.gif">
+		</div>
+	</center>
     <div ng-show="!isPublicNotAuthenticated" class="pull-right">Bienvenue&nbsp;<strong>{{ username }}&nbsp;</strong>
         <span data-ng-class="{&quot;label-success&quot;: userRole}" class="label">{{ userRole }}</span>
     </div>
-
 </div>

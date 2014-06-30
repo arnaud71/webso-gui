@@ -169,35 +169,35 @@ angular.module('websoApp')
 
 
     // add a widget to Solr
-    function addWidgetToSolr(widgetName, widgetTitle, isEnable, widgetWeight, userWidgetId, widgetId, titleSource){
+    function addWidgetToSolr(widgetId, widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
           $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
             {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
           $scope.widgetAdd.get({
-              widgetName_s    : widgetName,
-              widgetTitle_s   : widgetTitle,
-              widgetEnable_s  : isEnable,
-              widgetWeight_s  : widgetWeight,
-              userWidgetId_s  : userWidgetId,
-              widgetId_s      : widgetId,
-              widgetContent_s : titleSource
+              id              : widgetId,
+              widget_type_s   : widgetType,
+              title_t         : widgetTitle,
+              enable_s        : isEnable,
+              weight_s        : widgetWeight,
+              user_s          : userWidget,
+              query_s         : ''
           })
     };
 
     // add widget : principal function
-    function addWidget(nameWidget, titleSource){
+    function addWidget(widgetType){
       var userInformations = serviceWidgets.getUserIdents();
-      var userId, widgetName;
+      var userWidget, widgetTitle;
       $scope.informations = $resource(cfg.urlServices+'db/:action',
         {action:'get.pl',callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});
 
-      // Request Solr to get the current user id    
-      $scope.informations.get({user_s : userInformations[0], type_s:'user'}).$promise.then(function(user) {
-            userId = user.success.response.docs[0].id;
+        // username
+        userWidget = userInformations[0];
+
         // Request Solr to know if the current user have some widgets on the dashboard
-        $scope.informations.get({userWidgetId_s : userId, type_s:'widget'}).$promise.then(function(widg) {
+        $scope.informations.get({user_s : userWidget, type_s:'widget'}).$promise.then(function(widg) {
             var addScope = $scope.$new();
             addScope.widgets = dashboard.widgets;
 
@@ -207,19 +207,18 @@ angular.module('websoApp')
                 var widgetId;
                 var w = {
                   id: serviceWidgets.getIdWidget(widg.success.response.docs),
-                  type: nameWidget,
-                  config: serviceWidgets.getWidgetConfiguration(nameWidget)
+                  type: widgetType,
+                  config: serviceWidgets.getWidgetConfiguration(widgetType)
                 };
                 // id du widget
                 widgetId = serviceWidgets.getIdWidget(widg.success.response.docs);
                 // titre du widget
-                widgetName = serviceWidgets.getTitleWidget(nameWidget); 
+                widgetTitle = serviceWidgets.getTitleWidget(widgetType); 
                 // ajout du widget a la base Solr
-                addWidgetToSolr(nameWidget, widgetName, true, 1, userId, widgetId, titleSource);
+                addWidgetToSolr(widgetId, widgetType, widgetTitle, true, 1, userWidget);
             }
             addScope.$destroy();
         });
-      });
     };
 
     // ***************************************************************
@@ -303,19 +302,16 @@ angular.module('websoApp')
           else {
             $scope.model.sourceId = sourceAddResult.success.id;
           }
-      },function(){
-          if($scope.model.valueCheckBoxSource === true){
-            addWidget('affichageSource', $scope.model.inputTitle);
-          }
       });
 
+      if($scope.model.valueCheckBoxSource === true){
+        addWidget('affichageSource');
+      }
 
       var modalInstance = $modal.open({
         templateUrl: 'addSourceModal.html',
         controller: ModalInstanceCtrl
       });
-
-
     };
 
 
@@ -337,12 +333,11 @@ angular.module('websoApp')
         //source_id_s:    $scope.sourceAddResult.success.id,
         notification_s: $scope.notification.option
 
-      }, function(){
-          if($scope.model.valueCheckBoxWatch === true){
-            addWidget('affichageSurveillance', $scope.model.inputTitle);
-          }
       });
 
+      if($scope.model.valueCheckBoxWatch === true){
+        addWidget('affichageSurveillance');
+      }
 
       // var addWatch = alert('Surveillance ajoutée');
       // Testing  Modal trigger
@@ -350,8 +345,6 @@ angular.module('websoApp')
         templateUrl: 'addWatchModal.html',
         controller: ModalInstanceCtrl
       });
-
-
     };
 
     // ***************************************************************
