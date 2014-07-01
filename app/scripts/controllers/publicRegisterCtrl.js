@@ -14,7 +14,7 @@ angular.module('websoApp')
         {get:{method:'JSONP'}});
 
     var login = function (username, password) {
-        // envoi d'informations de login au service pour valider l'authentification  
+        // sending login information to the service to validate the authentication
         $scope.verifyLogin.get({user_s : username, password_s : password}).$promise.then(function(user) {
             $cookieStore.put('Authenticated', true);
             $cookieStore.put('username', $scope.username);

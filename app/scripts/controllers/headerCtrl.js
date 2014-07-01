@@ -27,14 +27,14 @@ angular.module('websoApp')
 		$scope.userRole = $role; 
 	}
 
-/****************** procedure de deconnexion *******************/  
+/****************** Disconnection procedure *******************/  
   $scope.verifyLogout = $resource(cfg.urlServices+'db/:action',
       {action:'logout.pl', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
   $scope.logout = function () {
   	$scope.loading = true;
-    // envoi d'informations de login au service pour valider la deconnexion
+    // sending login information to service to validate the disconnection
 	var $user = $cookieStore.get('username');
 	var $pass = $cookieStore.get('password');
 	$scope.verifyLogout.get({user_s : $user, password_s : $pass}).$promise.then(function(user) {

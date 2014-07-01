@@ -1,7 +1,7 @@
 'use strict';
 
 websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, cfg){
-	// fonction qui retourne les informatiosn de l'utilisateur stockées dans les cookies
+	// function returns the user information stored in the cookies
 	var getUserCookies = function(){
 		var informations = [];
 		informations[0] = $cookieStore.get('username');
@@ -9,10 +9,9 @@ websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, c
 		return informations;
 	};
 
-// fonction qui calcul le nombre de widgets maximum sur chaque colonne
+// function that calculates the maximum number of widgets on each column
 function nbWidgetsMaxInWichColumn(nbWidgets){
   var array = [], $i;
-  // calculer la dision entiere
   var div = Math.floor(nbWidgets/3);
   var mod = nbWidgets % 3;
   if(mod === 0){
@@ -34,25 +33,25 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
   return array;
 }
 
-	// fonction qui renvois les widgets de l'utilisateur en cours de session
-  // et les place sur le dashboard selon le format suivant :
-  // 1 ligne et 3 colonnes : chaque colonne sera de taille col-md-4
+  // function who gets the user's widgets
+  // and place them on the dashboard according the structure :
+  // 1 line and 3 columns : each column will be sized col-md-4
 	var getWidgetsUser = function(username, model){
     var widgets = [];
 
-    // requete de renvois d'informations
+    // request to get informations
     $scope.informations = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
-        // Interroger Solr pour savoir si l'utilisateur en cours a des widgets sur son dashboard  
+        // solr query whether the current user has on his dashboard widgets
         $scope.informations.get({user_s : username, type_s:'widget'}).$promise.then(function(widg) {
             if(widg.success.response.numFound > 0){
               var array = nbWidgetsMaxInWichColumn(widg.success.response.numFound);
               var $j = 0, $i = 0, nbWidgetsCourant = 0;
-                  // boucle principale s'arretant lorsque tous les widgets sont positionnés dans le dashboard
+                  // main loop stops when all the widgets are positioned in the dashboard
                   while($i < widg.success.response.numFound){
-                    // boucle s'arretant quand tous les widgets sont positionnés dans une colonne
+                    // main loop stops when all the widgets are positioned in one column
                     while(nbWidgetsCourant < array[$j]){
                       var conf = {};
                       widgets[$i] = widg.success.response.docs[$i].widget_type_s;
@@ -64,17 +63,17 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
                         config: conf
                       };
                       if(widg.success.response.docs[$i]){
-                          // ajouter le widget sur la colonne j
+                          // add the widget to the column j
                           model.rows[0].columns[$j].widgets.unshift(w);
-                          // incrementer le nombre de widgets courants sur la colonne courante 
+                          // increment the number of widgets on the current column 
                           nbWidgetsCourant++;
-                          // incrementer le nombre total de widgets de 1
+                          // increment the total number of widgets of 1
                           $i++;  
                       }
                     }
-                    // remettre a zero le nombre de widgets courants
+                    // reset to zero the number of widgets
                     nbWidgetsCourant = 0;
-                    // incrementer le nombre de colonnes de 1
+                    // increment the number of columns of 1
                     $j++;
                   }
               }
@@ -84,19 +83,19 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
     var model = {
       title: "Tableau de bord",
       structure: "4-8",
-      // ligne 1
+      // line 1
       rows: [{
-        // colonne 1
+        // column 1
         columns: [{
           styleClass: "col-md-4",
           widgets: [{
           }]
-        // colonne 2
+        // column 1
         },{
           styleClass: "col-md-4",
           widgets: [{
           }]
-        // colonne 3  
+        // column 1  
         },{
           styleClass: "col-md-4",
           widgets: [{
@@ -104,7 +103,7 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
         }]
       }]
     };
-    // masquer les widgets affichés par defaut
+    // hide widgets displayed by default
 	var w;
 	model.rows[0].columns[0].widgets.shift(w);
   model.rows[0].columns[1].widgets.shift(w);
