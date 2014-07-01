@@ -90,12 +90,12 @@ function nbWidgetsMaxInWichColumn(nbWidgets){
           styleClass: "col-md-4",
           widgets: [{
           }]
-        // column 1
+        // column 2
         },{
           styleClass: "col-md-4",
           widgets: [{
           }]
-        // column 1  
+        // column 3
         },{
           styleClass: "col-md-4",
           widgets: [{
