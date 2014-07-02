@@ -399,11 +399,16 @@ angular.module('websoApp')
     // testWatch
     // test the current watch with a query
     $scope.testWatch = function() {
+      $scope.isError = false;
       $scope.solrResult       = $scope.solrResource.get({
                                     q   : $scope.model.inputQuery,
                                     fq  : '+source_id_ss:'+$scope.model.sourceId+' +type_s:document'
 
       },
+        function () {
+          //$scope.isError = true;
+
+        },
       //error
       function () {
           $scope.isError = true;
