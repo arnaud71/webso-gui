@@ -20,6 +20,6 @@
     "jquery-ui":"~1.10.3",
     "angular-local-storage": "0.0.1",
     "highcharts-ng": "0.0.6",
-    "highcharts": "3.0.7"    
+    "highcharts": "4.0.0"    
   }
 }
