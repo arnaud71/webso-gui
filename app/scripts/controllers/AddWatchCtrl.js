@@ -29,6 +29,7 @@ angular.module('websoApp')
       inputQuery          : '',
       sourceId            : 0,
       watchId             : 0,
+      docAvailable        : 0,
       mySourceSelections  : [],
       myWatchSelections   : []
     };
@@ -167,6 +168,11 @@ angular.module('websoApp')
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+    // to delete from query
+    $scope.dbDeleteQuery = $resource(cfg.urlServices+'db/:action',
+      {action:'delete_q.pl', query:'',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
 
     // add a widget to Solr
     function addWidgetToSolr(widgetId, widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
@@ -301,6 +307,9 @@ angular.module('websoApp')
           if (typeof $scope.sourceAddResult.success === "undefined") {}
           else {
             $scope.model.sourceId = sourceAddResult.success.id;
+            if (sourceAddResult.nb_doc_added>0) {
+              $scope.model.docAvailable = 1;
+            }
           }
       },function(){
           if($scope.model.valueCheckBoxSource === true){
@@ -447,9 +456,25 @@ angular.module('websoApp')
 
 
       modalInstance.result.then(function () {
-        $scope.sourceAddResult = $scope.dbDelete.get({
-          id  :     $scope.dbId
+        // delete the source
+        //$scope.sourceAddResult = $scope.dbDelete.get({
+        //  id  :     $scope.dbId
+        //});
+
+        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
+          query  :  'id:'+$scope.dbId
         });
+
+        // delete watches linked to the source
+        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
+          query  :  'source_id_s:'+$scope.dbId
+        });
+
+        // delete documents linked to the source
+        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
+          query  :  'source_id_ss:'+$scope.dbId
+        });
+
         $scope.myDataSource.splice($scope.index, 1);
 
 

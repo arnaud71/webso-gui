@@ -88,7 +88,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-offset-5 col-md-7">
-                                    <button type="submit" class="btn btn-default" ng-click="doAddSource()" name ="watch">Ajouter source</button>
+                                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                     <label class="col-md-5 control-label"> Requête </label>
                                     <div class="col-md-7">
                                         <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
-                                        <button type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
+                                        <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
                                     </div>
                                 </div>
 

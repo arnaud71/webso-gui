@@ -190,7 +190,8 @@ module.exports = function (grunt) {
         files: {
           src: [
             '<%= yeoman.dist %>/scripts/**/*.js',
-            '<%= yeoman.dist %>/styles/**/*.css',
+            '<%= yeoman.dist %>/**/*.css',
+            //'<%= yeoman.dist %>/styles/**/*.css',
             '<%= yeoman.dist %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
@@ -220,7 +221,7 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       //html: ['<%= yeoman.dist %>/**/*.html'],
-      css: ['<%= yeoman.dist %>/styles/**/*.css'],
+      css: ['<%= yeoman.dist %>/**/*.css'],
       //js: ['<%= yeoman.dist %>/**/*.js'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist%>/images'],
@@ -344,6 +345,20 @@ module.exports = function (grunt) {
             dest: '<%= yeoman.dist %>/scripts/',
             //src: ['config.js','cfg.js']
             src: '**/*.js'
+          },
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/',
+            dest: '<%= yeoman.dist %>/scripts/',
+            //src: ['config.js','cfg.js']
+            src: '**/*.css'
+          },
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/',
+            dest: '<%= yeoman.dist %>/scripts/',
+            //src: ['config.js','cfg.js']
+            src: '**/*.html'
           },
           // copy bower_components
           {
