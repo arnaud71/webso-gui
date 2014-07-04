@@ -44,8 +44,14 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
           controller: 'sourceEditCtrl'
         }
       });
-  }).controller('sourceCtrl', function($scope, data){
+  }).controller('sourceCtrl', function($scope, data, $resource, cfg){
     $scope.data = data;
+    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
+
+      $scope.solrResult       = $scope.solr.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
+
   }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
         $scope.mySelections = [];
