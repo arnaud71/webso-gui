@@ -34,10 +34,18 @@ angular.module('sample.widgets.affichageDossiersValidation', ['adf.provider'])
         templateUrl: 'scripts/controllers/widgets/affichageDossiersValidation/affichageDossiersValidation.html',
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageDossiersValidation/edit.html',
-          reload: false,
           controller: 'dossiersValidationEditCtrl'
         }
       });
-  }).controller('dossiersValidationCtrl', function($scope, config){
+  }).controller('dossiersValidationCtrl', function($scope, $resource, cfg, serviceWidgets){
+
+    var currentUsername = serviceWidgets.getUserIdents();
+
+    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
+
+      $scope.solrResult       = $scope.solr.get({q:'user_s:' + currentUsername[0],fq:'type_s:validation'});
+
   }).controller('dossiersValidationEditCtrl', function($scope){
   });
