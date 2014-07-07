@@ -170,7 +170,7 @@ angular.module('adf')
             }
             // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.content, true);
-
+            window.location.reload();
           };
           editScope.closeDialog = function(){
             instance.close();
