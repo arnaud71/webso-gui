@@ -74,9 +74,9 @@ angular.module('websoApp')
         function () {
           $scope.isError = false;
           if (typeof solrResult !== 'undefined') {
-          //if ($scope.solrResult.response.numFound !== 'undefined') {
-          $scope.totalItems     = $scope.solrResult.response.numFound;
-          $scope.bigTotalItems  = $scope.solrResult.response.numFound;
+            //if ($scope.solrResult.response.numFound !== 'undefined') {
+            $scope.totalItems     = $scope.solrResult.response.numFound;
+            $scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
         },
         //error

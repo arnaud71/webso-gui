@@ -3,7 +3,7 @@
 angular.module('websoApp')
     .controller('UsersCtrl', function ($cookieStore, $location, $scope,$resource,cfg,$modal) {
 
-        $scope.isSuccess = false;
+        $scope.isSuccess              = false;
         $scope.isError                = false;
         $scope.errorMessage           = cfg.errorConnect;
 

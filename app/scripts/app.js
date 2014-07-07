@@ -4,11 +4,15 @@ var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sa
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
     'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
     'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
-    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule']);
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
     
     $stateProvider
+
+
+        // LOGIN CONNECTION
+
         .state('/home', {
             url: '/home',
             templateUrl: 'views/main.html',
@@ -54,6 +58,12 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
                 authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
             }
         })
+
+
+
+
+
+
         // VALIDATE
         .state('/validate/add', {
             url: '/validate/add',
@@ -88,6 +98,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
 			      }
         })
+
+
+
+
         // SOURCE
         .state('/source/list', {
             url: '/source/list',       
@@ -105,6 +119,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })        
+
+
+
+
         // PUBLISH
         .state('/publish/newsletter', {
             url: '/publish/newsletter',       
@@ -122,23 +140,12 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
+
+
+
+
         // ORGANIZE
-        .state('/organize/survfolder', {
-            url: '/organize/survfolder',       
-            templateUrl: 'views/organise.html',
-            controller:'',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur']
-			      }
-        })
-        .state('/organize/sourcesfolder', {
-            url: '/organize/sourcesfolder',       
-            templateUrl: 'views/organise.html' ,
-            controller:'',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur']
-			      }
-        })
+
         .state('/organize/templates', {
             url: '/organize/templates',       
             templateUrl: 'views/organise.html' ,
@@ -155,22 +162,25 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
-        .state('/organize/sources', {
-            url: '/organize/sources',                   
-            templateUrl: 'views/sources/list.html'  ,
-            controller:'',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur']
-			      }
+        .state('/organize/wfolder', {
+          url: '/organize/wfolder',
+          templateUrl: 'views/organize/wfolder.html' ,
+          controller:'',
+          data: {
+            authorizedRoles: ['administrateur', 'veilleur']
+          }
         })
         .state('/organize/vfolder', {
             url: '/organize/vfolder',       
-            templateUrl: 'views/report/reportList.html' ,
+            templateUrl: 'views/organize/vfolder.html' ,
             controller:'',
 			      data: {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
+
+
+
         // DASHBOARD
         .state('/dashboard', {
             url: '/dashboard',       
@@ -179,7 +189,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             data: {
                 authorizedRoles: ['administrateur', 'veilleur']
             }                        
-        })        
+        })
+
+
+
         // SETTINGS
         .state('/settings/booklet', {
             url: '/settings/booklet',       
@@ -189,15 +202,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
-        // SEARCH
-        /* .state('/search/source', {
-            url: '/search/source',       
-            templateUrl: 'views/source/sourceList.html',
-            controller: 'AddSourceCtrl',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-			      }
-         })*/
+
         .state('/search/rss', {
             url: '/search/rss',       
             templateUrl: 'views/source/searchNew.html',
@@ -222,6 +227,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
               authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
             }
         })
+
+
+
+
         //  Booklet
         .state('/url/:id_url', {
             url: '/url/:id_url',       
@@ -239,14 +248,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
-/*        .state('/validate/add/:id_selection', {
-            url: '/validate/add/:id_selection',
-            templateUrl: 'views/information/validate.html',
-            controller: 'AddInformationCtrl',
-			      data: {
-				      authorizedRoles: ['administrateur', 'veilleur']
-			      }
-        }) */
+
         .state('/404', {
             url: '/404',       
             templateUrl: '404.html'  
@@ -255,8 +257,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home');
 });
 
+
 // le run time de l'app est de la façon suivante : 
 websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions) {
+  //editableOptions.theme = 'bs3';
 	var arrayContain = function (array, element) {
 		var $i = 0;
 			while($i < array.length){
