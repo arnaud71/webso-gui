@@ -1,6 +1,6 @@
 angular.module('websoApp').constant('cfg', {
 
-
+  versionWebso    : '0.5',
   urlDB           : 'http://localhost:8983/',
   urlServices     : 'http://localhost/cgi-bin/webso-services/',
   urlBookmarklet  : '',
