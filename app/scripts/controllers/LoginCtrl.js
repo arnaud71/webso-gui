@@ -3,7 +3,7 @@
 angular.module('websoApp')
 	.controller('LoginCtrl', function ($cookieStore, $scope, $resource, $location, localStorageService, cfg) {
 
-/****************** procedure d'initialisation *******************/
+/****************** initialization procedure *******************/
 	var usernameStorage = localStorageService.get('username');
 	var passwordStorage = localStorageService.get('password');
 
@@ -21,7 +21,7 @@ angular.module('websoApp')
 		$scope.password = $cookieStore.get('password');
 	}
 
-/****************** procedure de connexion ***********************/  
+/****************** Connection procedure ***********************/  
   $scope.verifyLogin = $resource(cfg.urlServices+'db/:action',
       {action:'login.pl', callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
@@ -30,7 +30,7 @@ angular.module('websoApp')
 
   $scope.login = function () {
   	$scope.loading = true;
-    // envoi d'informations de login au service pour valider l'authentification  
+    // sending login information to the service to validate the authentication 
 	$scope.verifyLogin.get({user_s : $scope.username, password_s : $scope.password}).$promise.then(function(user) {
 
 		if(user.error){

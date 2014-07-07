@@ -144,7 +144,7 @@ angular.module('websoApp')
       };
     };
 
-// suppression d'un utilisateur
+// delete a user
     $scope.countDelete = $resource(cfg.urlServices+'db/:action',
           {action:'delete.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
@@ -177,7 +177,7 @@ angular.module('websoApp')
       });
     };
 
-    // modification du role de l'utilisateur
+    // modify the role of a user
     $scope.roleModify = $resource(cfg.urlServices+'db/:action',
         {action:'update.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});

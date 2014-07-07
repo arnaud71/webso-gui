@@ -227,10 +227,6 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
               authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
             }
         })
-
-
-
-
         //  Booklet
         .state('/url/:id_url', {
             url: '/url/:id_url',       
@@ -303,7 +299,7 @@ websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions)
         return booleansRestrictions;
     };
 
-  // fonction qui renvoie le 'username' et le 'userRole' en cookies de l'utilisateur
+  // function who gets the "username" and the "userRole" of the current user
   var getUserCookies = function(){
     var informations = [];
     informations[0] = $cookieStore.get('username');
@@ -312,30 +308,30 @@ websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions)
   };
 
 $rootScope.$on('$stateChangeStart', function (event, next) {
-    // renvoyer des informations de l'utilisateur en cours de session
+    // get the user's informations
     var userInformations = getUserCookies();
 
-    // calculer les restrictions aux fonctionnalités par rapport au role de l'utilisateur
+    // calculate restrictions on features compared to the role of the user
     var arrayOfrestrictions = calculRestriction(userInformations[0], userInformations[1]);
     serviceRestrictions.setRestrictions(arrayOfrestrictions);
     var authorizedRoles = next.data.authorizedRoles;
 
-    // si l'utilisateur n'est pas connecté 
+    // if the user is not connected
     if((!userInformations[0]) && (!userInformations[1])){
-        // s'il essai d'entrer dans un lien autorisé alors
+        // if he tries to enter an authorized link then
         if(arrayContain(next.data.authorizedRoles, 'public')){  
             $location.path(next.url);
-        // s'il essai d'entrer dans un lien non autorisé alors
+        // if he tries to enter an unauthorized link then
         }else{
             $location.path('/404');
         }
-    // si l'utilisateur est connecté    
+    // if the user is connected  
     }else if(userInformations[0] && userInformations[1]){ 
-        // s'il essai d'entrer dans un lien autorisé alors
+        // if he tries to enter an authorized link then
         if(arrayContain(next.data.authorizedRoles, 'public') || arrayContain(next.data.authorizedRoles, userInformations[1])){
             $location.path(next.url);
         }else{  
-        // s'il essai d'entrer dans un lien non autorisé alors
+        // if he tries to enter an unauthorized link then
             $location.path('/404');
         }   
     }
