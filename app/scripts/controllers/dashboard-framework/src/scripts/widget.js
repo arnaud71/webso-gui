@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf')
-  .directive('adfWidget', function($q, $log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
+  .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
 
   	// modify a widget's informations
     function modifyWidget(title, ident, widgetContent, isEnable){
