@@ -72,8 +72,8 @@ angular.module('adf')
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-          	// set the widget's state in front-end
-
+          
+          // set the widget's state in front-end
           $scope.isCollapsed = true;
           $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
               var isCollapsed = false;
@@ -156,16 +156,20 @@ angular.module('adf')
                 var widgetId = column.widgets[index].id;            
               }
             }
-            // close the modal
-            instance.close();
             // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.content, true);
-            // refresh the page
-            window.location.reload();
+
+            // close the modal
+            instance.close();
+
+            var widget = $scope.widget;
+            if (widget.edit && widget.edit.reload){
+              // reload content after edit dialog is closed
+              $scope.$broadcast('widgetConfigChanged');
+            }
           };
           editScope.closeDialog = function(){
             instance.close();
-            editScope.$destroy();            
           }
         };
         // activate a widget
