@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf')
-  .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
+  .directive('adfWidget', function($q, $log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
 
   	// modify a widget's informations
     function modifyWidget(title, ident, widgetContent, isEnable){
@@ -73,19 +73,16 @@ angular.module('adf')
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
           	// set the widget's state in front-end
-            $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
-              if(widg.success.response.numFound > 0){
-                var isCollapsed;
-                if(widg.success.response.docs[0].enable_s === "true"){
-                  isCollapsed = false;
-                }else{
+
+          $scope.isCollapsed = true;
+          $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
+              var isCollapsed = false;
+              if(widg.success.response.numFound > 0 && widg.success.response.docs[0].enable_s === "false"){
                   isCollapsed = true;
-                }
-                $scope.isCollapsed = isCollapsed;
-              }else{
-                $scope.isCollapsed = false;
               }
+              $scope.isCollapsed = isCollapsed;
             });
+
         } else {
           $log.warn('could not find widget ' + type);
         }
@@ -108,9 +105,9 @@ angular.module('adf')
           var instance = $modal.open(opts);
 
           editScope.valideDialog = function() {
-			instance.close();
-			editScope.$destroy();
-			var column = $scope.col;
+      			instance.close();
+      			editScope.$destroy();
+      			var column = $scope.col;
 	          if (column) {
 	            var index = column.widgets.indexOf(definition);
 	            var widgetId = column.widgets[index].id;
@@ -159,17 +156,11 @@ angular.module('adf')
                 var widgetId = column.widgets[index].id;            
               }
             }
-            
+            // close the modal
             instance.close();
-            editScope.$destroy();
-            
-            var widget = $scope.widget;
-            if (widget.edit && widget.edit.reload){
-              // reload content after edit dialog is closed
-              $scope.$broadcast('widgetConfigChanged');
-            }
             // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.content, true);
+            // refresh the page
             window.location.reload();
           };
           editScope.closeDialog = function(){
