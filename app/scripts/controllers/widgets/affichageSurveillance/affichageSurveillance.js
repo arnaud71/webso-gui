@@ -32,12 +32,28 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
         description: 'Surveillances',
         controller: 'surveillanceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageSurveillance/affichageSurveillance.html',
+        reload: true,
+        resolve: {
+          data: function(config){
+            if (config.content){
+              return config.content;
+            }
+          }
+        },
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageSurveillance/edit.html',
-          reload: false,
           controller: 'surveillanceEditCtrl'
         }
       });
-  }).controller('surveillanceCtrl', function($scope, config){
+  }).controller('surveillanceCtrl', function($scope, $resource, cfg, serviceWidgets){
+
+	var currentUsername = serviceWidgets.getUserIdents();
+
+    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
+
+      $scope.solrResult       = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:watch'});
+
   }).controller('surveillanceEditCtrl', function($scope){
   });

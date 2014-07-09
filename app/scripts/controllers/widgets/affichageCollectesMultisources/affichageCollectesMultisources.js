@@ -32,9 +32,9 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
         description: 'Collectes multisources',
         controller: 'collectesMultisourcesCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/affichageCollectesMultisources.html',
+        reload: true,
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/edit.html',
-          reload: false,
           controller: 'collectesMultisourcesEditCtrl'
         }
       });

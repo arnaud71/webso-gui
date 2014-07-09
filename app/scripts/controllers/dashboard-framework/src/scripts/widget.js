@@ -75,12 +75,17 @@ angular.module('adf')
           
           // set the widget's state in front-end
           $scope.isCollapsed = true;
+          $scope.widget.reload = false;
           $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
               var isCollapsed = false;
               if(widg.success.response.numFound > 0 && widg.success.response.docs[0].enable_s === "false"){
                   isCollapsed = true;
               }
               $scope.isCollapsed = isCollapsed;
+              if(!$scope.isCollapsed){
+                $scope.widget.reload = true;
+                $scope.$broadcast('widgetReload');
+              }
             });
 
         } else {
@@ -174,13 +179,16 @@ angular.module('adf')
         };
         // activate a widget
         $scope.activateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
-			$scope.isCollapsed = false;
+    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			$scope.isCollapsed = false;
+          $scope.widget.reload = true;
+          $scope.reload();
         };
         // desactivate a widget
         $scope.desactivateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
-			$scope.isCollapsed = true;
+    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			$scope.isCollapsed = true;
+          $scope.widget.reload = false;
 		};
 
       } else {

@@ -32,9 +32,9 @@ angular.module('sample.widgets.affichageDossiersSurveillance', ['adf.provider'])
         description: 'Dossiers de surveillances',
         controller: 'dossierSurveillanceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageDossiersSurveillance/affichageDossiersSurveillance.html',
+        reload: true,
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageDossiersSurveillance/edit.html',
-          reload: false,
           controller: 'dossierSurveillanceEditCtrl'
         }
       });

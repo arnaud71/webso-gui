@@ -32,6 +32,7 @@ angular.module('sample.widgets.defaultWidget', ['adf.provider', 'highcharts-ng']
         description: 'Widget par defaut',
         controller: 'defaultWidgetCtrl',
         templateUrl: 'scripts/controllers/widgets/defaultWidget/defaultWidget.html',
+        reload: true,
         resolve: {
           data: function(config){
             if (config.sourceContent){

@@ -32,6 +32,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         description: 'Sources',
         controller: 'sourceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageSource/affichageSource.html',
+        reload: true,
         resolve: {
           data: function(config){
             if (config.content){
