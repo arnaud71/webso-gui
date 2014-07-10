@@ -35,7 +35,7 @@ angular.module('adf')
 
         $rootScope.widgetModify.get({
         	title_t 		: title,
-        	id 				: ident, 
+        	id 				  : ident, 
         	query_s 		: widgetContent,
         	enable_s 		: isEnable
         });
@@ -161,17 +161,18 @@ angular.module('adf')
                 var widgetId = column.widgets[index].id;            
               }
             }
+
+            // modify the title of the widget if the user done it
+            if(definition.config.title){
+              definition.title = definition.config.title;
+            }
+
             // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.content, true);
 
             // close the modal
             instance.close();
-
-            var widget = $scope.widget;
-            if (widget.edit && widget.edit.reload){
-              // reload content after edit dialog is closed
-              $scope.$broadcast('widgetConfigChanged');
-            }
+            $scope.reload();
           };
           editScope.closeDialog = function(){
             instance.close();
