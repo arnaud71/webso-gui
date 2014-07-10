@@ -4,7 +4,7 @@ var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sa
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
     'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
     'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
-    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable']);
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable','angulartics', 'angulartics.google.analytics']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
     
