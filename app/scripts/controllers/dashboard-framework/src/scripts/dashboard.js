@@ -234,10 +234,7 @@ angular.module('adf')
 
         // add widget dialog
         $scope.addWidgetDialog = function(){
-          var userInformations = serviceWidgets.getUserIdents();
-          var userName, widgetTitle;
           var addScope = $scope.$new();
-          var array;
           addScope.widgets = dashboard.widgets;
           var opts = {
             scope: addScope,
@@ -246,34 +243,42 @@ angular.module('adf')
           var instance = $modal.open(opts);
 
           addScope.addWidget = function(widget){
+            var userInformations = serviceWidgets.getUserIdents(), widgetTitle, array, w;
+            // close the modal frame
+            addScope.closeDialog();
             // widget's title
-            widgetTitle = serviceWidgets.getTitleWidget(widget); 
+            widgetTitle = serviceWidgets.getTitleWidget(widget);
             // add the widget to Solr
             addWidgetToSolr(widget, widgetTitle, true, 1, userInformations[0]);
-            var w = {
-              type: widget,
-              config: serviceWidgets.getWidgetConfiguration(widget)
-            };
-            $scope.informations = $resource(cfg.urlServices+'db/:action',
-              {action:'get.pl',callback:"JSON_CALLBACK"},
+
+            // request to get informations
+            $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+              {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
               {get:{method:'JSONP'}});
 
-            $scope.informations.get({user_s : userInformations[0], type_s:'widget'}).$promise.then(function(widg) {
-              // add the widget to the front-end dashboard
-              array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.success.response.numFound);
-              if(array[0] === array[1] && array[0] === array[2]){
-                addScope.model.rows[0].columns[0].widgets.unshift(w);
+            $scope.solr.get({rows:100, q:'type_s:widget'}).$promise.then(function(widg) {
+              if(widg.response.numFound === 0){
+                window.location.reload();
               }else{
-                if(array[0] !== array[1] && array[1] === array[2]){
-                  addScope.model.rows[0].columns[1].widgets.unshift(w);
+              var w = {
+                  id: widg.response.docs[widg.response.numFound - 1].id,
+                  type: widget,
+                  config: widg.response.docs[widg.response.numFound - 1].query_s
+                };
+                // add the widget to the front-end dashboard
+                array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.response.numFound);
+                if(array[0] === array[1] && array[0] === array[2]){
+                  addScope.model.rows[0].columns[0].widgets.unshift(w);
                 }else{
-                    if(array[0] === array[1] && array[1] !== array[2]){
-                      addScope.model.rows[0].columns[2].widgets.unshift(w);
-                    }
+                  if(array[0] !== array[1] && array[1] === array[2]){
+                    addScope.model.rows[0].columns[1].widgets.unshift(w);
+                  }else{
+                      if(array[0] === array[1] && array[1] !== array[2]){
+                        addScope.model.rows[0].columns[2].widgets.unshift(w); 
+                      }
+                  }
                 }
               }
-              // close the modal frame
-              addScope.closeDialog();
             });
           };
 

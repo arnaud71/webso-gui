@@ -171,8 +171,9 @@ angular.module('adf')
             modifyWidget(definition.title, widgetId, definition.config.content, true);
 
             // close the modal
-            instance.close();
-            window.location.reload();
+            editScope.closeDialog();
+            // reload the modal
+            $scope.reload();
           };
           editScope.closeDialog = function(){
             instance.close();
