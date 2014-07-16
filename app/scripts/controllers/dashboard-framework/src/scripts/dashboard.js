@@ -41,19 +41,18 @@ angular.module('adf')
   .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, serviceWidgets, cfg){
 
   // add a widget to Solr
-  function addWidgetToSolr(widgetId, widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
+  function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
           {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
         $rootScope.widgetAdd.get({
-        	id 				: widgetId,
-            widget_type_s  	: widgetType,
-            title_t  		: widgetTitle,
-            enable_s 		: isEnable,
-            weight_s	 	: widgetWeight,
-            user_s		 	: userWidget,
-            query_s 		: ''
+            widget_type_s  : widgetType,
+            title_t  		   : widgetTitle,
+            enable_s 		   : isEnable,
+            weight_s	 	   : widgetWeight,
+            user_s		 	    : userWidget,
+            query_s 		    : ''
         })
   };
 
@@ -184,54 +183,105 @@ angular.module('adf')
           };
         };
 
+        // delete all widgets
+        $scope.closeAll = function(){
+          var userInformations = serviceWidgets.getUserIdents();          
+          var editDashboardScope = $scope.$new();
+          editDashboardScope.widgets = dashboard.widgets;
+          var opts = {
+            scope: editDashboardScope,
+            templateUrl: 'scripts/controllers/dashboard-framework/src/templates/dashboard-delete-all-widgets.html'
+          };
+
+          var widgetsNotExist = {
+            scope: editDashboardScope,
+            templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widgets-not-exist.html'
+          };
+
+          var instance;
+          
+          $scope.informations = $resource(cfg.urlServices+'db/:action',
+            {action:'get.pl',callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+            // Request to Solr to know if the current user have some widgets on his dashboard
+            // and add the widget
+            $scope.informations.get({user_s : userInformations[0], type_s:'widget'}).$promise.then(function(widg) {
+              if(widg.success.response.docs.length > 0){
+                instance = $modal.open(opts);
+
+                editDashboardScope.valideDialog = function() {
+                  editDashboardScope.closeDialog();
+                  $scope.widgetsDelete = $resource(cfg.urlServices+'db/:action',
+                            {action:'delete.pl', callback:"JSON_CALLBACK"},
+                            {get:{method:'JSONP'}});
+                  $scope.widgetsDeleteResult = $scope.widgetsDelete.get({
+                    type_s:'widget', 
+                    user_s:userInformations[0]
+                  });
+                  window.location.reload();
+                };
+
+              }else{
+                instance = $modal.open(widgetsNotExist);
+              }
+            });
+
+          editDashboardScope.closeDialog = function(){
+            instance.close();
+            editDashboardScope.$destroy();          
+          }
+        };
+
         // add widget dialog
         $scope.addWidgetDialog = function(){
           var userInformations = serviceWidgets.getUserIdents();
           var userName, widgetTitle;
-          $scope.informations = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl',callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
+          var addScope = $scope.$new();
+          var array;
+          addScope.widgets = dashboard.widgets;
+          var opts = {
+            scope: addScope,
+            templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-add.html'
+          };
+          var instance = $modal.open(opts);
 
-            // Request to Solr to know if the current user have some widgets on his dashboard
-            // and add the widget
+          addScope.addWidget = function(widget){
+            // widget's title
+            widgetTitle = serviceWidgets.getTitleWidget(widget); 
+            // add the widget to Solr
+            addWidgetToSolr(widget, widgetTitle, true, 1, userInformations[0]);
+            var w = {
+              type: widget,
+              config: serviceWidgets.getWidgetConfiguration(widget)
+            };
+            $scope.informations = $resource(cfg.urlServices+'db/:action',
+              {action:'get.pl',callback:"JSON_CALLBACK"},
+              {get:{method:'JSONP'}});
+
             $scope.informations.get({user_s : userInformations[0], type_s:'widget'}).$promise.then(function(widg) {
-            	userName = userInformations[0];
-                var addScope = $scope.$new();
-                addScope.widgets = dashboard.widgets;
-                var opts = {
-                  scope: addScope,
-                  templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-add.html'
-                };
-                var instance = $modal.open(opts);
-                addScope.addWidget = function(widget){
-                if(widg.success.response.docs.length >= 10){
-                  alert('nombre de widgets maximum atteint');
+              // add the widget to the front-end dashboard
+              array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.success.response.numFound);
+              if(array[0] === array[1] && array[0] === array[2]){
+                addScope.model.rows[0].columns[0].widgets.unshift(w);
+              }else{
+                if(array[0] !== array[1] && array[1] === array[2]){
+                  addScope.model.rows[0].columns[1].widgets.unshift(w);
                 }else{
-                var widgetId;
-                  var w = {
-                    id: serviceWidgets.getIdWidget(widg.success.response.docs),
-                    type: widget,
-                    config: serviceWidgets.getWidgetConfiguration(widget)
-                  };
-                  // add the widget to the front-end dashboard
-                  addScope.model.rows[0].columns[0].widgets.unshift(w);
-                  // widget's ID
-                  widgetId = addScope.model.rows[0].columns[0].widgets[0].id;
-                  // widget's title
-                  widgetTitle = serviceWidgets.getTitleWidget(widget); 
-                  // add the widget to Solr
-                  addWidgetToSolr(widgetId, widget, widgetTitle, true, 1, userName);
+                    if(array[0] === array[1] && array[1] !== array[2]){
+                      addScope.model.rows[0].columns[2].widgets.unshift(w);
+                    }
                 }
-                  // close the modal frame
-                  instance.close();
-                  addScope.$destroy();
-                };
-                addScope.closeDialog = function(){
-                  instance.close();
-                  addScope.$destroy();
-                };
-          });
-      };
+              }
+              // close the modal frame
+              addScope.closeDialog();
+            });
+          };
+
+          addScope.closeDialog = function(){
+            instance.close();
+            addScope.$destroy();
+          };
+        };
     },
       link: function ($scope, $element, $attr) {
         // pass attributes to scope
