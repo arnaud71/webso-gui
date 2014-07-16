@@ -172,7 +172,7 @@ angular.module('adf')
 
             // close the modal
             instance.close();
-            $scope.reload();
+            window.location.reload();
           };
           editScope.closeDialog = function(){
             instance.close();
