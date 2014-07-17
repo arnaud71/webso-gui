@@ -9,7 +9,7 @@ websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, s
 
     // request to get informations
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {action:'browse', q:'user_s:'+username, fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
         // solr query whether the current user has on his dashboard widgets
