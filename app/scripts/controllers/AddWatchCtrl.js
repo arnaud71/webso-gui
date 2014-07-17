@@ -174,56 +174,44 @@ angular.module('websoApp')
       {get:{method:'JSONP'}});
 
 
-    // add a widget to Solr
-    function addWidgetToSolr(widgetId, widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
-          $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
-            {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
+	// add a widget to Solr
+	function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
+	    $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
+	      {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
+	      {get:{method:'JSONP'}});
 
-          $scope.widgetAdd.get({
-              id              : widgetId,
-              widget_type_s   : widgetType,
-              title_t         : widgetTitle,
-              enable_s        : isEnable,
-              weight_s        : widgetWeight,
-              user_s          : userWidget,
-              query_s         : ''
-          })
-    };
+	    $scope.widgetAdd.get({
+	        widget_type_s  : widgetType,
+	        title_t  		   : widgetTitle,
+	        enable_s 		   : isEnable,
+	        weight_s	 	   : widgetWeight,
+	        user_s		 	    : userWidget,
+	        query_s 		    : ''
+	    })
+	};
 
     // add widget : principal function
     function addWidget(widgetType){
-      var userInformations = serviceWidgets.getUserIdents();
-      var userWidget, widgetTitle;
-      $scope.informations = $resource(cfg.urlServices+'db/:action',
-        {action:'get.pl',callback:"JSON_CALLBACK"},
-        {get:{method:'JSONP'}});
+        var userInformations = serviceWidgets.getUserIdents(), widgetTitle, array, w;
+        // widget's title
+        widgetTitle = serviceWidgets.getTitleWidget(widgetType);
+        // add the widget to Solr
+        addWidgetToSolr(widgetType, widgetTitle, true, 1, userInformations[0]);
 
-        // username
-        userWidget = userInformations[0];
+        // request to get informations
+        $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+          {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+          {get:{method:'JSONP'}});
 
-        // Request Solr to know if the current user have some widgets on the dashboard
-        $scope.informations.get({user_s : userWidget, type_s:'widget'}).$promise.then(function(widg) {
-            var addScope = $scope.$new();
-            addScope.widgets = dashboard.widgets;
-
-            if(widg.success.response.docs.length >= 10){
-              alert('nombre de widgets maximum atteint');
-            }else{
-                var widgetId;
-                var w = {
-                  id: serviceWidgets.getIdWidget(widg.success.response.docs),
-                  type: widgetType,
-                  config: serviceWidgets.getWidgetConfiguration(widgetType)
-                };
-                // id du widget
-                widgetId = serviceWidgets.getIdWidget(widg.success.response.docs);
-                // titre du widget
-                widgetTitle = serviceWidgets.getTitleWidget(widgetType); 
-                // ajout du widget a la base Solr
-                addWidgetToSolr(widgetId, widgetType, widgetTitle, true, 1, userWidget);
+        $scope.solr.get({rows:100, q:'type_s:widget'}).$promise.then(function(widg) {
+        	if(widg.response.numFound === 0){
+				window.location.reload();
             }
-            addScope.$destroy();
+          var w = {
+              id: widg.response.docs[widg.response.numFound - 1].id,
+              type: widgetType,
+              config: widg.response.docs[widg.response.numFound - 1].query_s
+            };
         });
     };
 
