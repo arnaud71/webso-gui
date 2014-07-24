@@ -173,8 +173,7 @@ angular.module('websoApp')
       {action:'delete_q.pl', query:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
-
-	// add a widget to Solr
+  	// add a widget to Solr
 	function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
 	    $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
 	      {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
@@ -182,12 +181,20 @@ angular.module('websoApp')
 
 	    $scope.widgetAdd.get({
 	        widget_type_s  : widgetType,
-	        title_t  		   : widgetTitle,
-	        enable_s 		   : isEnable,
-	        weight_s	 	   : widgetWeight,
-	        user_s		 	    : userWidget,
-	        query_s 		    : ''
-	    })
+	        title_t        : widgetTitle,
+	        enable_s       : isEnable,
+	        weight_s       : widgetWeight,
+	        user_s          : userWidget,
+	        query_s         : ''
+	    }).$promise.then(function(widg){
+          if(widg.success){
+            var w = {
+                id: widg.id,
+                type: widgetType,
+                config: widg.query_s
+            };
+          }
+        });
 	};
 
     // add widget : principal function
@@ -197,22 +204,6 @@ angular.module('websoApp')
         widgetTitle = serviceWidgets.getTitleWidget(widgetType);
         // add the widget to Solr
         addWidgetToSolr(widgetType, widgetTitle, true, 1, userInformations[0]);
-
-        // request to get informations
-        $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-          {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-          {get:{method:'JSONP'}});
-
-        $scope.solr.get({rows:100, q:'type_s:widget'}).$promise.then(function(widg) {
-        	if(widg.response.numFound === 0){
-				window.location.reload();
-            }
-          var w = {
-              id: widg.response.docs[widg.response.numFound - 1].id,
-              type: widgetType,
-              config: widg.response.docs[widg.response.numFound - 1].query_s
-            };
-        });
     };
 
     // ***************************************************************
@@ -299,12 +290,11 @@ angular.module('websoApp')
               $scope.model.docAvailable = 1;
             }
           }
-      },function(){
-          if($scope.model.valueCheckBoxSource === true){
-            addWidget('affichageSource', $scope.model.inputTitle);
-          }
       });
 
+      if($scope.model.valueCheckBoxSource === true){
+        addWidget('affichageSource', $scope.model.inputTitle);
+      }
 
       var modalInstance = $modal.open({
         templateUrl: 'addSourceModal.html',
@@ -333,12 +323,11 @@ angular.module('websoApp')
         //source_id_s:    $scope.sourceAddResult.success.id,
         notification_s: $scope.notification.option
 
-      }, function(){
-          if($scope.model.valueCheckBoxWatch === true){
-            addWidget('affichageSurveillance', $scope.model.inputTitle);
-          }
       });
 
+      if($scope.model.valueCheckBoxWatch === true){
+        addWidget('affichageSurveillance', $scope.model.inputTitle);
+      }
 
       // var addWatch = alert('Surveillance ajoutée');
       // Testing  Modal trigger

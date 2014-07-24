@@ -41,19 +41,46 @@ angular.module('adf')
   .directive('adfDashboard', function($rootScope, $log, $modal, $cookieStore, $resource, dashboard, serviceWidgets, cfg){
 
   // add a widget to Solr
-  function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
+  function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget, addScope){
         $rootScope.widgetAdd = $resource(cfg.urlServices+'db/:action',
           {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
         $rootScope.widgetAdd.get({
             widget_type_s  : widgetType,
-            title_t  		   : widgetTitle,
-            enable_s 		   : isEnable,
-            weight_s	 	   : widgetWeight,
-            user_s		 	    : userWidget,
-            query_s 		    : ''
-        })
+            title_t        : widgetTitle,
+            enable_s       : isEnable,
+            weight_s       : widgetWeight,
+            user_s          : userWidget,
+            query_s         : ''
+        }).$promise.then(function(widg){
+          if(widg.success){
+            var w = {
+                id: widg.id,
+                type: widgetType,
+                config: widg.query_s
+            };
+            $rootScope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+              {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+              {get:{method:'JSONP'}});
+
+            $rootScope.solr.get({q:'type_s:widget'}).$promise.then(function(widg) {
+              // add the widget to the front-end dashboard
+              var array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.response.numFound - 1);
+              if(array[0] === array[1] && array[0] === array[2]){
+                addScope.model.rows[0].columns[0].widgets.unshift(w);
+              }else{
+                if(array[0] !== array[1] && array[1] === array[2]){
+                  addScope.model.rows[0].columns[1].widgets.unshift(w);
+                }else{
+                    if(array[0] === array[1] && array[1] !== array[2]){
+                      addScope.model.rows[0].columns[2].widgets.unshift(w); 
+                    }
+                }
+              }
+            });
+          }
+        });
   };
 
     function copyWidgets(source, target){
@@ -240,6 +267,7 @@ angular.module('adf')
             scope: addScope,
             templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-add.html'
           };
+
           var instance = $modal.open(opts);
 
           addScope.addWidget = function(widget){
@@ -249,37 +277,7 @@ angular.module('adf')
             // widget's title
             widgetTitle = serviceWidgets.getTitleWidget(widget);
             // add the widget to Solr
-            addWidgetToSolr(widget, widgetTitle, true, 1, userInformations[0]);
-
-            // request to get informations
-            $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-              {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-              {get:{method:'JSONP'}});
-
-            $scope.solr.get({rows:100, q:'type_s:widget'}).$promise.then(function(widg) {
-              if(widg.response.numFound === 0){
-                window.location.reload();
-              }else{
-              var w = {
-                  id: widg.response.docs[widg.response.numFound - 1].id,
-                  type: widget,
-                  config: widg.response.docs[widg.response.numFound - 1].query_s
-                };
-                // add the widget to the front-end dashboard
-                array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.response.numFound);
-                if(array[0] === array[1] && array[0] === array[2]){
-                  addScope.model.rows[0].columns[0].widgets.unshift(w);
-                }else{
-                  if(array[0] !== array[1] && array[1] === array[2]){
-                    addScope.model.rows[0].columns[1].widgets.unshift(w);
-                  }else{
-                      if(array[0] === array[1] && array[1] !== array[2]){
-                        addScope.model.rows[0].columns[2].widgets.unshift(w); 
-                      }
-                  }
-                }
-              }
-            });
+            addWidgetToSolr(widget, widgetTitle, true, 1, userInformations[0], addScope);
           };
 
           addScope.closeDialog = function(){
