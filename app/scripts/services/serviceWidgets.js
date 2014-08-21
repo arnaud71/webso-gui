@@ -35,15 +35,6 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
 	    return title;
 	}
 
-	// give an ID to a widget
-	function giveIdToWidget(widgets){
-		if(widgets.length === 0){
-			return 1;
-		}else{
-			return parseInt(widgets[widgets.length - 1].id) + 1;
-		}
-	}
-
 	// get a current user's login
 	function getUserCookies(){
 		var informations = [];
@@ -62,6 +53,30 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
       return cfg;
     }
 
+	// function that calculates the maximum number of widgets on each column
+	function nbWidgetsMaxInWichColumn(nbWidgets){
+	  var array = [], $i;
+	  var div = Math.floor(nbWidgets/3);
+	  var mod = nbWidgets % 3;
+	  if(mod === 0){
+	    for($i = 0; $i < 3; $i++)
+	      array[$i] = div;
+	  }else {
+	    if(mod === 1){
+	        array[0] = div + 1;
+	        array[1] = div;
+	        array[2] = div;
+	    } else {
+	        if(mod === 2){
+	          array[0] = div + 1;
+	          array[1] = div + 1;
+	          array[2] = div;
+	        }
+	    }
+	  }
+	  return array;
+	}
+
     return {
         getTitleWidget:function(widget){
             return giveTitleToWidget(widget);
@@ -74,6 +89,9 @@ angular.module('websoApp').factory('serviceWidgets',function($cookieStore, dashb
         },
         getWidgetConfiguration:function(type){
         	return createConfiguration(type);
+        },
+        getNbWidgetsMaxInWichColumn:function(nbWidgets){
+        	return nbWidgetsMaxInWichColumn(nbWidgets);
         }
     };
 });

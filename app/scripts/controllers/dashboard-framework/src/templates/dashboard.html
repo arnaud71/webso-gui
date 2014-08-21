@@ -1,5 +1,4 @@
 <div class="dashboard-container">
-
   <h1>
     {{model.title}}
     <span style="font-size: 20px" class="pull-center">
@@ -11,6 +10,9 @@
       </a>
       <a href="" ng-if="editMode" title="add new widget" ng-click="addWidgetDialog()">
         <i class="fa fa-plus-circle"></i>
+      </a>
+      <a href="" title="remove all widgets" ng-click="closeAll()" ng-if="editMode">
+        <i class="fa fa-times"></i>
       </a>
     </span>
   </h1>

@@ -35,7 +35,7 @@ angular.module('adf')
 
         $rootScope.widgetModify.get({
         	title_t 		: title,
-        	id 				: ident, 
+        	id 				  : ident, 
         	query_s 		: widgetContent,
         	enable_s 		: isEnable
         });
@@ -72,20 +72,22 @@ angular.module('adf')
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-          	// set the widget's state in front-end
-            $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
-              if(widg.success.response.numFound > 0){
-                var isCollapsed;
-                if(widg.success.response.docs[0].enable_s === "true"){
-                  isCollapsed = false;
-                }else{
+          
+          // set the widget's state in front-end
+          $scope.isCollapsed = true;
+          $scope.widget.reload = false;
+          $scope.informations.get({id : definition.id, type_s:'widget'}).$promise.then(function(widg) {
+              var isCollapsed = false;
+              if(widg.success.response.numFound > 0 && widg.success.response.docs[0].enable_s === "false"){
                   isCollapsed = true;
-                }
-                $scope.isCollapsed = isCollapsed;
-              }else{
-                $scope.isCollapsed = false;
+              }
+              $scope.isCollapsed = isCollapsed;
+              if(!$scope.isCollapsed){
+                $scope.widget.reload = true;
+                $scope.$broadcast('widgetReload');
               }
             });
+
         } else {
           $log.warn('could not find widget ' + type);
         }
@@ -108,9 +110,9 @@ angular.module('adf')
           var instance = $modal.open(opts);
 
           editScope.valideDialog = function() {
-			instance.close();
-			editScope.$destroy();
-			var column = $scope.col;
+      			instance.close();
+      			editScope.$destroy();
+      			var column = $scope.col;
 	          if (column) {
 	            var index = column.widgets.indexOf(definition);
 	            var widgetId = column.widgets[index].id;
@@ -159,33 +161,36 @@ angular.module('adf')
                 var widgetId = column.widgets[index].id;            
               }
             }
-            
-            instance.close();
-            editScope.$destroy();
-            
-            var widget = $scope.widget;
-            if (widget.edit && widget.edit.reload){
-              // reload content after edit dialog is closed
-              $scope.$broadcast('widgetConfigChanged');
+
+            // modify the title of the widget if the user done it
+            if(definition.config.title){
+              definition.title = definition.config.title;
             }
+
             // load the widget's modifications in Solr
             modifyWidget(definition.title, widgetId, definition.config.content, true);
 
+            // close the modal
+            editScope.closeDialog();
+            // reload the modal
+            $scope.reload();
           };
           editScope.closeDialog = function(){
             instance.close();
-            editScope.$destroy();            
           }
         };
         // activate a widget
         $scope.activateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
-			$scope.isCollapsed = false;
+    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			$scope.isCollapsed = false;
+          $scope.widget.reload = true;
+          $scope.reload();
         };
         // desactivate a widget
         $scope.desactivateWidget = function() {
-			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
-			$scope.isCollapsed = true;
+    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			$scope.isCollapsed = true;
+          $scope.widget.reload = false;
 		};
 
       } else {
