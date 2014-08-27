@@ -43,7 +43,14 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
             if (config.title){
               return config.title;
             }
-          }
+          },
+          type: function(config){
+            if (config.type){
+              return config.type;
+            }
+          },
+
+
         },
 
         edit: {
@@ -54,125 +61,31 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
   }).controller('collectesMultisourcesCtrl', function($scope, data, $resource, cfg){
     $scope.data = data;
 
-    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}});
 
-      $scope.solrResult       = $scope.solr.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
+
 
     $scope.querySearch = $resource(cfg.urlServices+'harvester/QUERYSEARCH/:action',
-      {action:'get_querysearch.pl', query:'', type:''},
+      {action:'get_querysearch.pl', query:'', typeQuery:''},
       {get:{method:'JSONP'}});
 
-    $scope.querySearchResult       = $scope.querySearch.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
+    $scope.querySearchResult       = $scope.querySearch.get({query:data, typeQuery:'google_news'});
 
 
 
   }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
 
-    $scope.person = {};
-    $scope.people = [
-      { name: 'Adam',      email: 'adam@email.com',      age: 10 },
-      { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
-      { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
-      { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
-      { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
-      { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
-      { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
-      { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
-    ];
-
-
-
     $scope.queryTypes = cfg.querySearchTypeList;
 
-    $scope.type = {};
-    $scope.type.selected = undefined;
+    $scope.query = {};
 
 
 
+    $scope.$watch('query.selected', function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        $scope.config.typeQuery = $scope.query.selected;
+      }
+    }, true);
 
-        $scope.mySelections = [];
-        var usernameCookie = $cookieStore.get('username');
 
-        $scope.sourcesList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'source', user_s: usernameCookie, callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
-
-        $scope.filterOptions = {
-            filterText: "",
-            useExternalFilter: false
-        };
-
-        $scope.totalServerItems = 0;
-        $scope.pagingOptions = {
-            pageSizes: [10,100,1000],
-            pageSize: 10,
-            currentPage: 1
-        };
-
-        $scope.setPagingData = function(data, page, pageSize){
-            $scope.totalServerItems = data.success.response.numFound;
-            data = data.success.response.docs;
-            $scope.myData = data;
-            if($rootScope.$$phase !== '$digest'){
-              $rootScope.$digest(); 
-            }
-        };
-
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            // setTimeout(function () {
-            var data;
-            $scope.sourceResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
-                function() {        //call back function for asynchronous
-                    if (typeof $scope.sourceResult.success.response === "undefined") {}
-                    else {
-                        data = $scope.sourceResult;
-                        $scope.setPagingData(data,page,pageSize);
-                        //$('.row').trigger('resize');
-                    }
-                }
-            );
-            //}, 100);
-        };
-
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            if ((newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) || (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize)) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
-
-        $scope.$watch('filterOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
-
-    $scope.gridOptionsSource = {
-            data: 'myData',
-            enablePaging: true,
-            enableRowSelection : true,
-            multiSelect: false,
-            showFooter: true,
-            totalServerItems: 'totalServerItems',
-            pagingOptions: $scope.pagingOptions,
-            filterOptions: $scope.filterOptions,
-            showFilter: true,
-            selectedItems: $scope.mySelections,
-            columnDefs: [
-                {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-                {visible:true,width:'*',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'title_t', displayName:  'Titre de la source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' }
-            ],
-        beforeSelectionChange: function (rowItem) { return true; },
-        afterSelectionChange: function () {
-            angular.forEach($scope.mySelections, function ( item ) {
-                $scope.config.content = item.id;
-                $scope.config.title = item.title_t;
-            });
-        }             
-    };
   });

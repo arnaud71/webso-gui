@@ -3,15 +3,15 @@
 </div>
 <div ng-if="querySearchResult">
     <div id="docsFound">
-        <div query-search-result ng-show="querySearchResult.response.numFound">
+        <div query-search-result ng-show="querySearchResult.count">
             <table class="table table-striped">
-                <tr ng-repeat="doc in solrResult.response.docs">
+                <tr ng-repeat="doc in querySearchResult.res">
                     <td>
                         <div id="titleFound">
-                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                            <a href="{{doc.link}}" target="_blank">{{doc.title}}</a>
                         </div>
                         <div id="dateFound">
-                            date : {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
+                            date : {{doc.pubDate|date:'dd-MM-yyyy hh:mm'}}
                         </div>
                         <div id="contentFound">
                             <div ng-controller="CollapseSolrCtrl">
@@ -22,7 +22,7 @@
                                 </div>
                                 <div collapse="isCollapsed">
                                         <span ng-click="isCollapsed = !isCollapsed">
-                                        {{solrResult.highlighting[doc.id].content_en[0]}} &lt;&lt;&lt;&lt;
+                                        {{doc.description}} &lt;&lt;&lt;&lt;
                                         </span>
                                 </div>
                             </div>
