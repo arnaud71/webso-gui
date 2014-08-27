@@ -1,9 +1,9 @@
 <div class="alert alert-info" ng-if="!data">
-	Sélectionnez un ID de source dans la configuration du widget
+	Sélectionnez une requête et un type dans la configuration du widget
 </div>
-<div ng-if="solrResult">
+<div ng-if="querySearchResult">
     <div id="docsFound">
-        <div solr-result ng-show="solrResult.response.numFound">
+        <div query-search-result ng-show="querySearchResult.response.numFound">
             <table class="table table-striped">
                 <tr ng-repeat="doc in solrResult.response.docs">
                     <td>

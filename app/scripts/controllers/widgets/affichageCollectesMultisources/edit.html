@@ -1,15 +1,30 @@
 
-<label>Sources</label><br>
-	<div ng-controller="collectesMultisourcesEditCtrl">
-		
-		Source sélectionnée : <br>
-		Identifiant : <input type="content" id="content" ng-model="config.content" readonly>
-		Titre : <input type="title" id="title" ng-model="config.title" readonly> 
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="gridStyleSource" ng-grid="gridOptionsSource">
-				</div>
-			</div>
-		</div>
+	<div ng-controller="collectesMultisourcesEditCtrl">
+        <div class="row">
+            <div class="form-group" >
+                <label class="col-md-2 control-label"> Requête : </label>
+                <div  class="col-md-10">
+                    <input type="text" class="form-control" id="query" ng-model="config.query" required>
+                </div>
+            </div>
+            <div class="form-group" >
+
+                <label class="col-md-2 control-label"> Type : </label>
+
+                <div class="col-md-10">
+
+                    <ui-select ng-model="type.selected" theme="bootstrap">
+                        <ui-select-match placeholder="Selectionner un type dans la liste ...">{{$select.selected.displayName}}</ui-select-match>
+                        <ui-select-choices repeat="queryType in queryTypes | filter: $select.search">
+                            <span ng-bind-html="queryType.displayName | highlight: $select.search"></span>
+
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+
+
+	    </div>
  	</div>

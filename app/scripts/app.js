@@ -4,7 +4,7 @@ var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sa
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
     'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
     'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
-    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable']);
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable','ui.select']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
     
@@ -253,7 +253,9 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home');
 });
 
-
+websoApp.config(function(uiSelectConfig) {
+  uiSelectConfig.theme = 'bootstrap';
+});
 // le run time de l'app est de la façon suivante : 
 websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions) {
   //editableOptions.theme = 'bs3';

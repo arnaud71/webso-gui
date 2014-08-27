@@ -53,13 +53,45 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
       });
   }).controller('collectesMultisourcesCtrl', function($scope, data, $resource, cfg){
     $scope.data = data;
+
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
       {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
       $scope.solrResult       = $scope.solr.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
 
+    $scope.querySearch = $resource(cfg.urlServices+'harvester/QUERYSEARCH/:action',
+      {action:'get_querysearch.pl', query:'', type:''},
+      {get:{method:'JSONP'}});
+
+    $scope.querySearchResult       = $scope.querySearch.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
+
+
+
   }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
+
+
+    $scope.person = {};
+    $scope.people = [
+      { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+      { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+      { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+      { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+      { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+      { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+      { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+      { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+    ];
+
+
+
+    $scope.queryTypes = cfg.querySearchTypeList;
+
+    $scope.type = {};
+    $scope.type.selected = undefined;
+
+
+
 
         $scope.mySelections = [];
         var usernameCookie = $cookieStore.get('username');
