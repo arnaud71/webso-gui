@@ -28,10 +28,15 @@ angular.module('adf')
   .directive('adfWidget', function($log, $modal, $rootScope, $resource, cfg, dashboard, serviceWidgets) {
 
   	// modify a widget's informations
-    function modifyWidget(title, ident, widgetContent, isEnable){
+    function modifyWidget(title, ident, widgetContent, param, isEnable){
         $rootScope.widgetModify = $resource(cfg.urlServices+'db/:action',
           {action:'update.pl', id:'', type_s:'widget', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
+
+        /*var newContent = {
+          query : widgetContent,
+          param : param
+        } ;*/
 
         $rootScope.widgetModify.get({
         	title_t 		: title,
@@ -168,7 +173,7 @@ angular.module('adf')
             }
 
             // load the widget's modifications in Solr
-            modifyWidget(definition.title, widgetId, definition.config.content, true);
+            modifyWidget(definition.title, widgetId, definition.config.content, definition.config.param, true);
 
             // close the modal
             editScope.closeDialog();
@@ -181,14 +186,14 @@ angular.module('adf')
         };
         // activate a widget
         $scope.activateWidget = function() {
-    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			modifyWidget(definition.title, definition.id, definition.config.content, definition.config.param, $scope.isCollapsed);
     			$scope.isCollapsed = false;
           $scope.widget.reload = true;
           $scope.reload();
         };
         // desactivate a widget
         $scope.desactivateWidget = function() {
-    			modifyWidget(definition.title, definition.id, definition.config.content, $scope.isCollapsed);
+    			modifyWidget(definition.title, definition.id, definition.config.content, definition.config.param, $scope.isCollapsed);
     			$scope.isCollapsed = true;
           $scope.widget.reload = false;
 		};

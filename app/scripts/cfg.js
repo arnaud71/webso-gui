@@ -11,9 +11,10 @@ angular.module('websoApp').constant('cfg', {
                 {value:'google_news'  ,displayName:'Google News'},
                 {value:'bing_news'    ,displayName:'Bing News'},
                 {value:'yahoo_news'   ,displayName:'Yahoo News'},
-                {value:'google_blog'  ,displayName:'Google News'},
+                {value:'google_blog'  ,displayName:'Google Blog'},
                 {value:'reddit'       ,displayName:'Reddit'},
-                {value:'faroo_news'   ,displayName:'Faroo News'}
+                {value:'faroo_news'   ,displayName:'Faroo News'},
+                {value:'delicious'    ,displayName:'delicious'}
                       ],
 
   //urlDB           : 'http://albator.hesge.ch:8983/',

@@ -256,6 +256,8 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 websoApp.config(function(uiSelectConfig) {
   uiSelectConfig.theme = 'bootstrap';
 });
+
+
 // le run time de l'app est de la façon suivante : 
 websoApp.run(function ($rootScope, $location, $cookieStore, serviceRestrictions) {
   //editableOptions.theme = 'bs3';

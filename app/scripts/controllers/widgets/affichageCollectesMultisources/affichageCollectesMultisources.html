@@ -1,9 +1,9 @@
 <div class="alert alert-info" ng-if="!data">
 	Sélectionnez une requête et un type dans la configuration du widget
 </div>
-<div ng-if="querySearchResult">
+<div ng-if="querySearchResult.count>0">
     <div id="docsFound">
-        <div query-search-result ng-show="querySearchResult.count">
+        <div query-search-result ng-show="querySearchResult.count>0">
             <table class="table table-striped">
                 <tr ng-repeat="doc in querySearchResult.res">
                     <td>

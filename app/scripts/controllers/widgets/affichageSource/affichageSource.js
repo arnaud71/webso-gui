@@ -50,6 +50,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
           controller: 'sourceEditCtrl'
         }
       });
+
   }).controller('sourceCtrl', function($scope, data, $resource, cfg){
     $scope.data = data;
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',

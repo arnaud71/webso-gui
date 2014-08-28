@@ -6,9 +6,8 @@ angular.module('websoApp')
     var $username                 = $cookieStore.get('username');
 
     $scope.showFound              = false;
-    $scope.currentPage            = 1;
     $scope.maxSize                = 5;
-    $scope.bigCurrentPage         = 1;
+    $scope.currentPage            = 1;
     paginationConfig.nextText     = 'Suivant';
     paginationConfig.previousText = 'Précédent';
     paginationConfig.firstText    = 'Début';
@@ -67,16 +66,26 @@ angular.module('websoApp')
       $scope.isCollapsed = false;
 
       //if ($scope.searchTerm) {
+      $scope.totalItems       = 0;
       $scope.currentPage      = 1;
       $scope.maxSize          = 5;
-      $scope.bigCurrentPage   = 1;
+
+
+      $scope.solr.get({ q      :$scope.searchTerm,
+                        start  :$scope.currentPage-1,
+                        fq     :$scope.currentFq+' +type_s:document +user_s:'+$username
+                      }).$promise.then(function (result) {
+                                        $scope.solrResult = result;
+                                        $scope.totalItems = result.response.numFound;
+                                  });
+/*
       $scope.solrResult       = $scope.solr.get({q:$scope.searchTerm,start:$scope.currentPage-1,fq:$scope.currentFq+' +type_s:document +user_s:'+$username},
         function () {
           $scope.isError = false;
           if (typeof solrResult !== 'undefined') {
             //if ($scope.solrResult.response.numFound !== 'undefined') {
             $scope.totalItems     = $scope.solrResult.response.numFound;
-            $scope.bigTotalItems  = $scope.solrResult.response.numFound;
+            //$scope.bigTotalItems  = $scope.solrResult.response.numFound;
           }
         },
         //error
@@ -84,32 +93,27 @@ angular.module('websoApp')
           $scope.isError = true;
 
         }
-      );
+      );*/
+
       //}
     };
+
 
 
     $scope.doSearchFromPage = function () {
       $scope.isCollapsed = false;
       //if ($scope.searchTerm) {
-      $scope.solrResult = $scope.solr.get({q:$scope.searchTerm,start:($scope.currentPage-1)*10,fq:$scope.currentFq},
-        function () {
-          $scope.isError = true;
-          if (typeof solrResult !== 'undefined') {
-            $scope.totalItems     = $scope.solrResult.response.numFound;
-            $scope.bigTotalItems  = $scope.solrResult.response.numFound;
-          }
 
-        },
-        //error
-        function () {
-          $scope.isError = true;
-
-        }
+      $scope.solr.get({ q       :$scope.searchTerm,
+                        start   :($scope.currentPage-1)*10,
+                        fq      :$scope.currentFq
+                      }).$promise.then(function (result) {
+                                                    $scope.solrResult = result;
+                                                    $scope.totalItems = result.response.numFound;
+                                                        }
       );
-      //$scope.totalItems    = $scope.solrResult.response.numFound;
-      //$scope.bigTotalItems = $scope.solrResult.response.numFound;
-      //}
+
+
     };
 
 
@@ -118,10 +122,11 @@ angular.module('websoApp')
       $scope.doSearch();
     });
 
-    $scope.pageChanged = function(page) {
-      $scope.currentPage = page;
+    $scope.pageChanged = function() {
+
       $scope.doSearchFromPage();
     };
+
 
     $scope.doSearch();
 
