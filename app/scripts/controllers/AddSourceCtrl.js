@@ -66,7 +66,6 @@ angular.module('websoApp')
       {option:'12h'},
       {option:'24h'},
       {option:'48h'}
-
     ] ;
     $scope.frequency = $scope.frequencies[1];
 
