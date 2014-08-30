@@ -3,8 +3,6 @@
 </div>
 
 
-
-
 <div id="search">
     <div class="row">
         <div class="col-md-12">
@@ -34,7 +32,7 @@
 
                 <div id="numberFound">
                     <div solr-results-number ng-show="solrResult.response">
-                        Page: {{bigCurrentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
+                        Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
                         <br>
                     </div>
                 </div>
@@ -89,16 +87,16 @@
                                     <div id="dateFound">
                                         {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                         <div id="actionList">
-                                            <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></div></button>
+                                            <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                        </div>
+
+
                                     </div>
-                    </div>
-
-
 
                     </td>
                     </tr>
                     </table>
-                    <pagination on-select-page="pageChanged(page)" total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
                 </div>
             </div>
         </div>

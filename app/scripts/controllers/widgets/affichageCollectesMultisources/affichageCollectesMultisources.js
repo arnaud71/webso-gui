@@ -32,12 +32,67 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
         description: 'Collectes multisources',
         controller: 'collectesMultisourcesCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/affichageCollectesMultisources.html',
+        reload: true,
+        resolve: {
+          data: function(config){
+            if (config.content){
+              return config.content;
+            }
+          },
+          title: function(config){
+            if (config.title){
+              return config.title;
+            }
+          }
+
+
+
+        },
+
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/edit.html',
-          reload: false,
           controller: 'collectesMultisourcesEditCtrl'
+
         }
       });
-  }).controller('collectesMultisourcesCtrl', function($scope, config){
-  }).controller('collectesMultisourcesEditCtrl', function($scope){
+  }).controller('collectesMultisourcesCtrl', function($scope, data, $resource, cfg) {
+
+    if (data) {
+
+      $scope.data = data;
+
+      //$scope.query = $scope.data.query;
+      //$scope.typeQuery = $scope.data.param.value;
+
+
+    $scope.querySearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
+      {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
+      {get: {method: 'JSONP'}});
+
+    $scope.querySearchResult = $scope.querySearch.get({query: $scope.data, typeQuery: 'google_news'});
+  }
+
+
+
+  }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
+
+    //$scope.data = angular.fromJson(data);
+
+    //$scope.querySaved   = $scope.data.query;
+    //$scope.paramSaved   = $scope.data.param;
+
+    $scope.queryTypes = cfg.querySearchTypeList;
+
+    $scope.query = {};
+
+    //$scope.query.selected = $scope.config.param // set the initial selected option
+
+
+    $scope.$watch('query.selected', function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        $scope.config.param = $scope.query.selected;
+      }
+    }, true);
+
+
   });

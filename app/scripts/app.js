@@ -4,7 +4,11 @@ var websoApp = angular.module('websoApp', ['sample.widgets.affichageSource', 'sa
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
     'sample.widgets.affichageCollectesMultisources','sample.widgets.affichageFluxTwitter',
     'sample.widgets.defaultWidget', 'adf', 'checklist-model', 'ngCookies', 
+<<<<<<< HEAD
     'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable','angulartics', 'angulartics.google.analytics', 'angulartics.piwik']);
+=======
+    'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router', 'LocalStorageModule', 'ui.tree', 'xeditable','ui.select']);
+>>>>>>> master
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
     
@@ -251,6 +255,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         })
         
         $urlRouterProvider.otherwise('/home');
+});
+
+websoApp.config(function(uiSelectConfig) {
+  uiSelectConfig.theme = 'bootstrap';
 });
 
 

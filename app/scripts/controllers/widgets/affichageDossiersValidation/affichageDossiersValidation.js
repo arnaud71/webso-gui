@@ -32,6 +32,7 @@ angular.module('sample.widgets.affichageDossiersValidation', ['adf.provider'])
         description: 'Dossiers de validation',
         controller: 'dossiersValidationCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageDossiersValidation/affichageDossiersValidation.html',
+        reload: true,
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageDossiersValidation/edit.html',
           controller: 'dossiersValidationEditCtrl'
@@ -45,7 +46,7 @@ angular.module('sample.widgets.affichageDossiersValidation', ['adf.provider'])
       {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
-      $scope.solrResult       = $scope.solr.get({q:'user_s:' + currentUsername[0],fq:'type_s:validation'});
+    $scope.solrResult       = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:validation'});
 
   }).controller('dossiersValidationEditCtrl', function($scope){
   });

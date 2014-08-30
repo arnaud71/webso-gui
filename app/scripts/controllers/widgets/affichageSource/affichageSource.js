@@ -32,10 +32,16 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         description: 'Sources',
         controller: 'sourceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageSource/affichageSource.html',
+        reload: true,
         resolve: {
           data: function(config){
             if (config.content){
               return config.content;
+            }
+          },
+          title: function(config){
+            if (config.title){
+              return config.title;
             }
           }
         },
@@ -44,6 +50,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
           controller: 'sourceEditCtrl'
         }
       });
+
   }).controller('sourceCtrl', function($scope, data, $resource, cfg){
     $scope.data = data;
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
@@ -85,11 +92,11 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         $scope.getPagedDataAsync = function (pageSize, page, searchText) {
             // setTimeout(function () {
             var data;
-            $scope.watchResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
+            $scope.sourceResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
                 function() {        //call back function for asynchronous
-                    if (typeof $scope.watchResult.success.response === "undefined") {}
+                    if (typeof $scope.sourceResult.success.response === "undefined") {}
                     else {
-                        data = $scope.watchResult;
+                        data = $scope.sourceResult;
                         $scope.setPagingData(data,page,pageSize);
                         //$('.row').trigger('resize');
                     }
@@ -132,6 +139,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         afterSelectionChange: function () {
             angular.forEach($scope.mySelections, function ( item ) {
                 $scope.config.content = item.id;
+                $scope.config.title = item.title_t;
             });
         }             
     };

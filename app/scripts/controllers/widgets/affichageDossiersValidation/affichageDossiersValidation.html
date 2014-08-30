@@ -1,26 +1,24 @@
-<div class="text-center">
-	<div class="alert alert-info" ng-if="!solrResult.response.numFound">
-    	Aucune information n'est validée
-  	</div>
-  	<div ng-if="solrResult">
-        <div id="docsFound">
-            <div solr-result ng-show="solrResult.response.numFound">
-                <table class="table table-striped">
-                    <tr ng-repeat="doc in solrResult.response.docs">
-                        <td>
-                            <div id="titleFound">
-                                <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                            </div>
-                            <div id="detailsFound">
-                                Détails : {{doc.details_s}}
-                            </div>
-                            <div id="detailsFound">
-                                Tags : {{doc.tags_s}}
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+<div class="alert alert-info" ng-if="!solrResult.response.numFound">
+	Aucune information n'est validée
+</div>
+<div ng-if="solrResult">
+    <div id="docsFound">
+        <div solr-result ng-show="solrResult.response.numFound">
+            <table class="table table-striped">
+                <tr ng-repeat="doc in solrResult.response.docs">
+                    <td>
+                        <div id="titleFound">
+                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                        </div>
+                        <div id="detailsFound">
+                            Détails : {{doc.details_s}}
+                        </div>
+                        <div id="detailsFound">
+                            Tags : {{doc.tags_s}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-  	</div>
+    </div>
 </div>

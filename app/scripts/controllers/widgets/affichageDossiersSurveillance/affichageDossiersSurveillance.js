@@ -32,12 +32,20 @@ angular.module('sample.widgets.affichageDossiersSurveillance', ['adf.provider'])
         description: 'Dossiers de surveillances',
         controller: 'dossierSurveillanceCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageDossiersSurveillance/affichageDossiersSurveillance.html',
+        reload: true,
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageDossiersSurveillance/edit.html',
-          reload: false,
           controller: 'dossierSurveillanceEditCtrl'
         }
       });
-  }).controller('dossierSurveillanceCtrl', function($scope, config){
+  }).controller('dossierSurveillanceCtrl', function($scope, $resource, cfg, serviceWidgets){
+
+  var currentUsername = serviceWidgets.getUserIdents();
+
+    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
+
+      $scope.solrResult       = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:watch'});
   }).controller('dossierSurveillanceEditCtrl', function($scope){
   });

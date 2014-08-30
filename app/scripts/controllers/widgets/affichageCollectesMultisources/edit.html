@@ -1,0 +1,30 @@
+
+
+	<div ng-controller="collectesMultisourcesEditCtrl">
+        <div class="row">
+            <div class="form-group" >
+                <label class="col-md-2 control-label"> Requête : </label>
+                <div  class="col-md-10">
+                    <input type="text" class="form-control" id="query" ng-model="config.content" required>
+                </div>
+            </div>
+            <div class="form-group" >
+
+                <label class="col-md-2 control-label"> Type : </label>
+
+                <div class="col-md-10">
+
+                    <ui-select ng-model="query.selected" theme="bootstrap">
+                        <ui-select-match placeholder="Selectionner un type dans la liste ...">{{$select.selected.displayName}}</ui-select-match>
+                        <ui-select-choices repeat="queryType in queryTypes | filter: $select.search">
+                            <span ng-bind-html="queryType.displayName | highlight: $select.search"></span>
+
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+
+
+	    </div>
+ 	</div>

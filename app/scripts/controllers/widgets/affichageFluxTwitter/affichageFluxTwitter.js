@@ -32,6 +32,7 @@ angular.module('sample.widgets.affichageFluxTwitter', ['adf.provider'])
         description: 'Flux Twitter en temps réel',
         controller: 'fluxTwitterCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageFluxTwitter/affichageFluxTwitter.html',
+        reload: true,
         edit: {
           templateUrl: 'scripts/controllers/widgets/affichageFluxTwitter/edit.html',
           reload: false,
