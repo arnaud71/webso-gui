@@ -23,6 +23,6 @@
     "highcharts": "4.0.0",    
     "angular-ui-tree": "2.1.4",
     "angular-xeditable":"0.1.8",
-     "angulartics": "0.15.19"
+     "angulartics": "0.16.5"
   }
 }
