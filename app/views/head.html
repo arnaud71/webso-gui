@@ -2,13 +2,13 @@
 <div ng-controller = "headerCtrl">
 	<nav class="navbar navbar-inverse" role="navigation">
 	    <div class="navbar-header">
-	        <a class="navbar-brand" analytics-on="click" analytics-event="buttonHome" analytics-label="Button4" analytics-category="Commands" href="#">WebSo</a>
+	        <a class="navbar-brand" analytics-on='click' analytics-event='Home' analytics-label='Home' analytics-category='Passive' href="#">WebSo</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	        <!-- <li data-match-route="/home" ng-show="isPublic"><a ui-sref="/home">Home</a></li> -->
 	        <li class="dropdown" ng-show="isPublicNotAuthenticated">
 	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
-	            <ul class="dropdown-menu">
+	            <ul class="dropdown-menu" analytics-on='click' analytics-event='Authenticate' analytics-label='Authentication' analytics-category='Passive'>
 	                <li data-match-route="/publicRegister" ><a ui-sref="/publicRegister">Enregistrement</a></li> 
 	                <li data-match-route="/login" ><a ui-sref="/login">Connexion</a></li>
 	            </ul>
@@ -22,16 +22,16 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valider <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/validate/add" ng-show="isVeilleurAdmin">
 	                    <a ui-sref="/validate/add">Ajouter information</a></li>
 	                <li data-match-route="/validate/display">
-	                    <a ui-sref="/validate/display">Afficher informations validées</a></li>
+	                    <a ui-sref="/validate/display" analytics-on='click' analytics-event='Validate' analytics-label='Validate_show_information' analytics-category='Passive'>Afficher informations validées</a></li>
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Surveiller <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
 	                	<a ui-sref="/watch/add">Ajouter une surveillance</a>
@@ -43,12 +43,12 @@
 	                    <a ui-sref="/source/list">Afficher les sources</a>
 	                </li> -->
 	                <li data-match-route="/watch/list" >
-	                    <a ui-sref="/watch/list">Afficher les surveillances</a>
+	                    <a ui-sref="/watch/list" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Afficher les surveillances</a>
 	                </li>
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diffuser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive'>Diffuser <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/createNL">
 	                	<a ui-sref="/publish/newsletter">Newsletter</a>
@@ -59,12 +59,12 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organiser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive' >Organiser <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
-	                <li data-match-route="/organize/wfolder"><a ui-sref="/organize/wfolder">Dossiers de surveillance</a></li>
-	                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder">Dossiers de validation</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize">Templates</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize">Collectes webso</a></li>
+	                <li data-match-route="/organize/wfolder"><a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a></li>
+	                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a></li>
+	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive'>Templates</a></li>
+	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_collections' analytics-category='Passive'>Collectes webso</a></li>
 	                <li data-match-route="/organize"><a ui-sref="/organize">Packages de sources</a></li>
 	            </ul>
 	        </li>
@@ -72,7 +72,7 @@
 	        	<li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">Tableau de bord</a></li>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rechercher <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Search' analytics-label='Search_menu' analytics-category='Passive'>Rechercher <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/search/folder"><a ui-sref="/search/folder">Dossiers</a></li>
 	                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Collectes externes</a></li>
