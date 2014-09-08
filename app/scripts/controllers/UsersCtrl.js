@@ -106,6 +106,7 @@ angular.module('websoApp')
       };
 
     $scope.rolesTab = {};
+    $scope.rowTab = {};
 
       //$log.info($scope.roles[0].name);
 
@@ -138,7 +139,7 @@ angular.module('websoApp')
                 //{width:'*',field:'role_s', displayName:  'Modification du rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()"> <select ng-init="userRole = row.getProperty(\'role_s\')" data-ng-model="userRole" ng-options="userRole for userRole in roles"></select><button type="button" class="btn btn-xs" ng-click="modifyRole(row.getProperty(\'id\'), userRole, row.rowIndex)" ><span class="glyphicon glyphicon-refresh"></span></button></div>' },
               {width:'*',field:'', displayName:  'Modification du rôle',cellTemplate:'<div class="ngCellText" ng-class="col.colIndex()"> <select ng-model="rolesTab[row.getProperty(\'user_s\')]" ng-options="userRole for userRole in roles"></select><button type="button" class="btn btn-xs" ng-click="modifyRole(row.getProperty(\'id\'), rolesTab[row.getProperty(\'user_s\')], row.rowIndex)" ><span class="glyphicon glyphicon-refresh"></span></button></div>' },
 
-              {width:'*',field:'user_s', displayName:  'Suppression de l\'utilisateur', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'), row.getProperty(col.field), row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
+              {width:'*',field:'user_s', displayName:  'Suppression de l\'utilisateur', cellTemplate: ' <center><button type="button" class="btn btn-xs" ng-click="deleteCount(row.getProperty(\'id\'), row.getProperty(\'user_s\'), row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button></center>'}
 
             ]
         };
@@ -164,6 +165,8 @@ angular.module('websoApp')
                 // init rolesTab to construct the select column
                 angular.forEach(result.success.response.docs, function (item, index) {
                   $scope.rolesTab[item.user_s]= item.role_s;
+                  $scope.rowTab[item.user_s]= index;
+
                 });
 
 
@@ -223,26 +226,32 @@ angular.module('websoApp')
           {action:'delete.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
 
-    $scope.deleteCount = function (userId, username, index) {
+    $scope.deleteCount = function (userId, userName, index) {
         var usernameCookie = $cookieStore.get('username');
         var userRoleCookie = $cookieStore.get('userRole');
 
+      $scope.userName = userName;
       $scope.userId   = userId;
       $scope.index  = index;
       var modalInstance = $modal.open({
         templateUrl: 'deleteUserModal.html',
-        controller: ModalInstanceDeleteCtrl
+        controller: ModalInstanceDeleteCtrl,
+        resolve: {
+          userName: function () {
+            return $scope.userName;
+          }
+        }
       });
 
       modalInstance.result.then(function () {
         $scope.userDeleteResult = $scope.countDelete.get({
                 id  :     userId,
-                user_s : username
+                user_s : userName
         });
 
-        $scope.myData.splice($scope.index, 1);
+        $scope.myData.splice($scope.rowTab[userName], 1);
 
-        if(usernameCookie === username && userRoleCookie === 'administrateur'){
+        if(usernameCookie === userName && userRoleCookie === 'administrateur'){
             $cookieStore.remove('Authenticated');
             $cookieStore.remove('username');
             $cookieStore.remove('password');
