@@ -35,6 +35,12 @@ angular.module('websoApp')
     };
 
 
+
+    $scope.sortInfo = {
+      fields:['creation_dt'],
+      directions:['desc']
+    };
+
     // options for grid of sources
 
     $scope.gridOptionsSource = {
@@ -61,6 +67,7 @@ angular.module('websoApp')
       pagingOptions       : $scope.pagingOptions,
       filterOptions       : $scope.filterOptions,
       showFilter          : true,
+      sortInfo            : $scope.sortInfo,
 
       //selectWithCheckboxOnly: 'true',
       //selectedItems: $scope.mySelections,
@@ -73,6 +80,8 @@ angular.module('websoApp')
         {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+
         {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
 
       ]
