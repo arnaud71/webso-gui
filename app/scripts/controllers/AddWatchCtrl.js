@@ -34,6 +34,9 @@ angular.module('websoApp')
       myWatchSelections   : []
     };
 
+    $scope.rowTabSource = {}; // keep track of row number for deletion if sorting
+    $scope.rowTabWatch = {}; // keep track of row number for deletion if sorting
+
 
 
     $scope.sortInfo = {
@@ -221,7 +224,29 @@ angular.module('websoApp')
     // doSearchSource
     // list the available sources
     $scope.doSearchSource = function () {
-      $scope.sourceResult = $scope.dbList.get({type_s:'source',
+
+      $scope.dbList.get({type_s:'source',
+        start:$scope.pagingOptions.pageSize*$scope.pagingOptions.currentPage-$scope.pagingOptions.pageSize,
+        rows:$scope.pagingOptions.pageSize}).$promise.then(function(result) {
+
+
+
+        angular.forEach(result.success.response.docs, function (item, index) {
+
+          $scope.rowTabSource[item.id]= index;
+
+        });
+
+        $scope.myDataSource = result.success.response.docs;
+
+
+      }, function(reason) {
+        alert('Failed: ' + reason);
+      });
+
+
+
+      /* $scope.sourceResult = $scope.dbList.get({type_s:'source',
                                                start:$scope.pagingOptions.pageSize*$scope.pagingOptions.currentPage-$scope.pagingOptions.pageSize,
                                                rows:$scope.pagingOptions.pageSize},
         function() {        //call back function for asynchronous
@@ -231,6 +256,11 @@ angular.module('websoApp')
             }
             else {
               $scope.myDataSource = $scope.sourceResult.success.response.docs;
+              angular.forEach(result.success.response.docs, function (item, index) {
+
+                $scope.rowTabSource[item.id]= index;
+
+              });
 
               $('.row').trigger('resize');
             }
@@ -245,7 +275,7 @@ angular.module('websoApp')
 
         }
 
-      );
+      ); */
 
     };
 
@@ -465,7 +495,8 @@ angular.module('websoApp')
           query  :  'source_id_ss:'+$scope.dbId
         });
 
-        $scope.myDataSource.splice($scope.index, 1);
+        $scope.myDataSource.splice($scope.rowTabSource[$scope.dbId], 1);
+        $scope.doSearchSource();
 
 
       });
