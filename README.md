@@ -65,3 +65,31 @@ Run the tests
 	2.4 Run test :
 
 		protractor protractor-e2e.conf.js
+
+
+Installation on the server:
+---------------------------
+
+
+0. on client side do:
+
+grunt build (to update the dist directory)
+
+
+1. on server side do:
+
+mv webso-gui webso-gui-save-n
+ftp dist to webso-gui
+
+change script/cfg.js
+comment lines
+
+  urlDB               : 'http://localhost:8983/',
+  urlServices         : 'http://localhost/cgi-bin/webso-services/',
+  urlBookmarklet      : ‘',
+
+and uncomment lines
+
+ //urlDB           : 'http://albator.hesge.ch:8983/',
+  //urlServices     : 'http://albator.hesge.ch/cgi-bin/webso-services/',
+  //urlBookmarklet  : 'http://albator.hesge.ch/web/webso-gui/'
