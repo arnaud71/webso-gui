@@ -23,7 +23,7 @@
             <div class="col-md-12">
                 <form class="form-horizontal" ng-submit="doSearch()">
                     <input type="text" placeholder="Chercher" ng-model="model.searchTerm" name ="searchTerm">
-                    <button class="btn" ng-click="doSearch()" name ="searchButton"><i class="icon-search"></i>Search</button>
+                    <button class="btn" ng-click="doSearch()" name ="searchButton" analytics-on='click' analytics-event='Search' analytics-label='Search_RSS' analytics-category='Passive'><i class="icon-search"></i>Search</button>
                 </form>
                 <!-- <div solr-results_number ng-show="model.foundRes"> -->
                      Found: {{model.foundRes}} rss

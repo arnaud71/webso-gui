@@ -111,7 +111,7 @@
                         </div>
                         </tab>
 
-                        <tab heading="{{tabsSource[1].title}}" select="doSearchSource()">
+                        <tab heading="{{tabsSource[1].title}}" select="doSearchSource()" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_source' analytics-category='Passive'>
                             <div class="col-md-12">
                             <div class="gridStyleSourceSmall" ng-grid="gridOptionsSource">
 
@@ -173,7 +173,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-offset-5 col-md-7">
-                                        <button type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
+                                        <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
                                     </div>
                                 </div>
                             </div>

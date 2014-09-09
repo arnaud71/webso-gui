@@ -23,7 +23,7 @@
 
                     <form class="form-horizontal" ng-submit="doSearch()">
                         <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                        <button class="btn" ng-click="doSearch()" name="searchButton"><i class="icon-search"></i>Chercher</button>
+                        <button class="btn" ng-click="doSearch()" name="searchButton" analytics-on='click' analytics-event='Search' analytics-label='Search_external_collection' analytics-category='Passive'><i class="icon-search"></i>Chercher</button>
                     </form>
 
                 <div id="numberFound">
