@@ -57,9 +57,7 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
       });
   }).controller('collectesMultisourcesCtrl', function($scope, data, $resource, cfg) {
 
-    if (data) {
-
-      $scope.data = data;
+    if ($scope.config.content) {
 
       //$scope.query = $scope.data.query;
       //$scope.typeQuery = $scope.data.param.value;
@@ -69,7 +67,7 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
       {get: {method: 'JSONP'}});
 
-    $scope.querySearchResult = $scope.querySearch.get({query: $scope.data, typeQuery: 'google_news'});
+    $scope.querySearchResult = $scope.querySearch.get({query: $scope.config.content, typeQuery: 'google_news'});
   }
 
 

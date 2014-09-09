@@ -52,13 +52,15 @@ angular.module('adf')
             enable_s       : isEnable,
             weight_s       : widgetWeight,
             user_s          : userWidget,
+            param_s         : '',
             query_s         : ''
         }).$promise.then(function(widg){
           if(widg.success){
             var w = {
                 id: widg.id,
                 type: widgetType,
-                config: widg.query_s
+                config: widg.query_s,
+                param: widg.param_s
             };
             $rootScope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
               {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},

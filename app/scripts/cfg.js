@@ -1,6 +1,6 @@
 angular.module('websoApp').constant('cfg', {
 
-  versionWebso    : '0.6',
+  versionWebso    : '0.7',
   errorConnect    : 'Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n\'est pas disponible)',
 
 

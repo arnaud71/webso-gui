@@ -1,18 +1,18 @@
 /*
  * The MIT License
- * 
+ *
  * Copyright (c) 2013, Sebastian Sdorra
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ angular.module('adf')
 
         $rootScope.widgetModify.get({
         	title_t 		: title,
-        	id 				  : ident, 
+        	id 				  : ident,
         	query_s 		: widgetContent,
         	enable_s 		: isEnable
         });
@@ -77,7 +77,7 @@ angular.module('adf')
           $scope.informations = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
-          
+
           // set the widget's state in front-end
           $scope.isCollapsed = true;
           $scope.widget.reload = false;
@@ -100,14 +100,14 @@ angular.module('adf')
         $log.debug('definition not specified, widget was probably removed');
       }
     }
-    
+
     function postLink($scope, $element, $attr) {
       var definition = $scope.definition;
       if (definition) {
         // bind close function
         $scope.close = function() {
           var editScope = $scope.$new();
-          
+
           var opts = {
             scope: editScope,
             templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-delete.html'
@@ -138,10 +138,10 @@ angular.module('adf')
 
           editScope.closeDialog = function(){
             instance.close();
-            editScope.$destroy();            
+            editScope.$destroy();
           }
         };
-        
+
         // bind reload function
         $scope.reload = function(){
           $scope.$broadcast('widgetReload');
@@ -150,7 +150,7 @@ angular.module('adf')
         // bind edit function
         $scope.edit = function() {
           var editScope = $scope.$new();
-          
+
           var opts = {
             scope: editScope,
             templateUrl: 'scripts/controllers/dashboard-framework/src/templates/widget-edit.html'
@@ -163,7 +163,7 @@ angular.module('adf')
               var column = $scope.col;
               if (column) {
                 var index = column.widgets.indexOf(definition);
-                var widgetId = column.widgets[index].id;            
+                var widgetId = column.widgets[index].id;
               }
             }
 
@@ -215,11 +215,11 @@ angular.module('adf')
         collapsible: '='
       },
       compile: function compile($element, $attr, transclude) {
-        
+
         /**
          * use pre link, because link of widget-content
          * is executed before post link widget
-         */ 
+         */
         return {
           pre: preLink,
           post: postLink
