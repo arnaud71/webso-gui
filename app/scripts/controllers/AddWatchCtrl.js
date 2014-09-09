@@ -14,12 +14,20 @@ angular.module('websoApp')
     };
 
 
-    $scope.pagingOptions = {
+    $scope.totalServerItemsSource = 0;
+    $scope.totalServerItemsWatch  = 0;
+
+    $scope.pagingOptionsSource = {
       pageSizes     : [10,100,1000],
       pageSize      : 10,
       currentPage   : 1
     };
 
+    $scope.pagingOptionsWatch = {
+      pageSizes     : [10,100,1000],
+      pageSize      : 10,
+      currentPage   : 1
+    };
 
     // use this type of declaration to avoid scope problem (between tabs)
     $scope.model = {
@@ -66,8 +74,8 @@ angular.module('websoApp')
       enableColumnResize  : true,
       multiSelect         : false,
       showFooter          : true,
-      totalServerItems    : 'totalServerItems',
-      pagingOptions       : $scope.pagingOptions,
+      totalServerItems    : 'totalServerItemsSource',
+      pagingOptions       : $scope.pagingOptionsSource,
       filterOptions       : $scope.filterOptions,
       showFilter          : true,
       sortInfo            : $scope.sortInfo,
@@ -75,7 +83,7 @@ angular.module('websoApp')
       //selectWithCheckboxOnly: 'true',
       //selectedItems: $scope.mySelections,
       columnDefs: [
-        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsSource.pageSize*pagingOptionsSource.currentPage-pagingOptionsSource.pageSize)}}</div>'},
         {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -104,11 +112,12 @@ angular.module('websoApp')
         });
       },
       enablePaging        : true,
+      enableColumnResize  : true,
       enableRowSelection  : true,
       multiSelect         : false,
       showFooter          : true,
-      totalServerItems    : 'totalServerItems',
-      pagingOptions       : $scope.pagingOptions,
+      totalServerItems    : 'totalServerItemsWatch',
+      pagingOptions       : $scope.pagingOptionsWatch,
       filterOptions       : $scope.filterOptions,
       showFilter          : true,
       sortInfo            : $scope.sortInfo,
@@ -117,10 +126,10 @@ angular.module('websoApp')
       //selectWithCheckboxOnly: 'true',
       //selectedItems: $scope.mySelections,
       columnDefs: [
-        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsWatch.pageSize*pagingOptionsWatch.currentPage-pagingOptionsWatch.pageSize)}}</div>'},
         {visible:false,width:'100px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {visible:false,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
+        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -128,8 +137,7 @@ angular.module('websoApp')
         {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'query_s', displayName:  'Requête', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="watchDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="watchDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
 
       ]
     };
@@ -225,9 +233,12 @@ angular.module('websoApp')
     // list the available sources
     $scope.doSearchSource = function () {
 
-      $scope.dbList.get({type_s:'source',
-        start:$scope.pagingOptions.pageSize*$scope.pagingOptions.currentPage-$scope.pagingOptions.pageSize,
-        rows:$scope.pagingOptions.pageSize}).$promise.then(function(result) {
+      $scope.dbList.get({
+        type_s    :'source',
+        start     :$scope.pagingOptionsSource.pageSize*$scope.pagingOptionsSource.currentPage-$scope.pagingOptionsSource.pageSize,
+        sort      :'creation_dt desc',
+        rows      :$scope.pagingOptionsSource.pageSize
+      }).$promise.then(function(result) {
 
 
 
@@ -238,6 +249,7 @@ angular.module('websoApp')
         });
 
         $scope.myDataSource = result.success.response.docs;
+        $scope.totalServerItemsSource = result.success.response.numFound;
 
 
       }, function(reason) {
@@ -285,7 +297,38 @@ angular.module('websoApp')
     // list the available sources
     $scope.doSearchWatch = function () {
       $scope.isError = false;
-      $scope.watchResult = $scope.dbList.get({type_s:'watch',source_id_s:$scope.model.sourceId},
+
+      // search all watchs if no source defined
+      if (!$scope.model.sourceId) {
+        $scope.model.sourceId = '*';
+      }
+
+      $scope.dbList.get({
+                      type_s      :'watch',
+                      start:$scope.pagingOptionsWatch.pageSize*$scope.pagingOptionsWatch.currentPage-$scope.pagingOptionsWatch.pageSize,
+                      source_id_s :$scope.model.sourceId,
+                      sort        :'creation_dt desc',
+                      rows        :$scope.pagingOptionsWatch.pageSize
+        }).$promise.then(function(result) {
+
+
+
+          angular.forEach(result.success.response.docs, function (item, index) {
+
+            $scope.rowTabWatch[item.id]= index;
+
+          });
+
+          $scope.myDataWatch            = result.success.response.docs;
+          $scope.totalServerItemsWatch  = result.success.response.numFound;
+
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+
+
+      /* $scope.watchResult = $scope.dbList.get({type_s:'watch',source_id_s:$scope.model.sourceId},
         function() {        //call back function for asynchronous
 
           $scope.isError = false;
@@ -307,7 +350,7 @@ angular.module('websoApp')
           $scope.isError = true;
 
         }
-      );
+      );*/
 
     };
 
@@ -476,27 +519,46 @@ angular.module('websoApp')
 
 
       modalInstance.result.then(function () {
-        // delete the source
-        //$scope.sourceAddResult = $scope.dbDelete.get({
-        //  id  :     $scope.dbId
-        //});
 
-        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
-          query  :  'id:'+$scope.dbId
-        });
 
-        // delete watches linked to the source
-        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
-          query  :  'source_id_s:'+$scope.dbId
-        });
+        $scope.dbList.get({
+          type_s      :'watch',
+          start:$scope.pagingOptionsWatch.pageSize*$scope.pagingOptionsWatch.currentPage-$scope.pagingOptionsWatch.pageSize,
+          source_id_s :$scope.model.sourceId,
+          sort        :'creation_dt desc',
+          rows        :$scope.pagingOptionsWatch.pageSize
+        })
+          .$promise.then(function(result) {
+
+
+
+
+
+
+        }, function(reason) {
+            alert('Failed: ' + reason);
+          });
+
 
         // delete documents linked to the source
-        $scope.sourceAddResult = $scope.dbDeleteQuery.get({
-          query  :  'source_id_ss:'+$scope.dbId
-        });
 
-        $scope.myDataSource.splice($scope.rowTabSource[$scope.dbId], 1);
-        $scope.doSearchSource();
+        $scope.dbDeleteQuery.get({ query  :  'id:'+$scope.dbId})
+        .$promise.then(function() {
+          $scope.dbDeleteQuery.get({query  :  'source_id_s:'+$scope.dbId})
+          .$promise.then(function() {
+            $scope.dbDeleteQuery.get({query  :  'source_id_ss:'+$scope.dbId})
+            .$promise.then(function() {
+              $scope.doSearchSource();
+            })
+          })
+        }, function(reason) {
+              alert('Failed id: ' + reason);
+        })
+        ;
+
+
+
+
 
 
       });
@@ -519,10 +581,16 @@ angular.module('websoApp')
 
 
       modalInstance.result.then(function () {
-        $scope.sourceAddResult = $scope.dbDelete.get({
-          id  :     $scope.dbId
-        });
-        $scope.myDataWatch.splice($scope.index, 1);
+
+        $scope.dbDeleteQuery.get({ query  :  'id:'+$scope.dbId})
+          .$promise.then(function() {
+
+            $scope.doSearchWatch();
+
+          }, function(reason) {
+            alert('Failed id: ' + reason);
+          })
+        ;
 
       });
 
@@ -543,6 +611,27 @@ angular.module('websoApp')
       };
 
     };
+
+    $scope.$watch('pagingOptionsSource', function (newVal, oldVal) {
+      if (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize) {
+        $scope.doSearchSource();
+        $scope.pagingOptionsSource.currentPage = 1;
+      }
+      if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+        $scope.doSearchSource();
+      }
+    }, true);
+
+
+    $scope.$watch('pagingOptionsWatch', function (newVal, oldVal) {
+      if (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize) {
+        $scope.doSearchWatch();
+        $scope.pagingOptionsWatch.currentPage = 1;
+      }
+      if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+        $scope.doSearchWatch();
+      }
+    }, true);
 
 
     //$scope.doSearchSource();
