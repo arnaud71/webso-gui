@@ -82,14 +82,19 @@ mv webso-gui webso-gui-save-n
 ftp dist to webso-gui
 
 change script/cfg.js
+
 comment lines
 
-  urlDB               : 'http://localhost:8983/',
-  urlServices         : 'http://localhost/cgi-bin/webso-services/',
-  urlBookmarklet      : ‘',
+```
+urlDB               : 'http://localhost:8983/',
+urlServices         : 'http://localhost/cgi-bin/webso-services/',
+urlBookmarklet      : ‘',
+```
 
 and uncomment lines
 
- //urlDB           : 'http://albator.hesge.ch:8983/',
-  //urlServices     : 'http://albator.hesge.ch/cgi-bin/webso-services/',
-  //urlBookmarklet  : 'http://albator.hesge.ch/web/webso-gui/'
+```
+//urlDB           : 'http://albator.hesge.ch:8983/',
+//urlServices     : 'http://albator.hesge.ch/cgi-bin/webso-services/',
+//urlBookmarklet  : 'http://albator.hesge.ch/web/webso-gui/'
+```
