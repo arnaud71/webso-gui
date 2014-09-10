@@ -236,20 +236,30 @@ angular.module('websoApp')
       });
 
       modalInstance.result.then(function () {
-        $scope.userDeleteResult = $scope.countDelete.get({
+        $scope.countDelete.get({
                 id  :     userId,
                 user_s : userName
-        });
+        }).$promise.then(function() {
+            $scope.myData.splice($scope.rowTab[userName], 1);
+            $scope.getUsersList();
 
-        $scope.myData.splice($scope.rowTab[userName], 1);
 
-        if(usernameCookie === userName && userRoleCookie === 'administrateur'){
-            $cookieStore.remove('Authenticated');
-            $cookieStore.remove('username');
-            $cookieStore.remove('password');
-            $cookieStore.remove('userRole');
-            $location.path('/home');
-        }
+            if(usernameCookie === userName && userRoleCookie === 'administrateur'){
+              $cookieStore.remove('Authenticated');
+              $cookieStore.remove('username');
+              $cookieStore.remove('password');
+              $cookieStore.remove('userRole');
+              $location.path('/home');
+            }
+
+          }, function(reason) {
+            alert('Failed id: ' + reason);
+          })
+        ;
+
+
+
+
       });
     };
 
