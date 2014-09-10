@@ -6,45 +6,45 @@ angular.module('websoApp')
     // default sort function
 
 
-        $scope.isSuccess              = false;
-        $scope.isError                = false;
-        $scope.errorMessage           = cfg.errorConnect;
-        $scope.myData = [];
+    $scope.isSuccess              = false;
+    $scope.isError                = false;
+    $scope.errorMessage           = cfg.errorConnect;
+    $scope.myData = [];
 
-        /*
-         Getting watch   List
-         */
+    /*
+     Getting watch   List
+     */
 
-        $scope.userList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'user',callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
-
-
-
-        $scope.filterOptions = {
-            filterText: "",
-            useExternalFilter: false
+    $scope.userList = $resource(cfg.urlServices+'db/:action',
+        {action:'get.pl', type_s:'user',callback:"JSON_CALLBACK"},
+        {get:{method:'JSONP'}});
 
 
-        };
-        $scope.totalServerItems = 0;
-        $scope.pagingOptions = {
-            pageSizes: [10,100,1000],
-            pageSize: 10,
-            currentPage: 1
-        };
 
-        $scope.setPagingData = function(data, page, pageSize){
-            $scope.totalServerItems = data.success.response.numFound;
-            data = data.success.response.docs;
-            //var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.myData = data;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        };
+    $scope.filterOptions = {
+        filterText: "",
+        useExternalFilter: false
 
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+
+    };
+    $scope.totalServerItems = 0;
+    $scope.pagingOptions = {
+        pageSizes: [10,100,1000],
+        pageSize: 10,
+        currentPage: 1
+    };
+
+   /* $scope.setPagingData = function(data, page, pageSize){
+        $scope.totalServerItems = data.success.response.numFound;
+        data = data.success.response.docs;
+        //var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+        $scope.myData = data;
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    };*/
+
+        /*$scope.getPagedDataAsync = function (pageSize, page, searchText) {
             // setTimeout(function () {
             var data;
             $scope.watchResult = $scope.userList.get({rows:pageSize,start:(page*pageSize-pageSize)},
@@ -75,21 +75,14 @@ angular.module('websoApp')
             );
 
             //}, 100);
-        };
+        };*/
 
-        //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
-        /*$scope.$watch('pagingOptions', function (newVal, oldVal) {
-            if ((newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) || (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize)) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);*/
-
-        $scope.$watch('filterOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
+    $scope.$watch('filterOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+        }
+    }, true);
 
 //	    $scope.roles =  ['administrateur', 'veilleur', 'lecteur'];
 
@@ -144,39 +137,38 @@ angular.module('websoApp')
             ]
         };
 
-    /*$scope.getRole = function (index) {
-      if ($scope.rolesTab[index] == 'veilleur') {
-        return 1
-      }
-      else if ($scope.rolesTab[index] == 'administrateur') {
-        return 0;
-      }
-      else {
-        return 2;
-      }
-    };*/
 
     $scope.initRole = function (role) {
       return(role);
     }
 
-    $scope.userList.get({type_s:'user'}).$promise.then(function(result) {
+    $scope.getUsersList = function () {
 
-                // init rolesTab to construct the select column
-                angular.forEach(result.success.response.docs, function (item, index) {
-                  $scope.rolesTab[item.user_s]= item.role_s;
-                  $scope.rowTab[item.user_s]= index;
+      $scope.userList.get({
+          type_s: 'user',
+          start     :$scope.pagingOptions.pageSize*$scope.pagingOptions.currentPage-$scope.pagingOptions.pageSize,
 
-                });
+          rows      :$scope.pagingOptions.pageSize
+      }).$promise.then(function (result) {
+
+        // init rolesTab to construct the select column
+        angular.forEach(result.success.response.docs, function (item, index) {
+          $scope.rolesTab[item.user_s] = item.role_s;
+          $scope.rowTab[item.user_s] = index;
+
+        });
 
 
-                $scope.myData = result.success.response.docs;
+        $scope.myData = result.success.response.docs;
+        $scope.totalServerItems = result.success.response.numFound;
 
+      }, function (reason) {
+        alert('Failed: ' + reason);
+      });
+    };
 
-
-                }, function(reason) {
-                  alert('Failed: ' + reason);
-    });
+    // get list for the first call
+    $scope.getUsersList();
 
     /* $scope.userResult = $scope.userList.get({type_s:'user'},
         function() {        //call back function for asynchronous
@@ -287,4 +279,16 @@ angular.module('websoApp')
       //  window.location.reload();
 
     };
+
+
+    $scope.$watch('pagingOptions', function (newVal, oldVal) {
+      if (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize) {
+        $scope.getUsersList();
+        $scope.pagingOptionsWatch.currentPage = 1;
+      }
+      if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+        $scope.getUsersList();
+      }
+    }, true);
+
 });
