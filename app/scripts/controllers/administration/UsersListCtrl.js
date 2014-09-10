@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('UsersCtrl', function ($log, $cookieStore, $location, $scope,$resource,cfg,$modal) {
+    .controller('UsersListCtrl', function ($log, $cookieStore, $location, $scope,$resource,cfg,$modal) {
 
     // default sort function
 

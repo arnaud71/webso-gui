@@ -44,10 +44,10 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur']
 			      }
         })
-        .state('/counts', {
-            url: '/counts',
-            templateUrl: 'views/counts.html',
-            controller: 'UsersCtrl',
+        .state('/usersList', {
+            url: '/usersList',
+            templateUrl: '../views/administration/usersList.html',
+            controller: 'UsersListCtrl',
 			      data: {
 				      authorizedRoles: ['administrateur']
 			      }
