@@ -371,8 +371,8 @@ angular.module('websoApp')
       },function () {
           if (typeof $scope.sourceAddResult.success === "undefined") {}
           else {
-            $scope.model.sourceId = sourceAddResult.success.id;
-            if (sourceAddResult.nb_doc_added>0) {
+            $scope.model.sourceId = $scope.sourceAddResult.success.id;
+            if ($scope.sourceAddResult.nb_doc_added>0) {
               $scope.model.docAvailable = 1;
             }
           }
