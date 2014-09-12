@@ -658,12 +658,12 @@ angular.module('websoApp')
     /*
      Folders menu
      */
-    $scope.folders =  [
+    /*$scope.folders =  [
       {name:'Dossier 1'},
       {name:'Dossier 2'},
       {name:'Dossier 3'}
     ] ;
-    $scope.folder = $scope.folders[2];
+    $scope.folder = $scope.folders[2];*/
 
     /*
      Frequency menu
@@ -691,5 +691,40 @@ angular.module('websoApp')
 
     //$scope.$on('CHECKRSS',function(){$scope.checkingSource=true});
     //$scope.$on('UNCKECKRSS',function(){$scope.checkingSource=false});
-  });
 
+  // ***************************************************************
+    // doSearchFolder
+    // list the available sources
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
+
+      // search all watchs if no source defined
+      if (!$scope.model.sourceId) {
+        $scope.model.sourceId = '*';
+      }
+
+      $scope.dbList.get({
+                      type_s      : 'tree',
+                      user_s      : $username,
+        }).$promise.then(function(result) {
+
+
+
+          // angular.forEach(result.success.response.docs, function (item, index) {
+
+          //   $scope.rowTabWatch[item.id]= index;
+
+          // });
+
+          // $scope.myDataWatch            = result.success.response.docs;
+          // $scope.totalServerItemsWatch  = result.success.response.numFound;
+          $scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //alert($scope.folder[0].id);
+
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
+  $scope.doSearchFolder();
+  });
