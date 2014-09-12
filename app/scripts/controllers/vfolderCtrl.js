@@ -18,10 +18,16 @@ angular.module('websoApp')
 
 
     $scope.remove = function(scope) {
-      scope.remove();
+        alert("Vous êtes sur le point de supprimer un dossier et tout son sontenu");
+        //if(){
+            //scope.remove();
+        //}
     };
 
     $scope.toggle = function(scope) {
+      if(scope.$modelValue.id = 1){
+        alert("modification non autorisée");
+      }
       scope.toggle();
     };
 
@@ -32,11 +38,16 @@ angular.module('websoApp')
 
     $scope.newSubItem = function(scope) {
       var nodeData = scope.$modelValue;
-      nodeData.nodes.push({
-        id: nodeData.id * 10 + nodeData.nodes.length,
-        title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-        nodes: []
-      });
+      if(nodeData.id <= 1000){
+        nodeData.nodes.push({
+          id: nodeData.id * 10 + nodeData.nodes.length,
+          title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+          nodes: []
+        });
+      }
+      else{
+          alert("Vous êtes limité à 4 niveau de dossier.");
+      }
     };
 
     var getRootNodesScope = function() {
@@ -56,10 +67,13 @@ angular.module('websoApp')
     $scope.editTree = function () {
       $scope.model.edit = true;
       $scope.loadTree();
+      //$(".col-lg-4").toggleClass("col-lg-5").toggleClass("col-lg-4");
+      //$(".col-lg-8").toggleClass("col-lg-7").toggleClass("col-lg-8");
+
     };
 
     $scope.loadTree = function () {
-      $scope.solrResult       = $scope.solrResource.get({
+      $scope.solrResult = $scope.solrResource.get({
           q   : '+title_t:vfolder',
           fq  : '+type_s:tree +user_s:'+$username
 
@@ -103,6 +117,32 @@ angular.module('websoApp')
       $scope.loadTree();
     };
 
+    $scope.folderList = function(scope) {
+      //alert('+folder_s:'+scope.$modelValue.title);
+      $scope.solrResult = $scope.solrResource.get({
+          q   : '+folder_s:"'+scope.$modelValue.title+'"AND+user_s:'+$username,
+          //fq  : '+user_s:'+$username
+
+        },
+        function () {
+          $scope.isError = false;
+
+          if (typeof $scope.solrResult.response !== "undefined") {
+            //if (typeof solrResult !== 'undefined') {
+              //if ($scope.solrResult.response.numFound !== 'undefined') {
+              $scope.folder = angular.fromJson($scope.solrResult.response.docs);
+              //alert($scope.folder);
+              //log($scope.solrResult.response.docs[0].content_s);
+            //}
+          }
+        },
+        //error
+        function () {
+          $scope.isError = true;
+
+        });
+    };
+
     // default value
 
 
@@ -110,7 +150,7 @@ angular.module('websoApp')
       edit : false,
       data : [{
         "id": 1,
-        "title": "dossier",
+        "title": $username,
         "nodes": [
           {
             "id": 11,
