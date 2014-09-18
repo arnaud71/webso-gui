@@ -140,7 +140,7 @@
                                 <div class="form-group" >
                                     <label class="col-md-5 control-label"> Dossier </label>
                                     <div  class="col-md-7">
-                                        <select id="inputFolderName" name="inputFolderName"> <!--ng-model="folders">-->
+                                        <select id="inputFolderName" name="inputFolderName" ng-model="model.inputFolder">
                                             <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
                                         </select>
                                         <!-- <div ng-repeat="folder in folders">

@@ -104,10 +104,10 @@ angular.module('websoApp')
       afterSelectionChange: function () {
         angular.forEach($scope.model.myWatchSelections, function ( item ) {
 
-          $scope.model.inputQuery     = item.query_s;
-          $scope.folder.name          = item.folder_s;
-          $scope.notification.option  = item.notification_s;
-          $scope.model.watchId        = item.id;
+          $scope.model.inputQuery       = item.query_s;
+          $scope.model.inputFolder      = item.folder_s;
+          $scope.notification.option    = item.notification_s;
+          $scope.model.watchId          = item.id;
 
         });
       },
@@ -396,33 +396,34 @@ angular.module('websoApp')
     // doAddWatch
     // add a watch in the DB
     $scope.doAddWatch = function () {
-      $scope.watchAddResult = $scope.addResource.get({
-        type_s:         'watch',
-        url_s  :        $scope.model.inputUrl,
-        title_t:        $scope.model.inputTitle,
-        tags_ss :       $scope.model.inputTags,
-        domain_s:       $scope.domain.name,
-        activity_s:     $scope.activity.name,
-        folder_s:       $scope.folder.name,
-        query_s:        $scope.model.inputQuery,
-        source_id_s:    $scope.model.sourceId,
-        //source_id_s:    $scope.sourceAddResult.success.id,
-        notification_s: $scope.notification.option
+      if(angular.isUndefined($scope.model.inputFolder) || ($scope.model.sourceId == "*")) alert('Merci de choisir une source et un dossier');
+      else{
+        $scope.watchAddResult = $scope.addResource.get({
+          type_s:         'watch',
+          url_s  :        $scope.model.inputUrl,
+          title_t:        $scope.model.inputTitle,
+          tags_ss :       $scope.model.inputTags,
+          domain_s:       $scope.domain.name,
+          activity_s:     $scope.activity.name,
+          folder_s:       $scope.model.inputFolder,
+          query_s:        $scope.model.inputQuery,
+          source_id_s:    $scope.model.sourceId,
+          //source_id_s:    $scope.sourceAddResult.success.id,
+          notification_s: $scope.notification.option
 
-      });
+        });
 
-      if($scope.model.valueCheckBoxWatch === true){
-        addWidget('affichageSurveillance', $scope.model.inputTitle);
+        if($scope.model.valueCheckBoxWatch === true){
+          addWidget('affichageSurveillance', $scope.model.inputTitle);
+        }
+
+        // var addWatch = alert('Surveillance ajoutée');
+        // Testing  Modal trigger
+        var modalInstance = $modal.open({
+          templateUrl: 'addWatchModal.html',
+          controller: ModalInstanceCtrl
+        });
       }
-
-      // var addWatch = alert('Surveillance ajoutée');
-      // Testing  Modal trigger
-      var modalInstance = $modal.open({
-        templateUrl: 'addWatchModal.html',
-        controller: ModalInstanceCtrl
-      });
-
-
     };
 
     // ***************************************************************
@@ -765,6 +766,7 @@ angular.module('websoApp')
             }, log);
           }, log);
           //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
 
         }, function(reason) {
           alert('Failed: ' + reason);
