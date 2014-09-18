@@ -10,12 +10,6 @@ angular.module('websoApp')
       {get:{method:'JSONP'}}
     );
 
-    // to query solr as a search engine
-    $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}}
-    );
-
     $scope.dbList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',user_s:$username,callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
@@ -76,22 +70,22 @@ angular.module('websoApp')
     };
 
     $scope.loadTree = function () {
-      $scope.solrResult = $scope.solrResource.get({
-          q   : '+title_t:vfolder',
-          fq  : '+type_s:tree +user_s:'+$username
+      $scope.dbList.get({
+        title_t  :  'vfolder',
+        type_s   :  'tree',
+        user_s   :  $username
+      }).$promise.then(function(result) {
+        $scope.isError = false;
 
-        },
-        function () {
-          $scope.isError = false;
-
-          if (typeof $scope.solrResult.response !== 'undefined') {
-            //if (typeof solrResult !== 'undefined') {
-              //if ($scope.solrResult.response.numFound !== 'undefined') {
-              $scope.model.data = angular.fromJson($scope.solrResult.response.docs[0].content_s);
-              //log($scope.solrResult.response.docs[0].content_s);
-            //}
-          }
-        },
+        if (typeof result.success.response !== 'undefined') {
+          //if (typeof solrResult !== 'undefined') {
+            //if ($scope.solrResult.response.numFound !== 'undefined') {
+            $scope.model.data = angular.fromJson(result.success.response.docs[0].content_s);
+            //alert($scope.folder);
+            //log($scope.solrResult.response.docs[0].content_s);
+          //}
+        }
+      },
         //error
         function () {
           $scope.isError = true;

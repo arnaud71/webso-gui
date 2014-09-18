@@ -76,22 +76,22 @@ angular.module('websoApp')
     };
 
     $scope.loadTree = function () {
-      $scope.solrResult = $scope.solrResource.get({
-          q   : '+title_t:wfolder',
-          fq  : '+type_s:tree +user_s:'+$username
+      $scope.dbList.get({
+        title_t  :  'wfolder',
+        type_s   :  'tree',
+        user_s   :  $username
+      }).$promise.then(function(result) {
+        $scope.isError = false;
 
-        },
-        function () {
-          $scope.isError = false;
-
-          if (typeof $scope.solrResult.response !== 'undefined') {
-            //if (typeof solrResult !== 'undefined') {
-              //if ($scope.solrResult.response.numFound !== 'undefined') {
-              $scope.model.data = angular.fromJson($scope.solrResult.response.docs[0].content_s);
-              //log($scope.solrResult.response.docs[0].content_s);
-            //}
-          }
-        },
+        if (typeof result.success.response !== 'undefined') {
+          //if (typeof solrResult !== 'undefined') {
+            //if ($scope.solrResult.response.numFound !== 'undefined') {
+            $scope.model.data = angular.fromJson(result.success.response.docs[0].content_s);
+            //alert($scope.folder);
+            //log($scope.solrResult.response.docs[0].content_s);
+          //}
+        }
+      },
         //error
         function () {
           $scope.isError = true;
@@ -125,14 +125,8 @@ angular.module('websoApp')
       $scope.dbList.get({
         folder_s  : scope.$modelValue.id,
         type_s    :  'watch',
-        //user_s      : $username
+        user_s      : $username
       }).$promise.then(function(result) {
-      // $scope.solrResult = $scope.solrResource.get({
-      //     q   : '+folder_s:''+scope.$modelValue.title+''AND+user_s:'+$username,
-      //     //fq  : '+user_s:'+$username
-
-      //   },
-      //   function () {
         $scope.isError = false;
 
         if (typeof result.success.response !== 'undefined') {
