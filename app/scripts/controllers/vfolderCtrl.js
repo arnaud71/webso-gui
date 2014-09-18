@@ -6,7 +6,7 @@ angular.module('websoApp')
     var $username = $cookieStore.get('username');
 
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
-      {action:'put.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {action:'put.pl',user_s:$username,callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}}
     );
 
@@ -16,17 +16,20 @@ angular.module('websoApp')
       {get:{method:'JSONP'}}
     );
 
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
 
     $scope.remove = function(scope) {
-        alert("Vous êtes sur le point de supprimer un dossier et tout son sontenu");
-        //if(){
-            //scope.remove();
-        //}
+      alert('Vous êtes sur le point de supprimer un dossier et tout son sontenu');
+      //if(){
+          //scope.remove();
+      //}
     };
 
     $scope.toggle = function(scope) {
-      if(scope.$modelValue.id = 1){
-        alert("modification non autorisée");
+      if(scope.$modelValue.id === 1){
+        alert('modification non autorisée');
       }
       scope.toggle();
     };
@@ -46,12 +49,12 @@ angular.module('websoApp')
         });
       }
       else{
-          alert("Vous êtes limité à 4 niveau de dossier.");
+        alert('Vous êtes limité à 4 niveau de dossier.');
       }
     };
 
     var getRootNodesScope = function() {
-      return angular.element(document.getElementById("tree-root")).scope();
+      return angular.element(document.getElementById('tree-root')).scope();
     };
 
     $scope.collapseAll = function() {
@@ -67,8 +70,8 @@ angular.module('websoApp')
     $scope.editTree = function () {
       $scope.model.edit = true;
       $scope.loadTree();
-      //$(".col-lg-4").toggleClass("col-lg-5").toggleClass("col-lg-4");
-      //$(".col-lg-8").toggleClass("col-lg-7").toggleClass("col-lg-8");
+      //$('.col-lg-4').toggleClass('col-lg-5').toggleClass('col-lg-4');
+      //$('.col-lg-8').toggleClass('col-lg-7').toggleClass('col-lg-8');
 
     };
 
@@ -81,7 +84,7 @@ angular.module('websoApp')
         function () {
           $scope.isError = false;
 
-          if (typeof $scope.solrResult.response !== "undefined") {
+          if (typeof $scope.solrResult.response !== 'undefined') {
             //if (typeof solrResult !== 'undefined') {
               //if ($scope.solrResult.response.numFound !== 'undefined') {
               $scope.model.data = angular.fromJson($scope.solrResult.response.docs[0].content_s);
@@ -119,28 +122,28 @@ angular.module('websoApp')
 
     $scope.folderList = function(scope) {
       //alert('+folder_s:'+scope.$modelValue.title);
-      $scope.solrResult = $scope.solrResource.get({
-          q   : '+folder_s:"'+scope.$modelValue.title+'"AND+user_s:'+$username,
-          //fq  : '+user_s:'+$username
+      $scope.dbList.get({
+        folder_s    : scope.$modelValue.id,
+        //type_s     : 'validate ',
+        user_s      : $username,
+      }).$promise.then(function(result) {
+        $scope.isError = false;
 
-        },
-        function () {
-          $scope.isError = false;
+        if (typeof result.success.response !== 'undefined') {
+          //if (typeof solrResult !== 'undefined') {
+            //if ($scope.solrResult.response.numFound !== 'undefined') {
+            $scope.folder = angular.fromJson(result.success.response.docs);
+            //alert($scope.folder);
+            //log($scope.solrResult.response.docs[0].content_s);
+          //}
+        }
+      },
 
-          if (typeof $scope.solrResult.response !== "undefined") {
-            //if (typeof solrResult !== 'undefined') {
-              //if ($scope.solrResult.response.numFound !== 'undefined') {
-              $scope.folder = angular.fromJson($scope.solrResult.response.docs);
-              //alert($scope.folder);
-              //log($scope.solrResult.response.docs[0].content_s);
-            //}
-          }
-        },
-        //error
-        function () {
-          $scope.isError = true;
+      //error
+      function () {
+        $scope.isError = true;
 
-        });
+      });
     };
 
     // default value
@@ -149,24 +152,24 @@ angular.module('websoApp')
     $scope.model = {
       edit : false,
       data : [{
-        "id": 1,
-        "title": $username,
-        "nodes": [
+        'id': 1,
+        'title': $username,
+        'nodes': [
           {
-            "id": 11,
-            "title": "dossier.1",
-            "nodes": [
+            'id': 11,
+            'title': 'dossier.1',
+            'nodes': [
               {
-                "id": 111,
-                "title": "dossier.1.1",
-                "nodes": []
+                'id': 111,
+                'title': 'dossier.1.1',
+                'nodes': []
               }
             ]
           },
           {
-            "id": 12,
-            "title": "dossier.2",
-            "nodes": []
+            'id': 12,
+            'title': 'dossier.2',
+            'nodes': []
           }
         ],
       }]
@@ -174,4 +177,4 @@ angular.module('websoApp')
 
 
     $scope.loadTree();
-});
+  });
