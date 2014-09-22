@@ -47,7 +47,7 @@
                             <div class="form-group" >
                                 <label class="col-md-5 control-label"> Fréquence de la source </label>
                                 <div class="col-md-7">
-                                    <select ng-model="frequency" ng-options="frequency.option for frequency in frequencies"></select>
+                                    <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
                                 </div>
                             </div>
 
@@ -64,7 +64,7 @@
                                 <div class="form-group" >
                                     <label class="col-md-5 control-label"> Domaine </label>
                                     <div  class="col-md-7">
-                                        <select id="inputDomain" name="inputDomain" ng-model="domain" ng-options="domain.name for domain in domains"></select>
+                                        <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,9 @@
                             <div class="form-group">
                                 <label class="col-md-5 control-label"> Secteur d'activité </label>
                                 <div class="col-md-7">
-                                    <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select>
+                                    <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
+                                    <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
+                                    {{activity}}
                                 </div>
                             </div>
 
@@ -140,12 +142,7 @@
                                 <div class="form-group" >
                                     <label class="col-md-5 control-label"> Dossier </label>
                                     <div  class="col-md-7">
-                                        <select id="inputFolderName" name="inputFolderName" ng-model="model.inputFolder">
-                                            <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
-                                        </select>
-                                        <!-- <div ng-repeat="folder in folders">
-                                            {{folder}}
-                                        </div> -->
+                                        <select id="inputFolderName" name="inputFolderName" ng-model="folder" ng-options="folder.name for folder in folders"></select>
                                     </div>
                                 </div>
 

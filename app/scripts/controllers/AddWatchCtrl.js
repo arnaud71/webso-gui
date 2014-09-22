@@ -34,7 +34,11 @@ angular.module('websoApp')
       inputUrl            : '',
       inputTags           : '',
       inputTitle          : '',
+      inputFrequency      : 0,
+      inputDomain         : '',
+      inputActivity       : '',
       inputQuery          : '',
+      inputFolder         : '',
       sourceId            : 0,
       watchId             : 0,
       docAvailable        : 0,
@@ -62,9 +66,11 @@ angular.module('websoApp')
           $scope.model.inputTitle = item.title_t;
           $scope.model.inputUrl   = item.url_s;
           $scope.model.inputTags  = item.tags_s;
-          $scope.domain.name      = item.domain_s;
-          $scope.activity.name    = item.activity_s;
-          $scope.frequency.option = item.refresh_s;
+          //$scope.domain.name      = item.domain_s;
+          //$scope.activity.name    = item.activity_s;
+          $scope.model.inputDomain = item.domain_s;
+          $scope.model.activity    = item.activity_s;
+          $scope.model.inputFrequency.option = item.refresh_s;
           $scope.model.sourceId   = item.id;
         });
         $scope.doSearchWatch();
@@ -364,15 +370,15 @@ angular.module('websoApp')
         url_s           : $scope.model.inputUrl,
         tags_s          : $scope.model.inputTags,
         title_t         : $scope.model.inputTitle,
-        domain_s        : $scope.domain.name,
-        activity_s      : $scope.activity.name,
-        refresh_s       : $scope.frequency.option
+        domain_s        : $scope.model.inputDomain.name,
+        activity_s      : $scope.model.inputActivity.name,
+        refresh_s       : $scope.model.inputFrequency.option
 
       },function () {
           if (typeof $scope.sourceAddResult.success === "undefined") {}
           else {
-            $scope.model.sourceId = sourceAddResult.success.id;
-            if (sourceAddResult.nb_doc_added>0) {
+            $scope.model.sourceId = $scope.sourceAddResult.success.id;
+            if ($scope.sourceAddResult.nb_doc_added>0) {
               $scope.model.docAvailable = 1;
             }
           }
@@ -400,16 +406,16 @@ angular.module('websoApp')
       else{
         $scope.watchAddResult = $scope.addResource.get({
           type_s:         'watch',
-          url_s  :        $scope.model.inputUrl,
-          title_t:        $scope.model.inputTitle,
-          tags_ss :       $scope.model.inputTags,
-          domain_s:       $scope.domain.name,
-          activity_s:     $scope.activity.name,
-          folder_s:       $scope.model.inputFolder,
-          query_s:        $scope.model.inputQuery,
-          source_id_s:    $scope.model.sourceId,
-          //source_id_s:    $scope.sourceAddResult.success.id,
-          notification_s: $scope.notification.option
+          url_s         :  $scope.model.inputUrl,
+          title_t       :  $scope.model.inputTitle,
+          tags_ss       :  $scope.model.inputTags,
+          domain_s      :  $scope.model.inputDomain.name,
+          activity_s    :  $scope.model.inputActivity.name,
+          folder_s      :  $scope.model.inputFolder,
+          query_s       :  $scope.model.inputQuery,
+          source_id_s   :  $scope.model.sourceId,
+          //source_id_s   :  $scope.sourceAddResult.success.id,
+          notification_s:  $scope.notification.option
 
         });
 
@@ -641,20 +647,81 @@ angular.module('websoApp')
      Domains menu
      */
     $scope.domains =  [
-      {name:'domaine 1'},
-      {name:'domaine 2'},
-      {name:'domaine 3'}
+      {name:'Technologie',activites:[
+        {name:'Publications scientifiques'},
+        {name:'Brevets/marques'}
+      ]},
+      {name:'Economie/Politique',activites:[
+        {name:'Organismes publics'},
+        {name:'Etudes de marchés'},
+        {name:'Bases de données entreprises'},
+        {name:'Appel d\'offres'},
+        {name:'Informations financières'}
+      ]},
+      {name:'Concurrence/Entreprises',activites:[
+        {name:'Agriculture, Sylviculture, et pêche'},
+        {name:'Industries extractives'},
+        {name:'Industries manufacturières'},
+        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
+        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
+        {name:'Construction'},
+        {name:'Commerce, réparation d\'automobiles, et motocycles'},
+        {name:'Transport et entreposage'},
+        {name:'Hébergement et restauration'},
+        {name:'Information et communication'},
+        {name:'Activité financières et assurances'},
+        {name:'Activités immobilières'},
+        {name:'Activités spécialisées scientifiques et techniques'},
+        {name:'Activités de service administratifs et de soutien'},
+        {name:'Administration publique'},
+        {name:'Enseignement'},
+        {name:'Santé humaine, action sociale'},
+        {name:'Arts, spectacles, activités récréatives'},
+        {name:'Autres activités de services'},
+        {name:'Activités de ménages'},
+        {name:'Activités extra territoriales'},
+      ]},
+      {name:'Juridique/réglementaire'},
+      {name:'Réseaux sociaux'},
+      {name:'Presse',activites:[
+        {name:'Agricole/Agroalimentaire'},
+        {name:'Assurance'},
+        {name:'Arts/Musique/Spectacle'},
+        {name:'Automobile'},
+        {name:'Autres services'},
+        {name:'Batiment'},
+        {name:'Bijoux'},
+        {name:'Bois, Papier, Carton'},
+        {name:'Communication'},
+        {name:'Distribution'},
+        {name:'Economie/ Finance'},
+        {name:'Environnement'},
+        {name:'Géopolitique, Défense'},
+        {name:'Industrie & Techniques'},
+        {name:'Informatique et réseaux'},
+        {name:'Jeux et Jouets'},
+        {name:'Juridique'},
+        {name:'Petite enfance'},
+        {name:'People'},
+        {name:'Photo'},
+        {name:'Restauration/Hotellerie'},
+        {name:'Relation client/Ressources humaines'},
+        {name:'Santé'},
+        {name:'Transport'},
+        {name:'Sport'},
+        {name:'Tourisme & Voyages'},
+        {name:'Urbanisme'},
+        {name:'Vin et Boissons'},
+        {name:'WebDesign et multimédia'}
+      ]}
     ] ;
-    $scope.domain = $scope.domains[2];
+    $scope.domain = ''; //= $scope.domains[0];
     /*
      Activities menu
      */
-    $scope.activities =  [
-      {name:'Secteur dactivité 1'},
-      {name:'Secteur dactivité 2'},
-      {name:'Secteur dactivité 3'}
-    ] ;
-    $scope.activity = $scope.activities[2];
+    // $scope.activities =  [
+    // ] ;
+    $scope.activity = ''; //$scope.domains[0].activites[0];
 
     /*
      Folders menu
