@@ -18,12 +18,30 @@
             <strong>&nbsp;</strong><span>{{errorMessage}}</span>
         </div>
         <div class="row">
-            <div class="col-md-2">
-                <div class="gridStylePeriod" ng-grid="gridOptionsPeriod">
+            <!-- searchNav box -->
+            <div class="col-md-3">
+                <table class="table table-striped">
+                <tr ng-repeat="searchGroup in searchNav">
+                <td>
+                    <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}}
 
-                </div>
+                    <table ng-show="searchGroup.checked" class="table table-striped">
+                        <tr ng-repeat="facet in searchGroup.facetsGroup">
+                            <td> <div ng-show="facet.visible"><input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}}</div>
+                                <table ng-show="facet.checked" class="table table-striped">
+                                    <tr ng-repeat="item in facet.items">
+                                        <td><input type="checkbox" ng-model="item.checked"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
+
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td></tr>
+               </table>
             </div>
-            <div class="col-md-10">
+
+            <!-- search results box -->
+            <div class="col-md-9">
 
                 <form class="form-horizontal" ng-submit="doSearch()">
                     <input type="text" placeholder="Chercher" ng-model="searchTerm">
