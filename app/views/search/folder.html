@@ -30,7 +30,7 @@
                             <td> <div ng-show="facet.visible"><input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}}</div>
                                 <table ng-show="facet.checked" class="table table-striped">
                                     <tr ng-repeat="item in facet.items">
-                                        <td><input type="checkbox" ng-model="item.checked"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
+                                        <td><input type="checkbox" ng-model="item.checked" ng-click="itemCheck(item)"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
 
                                 </table>
                             </td>
@@ -50,7 +50,7 @@
 
                 <div id="numberFound">
                     <div solr-results-number ng-show="solrResult.response">
-                        Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> sur <b>{{currentPeriod}}</b> en {{solrResult.responseHeader.QTime}} ms
+                        Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
                         <br>
                     </div>
                 </div>
@@ -106,6 +106,8 @@
                                         {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                         <div id="actionList">
                                             <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                            <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
+                                            <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
                                         </div>
 
 

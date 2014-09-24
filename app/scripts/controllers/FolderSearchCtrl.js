@@ -17,21 +17,24 @@ angular.module('websoApp')
     $scope.errorMessage           = cfg.errorConnect;
 
 
+    $scope.readFlag               = false;
+
+
     // to keep index  to adress table like a hash
     $scope.idx = {};
 
     $scope.periodFacets = [
-      {name: 'day',   value: 'jour',    nb:0, checked:false },
-      {name: 'week',  value: 'semaine', nb:0, checked:false },
-      {name: 'month', value: 'mois',    nb:0, checked:false }
+      {name: 'day',   value: 'jour',    nb:0, checked:false, fq:'+date_dt:[NOW-1DAY TO NOW]'},
+      {name: 'week',  value: 'semaine', nb:0, checked:false, fq:'+date_dt:[NOW-7DAY TO NOW]'},
+      {name: 'month', value: 'mois',    nb:0, checked:false, fq:'+date_dt:[NOW-30DAY TO NOW]'}
     ];
     angular.forEach($scope.periodFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.langFacets = [
-      {name: 'en', value:'anglais',     nb:0, checked:false },
-      {name: 'fr', value:'français',    nb:0, checked:false }
+      {name: 'en', value:'anglais',     nb:0, checked:false,  fq:'+lang_s:en' },
+      {name: 'fr', value:'français',    nb:0, checked:true,   fq:'+lang_s:fr' }
     ];
     angular.forEach($scope.langFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -39,8 +42,8 @@ angular.module('websoApp')
 
 
     $scope.folderFacets =  [
-      {name: 'validation',  value:'validation',   nb:0, checked:false },
-      {name: 'watch',       value:'surveillance', nb:0, checked:false }
+      {name: 'validation',  value:'validation',   nb:0, checked:false},
+      {name: 'watch',       value:'surveillance', nb:0, checked:true }
     ];
     angular.forEach($scope.folderFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -48,8 +51,8 @@ angular.module('websoApp')
 
 
     $scope.readFacets =  [
-      {name: 'notRead',  value:'non lu',   nb:0, checked:true },
-      {name: 'read',     value:'lu',   nb:0, checked:true },
+      {name: 'notRead',  value:'non lu',    nb:0, checked:true, fq:'+read_b:false' },
+      {name: 'read',     value:'lu',        nb:0, checked:false, fq:'+read_b:true' }
     ];
     angular.forEach($scope.readFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -111,8 +114,12 @@ angular.module('websoApp')
     // default values
 
     $scope.mySelectionsPeriod = [];
-    $scope.currentPeriod      = 'tout';
-    $scope.currentFq          = 'type_s:document';
+   // $scope.currentPeriod      = 'tout';
+    $scope.currentFacetFq     = '';
+    $scope.langFacetFq        = '';
+    $scope.periodFacetFq      = '';
+    $scope.readFacetFq        = '';
+    $scope.folderFacetFq      = '';
 
     //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
     $scope.solr             = $resource(cfg.urlDB+'solr/collection1/:action',
@@ -129,10 +136,16 @@ angular.module('websoApp')
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
       {get: {method: 'JSONP'}});
 
+    $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
+      {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
+      {get: {method: 'JSONP'}});
+
+
+
     // http://albator.hesge.ch:8984/solr/collection1/select?q=*%3A*&wt=json&indent=true
 
     // grid init for Period menu
-    $scope.gridOptionsPeriod = {
+    /*$scope.gridOptionsPeriod = {
 
       data:           'myDataDate',
       selectedItems:  $scope.mySelectionsPeriod,
@@ -153,7 +166,7 @@ angular.module('websoApp')
         {visible:'true',field:'period', displayName: 'Période', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' }
 
       ]
-    };
+    };*/
 
 
     $scope.doSearch = function () {
@@ -168,26 +181,29 @@ angular.module('websoApp')
       if ($scope.searchNav[$scope.idx.facets].checked) {
         $scope.solr.get({ q: $scope.searchTerm,
           start: $scope.currentPage - 1,
-          fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
+          fq: $scope.currentFq + ' +type_s:document +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
         }).$promise.then(function (result) {
             $scope.solrResult = result;
             $scope.totalItems = result.response.numFound;
             // get read / not read
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound;
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
+
+
             // get period data
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'];
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'];
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'];
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]']|0;
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]']|0;
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]']|0;
             // get
 
             // convert table lang in hash lang
             var lang = {};
-            for(var i=0;i<result.facet_counts.facet_fields.lang_s.length-2;i+=2) {
+            for(var i=0;i<result.facet_counts.facet_fields.lang_s.length;i+=2) {
               lang[result.facet_counts.facet_fields.lang_s[i]]=result.facet_counts.facet_fields.lang_s[i+1];
             }
 
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en;
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr;
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en|0;
+            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr|0;
 
           });
 
@@ -265,12 +281,138 @@ angular.module('websoApp')
       }
     };
 
+
+    $scope.itemCheck = function(item) {
+
+      // lang
+      if (item.name == 'fr') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].checked = false;
+          $scope.langFacetFq = item.fq;
+
+        }
+        else {
+          $scope.langFacetFq = '';
+        }
+
+      }
+      else if (item.name == 'en') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].checked = false;
+          $scope.langFacetFq = item.fq;
+        }
+        else {
+          $scope.langFacetFq = '';
+        }
+      }
+
+      // read or not read
+      else if (item.name == 'read') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].checked = false;
+          $scope.readFacetFq = item.fq;
+
+        }
+        else {
+          $scope.readFacetFq = '';
+        }
+      }
+      else if (item.name == 'notRead') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].checked = false;
+          $scope.readFacetFq = item.fq;
+
+        }
+        else {
+          $scope.readFacetFq = '';
+        }
+      }
+
+      // period
+      else if (item.name == 'day') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
+          $scope.periodFacetFq = item.fq;
+        }
+        else {
+          $scope.periodFacetFq = '';
+        }
+      }
+      else if (item.name == 'week') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
+          $scope.periodFacetFq = item.fq;
+        }
+        else {
+          $scope.periodFacetFq = '';
+        }
+      }
+      else if (item.name == 'month') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
+          $scope.periodFacetFq = item.fq;
+        }
+        else {
+          $scope.folderFacetFq = '';
+        }
+      }
+
+      else if (item.name == 'validation') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.watch].checked = false;
+          $scope.folderFacetFq = item.fq;
+        }
+        else {
+          $scope.folderFacetFq = '';
+        }
+      }
+
+      else if (item.name == 'watch') {
+        if (item.checked == false) {
+          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].checked = false;
+          $scope.folderFacetFq = item.fq;
+        }
+        else {
+          $scope.folderFacetFq = '';
+        }
+      }
+      $scope.doSearch();
+    }
+
     $scope.pageChanged = function() {
 
       $scope.doSearchFromPage();
     };
 
 
+    $scope.setRead = function (idDoc,value){
+
+      $scope.atomicChange.get({
+          id       :idDoc,
+          read_b   :value
+      }).$promise.then(function (result) {
+          $scope.doSearch();
+        }
+      );
+    }
+
+
+    $scope.initFacet = function() {
+      angular.forEach($scope.facetsGroup, function(v1) {
+        angular.forEach(v1.items, function(v2) {
+          if (v2.checked == true) {
+            $scope[v1.name+'Fq'] = v2.fq;
+          }
+        });
+      });
+
+    }
+
+    // first call,init
+    $scope.initFacet();
     $scope.doSearch();
 
     $scope.getSummary = function(id) {
@@ -284,6 +426,8 @@ angular.module('websoApp')
     }
 
   }]);
+
+
 
 
 // http://albator.hesge.ch:8587/solr/collection1/select?q='+query+'&wt=json&json.wrf=?&callback=?'
