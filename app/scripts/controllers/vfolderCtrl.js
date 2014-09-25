@@ -118,7 +118,7 @@ angular.module('websoApp')
       //alert('+folder_s:'+scope.$modelValue.title);
       $scope.dbList.get({
         folder_s    : scope.$modelValue.id,
-        //type_s     : 'validate ',
+        type_s     : 'validation ',
         user_s      : $username,
       }).$promise.then(function(result) {
         $scope.isError = false;
