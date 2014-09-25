@@ -142,7 +142,7 @@
                                 <div class="form-group" >
                                     <label class="col-md-5 control-label"> Dossier </label>
                                     <div  class="col-md-7">
-                                        <select id="inputFolderName" name="inputFolderName" ng-model="folder" ng-options="folder.name for folder in folders"></select>
+                                        <select id="inputFolder" name="inputFolder" ng-model="model.inputFolder" ng-options="folder.name for folder in folders"></select>
                                     </div>
                                 </div>
 
@@ -160,7 +160,7 @@
                                     <label class="col-md-5 control-label"> Notification </label>
 
                                     <div class="col-md-7">
-                                        <select id="inputNotification" ng-model="notification" ng-options="notification.option for notification in notifications"></select>
+                                        <select id="inputNotification" ng-model="model.inputNotification" ng-options="notification.option for notification in notifications"></select>
                                     </div>
                                 </div>
 

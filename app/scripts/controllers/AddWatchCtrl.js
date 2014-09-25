@@ -39,6 +39,7 @@ angular.module('websoApp')
       inputActivity       : '',
       inputQuery          : '',
       inputFolder         : '',
+      inputNotification   : '',
       sourceId            : 0,
       watchId             : 0,
       docAvailable        : 0,
@@ -68,9 +69,9 @@ angular.module('websoApp')
           $scope.model.inputTags  = item.tags_s;
           //$scope.domain.name      = item.domain_s;
           //$scope.activity.name    = item.activity_s;
-          $scope.model.inputDomain = item.domain_s;
-          $scope.model.activity    = item.activity_s;
-          $scope.model.inputFrequency.option = item.refresh_s;
+          $scope.model.inputDomain  = item.domain_s;
+          $scope.model.inputActivity    = item.activity_s;
+          $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
         });
         $scope.doSearchWatch();
@@ -137,7 +138,7 @@ angular.module('websoApp')
         {visible:false,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_ss', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -317,17 +318,14 @@ angular.module('websoApp')
                       rows        :$scope.pagingOptionsWatch.pageSize
         }).$promise.then(function(result) {
 
-
-
           angular.forEach(result.success.response.docs, function (item, index) {
-
             $scope.rowTabWatch[item.id]= index;
+            item.folder_s = $scope.folderArray[item.folder_s];
 
           });
 
           $scope.myDataWatch            = result.success.response.docs;
           $scope.totalServerItemsWatch  = result.success.response.numFound;
-
 
         }, function(reason) {
           alert('Failed: ' + reason);
@@ -409,13 +407,13 @@ angular.module('websoApp')
           url_s         :  $scope.model.inputUrl,
           title_t       :  $scope.model.inputTitle,
           tags_ss       :  $scope.model.inputTags,
-          domain_s      :  $scope.model.inputDomain.name,
-          activity_s    :  $scope.model.inputActivity.name,
-          folder_s      :  $scope.model.inputFolder,
+          domain_s      :  $scope.model.inputDomain,
+          activity_s    :  $scope.model.inputActivity,
+          folder_s      :  $scope.model.inputFolder.id,
           query_s       :  $scope.model.inputQuery,
           source_id_s   :  $scope.model.sourceId,
           //source_id_s   :  $scope.sourceAddResult.success.id,
-          notification_s:  $scope.notification.option
+          notification_s:  $scope.model.inputNotification.option
 
         });
 
@@ -788,6 +786,7 @@ angular.module('websoApp')
           // $scope.myDataWatch            = result.success.response.docs;
           // $scope.totalServerItemsWatch  = result.success.response.numFound;
           $scope.folders = [];
+          $scope.folderArray = [];
           var tmp = JSON.parse(result.success.response.docs[0].content_s);
           var log = [];
           angular.forEach(tmp[0].nodes, function(value1, key1) {
@@ -820,13 +819,17 @@ angular.module('websoApp')
             // }
             // else
             $scope.folders.push({"id":value1.id ,"name":value1.title});
+            $scope.folderArray[value1.id]=value1.title;
             angular.forEach(value1.nodes, function(value2, key2){
               $scope.folders.push({"id":value2.id , "name":value2.title});
+              $scope.folderArray[value2.id]=value2.title;
               angular.forEach(value2.nodes, function(value3, key3){
                 $scope.folders.push({"id":value3.id, "name":value3.title});
+                $scope.folderArray[value3.id]=value3.title;
                 if(angular.isArray(value3.nodes)){
                   angular.forEach(value3.nodes, function(value4, key4){
                     $scope.folders.push({"id":value4.id, "name":value4.title});
+                    $scope.folderArray[value4.id]=value4.title;
                   }, log);
                 }
               }, log);
