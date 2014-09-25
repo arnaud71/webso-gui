@@ -73,7 +73,7 @@ angular.module('websoApp')
     $scope.searchNav = [
       {
         name        : 'facets',
-        value       : 'Recherche par facettes',
+        value       : 'Recherche dans les dossiers',
         facetsGroup : $scope.facetsGroup,
         checked     : true
       },
@@ -269,20 +269,37 @@ angular.module('websoApp')
         if ($scope.searchNav[$scope.idx.facets].checked == false) {
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.facets].checked = true;
         }
+        else {
+          $scope.searchNav[$scope.idx.facets].checked = false;
+        }
+
       }
       else if (searchGroup == 'collectMultiSource') {
         if ($scope.searchNav[$scope.idx.collectMultiSource].checked == false) {
           $scope.searchNav[$scope.idx.facets].checked = false;
           $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.collectMultiSource].checked = true;
+        }
+        else {
+          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
         }
       }
       else if (searchGroup == 'feeds') {
         if ($scope.searchNav[$scope.idx.feeds].checked == false) {
           $scope.searchNav[$scope.idx.facets].checked = false;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          $scope.searchNav[$scope.idx.feeds].checked = true;
+        }
+        else {
+          $scope.searchNav[$scope.idx.feeds].checked = false;
         }
       }
+    };
+
+    $scope.facetCheck = function (facet) {
+      facet.checked = ! facet.checked;
     };
 
 

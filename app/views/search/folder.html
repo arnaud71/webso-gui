@@ -20,15 +20,22 @@
         <div class="row">
             <!-- searchNav box -->
             <div class="col-md-3">
-                <table class="table table-striped">
+                <table class="table table-condensed">
                 <tr ng-repeat="searchGroup in searchNav">
                 <td>
-                    <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}}
+                    <div ng-show="searchGroup.checked == false"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-right"></span></button> &nbsp;  {{searchGroup.value}} </div>
+                    <div ng-show="searchGroup.checked == true"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp; {{searchGroup.value}} </div>
+                    <!-- <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}} -->
 
-                    <table ng-show="searchGroup.checked" class="table table-striped">
+                    <table ng-show="searchGroup.checked" class="table table-condensed">
                         <tr ng-repeat="facet in searchGroup.facetsGroup">
-                            <td> <div ng-show="facet.visible"><input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}}</div>
-                                <table ng-show="facet.checked" class="table table-striped">
+                            <td> <div ng-show="facet.visible">
+                                <div ng-show="facet.checked == false"><button type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{facet.value}}</div>
+                                <div ng-show="facet.checked == true"><button  type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{facet.value}}</div>
+
+                                <!-- <input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}} -->
+                                </div>
+                                <table ng-show="facet.checked" class="table table-condensed">
                                     <tr ng-repeat="item in facet.items">
                                         <td><input type="checkbox" ng-model="item.checked" ng-click="itemCheck(item)"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
 
