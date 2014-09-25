@@ -169,7 +169,7 @@ angular.module('websoApp')
     };*/
 
 
-    $scope.doSearch = function () {
+    $scope.doSearch = function (group) {
       $scope.isCollapsed = false;
 
       //if ($scope.searchTerm) {
@@ -177,57 +177,61 @@ angular.module('websoApp')
       $scope.currentPage      = 1;
       $scope.maxSize          = 5;
 
-
-      if ($scope.searchNav[$scope.idx.facets].checked) {
-        $scope.solr.get({ q: $scope.searchTerm,
-          start: $scope.currentPage - 1,
-          fq: $scope.currentFq + ' +type_s:document +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
-        }).$promise.then(function (result) {
-            $scope.solrResult = result;
-            $scope.totalItems = result.response.numFound;
-            // get read / not read
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
-
-
-            // get period data
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]']|0;
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]']|0;
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]']|0;
-            // get
-
-            // convert table lang in hash lang
-            var lang = {};
-            for(var i=0;i<result.facet_counts.facet_fields.lang_s.length;i+=2) {
-              lang[result.facet_counts.facet_fields.lang_s[i]]=result.facet_counts.facet_fields.lang_s[i+1];
-            }
-
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en|0;
-            $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr|0;
-
-          });
+      if (group == 'feeds') {
 
       }
-      else if ($scope.searchNav[$scope.idx.feeds].checked) {
-        $scope.feedSearch.get({ query: $scope.searchTerm,
-          //start: $scope.currentPage - 1,
-          //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
-        }).$promise.then(function (result) {
-            $scope.solrResult = {};
-        });
-
-      }
-
-      else if ($scope.searchNav[$scope.idx.collectMultiSource].checked) {
-        $scope.collectMultiSourceSearch.get({ query: $scope.searchTerm,
-          //start: $scope.currentPage - 1,
-          //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
-        }).$promise.then(function (result) {
-            $scope.solrResult = {};
-
-          });
+      else {
+        if ($scope.searchNav[$scope.idx.facets].checked) {
+          $scope.solr.get({ q: $scope.searchTerm,
+            start: $scope.currentPage - 1,
+            fq: $scope.currentFq + ' +type_s:document +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+          }).$promise.then(function (result) {
+              $scope.solrResult = result;
+              $scope.totalItems = result.response.numFound;
+              // get read / not read
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
 
 
+              // get period data
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+              // get
+
+              // convert table lang in hash lang
+              var lang = {};
+              for (var i = 0; i < result.facet_counts.facet_fields.lang_s.length; i += 2) {
+                lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
+              }
+
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
+              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
+
+            });
+
+        }
+        else if ($scope.searchNav[$scope.idx.feeds].checked) {
+          $scope.feedSearch.get({ query: $scope.searchTerm,
+            //start: $scope.currentPage - 1,
+            //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
+          }).$promise.then(function (result) {
+              $scope.solrResult = {};
+            });
+
+        }
+
+        else if ($scope.searchNav[$scope.idx.collectMultiSource].checked) {
+          $scope.collectMultiSourceSearch.get({ query: $scope.searchTerm,
+            //start: $scope.currentPage - 1,
+            //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
+          }).$promise.then(function (result) {
+              $scope.solrResult = {};
+
+            });
+
+
+        }
       }
     };
 
