@@ -12,15 +12,15 @@ angular.module('websoApp')
         /*
         Getting validation doc
          */
-        if($userRole === 'administrateur'){
+        /*if($userRole === 'administrateur'){
           $scope.validationList = $resource(cfg.urlServices+'db/:action',
               {action:'get.pl', type_s:'validation',user_s:'*',callback:"JSON_CALLBACK"},
               {get:{method:'JSONP'}});
-        }else{
+        }else{*/
           $scope.validationList = $resource(cfg.urlServices+'db/:action',
               {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
               {get:{method:'JSONP'}});
-        }
+       // }
 
         $scope.doSearch = function () {
             $scope.validationResult = $scope.validationList.get();
