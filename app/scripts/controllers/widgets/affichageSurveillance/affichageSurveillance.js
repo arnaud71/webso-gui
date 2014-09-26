@@ -50,13 +50,14 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
           controller: 'surveillanceEditCtrl'
         }
       });
+
   }).controller('surveillanceCtrl', function($scope, id_source, $resource, cfg){
     $scope.data = id_source;
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
       {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
-    // request Solr to get informations
+      $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch +id:'+id_source});
 
   }).controller('surveillanceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
@@ -84,7 +85,7 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
             data = data.success.response.docs;
             $scope.myData = data;
             if($rootScope.$$phase !== '$digest'){
-              $rootScope.$digest(); 
+                $rootScope.$digest();
             }
         };
 
