@@ -130,7 +130,7 @@ angular.module('websoApp')
      //   {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
        // {width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span>--></button>'}
 
       ]
     };
@@ -161,7 +161,7 @@ angular.module('websoApp')
      Deleting source
      */
 
-    $scope.sourceDelete = $resource(cfg.urlServices+'db/:action',
+    $scope.validationDelete = $resource(cfg.urlServices+'db/:action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
@@ -172,34 +172,47 @@ angular.module('websoApp')
          Confirm dialogs
          */
 
-        var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette source?');
-        if (deleteSource) {
-            alert('Suppression confirmée');
+        //var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette validation?');
 
-            /*
-             Delete from Docs
-             */
-            $scope.sourceAddResult = $scope.sourceDelete.get({
-                id  :     sourceId
+
+
+            var modalInstance = $modal.open({
+              templateUrl: 'deleteValidationModal.html',
+              controller: ModalInstanceDeleteCtrl
+
             });
-            /*
-             Delete from table
-             */
-            $scope.myData.splice(index, 1);
-        }
 
-        //  $('#myModal').modal('show');
+            modalInstance.result.then(function () {
+              $scope.validationDelete.get({
+                id: sourceId,
+                user_s: $username
+              }).$promise.then(function () {
+
+                  $scope.myData.splice(index, 1);
 
 
+                }, function (reason) {
+                  alert('Failed id: ' + reason);
+                })
 
-      //$('.row').trigger('resize');
-      //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            })
 
 
 
     };
 
+    var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
 
+      $scope.ok = function () {
+
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+
+    };
 
 
 
