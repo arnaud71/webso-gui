@@ -19,10 +19,10 @@ angular.module('websoApp')
 
         $scope.doAdd = function () {
             $scope.informationAddResult = $scope.informationAdd.get({
-                url_s  :      $scope.inputUrl,
-                tags_s :      $scope.inputTags,
-                title_t:      $scope.inputTitle,
-                details_s: $scope.inputDetails
+                url_s     : $scope.inputUrl,
+                tags_s    : $scope.inputTags,
+                title_t   : $scope.inputTitle,
+                content_t : $scope.inputDetails
 
             });
          //   var addInfo = alert('Information ajoutée');

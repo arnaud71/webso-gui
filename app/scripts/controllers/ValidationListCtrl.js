@@ -118,7 +118,7 @@ angular.module('websoApp')
         afterSelectionChange: function () {
             $scope.selectedIDs = [];
             angular.forEach($scope.mySelections, function ( item ) {
-                $scope.selectedIDs.push( item.details_s ) ;
+                $scope.selectedIDs.push( item.content_t ) ;
             });
         },
       columnDefs: [

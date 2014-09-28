@@ -6,8 +6,9 @@ angular.module('websoApp')
     var $username                 = $cookieStore.get('username');
 
     $scope.showFound              = false;
-    $scope.maxSize                = 5;
+    $scope.totalItems             = 0;
     $scope.currentPage            = 1;
+    $scope.maxSize                = 5;
     paginationConfig.nextText     = 'Suivant';
     paginationConfig.previousText = 'Précédent';
     paginationConfig.firstText    = 'Début';
@@ -15,9 +16,8 @@ angular.module('websoApp')
     $scope.isCollapsed            = true;
     $scope.isError                = false;
     $scope.errorMessage           = cfg.errorConnect;
+    $scope.searchTerm             = '';
 
-
-    $scope.readFlag               = false;
 
 
     // to keep index  to adress table like a hash
@@ -62,7 +62,7 @@ angular.module('websoApp')
       {name :'readFacet',   value: 'Lecture' ,  items : $scope.readFacets,    checked : true, visible : true},
       {name :'periodFacet', value: 'Période' ,  items : $scope.periodFacets,  checked : true, visible : true},
       {name :'langFacet',   value: 'Langage' ,  items : $scope.langFacets,    checked : true, visible : true},
-      {name :'folderFacet', value: 'Dossier' ,  items : $scope.folderFacets,  checked : true, visible : true}
+    //  {name :'folderFacet', value: 'Dossier' ,  items : $scope.folderFacets,  checked : true, visible : true}
     ];
     angular.forEach($scope.facetsGroup, function(value, key) {
       $scope.idx[value.name] = key;
@@ -72,10 +72,16 @@ angular.module('websoApp')
     // full left search model
     $scope.searchNav = [
       {
-        name        : 'facets',
-        value       : 'Recherche dans les dossiers',
+        name        : 'watch',
+        value       : 'Dossiers de surveillances',
         facetsGroup : $scope.facetsGroup,
         checked     : true
+      },
+
+      {
+        name        : 'validation',
+        value       : 'Dossiers de validations',
+        checked     : false
       },
 
       {
@@ -113,8 +119,9 @@ angular.module('websoApp')
 
     // default values
 
-    $scope.mySelectionsPeriod = [];
+   // $scope.mySelectionsPeriod = [];
    // $scope.currentPeriod      = 'tout';
+    $scope.typeFq             = '+type_s:document ';
     $scope.currentFacetFq     = '';
     $scope.langFacetFq        = '';
     $scope.periodFacetFq      = '';
@@ -124,6 +131,10 @@ angular.module('websoApp')
     //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
     $scope.solr             = $resource(cfg.urlDB+'solr/collection1/:action',
       {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
+
+    $scope.validationAdd = $resource(cfg.urlServices+'db/:action',
+      {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
 
@@ -139,6 +150,10 @@ angular.module('websoApp')
     $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
       {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
       {get: {method: 'JSONP'}});
+
+    $scope.deleteSource = $resource(cfg.urlServices+'db/:action',
+      {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
 
 
 
@@ -173,30 +188,60 @@ angular.module('websoApp')
       $scope.isCollapsed = false;
 
       //if ($scope.searchTerm) {
-      $scope.totalItems       = 0;
-      $scope.currentPage      = 1;
-      $scope.maxSize          = 5;
+
 
       if (group == 'feeds') {
 
       }
-      else {
-        if ($scope.searchNav[$scope.idx.facets].checked) {
+      else if (group == 'collectMultiSource') {
+
+      }
+      else if ($scope.searchNav[$scope.idx.validation].checked) {
+
+          if ($scope.searchTerm == '') {
+            $scope.sort = 'date_dt desc';
+          }
+          else {
+            $scope.sort = 'score desc, date_dt desc';
+          }
           $scope.solr.get({ q: $scope.searchTerm,
-            start: $scope.currentPage - 1,
-            fq: $scope.currentFq + ' +type_s:document +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+            //start: $scope.currentPage - 1,
+            start: ($scope.currentPage - 1) * 10,
+            sort: $scope.sort,
+            fq: ' +type_s:validation' + ' +user_s:' + $username
+          }).$promise.then(function (result) {
+              $scope.solrResult = result;
+              $scope.totalItems = result.response.numFound;
+
+
+          })
+      }
+      else {
+        if ($scope.searchNav[$scope.idx.watch].checked) {
+          if ($scope.searchTerm == '') {
+            $scope.sort = 'date_dt desc';
+          }
+          else {
+            $scope.sort = 'score desc, date_dt desc';
+          }
+          $scope.solr.get({ q: $scope.searchTerm,
+            //start: $scope.currentPage - 1,
+            start   :($scope.currentPage-1)*10,
+            sort    : $scope.sort,
+            fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
           }).$promise.then(function (result) {
               $scope.solrResult = result;
               $scope.totalItems = result.response.numFound;
               // get read / not read
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
+              //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
 
 
               // get period data
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
               // get
 
               // convert table lang in hash lang
@@ -205,31 +250,10 @@ angular.module('websoApp')
                 lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
               }
 
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
-              $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
 
             });
-
-        }
-        else if ($scope.searchNav[$scope.idx.feeds].checked) {
-          $scope.feedSearch.get({ query: $scope.searchTerm,
-            //start: $scope.currentPage - 1,
-            //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
-          }).$promise.then(function (result) {
-              $scope.solrResult = {};
-            });
-
-        }
-
-        else if ($scope.searchNav[$scope.idx.collectMultiSource].checked) {
-          $scope.collectMultiSourceSearch.get({ query: $scope.searchTerm,
-            //start: $scope.currentPage - 1,
-            //fq: $scope.currentFq + ' +type_s:document +user_s:' + $username
-          }).$promise.then(function (result) {
-              $scope.solrResult = {};
-
-            });
-
 
         }
       }
@@ -265,22 +289,28 @@ angular.module('websoApp')
 
 
     $scope.groupCheck = function(searchGroup) {
-      if (searchGroup == 'facets') {
-        if ($scope.searchNav[$scope.idx.facets].checked == false) {
+      if (searchGroup == 'watch') {
+        if ($scope.searchNav[$scope.idx.watch].checked == false) {
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           $scope.searchNav[$scope.idx.feeds].checked = false;
-          $scope.searchNav[$scope.idx.facets].checked = true;
+          $scope.searchNav[$scope.idx.validation].checked = false;
+          $scope.searchNav[$scope.idx.watch].checked = true;
+          $scope.currentPage            = 1;
+          $scope.doSearch();
         }
         else {
-          $scope.searchNav[$scope.idx.facets].checked = false;
+          $scope.searchNav[$scope.idx.watch].checked = false;
         }
 
       }
       else if (searchGroup == 'collectMultiSource') {
         if ($scope.searchNav[$scope.idx.collectMultiSource].checked == false) {
-          $scope.searchNav[$scope.idx.facets].checked = false;
+          $scope.searchNav[$scope.idx.watch].checked = false;
+          $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = true;
+          $scope.currentPage            = 1;
+          $scope.doSearch();
         }
         else {
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
@@ -288,14 +318,31 @@ angular.module('websoApp')
       }
       else if (searchGroup == 'feeds') {
         if ($scope.searchNav[$scope.idx.feeds].checked == false) {
-          $scope.searchNav[$scope.idx.facets].checked = false;
+          $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          $scope.searchNav[$scope.idx.watch].checked = false;
           $scope.searchNav[$scope.idx.feeds].checked = true;
+          $scope.currentPage            = 1;
+          $scope.doSearch();
         }
         else {
           $scope.searchNav[$scope.idx.feeds].checked = false;
         }
       }
+      else if (searchGroup == 'validation') {
+        if ($scope.searchNav[$scope.idx.validation].checked == false) {
+          $scope.searchNav[$scope.idx.validation].checked = true;
+          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          $scope.searchNav[$scope.idx.watch].checked = false;
+          $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.currentPage            = 1;
+          $scope.doSearch();
+        }
+        else {
+          $scope.searchNav[$scope.idx.validation].checked = false;
+        }
+      }
+
     };
 
     $scope.facetCheck = function (facet) {
@@ -308,7 +355,7 @@ angular.module('websoApp')
       // lang
       if (item.name == 'fr') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].checked = false;
           $scope.langFacetFq = item.fq;
 
         }
@@ -319,7 +366,7 @@ angular.module('websoApp')
       }
       else if (item.name == 'en') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].checked = false;
           $scope.langFacetFq = item.fq;
         }
         else {
@@ -330,7 +377,7 @@ angular.module('websoApp')
       // read or not read
       else if (item.name == 'read') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].checked = false;
           $scope.readFacetFq = item.fq;
 
         }
@@ -340,7 +387,7 @@ angular.module('websoApp')
       }
       else if (item.name == 'notRead') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].checked = false;
           $scope.readFacetFq = item.fq;
 
         }
@@ -352,8 +399,8 @@ angular.module('websoApp')
       // period
       else if (item.name == 'day') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
           $scope.periodFacetFq = item.fq;
         }
         else {
@@ -362,8 +409,8 @@ angular.module('websoApp')
       }
       else if (item.name == 'week') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].checked = false;
           $scope.periodFacetFq = item.fq;
         }
         else {
@@ -372,8 +419,8 @@ angular.module('websoApp')
       }
       else if (item.name == 'month') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].checked = false;
           $scope.periodFacetFq = item.fq;
         }
         else {
@@ -383,17 +430,19 @@ angular.module('websoApp')
 
       else if (item.name == 'validation') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.watch].checked = false;
-          $scope.folderFacetFq = item.fq;
+          //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.watch].checked = false;
+          //$scope.folderFacetFq = item.fq;
+          $scope.typeFq = '+type_s:validation ';
         }
         else {
           $scope.folderFacetFq = '';
+          $scope.typeFq = '+type_s:document';
         }
       }
 
       else if (item.name == 'watch') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.facets].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].checked = false;
+          $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].checked = false;
           $scope.folderFacetFq = item.fq;
         }
         else {
@@ -405,7 +454,8 @@ angular.module('websoApp')
 
     $scope.pageChanged = function() {
 
-      $scope.doSearchFromPage();
+      //$scope.doSearchFromPage();
+      $scope.doSearch();
     };
 
 
@@ -431,6 +481,52 @@ angular.module('websoApp')
       });
 
     }
+
+    $scope.deleteDoc = function(docId) {
+      $scope.deleteSource.get({
+        id  :     docId,
+        user_s :  $username
+      }).$promise.then(function() {
+          $scope.doSearch();
+
+        }, function(reason) {
+          alert('Failed id: ' + reason);
+        })
+      ;
+    };
+
+    $scope.validateDoc = function (doc, validate) {
+      if (validate) {
+        $scope.validationAdd.get({
+          url_s: doc.url_s,
+          //tags_s :      $scope.inputTags,
+          title_t: doc.title_t,
+          content_en: doc.content_t,
+          lang_s: doc.lang_s,
+          date_dt: doc.date_dt
+
+        });
+      }
+      else {
+
+
+      }
+
+      $scope.atomicChange.get({
+        id            : doc.id,
+        validated_b   : validate
+      }).$promise.then(function (result) {
+          $scope.doSearch();
+        }
+      );
+      //   var addInfo = alert('Information ajoutée');
+
+      // Testing  Modal trigger
+      /*var modalInstance = $modal.open({
+        templateUrl: 'validateModal.html',
+        controller: ModalInstanceCtrl
+      });*/
+    };
 
     // first call,init
     $scope.initFacet();

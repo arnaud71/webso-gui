@@ -112,9 +112,12 @@
                                     <div id="dateFound">
                                         {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                         <div id="actionList">
-                                            <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                            <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                            <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
                                             <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
                                             <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
+
+                                            <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
                                         </div>
 
 
