@@ -501,7 +501,9 @@ angular.module('websoApp')
           url_s: doc.url_s,
           //tags_s :      $scope.inputTags,
           title_t: doc.title_t,
-          content_en: doc.content_t,
+          content_en: doc.content_en,
+          content_t: doc.content_t,
+          content_fr: doc.content_fr,
           lang_s: doc.lang_s,
           date_dt: doc.date_dt
 

@@ -1,12 +1,18 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('vfolderCtrl', function ($filter, $cookieStore, $scope, cfg, $resource) {
+  .controller('wfolderCtrl', function ($filter, $cookieStore, $scope, cfg, $resource) {
 
     var $username = $cookieStore.get('username');
 
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
       {action:'put.pl',user_s:$username,callback:'JSON_CALLBACK'},
+      {get:{method:'JSONP'}}
+    );
+
+    // to query solr as a search engine
+    $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
+      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}}
     );
 
@@ -71,7 +77,7 @@ angular.module('websoApp')
 
     $scope.loadTree = function () {
       $scope.dbList.get({
-        title_t  :  'vfolder',
+        title_t  :  'wfolder',
         type_s   :  'tree',
         user_s   :  $username
       }).$promise.then(function(result) {
@@ -97,7 +103,7 @@ angular.module('websoApp')
 
       $scope.sourceSaveTree = $scope.addResource.get({
         type_s          : 'tree',
-        title_t         : 'vfolder',
+        title_t         : 'wfolder',
         content_s       : $filter('json')($scope.model.data)
       },function () {
       },
@@ -117,9 +123,9 @@ angular.module('websoApp')
     $scope.folderList = function(scope) {
       //alert('+folder_s:'+scope.$modelValue.title);
       $scope.dbList.get({
-        folder_s    : scope.$modelValue.id,
-        type_s     : 'validation ',
-        user_s      : $username,
+        folder_s  : scope.$modelValue.id,
+        type_s    :  'watch',
+        user_s      : $username
       }).$promise.then(function(result) {
         $scope.isError = false;
 
@@ -132,7 +138,6 @@ angular.module('websoApp')
           //}
         }
       },
-
       //error
       function () {
         $scope.isError = true;

@@ -18,7 +18,6 @@ Install
 
         npm install
 
-
 3. And reload dependancies (such as angular ones)
 
         bower install
@@ -37,6 +36,10 @@ Pre-install
 2. install yeoman
 
         npm install -g yo (http://yeoman.io/)
+
+3. on fresh installs don't forget compass
+
+		sudo gem install compass
 
 
 Run the tests 
