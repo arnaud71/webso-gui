@@ -46,7 +46,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('/usersList', {
             url: '/usersList',
-            templateUrl: '../views/administration/usersList.html',
+            templateUrl: 'views/administration/usersList.html',
             controller: 'UsersListCtrl',
 			      data: {
 				      authorizedRoles: ['administrateur']

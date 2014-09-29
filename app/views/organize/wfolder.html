@@ -9,7 +9,83 @@
 </ol>
 
 
-<div id="watch-folder">
-    <h2>Organiser les dossiers de validation</h2>
+<div id="watch-folder" ng-controller="wfolderCtrl">
+    <h2>Organiser les dossiers de surveillance</h2>
+	
+	<link rel="stylesheet" href="styles/treeview.css">
+
+    <div class="row">
+        <div class="col-lg-4">
+            <h3>Arborescence
+                <a href="" class="btn btn-sm btn-default pull-right" ng-click="collapseAll()">Replier tout</a>
+                <a href="" class="btn btn-sm btn-default pull-right" ng-click="expandAll()">Déplier  tout</a>
+                    <!-- <a href="" class="btn btn-default btn-warning pull-right" ng-click="moveLastToTheBegginig()">Move Last To The Beginning</a> -->
+
+            </h3>
+
+            <!-- Nested node template -->
+            <script type="text/ng-template" id="nodes_renderer.html">
+                <div ui-tree-handle class="tree-node tree-node-content">    
+
+                    <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                    <a data-nodrag href="#" ng-show="model.edit"  editable-text="node.title">{{ node.title || "empty" }}</a>
+                    <!-- <span data-nodrag ng-show="!model.edit">{{ node.title || "empty" }}</span> -->
+                    <a data-nodrag ng-show="!model.edit" ng-click="folderList(this)">{{ node.title || "empty" }}</a>
+
+
+                    <a ng-show="((node.id>1) && (model.edit))" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a ng-show="model.edit" class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+
+                </div>
+                <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+                    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+                    </li>
+                </ol>
+            </script>
+
+            <div ui-tree id="tree-root" data-drag-enabled="{{model.edit}}">
+
+                <ol ui-tree-nodes="" ng-model="model.data" data-max-depth="5" data-drag-delay="500">
+                    <li ng-repeat="node in model.data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+            <a ng-show="!model.edit" href="" class="btn btn-default pull-left" ng-click="editTree()">Editer</a>
+            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="saveTree()">Sauvegarder</a>
+            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="cancelTree()">Annuler</a>
+        </div>
+
+        <div class="col-lg-8">
+            <h3> File information </h3>
+            <!-- <div class="info">
+                {{folder}}
+            </div> -->
+                <table class="table table-striped">
+                    <tr ng-repeat="fold in folder">
+                        <td>
+                            <div id="titleFound">
+                                <a href="{{fold.url_s}}" target="_blank">{{fold.title_t}}</a>
+                            </div>
+                            <div id="contentFound">
+                                <span>Recherche : {{ fold.query_s }} | {{ fold.notification_s }}</span>
+                            </div>
+                            <div id="actionList">
+                                <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- <pre class="code" ng-repeat="fold in folder">{{ fold.title_t }}</pre> -->
+
+
+
+            <!-- <h3>Data binding</h3>
+            <div class="info">
+                {{info}}
+            </div>
+            <pre class="code">{{ model.data | json }}</pre> -->
+        </div>
+    </div>
+
 
 </div>
