@@ -48,7 +48,7 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin" >
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="hideForTests">Diffuser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">Diffuser <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/createNL">
 	                	<a ui-sref="/publish/newsletter">Newsletter</a>
@@ -63,9 +63,9 @@
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/organize/wfolder"><a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a></li>
 	                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="hideForTests">Templates</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_collections' analytics-category='Passive' ng-show="hideForTests">Collectes webso</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize" ng-show="hideForTests">Packages de sources</a></li>
+	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a></li>
+	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_collections' analytics-category='Passive' ng-show="!hideForTests">Collectes webso</a></li>
+	                <li data-match-route="/organize"><a ui-sref="/organize" ng-show="!hideForTests">Packages de sources</a></li>
 	            </ul>
 	        </li>
 	        <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
@@ -81,9 +81,10 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-show="hideForTests">Configuration <b class="caret"></b></a>
+	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-show="!hideForTests">Configuration <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/settings/booklet"><a ui-sref="/settings/booklet">Booklet</a></li>
+	                <li data-match-route="/settings/profile"><a ui-sref="/settings/profile">Mon profil</a></li>
 	            </ul>
 	        </li>
 			 <li class="dropdown" ng-show="!isPublicNotAuthenticated">

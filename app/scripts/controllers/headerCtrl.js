@@ -8,6 +8,7 @@ angular.module('websoApp')
 	$scope.isPublic = true;
 	$scope.isLecteurVeilleurAdmin = false;
 	$scope.isPublicNotAuthenticated = true;
+	$scope.hideForTests = cfg.hideForTest;
 
 	$scope.templates = [{
 	    name: 'head.html',

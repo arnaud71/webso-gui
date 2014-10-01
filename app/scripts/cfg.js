@@ -16,7 +16,7 @@ angular.module('websoApp').constant('cfg', {
               //  {value:'faroo_news'   ,displayName:'Faroo News'},
               //  {value:'delicious'    ,displayName:'delicious'}
                       ],
-  hideFortest         : true,
+  hideForTest         : true,
 
   //urlDB           : 'http://beta.inelio.fr:8888/',
   //urlServices     : 'http://beta.inelio.fr/cgi-bin/',
