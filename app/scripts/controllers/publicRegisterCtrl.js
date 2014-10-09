@@ -17,15 +17,16 @@ angular.module('websoApp')
         // sending login information to the service to validate the authentication
         $scope.verifyLogin.get({user_s : username, password_s : password}).$promise.then(function(user) {
             $cookieStore.put('Authenticated', true);
-            $cookieStore.put('username', $scope.username);
-            $cookieStore.put('password', $scope.password);
+            $cookieStore.put('username', user.username);
             $cookieStore.put('userRole', user.role);
+            $cookieStore.put('token', user.token);
+            $cookieStore.put('token_timeout', user.token_timeout);
             $location.path('/home');
         });
     };
 
     $scope.register = function() {
-        $scope.informationAdd.get({user_s  : $scope.username, password_s : $scope.password, role_s : 'veilleur'}).$promise.then(function(user) {
+        $scope.informationAdd.get({user_s  : $scope.username, password_s : $scope.password, email_s : $scope.email, role_s : 'veilleur'}).$promise.then(function(user) {
             if(user.error){
                 $scope.isError = true;
                 $scope.errorMessage = user.error;
