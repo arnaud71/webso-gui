@@ -14,15 +14,56 @@
 	            </ul>
 	        </li>
 
-	        <li class="dropdown" ng-show="isAdmin">
+	        <!-- <li class="dropdown" ng-show="isAdmin">
 	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/administratorRegister"><a ui-sref="/administratorRegister">Enregistrement</a></li>
 	                <li data-match-route="/usersList"><a ui-sref="/usersList">Comptes des utilisateurs</a></li>
 	            </ul>
+	        </li> -->
+	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-show="!hideForTests">Collecter<b class="caret"></b></a>
+	            <ul class="dropdown-menu">
+		            <li data-match-route="/organize"><a ui-sref="/organize" ng-show="!hideForTests">Collectes externes</a></li>
+		            <li data-match-route="/organize"><a ui-sref="/organize" ng-show="!hideForTests">Flux RSS</a></li>
+	        		<li data-match-route="/organize"><a ui-sref="/organize" ng-show="!hideForTests">Packages de sources</a></li>
+	        	</ul>
+	        </li>
+
+
+			<li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Search' analytics-label='Search_menu' analytics-category='Passive'>Rechercher <b class="caret"></b></a>
+	            <ul class="dropdown-menu">
+	                <li data-match-route="/search/source"><a ui-sref="/search/source" ng-show="!hideForTests">Dans les sources</a></li>
+	                <li data-match-route="/search/rss"><a ui-sref="/search/rss">Flux RSS</a></li>
+	                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Dans les collectes externes</a></li>
+	                <li data-match-route="/search/folder"><a ui-sref="/search/folder">Dans les dossiers</a></li>
+	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Sources' analytics-label='Watch_menu' analytics-category='Passive'>Gérer les sources<b class="caret"></b></a>
+	            <ul class="dropdown-menu">
+	            	<li data-match-route="/source/add" ng-show="isVeilleurAdmin">
+	                    <a ui-sref="/source/add">Ajouter une source</a>
+	                </li>
+	                <li data-match-route="/source/list" >
+	                    <a ui-sref="/source/list">Afficher les sources</a>
+	                </li>
+	            </ul>
+	        </li>
+	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller<b class="caret"></b></a>
+	            <ul class="dropdown-menu">
+	                <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
+	                	<a ui-sref="/watch/add">Ajouter une surveillance</a>
+	                </li>
+	                <li data-match-route="/watch/list" >
+	                    <a ui-sref="/watch/list" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Afficher les surveillances</a>
+	                </li>
+	            </ul>
+	        </li>
+	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider<b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/validate/add" ng-show="isVeilleurAdmin">
 	                    <a ui-sref="/validate/add">Ajouter information</a></li>
@@ -30,25 +71,11 @@
 	                    <a ui-sref="/validate/display" analytics-on='click' analytics-event='Validate' analytics-label='Validate_show_information' analytics-category='Passive'>Afficher informations validées</a></li>
 	            </ul>
 	        </li>
-	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller <b class="caret"></b></a>
-	            <ul class="dropdown-menu">
-	                <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
-	                	<a ui-sref="/watch/add">Ajouter une surveillance</a>
-	                </li>
-	                <!-- <li data-match-route="/source/add" ng-show="isVeilleurAdmin">
-	                    <a ui-sref="/source/add">Ajouter une source</a>
-	                </li>
-	                <li data-match-route="/source/list" >
-	                    <a ui-sref="/source/list">Afficher les sources</a>
-	                </li> -->
-	                <li data-match-route="/watch/list" >
-	                    <a ui-sref="/watch/list" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Afficher les surveillances</a>
-	                </li>
-	            </ul>
+	        <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
+	        	<li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">Tableau de bord</a></li>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin" >
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">Diffuser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">Diffuser<b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/createNL">
 	                	<a ui-sref="/publish/newsletter">Newsletter</a>
@@ -59,34 +86,24 @@
 	            </ul>
 	        </li>
 	        <li class="dropdown" ng-show="isVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive' >Organiser <b class="caret"></b></a>
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive'>Organiser<b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	                <li data-match-route="/organize/wfolder"><a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a></li>
 	                <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a></li>
 	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a></li>
 	                <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_collections' analytics-category='Passive' ng-show="!hideForTests">Collectes webso</a></li>
-	                <li data-match-route="/organize"><a ui-sref="/organize" ng-show="!hideForTests">Packages de sources</a></li>
+	                <li data-match-route="/settings/profile"><a ui-sref="/settings/profile">Mon profil</a></li>
+	                <li data-match-route="/usersList" ng-show="isAdmin"><a ui-sref="/usersList">Comptes des utilisateurs</a></li>
+	                <li data-match-route="/settings/booklet" ng-show="!hideForTests"><a ui-sref="/settings/booklet" >Booklet</a></li>
+	                <li data-match-route="/settings/social" ng-show="!hideForTests"><a ui-sref="/settings/social">Connecter aux réseaux sociaux</a></li>
 	            </ul>
 	        </li>
-	        <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
-	        	<li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">Tableau de bord</a></li>
-	        </li>
-	        <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Search' analytics-label='Search_menu' analytics-category='Passive'>Rechercher <b class="caret"></b></a>
-	            <ul class="dropdown-menu">
-	                <li data-match-route="/search/folder"><a ui-sref="/search/folder">Dossiers</a></li>
-	                <li data-match-route="/search/webso"><a ui-sref="/search/webso">Collectes externes</a></li>
-	                <!-- <li data-match-route="/search/source"><a ui-sref="/search/source">Sources</a></li> -->
-	                <li data-match-route="/search/rss"><a ui-sref="/search/rss">Flux RSS</a></li>
-	            </ul>
-	        </li>
-	        <li class="dropdown" ng-show="isVeilleurAdmin">
+	        <!-- <li class="dropdown" ng-show="isVeilleurAdmin">
 	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-show="!hideForTests">Configuration <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
-	                <li data-match-route="/settings/booklet"><a ui-sref="/settings/booklet">Booklet</a></li>
-	                <li data-match-route="/settings/profile"><a ui-sref="/settings/profile">Mon profil</a></li>
+
 	            </ul>
-	        </li>
+	        </li> -->
 			 <li class="dropdown" ng-show="!isPublicNotAuthenticated">
 			 	<a ui-sref="/deconnexion" ng-click="logout()">Déconnexion</a>
 	        </li>
