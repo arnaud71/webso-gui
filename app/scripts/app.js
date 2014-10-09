@@ -202,6 +202,15 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
 				      authorizedRoles: ['administrateur', 'veilleur']
 			      }
         })
+        .state('/settings/profile', {
+            url: '/settings/profile',
+            templateUrl: 'views/settings/profile.html' ,
+            controller:'',
+                    data: {
+                      authorizedRoles: ['administrateur', 'veilleur']
+                  }
+        })
+
 
         .state('/search/rss', {
             url: '/search/rss',       
