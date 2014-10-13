@@ -55,84 +55,248 @@
                     <button class="btn" ng-click="doSearch()" name="searchButton" analytics-on='click' analytics-event='Search' analytics-label='Search_folder' analytics-category='Passive'><i class="icon-search"></i>Chercher</button>
                 </form>
 
-                <div id="numberFound">
-                    <div solr-results-number ng-show="solrResult.response">
-                        Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
-                        <br>
+
+                <!-- collect Multisource results -->
+                <div ng-show='searchNav[idx.collectMultiSource].checked' id="solrResult">
+                    <div id="numberFound">
+                        <div results-number ng-show="collectMultiSourceResult.count>0">
+                            {{collectMultiSourceResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div id="docsFound">
+                        <div collectMultiSourceResult ng-show="collectMultiSourceResult.count">
+                            <table class="table table-striped">
+
+                                <tr ng-repeat="collect in collectMultiSourceResult.res | orderBy: 'pubDate' ">
+                                    <td>
+
+                                        <div id="titleFound">
+                                            <a href="{{collect.link}}" target="_blank" ng-bind-html="collect.title"></a>
+                                        </div>
+                                        <div id="contentFound">
+
+                                            <p ng-bind-html="collect.description"></p>
+
+                                        </div>
+                                        <div id="urlFound">
+                                            <span ng-if="collect.link.length<100">
+                                            {{collect.link}}
+                                            </span>
+                                            <span ng-if="collect.link>100">
+                                                {{collect.link| limitTo:100}}...
+                                            </span>
+                                        </div>
+
+                                        <div id="dateFound">
+                                            {{collect.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            <div id="actionList">
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                            </div>
+
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
                     </div>
                 </div>
-                <div id="docsFound">
-                    <div solr-result ng-show="solrResult.response.numFound">
-                        <table class="table table-striped">
-
-                            <tr ng-repeat="doc in solrResult.response.docs">
-                                <td>
 
 
-                                    <div id="titleFound">
-                                        <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                    </div>
-                                    <div id="contentFound">
-                                        <div ng-controller="CollapseSolrCtrl">
+                <!-- collect feeds results -->
+                <div ng-show='searchNav[idx.feeds].checked' id="solrResult">
+                    <div id="numberFound">
+                        <div results-number ng-show="feedResult.count>0">
+                            {{feedResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
+                            <br>
+                        </div>
+                    </div>
 
-                                            <div collapse="!isCollapsed">
-                                                    <span ng-click="isCollapsed = !isCollapsed">
-                                                    <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
-                                                        <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                    <div id="docsFound">
+                        <div feedResult ng-show="feedResult.count">
+                            <table class="table table-striped">
 
-                                                        <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[0]=== \"undefined\"">{{ doc.content_en | limitTo:500 }} &gt;&gt;&gt;&gt;</span> -->
+                                <tr ng-repeat="feed in feedResult.res">
+                                    <td>
 
-                                                        <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
-                                                        <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
-
-                                                       &gt;&gt;&gt;&gt;
-                                                        <!-- <span ng-bind="getSummary(doc.id)"></span> -->
-                                                    </span>
-
-
-
-                                            </div>
-                                            <div collapse="isCollapsed">
-                                                    <span ng-click="isCollapsed = !isCollapsed">
-                                                    {{doc.content_en}} &lt;&lt;&lt;&lt;
-                                                    </span>
-                                            </div>
+                                        <div id="titleFound">
+                                            <a href="{{feed.link}}" target="_blank">{{feed.title}}</a>
+                                        </div>
+                                        <div id="contentFound">
+                                            {{feed.description}}
 
                                         </div>
-                                    </div>
-                                    <div id="urlFound">
-                                        <span ng-if="doc.url_s.length<100">
-                                        {{doc.url_s}}
-                                        </span>
-                                        <span ng-if="doc.url_s.length>100">
-                                            {{doc.url_s| limitTo:100}}...
-                                        </span>
-                                    </div>
-
-                                    <div id="dateFound">
-                                        {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
-                                        <div id="actionList">
-                                            <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                            <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
-                                            <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
-                                            <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
-
-                                            <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
+                                        <div id="urlFound">
+                                            <span ng-if="collect.link.length<100">
+                                            {{collect.link}}
+                                            </span>
+                                            <span ng-if="collect.link>100">
+                                                {{collect.link| limitTo:100}}...
+                                            </span>
                                         </div>
 
+                                        <div id="dateFound">
+                                            {{collect.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            <div id="actionList">
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                            </div>
 
-                                    </div>
 
-                    </td>
-                    </tr>
-                    </table>
-                    <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- solr results -->
+                <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked' id="solrResult">
+
+                    <div id="numberFound">
+                        <div solr-results-number ng-show="solrResult.response">
+                            Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
+                            <br>
+                        </div>
+                    </div>
+                    <div id="docsFound">
+                        <div solr-result ng-show="solrResult.response.numFound">
+                            <table class="table table-striped">
+
+                                <tr ng-repeat="doc in solrResult.response.docs">
+                                    <td>
+
+
+                                        <div id="titleFound">
+                                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                        </div>
+                                        <div id="contentFound">
+                                            <div ng-controller="CollapseSolrCtrl">
+
+                                                <div collapse="!isCollapsed">
+                                                        <span ng-click="isCollapsed = !isCollapsed">
+                                                        <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
+                                                            <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+
+                                                            <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[0]=== \"undefined\"">{{ doc.content_en | limitTo:500 }} &gt;&gt;&gt;&gt;</span> -->
+
+                                                            <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
+                                                            <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
+
+                                                           &gt;&gt;&gt;&gt;
+                                                            <!-- <span ng-bind="getSummary(doc.id)"></span> -->
+                                                        </span>
+
+
+
+                                                </div>
+                                                <div collapse="isCollapsed">
+                                                        <span ng-click="isCollapsed = !isCollapsed">
+                                                        {{doc.content_en}} &lt;&lt;&lt;&lt;
+                                                        </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div id="urlFound">
+                                            <span ng-if="doc.url_s.length<100">
+                                            {{doc.url_s}}
+                                            </span>
+                                            <span ng-if="doc.url_s.length>100">
+                                                {{doc.url_s| limitTo:100}}...
+                                            </span>
+                                        </div>
+
+                                        <div id="dateFound">
+                                            {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
+                                            <div id="actionList">
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
+                                                <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
+
+                                                <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
+                                            </div>
+
+
+                                        </div>
+
+                        </td>
+                        </tr>
+                        </table>
+                        <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+        <!-- validation Modal  -->
+        <script type="text/ng-template" id="validateModal.html">
+            <div class="modal-header">
+            <h3> Validation de document</h3>
+            </div>
+            <div class="modal-body">
 
-</div>
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label"> Titre </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="validationForm.title">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label"> Url </label>
+                        <div class="col-sm-10">
+                            <input type="url" class="form-control" ng-model="validationForm.url">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label"> Tags </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="validationForm.tags">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label"> Content </label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="6" ng-model="validationForm.content"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label"> Dossiers </label>
+                        <div class="col-sm-10">
+
+                            <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
+                            <!-- <pre>{{validationFolder.id}}</pre>
+                            <select id="validationFolder" name="validationFolder" ng-model="validationFolder">
+                                <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
+                            </select> -->
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            </div>
+        </script>
+    </div>
 </div>
 
 

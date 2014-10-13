@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore) {
+  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal) {
 
     var $username                 = $cookieStore.get('username');
 
@@ -143,6 +143,10 @@ angular.module('websoApp')
       {get:{method:'JSONP'}
       });
 
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
     $scope.collectMultiSourceSearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
       {get: {method: 'JSONP'}});
@@ -190,10 +194,25 @@ angular.module('websoApp')
       //if ($scope.searchTerm) {
 
 
-      if (group == 'feeds') {
+      if (($scope.searchNav[$scope.idx.feeds].checked)) {
+
+        $scope.feedSearch.get({
+          query     : $scope.searchTerm
+        }).$promise.then(function (result) {
+            $scope.feedResult = result;
+          })
+
+
 
       }
-      else if (group == 'collectMultiSource') {
+      else if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
+
+        $scope.collectMultiSourceSearch.get({
+          query     : $scope.searchTerm,
+          typeQuery : 'google_news'
+        }).$promise.then(function (result) {
+            $scope.collectMultiSourceResult = result;
+          })
 
       }
       else if ($scope.searchNav[$scope.idx.validation].checked) {
@@ -258,6 +277,49 @@ angular.module('websoApp')
         }
       }
     };
+
+
+
+    // ***************************************************************
+    // doSearchFolder
+    // list the available sources
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
+
+      $scope.dbList.get({
+        type_s      : 'tree',
+        title_t     : 'vfolder',
+        user_s      : $username,
+      }).$promise.then(function(result) {
+
+          $scope.folders = [];
+          var tmp = JSON.parse(result.success.response.docs[0].content_s);
+          var log = [];
+          angular.forEach(tmp[0].nodes, function(value1, key1) {
+            // if(angular.isArray(value1)){
+
+            $scope.folders.push({"id":value1.id ,"name":value1.title});
+            angular.forEach(value1.nodes, function(value2, key2){
+              $scope.folders.push({"id":value2.id , "name":value2.title});
+              angular.forEach(value2.nodes, function(value3, key3){
+                $scope.folders.push({"id":value3.id, "name":value3.title});
+                if(angular.isArray(value3.nodes)){
+                  angular.forEach(value3.nodes, function(value4, key4){
+                    $scope.folders.push({"id":value4.id, "name":value4.title});
+                  }, log);
+                }
+              }, log);
+            }, log);
+          }, log);
+          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
+
+    $scope.doSearchFolder();
 
     $scope.doSearchFromPage = function () {
       $scope.isCollapsed = false;
@@ -496,31 +558,64 @@ angular.module('websoApp')
     };
 
     $scope.validateDoc = function (doc, validate) {
+
+
+
       if (validate) {
-        $scope.validationAdd.get({
-          url_s: doc.url_s,
-          //tags_s :      $scope.inputTags,
-          title_t: doc.title_t,
-          content_en: doc.content_en,
-          content_t: doc.content_t,
-          content_fr: doc.content_fr,
-          lang_s: doc.lang_s,
-          date_dt: doc.date_dt
+        $scope.validationForm = {};
+        $scope.validationForm.url      = doc.url_s;
+        $scope.validationForm.title    = doc.title_t;
+        $scope.validationForm.content  = doc.content_t;
+        $scope.validationForm.tags     = '';
+        $scope.validationForm.folder   = '';
+
+        var modalInstance = $modal.open({
+          scope: $scope,
+          templateUrl : 'validateModal.html',
+          controller  : ModalInstanceCtrl,
+
 
         });
+
+        modalInstance.result.then(function () {
+
+          $scope.validationAdd.get({
+            url_s         : $scope.validationForm.url,
+            tags_s        : $scope.validationForm.tags,
+            title_t       : $scope.validationForm.title,
+            content_en    : $scope.validationForm.content,
+            content_t     : $scope.validationForm.content,
+            content_fr    : $scope.validationForm.content,
+            folder_s      : $scope.validationForm.folder.name,
+            folder_i      : $scope.validationForm.folder.id,
+            lang_s        : doc.lang_s,
+            date_dt       : doc.date_dt
+          });
+
+          $scope.atomicChange.get({
+            id            : doc.id,
+            validated_b   : validate
+          }).$promise.then(function (result) {
+              $scope.doSearch();
+            }
+          );
+
+        });
+
+
       }
       else {
-
+        $scope.atomicChange.get({
+          id            : doc.id,
+          validated_b   : validate
+        }).$promise.then(function (result) {
+            $scope.doSearch();
+          }
+        );
 
       }
 
-      $scope.atomicChange.get({
-        id            : doc.id,
-        validated_b   : validate
-      }).$promise.then(function (result) {
-          $scope.doSearch();
-        }
-      );
+
       //   var addInfo = alert('Information ajoutée');
 
       // Testing  Modal trigger
@@ -528,6 +623,20 @@ angular.module('websoApp')
         templateUrl: 'validateModal.html',
         controller: ModalInstanceCtrl
       });*/
+    };
+
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
     };
 
     // first call,init
@@ -543,6 +652,8 @@ angular.module('websoApp')
       var path = '/validate/add/'+url ; //dont need the '#'
       $location.path(path);
     }
+
+
 
   }]);
 

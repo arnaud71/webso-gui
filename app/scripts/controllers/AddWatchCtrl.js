@@ -74,6 +74,7 @@ angular.module('websoApp')
           $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
         });
+        $scope.checkSourceUrl($scope.model.inputUrl);
         $scope.doSearchWatch();
       },
       enablePaging        : true,
@@ -446,8 +447,11 @@ angular.module('websoApp')
           }
           //$scope.$emit('UNCHECKRSS');
           $scope.checkingSource = false;
-          $scope.sourceChecked = true;
-        });
+          if ($scope.checkSourceResult.count>0) {
+            $scope.sourceChecked = true;
+          }
+
+        },function (){$scope.sourceChecked = false});
       }
       else {
         $scope.sourceChecked = false;
