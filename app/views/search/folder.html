@@ -126,26 +126,25 @@
                                     <td>
 
                                         <div id="titleFound">
-                                            <a href="{{feed.link}}" target="_blank">{{feed.title}}</a>
+                                            <a href="{{feed.link}}" target="_blank" ng-bind-html="feed.title"></a>
                                         </div>
-                                        <div id="contentFound">
-                                            {{feed.description}}
+                                        <div id="contentFound" ng-bind-html="feed.description">
 
                                         </div>
                                         <div id="urlFound">
-                                            <span ng-if="collect.link.length<100">
-                                            {{collect.link}}
+                                            <span ng-if="feed.link.length<100">
+                                            {{feed.link}}
                                             </span>
                                             <span ng-if="collect.link>100">
-                                                {{collect.link| limitTo:100}}...
+                                                {{feed.link| limitTo:100}}...
                                             </span>
                                         </div>
 
                                         <div id="dateFound">
-                                            {{collect.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            {{feed.pubDate|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="addFeed(feed)" tooltip="Ajouter le flux"> <span class="glyphicon glyphicon-plus"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="seeFeed(feed)" tooltip="Voir le flux"> <span class="glyphicon glyphicon-search"></span></button>
                                             </div>
 
 

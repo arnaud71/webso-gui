@@ -107,12 +107,12 @@ angular.module('websoApp')
 
     $scope.collectMultiSourceGroup =  [
       {name: 'google_news',   value: 'Google News',   nb:0, checked:false },
-      {name: 'bing_news',     value: 'Bing News',     nb:0, checked:false },
-      {name: 'yahoo_news',    value: 'Yahoo News',    nb:0, checked:false },
-      {name: 'google_blogs',  value: 'Google Blog',   nb:0, checked:false },
-      {name: 'reddit',        value: 'Reddit',        nb:0, checked:false },
-      {name: 'faroo_news',    value: 'Faroo News',    nb:0, checked:false },
-      {name: 'delicious',     value: 'Delicious',     nb:0, checked:false },
+     // {name: 'bing_news',     value: 'Bing News',     nb:0, checked:false },
+     // {name: 'yahoo_news',    value: 'Yahoo News',    nb:0, checked:false },
+     // {name: 'google_blogs',  value: 'Google Blog',   nb:0, checked:false },
+     // {name: 'reddit',        value: 'Reddit',        nb:0, checked:false },
+     // {name: 'faroo_news',    value: 'Faroo News',    nb:0, checked:false },
+     // {name: 'delicious',     value: 'Delicious',     nb:0, checked:false },
     ];
 
 
