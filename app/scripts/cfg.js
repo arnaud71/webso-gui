@@ -1,6 +1,6 @@
 angular.module('websoApp').constant('cfg', {
 
-  versionWebso    : '0.7.1',
+  versionWebso    : '0.8',
   errorConnect    : 'Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n\'est pas disponible)',
 
 
@@ -18,8 +18,8 @@ angular.module('websoApp').constant('cfg', {
                       ],
   hideForTest         : true,
 
-  //urlDB           : 'http://beta.inelio.fr:8888/',
-  //urlServices     : 'http://beta.inelio.fr/cgi-bin/',
+  //urlDB           : 'http://195.176.237.198:8983/',
+  //urlServices     : 'http://cgi.inelio.fr/',
   //urlBookmarklet  : 'http://beta.inelio.fr/'
 
   //urlDB           : 'http://albator.hesge.ch:8983/',
