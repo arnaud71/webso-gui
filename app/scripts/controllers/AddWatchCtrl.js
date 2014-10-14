@@ -318,7 +318,8 @@ angular.module('websoApp')
                       sort        :'creation_dt desc',
                       rows        :$scope.pagingOptionsWatch.pageSize
         }).$promise.then(function(result) {
-
+          $scope.folderArray=[];
+          $scope.doSearchFolder();
           angular.forEach(result.success.response.docs, function (item, index) {
             $scope.rowTabWatch[item.id]= index;
             item.folder_s = $scope.folderArray[item.folder_s];
@@ -791,57 +792,58 @@ angular.module('websoApp')
           // $scope.totalServerItemsWatch  = result.success.response.numFound;
           $scope.folders = [];
           $scope.folderArray = [];
-          var tmp = JSON.parse(result.success.response.docs[0].content_s);
-          var log = [];
-          angular.forEach(tmp[0].nodes, function(value1, key1) {
-            // if(angular.isArray(value1)){
-            //   alert(angular.isArray(value1));
+          if(angular.isDefined(result.success.response.docs[0].content_s)){
+            var tmp = JSON.parse(result.success.response.docs[0].content_s);
+            var log = [];
+            angular.forEach(tmp[0].nodes, function(value1, key1) {
+              // if(angular.isArray(value1)){
+              //   alert(angular.isArray(value1));
 
-            //   angular.forEach(value1, function(value2, key2) {
+              //   angular.forEach(value1, function(value2, key2) {
+                  
+              //     if(angular.isArray(value2)){
+              //       angular.forEach(value2, function(value3, key3) {
+                      
+              //         if(angular.isArray(value3)){
+              //           $scope.forEach.push(value3);
+
+              //           angular.forEach(value3, function(value4, key4) {
+              //             //$scope.folders.push(key + ': ' + value);
+              //           }, log);
+              //           $scope.folders.push(vlue3.id+ ': ' + value3.title);
+
+              //         }
+              //         else $scope.folders.push(key3 + ': ' + value3);
+
+              //       }, log);
+
+              //     }
+              //     else $scope.folders.push(key2 + ': ' + value2);
                 
-            //     if(angular.isArray(value2)){
-            //       angular.forEach(value2, function(value3, key3) {
-                    
-            //         if(angular.isArray(value3)){
-            //           $scope.forEach.push(value3);
+              //   }, log);
 
-            //           angular.forEach(value3, function(value4, key4) {
-            //             //$scope.folders.push(key + ': ' + value);
-            //           }, log);
-            //           $scope.folders.push(vlue3.id+ ': ' + value3.title);
-
-            //         }
-            //         else $scope.folders.push(key3 + ': ' + value3);
-
-            //       }, log);
-
-            //     }
-            //     else $scope.folders.push(key2 + ': ' + value2);
-              
-            //   }, log);
-
-            // }
-            // else
-            $scope.folders.push({"id":value1.id ,"name":value1.title});
-            $scope.folderArray[value1.id]=value1.title;
-            angular.forEach(value1.nodes, function(value2, key2){
-              $scope.folders.push({"id":value2.id , "name":value2.title});
-              $scope.folderArray[value2.id]=value2.title;
-              angular.forEach(value2.nodes, function(value3, key3){
-                $scope.folders.push({"id":value3.id, "name":value3.title});
-                $scope.folderArray[value3.id]=value3.title;
-                if(angular.isArray(value3.nodes)){
-                  angular.forEach(value3.nodes, function(value4, key4){
-                    $scope.folders.push({"id":value4.id, "name":value4.title});
-                    $scope.folderArray[value4.id]=value4.title;
-                  }, log);
-                }
+              // }
+              // else
+              $scope.folders.push({"id":value1.id ,"name":value1.title});
+              $scope.folderArray[value1.id]=value1.title;
+              angular.forEach(value1.nodes, function(value2, key2){
+                $scope.folders.push({"id":value2.id , "name":value2.title});
+                $scope.folderArray[value2.id]=value2.title;
+                angular.forEach(value2.nodes, function(value3, key3){
+                  $scope.folders.push({"id":value3.id, "name":value3.title});
+                  $scope.folderArray[value3.id]=value3.title;
+                  if(angular.isArray(value3.nodes)){
+                    angular.forEach(value3.nodes, function(value4, key4){
+                      $scope.folders.push({"id":value4.id, "name":value4.title});
+                      $scope.folderArray[value4.id]=value4.title;
+                    }, log);
+                  }
+                }, log);
               }, log);
             }, log);
-          }, log);
-          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
-          //$scope.folder = $scope.folders[1];
-
+            //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+            //$scope.folder = $scope.folders[1];
+          }
         }, function(reason) {
           alert('Failed: ' + reason);
         });

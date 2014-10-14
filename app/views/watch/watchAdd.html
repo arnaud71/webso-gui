@@ -15,12 +15,12 @@
 
     <form name="sourceForm" class="form-horizontal" role="form">
         <!-- source panel -->
-        <div class="row">
+         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body">
 
                     <tabset>
-                        <tab heading="{{tabsSource[0].title}}">
+                        <!-- <tab heading="{{tabsSource[0].title}}">
                             <div class="col-md-6">
                             <div class="form-group" >
                                 <label class="col-md-5 control-label required"> Source </label>
@@ -73,7 +73,8 @@
                             <div class="form-group">
                                 <label class="col-md-5 control-label"> Secteur d'activité </label>
                                 <div class="col-md-7">
-                                    <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
+                                    -->
+                                    <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> --><!--
                                     <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
                                     {{activity}}
                                 </div>
@@ -93,8 +94,8 @@
                                     <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6" id="displaySample">
+                        </div> -->
+                        <!-- <div class="col-md-6" id="displaySample">
                             <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                                 <div ng-show="sourceChecked">
                                     {{checkSourceResult.count}} élément(s) trouvé(s)
@@ -111,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        </tab>
+                        </tab> -->
 
                         <tab heading="{{tabsSource[1].title}}" select="doSearchSource()" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_source' analytics-category='Passive'>
                             <div class="col-md-12">
@@ -129,13 +130,13 @@
 
         <!-- watch panel -->
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <!-- <div class="panel panel-default">
+                <div class="panel-body"> -->
                     <div ng-show="model.inputUrl">
                         Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
                     </div>
-                    <tabset>
-                        <tab heading="{{tabsWatch[0].title}}">
+                    <!-- <tabset>
+                        <tab heading="{{tabsWatch[0].title}}"> -->
                             <div class="col-md-6">
 
 
@@ -200,7 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </tab>
+                        <!-- </tab>
                         <tab heading="{{tabsWatch[1].title}}" select="doSearchWatch()">
                             <div class="col-md-12">
                                 <div class="gridStyleWatchSmall" ng-grid="gridOptionsWatch">
@@ -210,7 +211,7 @@
                         </tab>
                     </tabset>
                 </div>
-            </div>
+            </div> -->
         </div>
     </form>
 

@@ -16,9 +16,14 @@ angular.module('websoApp')
 	$scope.valueCheckBox = false;
 	$scope.isAuthenticated = $cookieStore.get('Authenticated');
 
-	if ($scope.isAuthenticated) {
+	/*if ($scope.isAuthenticated) {
 		$scope.username = $cookieStore.get('username');
 		$scope.password = $cookieStore.get('password');
+	}*/
+
+	if ($scope.isAuthenticated) {
+		var token 		  = $cookieStore.get('token');
+		var token_timeout = $cookieStore.get('token_timeout');
 	}
 
 /****************** Connection procedure ***********************/  
@@ -31,7 +36,14 @@ angular.module('websoApp')
   $scope.login = function () {
   	$scope.loading = true;
     // sending login information to the service to validate the authentication 
-	$scope.verifyLogin.get({user_s : $scope.username, password_s : $scope.password}).$promise.then(function(user) {
+    var requete = {};
+    // if(scope.isAuthenticated){
+    // 	requete = {token_s : token, token_timeout_dt : token_timeout};
+    // }
+    // else{
+    	requete = {user_s : $scope.username, password_s : $scope.password};
+    //}
+	$scope.verifyLogin.get(requete).$promise.then(function(user) {
 
 		if(user.error){
 			$scope.loading = false;
@@ -43,13 +55,16 @@ angular.module('websoApp')
 				$scope.loading = false;
 				if($scope.valueCheckBox === true){
 					localStorageService.set('username', $scope.username);
-					localStorageService.set('password', $scope.password);
+					//localStorageService.set('password', $scope.password);
 				}
 				$cookieStore.put('Authenticated', true);
 				$scope.isAuthenticated = true;
-				$cookieStore.put('username', $scope.username);
-				$cookieStore.put('password', $scope.password);
+				$cookieStore.put('username', user.username);
+				$cookieStore.put('email', user.email);
+				//$cookieStore.put('password', $scope.password);
 				$cookieStore.put('userRole', user.role);
+				$cookieStore.put('token', user.token);
+				$cookieStore.put('token_timeout', user.token_timeout);
 				$location.path('/home');				
 			}
 		}

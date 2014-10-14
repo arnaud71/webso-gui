@@ -1,0 +1,73 @@
+<div ng-controller="headerCtrl">
+  <div ng-include src="template.url"></div>
+</div>
+
+<h1>Mon profil</h1>
+<div ng-controller="ProfileSettingCtrl">
+  <form ng-submit="modifyPassword()" name="modifyFrom" role="form" class="form-horizontal">
+    <!-- <div class="form-group">
+      <label for="pseudo" class="control-label col-sm-2">Pseudo</label>
+      <div class="col-sm-3">
+        <input type="text" ng-blur="releaseError()" data-ng-model="pseudo" value="{{username}}" class="form-control" disabled/>
+        {{username}}
+      </div>
+    </div> -->
+    <div class="form-group">
+      <label for="password" class="control-label col-sm-2">Mot de passe</label>
+      <div class="col-sm-3">
+        <input type="password" ng-blur="releaseError()" data-ng-model="password" placeholder="Mot de passe" name="password" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="passwordConfirm" class="control-label col-sm-2">Confirmation mot de passe</label>
+      <div class="col-sm-3">
+        <input type="password" ng-blur="releaseError()" data-ng-model="passwordConfirm" placeholder="Confirmation mot de passe" name="passwordConfirm" class="form-control"/>
+      </div>
+    </div>
+    <!-- <div class="form-group">
+      <label for="email" class="control-label col-sm-2">Adresse email</label>
+      <div class="col-sm-3">
+        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="Adresse email" name="email" 
+         class="form-control"/>
+      </div>
+    </div> -->
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn" name="validate">Modifier</button>
+      </div>
+    </div>
+    <div class="alert alert-success" ng-show="isSuccessPassword">
+      <strong>Succès :&nbsp;</strong><span>{{messagePassword}}</span>
+    </div>
+    <div class="alert alert-danger" ng-show="isErrorPassword">
+      <strong>erreur :&nbsp;</strong><span>{{errorMessagePassword}}</span>
+    </div>
+  </form>
+  <form ng-submit="modifyEmail()" name="modifyFrom" role="form" class="form-horizontal">
+    <!-- <div class="form-group">
+      <label for="pseudo" class="control-label col-sm-2">Pseudo</label>
+      <div class="col-sm-3">
+        <input type="text" ng-blur="releaseError()" data-ng-model="pseudo" value="{{username}}" class="form-control" disabled/>
+        {{username}}
+      </div>
+    </div> -->
+    <div class="form-group">
+      <label for="email" class="control-label col-sm-2">Adresse email</label>
+      <div class="col-sm-3">
+        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="Adresse email" name="email" 
+         class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn" name="validate">Modifier</button>
+      </div>
+    </div>
+    <div class="alert alert-success" ng-show="isSuccessMail">
+      <strong>Succès :&nbsp;</strong><span>{{messageMail}}</span>
+    </div>
+    <div class="alert alert-danger" ng-show="isErrorMail">
+      <strong>erreur :&nbsp;</strong><span>{{errorMessageMail}}</span>
+    </div>
+  </form>
+</div>
