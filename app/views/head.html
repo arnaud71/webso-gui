@@ -24,7 +24,7 @@
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collecter<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li data-match-route="/collect/external"><a ui-sref="/collect/external">Collectes externes</a></li>
+                    <li data-match-route="/collect/external"><a ui-sref="/collect/external" ng-show="!hideForTests">Collectes externes</a></li>
                     <li data-match-route="/collect/rss"><a ui-sref="/collect/rss">Flux RSS</a></li>
                     <li data-match-route="/collect/package"><a ui-sref="/collect/package" ng-show="!hideForTests">Packages de sources</a></li>
                 </ul>
