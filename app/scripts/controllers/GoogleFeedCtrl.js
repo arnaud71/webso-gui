@@ -7,7 +7,7 @@ angular.module('websoApp')
 
     $scope.model = {
       msgSelect           : 'Selectionner tout',
-      msgAdd              : 'Ajouter',
+      msgAdd              : 'Ajouter source',
       foundRes            : 0,
       searchTerm          : '',
       mySelections        : [],
@@ -138,31 +138,36 @@ angular.module('websoApp')
     // doAddSource
     // add a source in the DB
     $scope.doAddRss = function () {
+      if($scope.model.foundRes != 0 && angular.isDefined($scope.model.mySelections[0])){
 
-      $.each($scope.model.mySelections, function(index, element) {
+        $.each($scope.model.mySelections, function(index, element) {
 
+          $scope.rssAddResult = $scope.addRss.get({
+            source_type_s : 'rss',
+            type_s :        'source',
+            url_s :         this.url,
+            tags_s:         '',
+            title_t:        this.title,
+            domain_s:       '',
+            activity_s:     '',
+            //domain_s:       $scope.domain.name,
+            //activity_s:     $scope.activity.name,
+            refresh_s:      '12h'
 
-        $scope.rssAddResult = $scope.addRss.get({
-          source_type_s : 'rss',
-          type_s :        'source',
-          url_s :         this.url,
-          tags_s:         '',
-          title_t:        this.title,
-          domain_s:       '',
-          activity_s:     '',
-          //domain_s:       $scope.domain.name,
-          //activity_s:     $scope.activity.name,
-          refresh_s:      '12h'
+          }, function () {
 
-        }, function () {
+          });
 
         });
-
-      });
-      var modalInstance = $modal.open({
-        templateUrl: 'addSourceModal.html',
-        controller: ModalInstanceCtrl
-      });
+        var modalInstance = $modal.open({
+          templateUrl: 'addSourceModal.html',
+          controller: ModalInstanceCtrl
+        });
+      }
+      else{
+        $scope.isError      = true;
+        $scope.errorMessage = 'Merci de sélectionner au moins une source';
+      }
 
 
     };
