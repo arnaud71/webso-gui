@@ -80,24 +80,24 @@ angular.module('websoApp')
 
       {
         name        : 'validation',
-        value       : 'Dossiers de validations',
+        value       : 'Dossiers de validation',
         checked     : false
       },
 
-      {
-        name        : 'collectMultiSource',
-        value       : 'Collectes multisources',
-        facetsGroup : [
-          {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
-        ],
-        checked     : false
-      },
+      // {
+      //   name        : 'collectMultiSource',
+      //   value       : 'Collectes multisources',
+      //   facetsGroup : [
+      //     {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
+      //   ],
+      //   checked     : false
+      // },
 
-      {
-        name        : 'feeds',
-        value       : 'Recherche de flux RSS',
-        checked     : false
-      },
+      // {
+      //   name        : 'feeds',
+      //   value       : 'Recherche de flux RSS',
+      //   checked     : false
+      // },
     ];
     angular.forEach($scope.searchNav, function(value, key) {
       $scope.idx[value.name] = key;
@@ -194,28 +194,29 @@ angular.module('websoApp')
       //if ($scope.searchTerm) {
 
 
-      if (($scope.searchNav[$scope.idx.feeds].checked)) {
+      // if (($scope.searchNav[$scope.idx.feeds].checked)) {
 
-        $scope.feedSearch.get({
-          query     : $scope.searchTerm
-        }).$promise.then(function (result) {
-            $scope.feedResult = result;
-          })
+      //   $scope.feedSearch.get({
+      //     query     : $scope.searchTerm
+      //   }).$promise.then(function (result) {
+      //       $scope.feedResult = result;
+      //     })
 
 
 
-      }
-      else if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
+      // }
+      // else if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
 
-        $scope.collectMultiSourceSearch.get({
-          query     : $scope.searchTerm,
-          typeQuery : 'google_news'
-        }).$promise.then(function (result) {
-            $scope.collectMultiSourceResult = result;
-          })
+      //   $scope.collectMultiSourceSearch.get({
+      //     query     : $scope.searchTerm,
+      //     typeQuery : 'google_news'
+      //   }).$promise.then(function (result) {
+      //       $scope.collectMultiSourceResult = result;
+      //     })
 
-      }
-      else if ($scope.searchNav[$scope.idx.validation].checked) {
+      // }
+      // else 
+        if ($scope.searchNav[$scope.idx.validation].checked) {
 
           if ($scope.searchTerm == '') {
             $scope.sort = 'date_dt desc';
@@ -353,8 +354,8 @@ angular.module('websoApp')
     $scope.groupCheck = function(searchGroup) {
       if (searchGroup == 'watch') {
         if ($scope.searchNav[$scope.idx.watch].checked == false) {
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = false;
+          // $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          // $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.searchNav[$scope.idx.watch].checked = true;
           $scope.currentPage            = 1;
@@ -394,9 +395,9 @@ angular.module('websoApp')
       else if (searchGroup == 'validation') {
         if ($scope.searchNav[$scope.idx.validation].checked == false) {
           $scope.searchNav[$scope.idx.validation].checked = true;
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          // $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           $scope.searchNav[$scope.idx.watch].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = false;
+          // $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
