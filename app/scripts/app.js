@@ -81,7 +81,15 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         })
 
         // SEARCH
-        .state('/search/source', {
+        .state('/search', {
+            url: '/search',
+            templateUrl: 'views/search/folder.html',
+            controller: 'FolderSearchCtrl',
+            data: {
+              authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+            }
+        })
+        /*.state('/search/source', {
             url: '/search/source',
             templateUrl: 'views/search/sources.html',
             controller: 'FolderSearchCtrl',
@@ -112,7 +120,7 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             data: {
               authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
             }
-        })
+        })*/
 
         // SOURCE
         .state('/source/list', {
@@ -245,8 +253,8 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
                       authorizedRoles: ['administrateur', 'veilleur']
                   }
         })
-        .state('/usersList', {
-            url: '/usersList',
+        .state('/organize/usersList', {
+            url: '/organize/usersList',
             templateUrl: 'views/administration/usersList.html',
             controller: 'UsersListCtrl',
                   data: {
