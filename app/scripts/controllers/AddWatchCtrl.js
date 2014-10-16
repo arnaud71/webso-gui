@@ -36,8 +36,8 @@ angular.module('websoApp')
       inputTags           : '',
       inputTitle          : '',
       inputFrequency      : 0,
-      inputDomain         : '',
-      inputActivity       : '',
+      inputDomain         : [{name:'',activites:[]}],
+      inputActivity       : [{name:''}],
       inputQuery          : '',
       inputFolder         : '',
       inputNotification   : '',
@@ -70,8 +70,8 @@ angular.module('websoApp')
           $scope.model.inputTags  = item.tags_s;
           //$scope.domain.name      = item.domain_s;
           //$scope.activity.name    = item.activity_s;
-          $scope.model.inputDomain  = item.domain_s;
-          $scope.model.inputActivity    = item.activity_s;
+          $scope.model.inputDomain.name  = item.domain_s;
+          $scope.model.inputActivity.name    = item.activity_s;
           $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
         });
@@ -410,8 +410,8 @@ angular.module('websoApp')
           url_s         :  $scope.model.inputUrl,
           title_t       :  $scope.model.inputTitle,
           tags_ss       :  $scope.model.inputTags,
-          domain_s      :  $scope.model.inputDomain,
-          activity_s    :  $scope.model.inputActivity,
+          domain_s      :  $scope.model.inputDomain.name,
+          activity_s    :  $scope.model.inputActivity.name,
           folder_s      :  $scope.model.inputFolder.id,
           query_s       :  $scope.model.inputQuery,
           source_id_s   :  $scope.model.sourceId,
