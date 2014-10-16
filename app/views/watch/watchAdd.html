@@ -19,100 +19,99 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <tabset>
-                        <!-- <tab heading="{{tabsSource[0].title}}">
-                            <div class="col-md-6">
-                            <div class="form-group" >
-                                <label class="col-md-5 control-label required"> Source </label>
-
-
-                                <div class="col-md-6">
-                                    <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
-
-                                </div>
-                                <div class="col-md-1">
-
-                                    <span class="glyphicon glyphicon-repeat" ng-show="checkingSource"></span>
-                                </div>
-
-                            </div>
-                            <div class="form-group" >
-                                <label class="col-md-5 control-label"> Nom de la source </label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group" >
-                                <label class="col-md-5 control-label"> Fréquence de la source </label>
-                                <div class="col-md-7">
-                                    <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group" >
-                                <label class="col-md-5 control-label"> Tags </label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
-                                </div>
-
-                            </div>
-
-                            <div class="form-group" >
+                    <tabset ng-show="heg">
+                        <tab heading="{{tabsSource[0].title}}" ng-show="heg">
+                            <div class="col-md-6" ng-show="heg">
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Domaine </label>
-                                    <div  class="col-md-7">
-                                        <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
+                                    <label class="col-md-5 control-label required"> Source </label>
+
+
+                                    <div class="col-md-6">
+                                        <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
+
+                                    </div>
+                                    <div class="col-md-1">
+
+                                        <span class="glyphicon glyphicon-repeat" ng-show="checkingSource"></span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Nom de la source </label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Fréquence de la source </label>
+                                    <div class="col-md-7">
+                                        <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group" >
+                                    <label class="col-md-5 control-label"> Tags </label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group" >
+                                    <div class="form-group" >
+                                        <label class="col-md-5 control-label"> Domaine </label>
+                                        <div  class="col-md-7">
+                                            <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label"> Secteur d'activité </label>
+                                    <div class="col-md-7">
+                                        <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
+                                        <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
+                                        {{activity}}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="checkbox">
+                                    <div class="col-sm-offset-5 col-sm-10">
+                                        <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxSource" name="valueCheckBox"> 
+                                        Ajouter le widget source au tableau de bord
+                                    </div>
+                                  </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-5 col-md-7">
+                                        <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6" id="displaySample">
+                                <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
+                                    <div ng-show="sourceChecked">
+                                        {{checkSourceResult.count}} élément(s) trouvé(s)
+                                        <div ng-repeat="item in checkSourceResult.items">
+                                            <div class row>
+
+                                                <h5>{{item.title}}</h5>
+
+                                                <p>{{item.description}}</p>
 
 
-                            <div class="form-group">
-                                <label class="col-md-5 control-label"> Secteur d'activité </label>
-                                <div class="col-md-7">
-                                    -->
-                                    <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> --><!--
-                                    <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
-                                    {{activity}}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="checkbox">
-                                <div class="col-sm-offset-5 col-sm-10">
-                                    <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxSource" name="valueCheckBox"> 
-                                    Ajouter le widget source au tableau de bord
-                                </div>
-                              </label>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-5 col-md-7">
-                                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-md-6" id="displaySample">
-                            <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                                <div ng-show="sourceChecked">
-                                    {{checkSourceResult.count}} élément(s) trouvé(s)
-                                    <div ng-repeat="item in checkSourceResult.items">
-                                        <div class row>
-
-                                            <h5>{{item.title}}</h5>
-
-                                            <p>{{item.description}}</p>
-
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        </tab> -->
+                        </tab>
 
                         <tab heading="{{tabsSource[1].title}}" select="doSearchSource()" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_source' analytics-category='Passive'>
                             <div class="col-md-12">
@@ -122,7 +121,15 @@
                             </div>
                         </tab>
                     </tabset>
+                    <tabset ng-hide="heg">
+                        <tab heading="{{tabsSource[1].title}}" select="doSearchSource()" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_source' analytics-category='Passive'>
+                            <div class="col-md-12">
+                            <div class="gridStyleSourceSmall" ng-grid="gridOptionsSource">
 
+                            </div>
+                            </div>
+                        </tab>
+                    </tabset>
 
                 </div>
             </div>
@@ -130,13 +137,13 @@
 
         <!-- watch panel -->
         <div class="row">
-            <!-- <div class="panel panel-default">
-                <div class="panel-body"> -->
+            <div class="panel panel-default" ng-show="heg">
+                <div class="panel-body">
                     <div ng-show="model.inputUrl">
                         Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
                     </div>
-                    <!-- <tabset>
-                        <tab heading="{{tabsWatch[0].title}}"> -->
+                    <tabset>
+                        <tab heading="{{tabsWatch[0].title}}">
                             <div class="col-md-6">
 
 
@@ -201,7 +208,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- </tab>
+                        </tab>
                         <tab heading="{{tabsWatch[1].title}}" select="doSearchWatch()">
                             <div class="col-md-12">
                                 <div class="gridStyleWatchSmall" ng-grid="gridOptionsWatch">
@@ -211,7 +218,75 @@
                         </tab>
                     </tabset>
                 </div>
-            </div> -->
+            </div>
+
+            <div ng-hide="heg">
+                <div ng-show="model.inputUrl">
+                    Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" >
+                        <label class="col-md-5 control-label"> Dossier </label>
+                        <div  class="col-md-7">
+                            <select id="inputFolder" name="inputFolder" ng-model="model.inputFolder" ng-options="folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" >
+                        <label class="col-md-5 control-label"> Requête </label>
+                        <div class="col-md-7">
+                            <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
+                            <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" >
+                        <label class="col-md-5 control-label"> Notification </label>
+
+                        <div class="col-md-7">
+                            <select id="inputNotification" ng-model="model.inputNotification" ng-options="notification.option for notification in notifications"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="checkbox">
+                        <div class="col-sm-offset-5 col-sm-10">
+                            <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxWatch" name="valueCheckBox"> 
+                            Ajouter le widget surveillance au tableau de bord
+                        </div>
+                      </label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-5 col-md-7">
+                            <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="displaySolrTest">
+                    <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
+                        <div ng-show="solrResult.response">
+                            {{solrResult.response.numFound||0}} documents(s) trouvé(s)
+                        <div ng-show="solrResult.response.numFound">
+
+                            <div ng-repeat="doc in solrResult.response.docs">
+                                <div class row>
+
+                                    </p><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+
+                                    <p><span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                                    </p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 

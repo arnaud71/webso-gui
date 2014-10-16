@@ -5,6 +5,7 @@ angular.module('websoApp')
 
     var $username = $cookieStore.get('username');
 
+    $scope.heg                    = cfg.heg;
     $scope.isError                = false;
     $scope.errorMessage           = cfg.errorConnect;
 

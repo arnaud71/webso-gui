@@ -4,6 +4,7 @@ angular.module('websoApp')
   .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal) {
 
     var $username                 = $cookieStore.get('username');
+    var $heg                      = cfg.heg;
 
     $scope.showFound              = false;
     $scope.totalItems             = 0;
@@ -70,35 +71,68 @@ angular.module('websoApp')
 
 
     // full left search model
-    $scope.searchNav = [
-      {
-        name        : 'watch',
-        value       : 'Dossiers de surveillances',
-        facetsGroup : $scope.facetsGroup,
-        checked     : true
-      },
+    if($heg == true){
+      $scope.searchNav = [
+        {
+          name        : 'watch',
+          value       : 'Dossiers de surveillances',
+          facetsGroup : $scope.facetsGroup,
+          checked     : true
+        },
 
-      {
-        name        : 'validation',
-        value       : 'Dossiers de validation',
-        checked     : false
-      },
+        {
+          name        : 'validation',
+          value       : 'Dossiers de validation',
+          checked     : false
+        },
 
-      // {
-      //   name        : 'collectMultiSource',
-      //   value       : 'Collectes multisources',
-      //   facetsGroup : [
-      //     {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
-      //   ],
-      //   checked     : false
-      // },
+        {
+          name        : 'collectMultiSource',
+          value       : 'Collectes multisources',
+          facetsGroup : [
+            {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
+          ],
+          checked     : false
+        },
 
-      // {
-      //   name        : 'feeds',
-      //   value       : 'Recherche de flux RSS',
-      //   checked     : false
-      // },
-    ];
+        // {
+        //   name        : 'feeds',
+        //   value       : 'Recherche de flux RSS',
+        //   checked     : false
+        // },
+      ];
+    }
+    else{
+      $scope.searchNav = [
+        {
+          name        : 'watch',
+          value       : 'Dossiers de surveillances',
+          facetsGroup : $scope.facetsGroup,
+          checked     : true
+        },
+
+        {
+          name        : 'validation',
+          value       : 'Dossiers de validation',
+          checked     : false
+        },
+
+        // {
+        //   name        : 'collectMultiSource',
+        //   value       : 'Collectes multisources',
+        //   facetsGroup : [
+        //     {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
+        //   ],
+        //   checked     : false
+        // },
+
+        // {
+        //   name        : 'feeds',
+        //   value       : 'Recherche de flux RSS',
+        //   checked     : false
+        // },
+      ];
+    }
     angular.forEach($scope.searchNav, function(value, key) {
       $scope.idx[value.name] = key;
     });
@@ -354,7 +388,7 @@ angular.module('websoApp')
     $scope.groupCheck = function(searchGroup) {
       if (searchGroup == 'watch') {
         if ($scope.searchNav[$scope.idx.watch].checked == false) {
-          // $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          if($heg) $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           // $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.searchNav[$scope.idx.watch].checked = true;
@@ -370,7 +404,7 @@ angular.module('websoApp')
         if ($scope.searchNav[$scope.idx.collectMultiSource].checked == false) {
           $scope.searchNav[$scope.idx.watch].checked = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = false;
+          //$scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = true;
           $scope.currentPage            = 1;
           $scope.doSearch();
@@ -395,7 +429,7 @@ angular.module('websoApp')
       else if (searchGroup == 'validation') {
         if ($scope.searchNav[$scope.idx.validation].checked == false) {
           $scope.searchNav[$scope.idx.validation].checked = true;
-          // $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          if($heg) $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           $scope.searchNav[$scope.idx.watch].checked = false;
           // $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.currentPage            = 1;
