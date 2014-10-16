@@ -21,20 +21,12 @@
                     <li data-match-route="/usersList"><a ui-sref="/usersList">Comptes des utilisateurs</a></li>
                 </ul>
             </li> -->
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collecter<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li data-match-route="/collect/external"><a ui-sref="/collect/external">Collectes externes</a></li>
-                    <li data-match-route="/collect/rss"><a ui-sref="/collect/rss">Flux RSS</a></li>
-                    <li data-match-route="/collect/package"><a ui-sref="/collect/package" ng-show="!hideForTests">Packages de sources</a></li>
-                </ul>
+
+            <li data-match-route="/search" ng-show="isVeilleurAdmin">
+                <li data-match-route="/search" ng-show="isVeilleurAdmin"><a ui-sref="/search">Rechercher</a></li>
             </li>
 
-            <li data-match-route="/search" ng-show="isVeilleurAdmin" ng-hide="heg">
-                <li data-match-route="/search" ng-show="isVeilleurAdmin" ng-hide="heg"><a ui-sref="/search">Rechercher</a></li>
-            </li>
-
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
+            <!-- <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Search' analytics-label='Search_menu' analytics-category='Passive'>Rechercher<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/search/source"><a ui-sref="/search/source" ng-hide="hideForTests">Dans les sources</a></li>
@@ -42,7 +34,7 @@
                     <li data-match-route="/search/webso"><a ui-sref="/search/webso" ng-hide="hideForTests">Dans les collectes externes</a></li>
                     <li data-match-route="/search"><a ui-sref="/search">Dans les dossiers</a></li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Sources' analytics-label='Watch_menu' analytics-category='Passive'>Gérer les sources<b class="caret"></b></a>

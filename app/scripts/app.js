@@ -54,32 +54,6 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             }
         })
 
-        // COLLECT
-        .state('/collect/external', {
-            url: '/collect/external',       
-            templateUrl: 'views/collect/external.html' ,
-            controller:'',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur']
-                  }
-        })
-        .state('/collect/rss', {
-            url: '/collect/rss',       
-            templateUrl: 'views/collect/rss.html' ,
-            controller:'',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur']
-                  }
-        })
-        .state('/collect/package', {
-          url: '/collect/package',
-          templateUrl: 'views/collect/package.html' ,
-          controller:'',
-          data: {
-            authorizedRoles: ['administrateur', 'veilleur']
-          }
-        })
-
         // SEARCH
         .state('/search', {
             url: '/search',
