@@ -17,6 +17,7 @@ angular.module('websoApp').constant('cfg', {
               //  {value:'delicious'    ,displayName:'delicious'}
                       ],
   hideForTest         : true,
+  heg                 : false,
 
   //urlDB           : 'http://195.176.237.198:8983/',
   //urlServices     : 'http://cgi.inelio.fr/',

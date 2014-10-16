@@ -21,26 +21,30 @@
                     <li data-match-route="/usersList"><a ui-sref="/usersList">Comptes des utilisateurs</a></li>
                 </ul>
             </li> -->
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collecter<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li data-match-route="/collect/external"><a ui-sref="/collect/external" ng-show="!hideForTests">Collectes externes</a></li>
+                    <li data-match-route="/collect/external"><a ui-sref="/collect/external">Collectes externes</a></li>
                     <li data-match-route="/collect/rss"><a ui-sref="/collect/rss">Flux RSS</a></li>
                     <li data-match-route="/collect/package"><a ui-sref="/collect/package" ng-show="!hideForTests">Packages de sources</a></li>
                 </ul>
             </li>
 
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+            <li data-match-route="/search" ng-show="isVeilleurAdmin" ng-hide="heg">
+                <li data-match-route="/search" ng-show="isVeilleurAdmin" ng-hide="heg"><a ui-sref="/search">Rechercher</a></li>
+            </li>
+
+            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Search' analytics-label='Search_menu' analytics-category='Passive'>Rechercher<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li data-match-route="/search/source"><a ui-sref="/search/source" ng-show="!hideForTests">Dans les sources</a></li>
-                    <li data-match-route="/search/rss"><a ui-sref="/search/rss" ng-show="!hideForTests">Flux RSS</a></li>
-                    <li data-match-route="/search/webso"><a ui-sref="/search/webso">Dans les collectes externes</a></li>
-                    <li data-match-route="/search/folder"><a ui-sref="/search/folder">Dans les dossiers</a></li>
+                    <li data-match-route="/search/source"><a ui-sref="/search/source" ng-hide="hideForTests">Dans les sources</a></li>
+                    <li data-match-route="/collect/rss"><a ui-sref="/collect/rss">Flux RSS</a></li>
+                    <li data-match-route="/search/webso"><a ui-sref="/search/webso" ng-hide="hideForTests">Dans les collectes externes</a></li>
+                    <li data-match-route="/search"><a ui-sref="/search">Dans les dossiers</a></li>
                 </ul>
             </li>
 
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Sources' analytics-label='Watch_menu' analytics-category='Passive'>Gérer les sources<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/source/add" ng-show="isVeilleurAdmin">
@@ -96,7 +100,7 @@
                     <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a></li>
                     <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a></li>
                     <li data-match-route="/organize/profile"><a ui-sref="/organize/profile">Mon profil</a></li>
-                    <li data-match-route="/organize/usersList" ng-show="isAdmin"><a ui-sref="organize/usersList">Comptes des utilisateurs</a></li>
+                    <li data-match-route="/organize/usersList" ng-show="isAdmin"><a ui-sref="/organize/usersList">Comptes des utilisateurs</a></li>
                     <li data-match-route="/organize/booklet" ng-show="!hideForTests"><a ui-sref="/organize/booklet" >Booklet</a></li>
                     <!-- <li data-match-route="/organize/social" ng-show="!hideForTests"><a ui-sref="/organize/social">Connecter aux réseaux sociaux</a></li> -->
                 </ul>
