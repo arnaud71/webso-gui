@@ -93,11 +93,11 @@ angular.module('websoApp')
         checked     : false
       },
 
-      // {
-      //   name        : 'feeds',
-      //   value       : 'Recherche de flux RSS',
-      //   checked     : false
-      // },
+      {
+        name        : 'feeds',
+        value       : 'Recherche de flux RSS',
+        checked     : false
+      },
     ];
     angular.forEach($scope.searchNav, function(value, key) {
       $scope.idx[value.name] = key;
@@ -191,22 +191,18 @@ angular.module('websoApp')
     $scope.doSearch = function (group) {
       $scope.isCollapsed = false;
 
-      //if ($scope.searchTerm) {
+      // if ($scope.searchTerm) {
 
 
-      // if (($scope.searchNav[$scope.idx.feeds].checked)) {
+      if (($scope.searchNav[$scope.idx.feeds].checked)) {
 
-      //   $scope.feedSearch.get({
-      //     query     : $scope.searchTerm
-      //   }).$promise.then(function (result) {
-      //       $scope.feedResult = result;
-      //     })
-
-
-
-      // }
-      //else 
-        if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
+        $scope.feedSearch.get({
+          query     : $scope.searchTerm
+        }).$promise.then(function (result) {
+            $scope.feedResult = result;
+          })
+      }
+      else if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
 
         $scope.collectMultiSourceSearch.get({
           query     : $scope.searchTerm,
@@ -370,7 +366,7 @@ angular.module('websoApp')
         if ($scope.searchNav[$scope.idx.collectMultiSource].checked == false) {
           $scope.searchNav[$scope.idx.watch].checked = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
-          //$scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = true;
           $scope.currentPage            = 1;
           $scope.doSearch();
@@ -397,7 +393,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.validation].checked = true;
           $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
           $scope.searchNav[$scope.idx.watch].checked = false;
-          // $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.feeds].checked = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
