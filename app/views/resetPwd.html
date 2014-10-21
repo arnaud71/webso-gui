@@ -1,0 +1,37 @@
+<div ng-controller="headerCtrl">
+  <div ng-include src="template.url"></div>
+</div>
+
+<div ng-controller="ResetPasswordCtrl">
+  <form ng-show="!isAuthenticated" ng-submit="send()" name="loginForm" role="form" class="form-horizontal">
+    <h1>{{ RESETPWD_H1_TXT }}</h1>
+    <div class="form-group">
+      <label for="username" class="control-label col-sm-2">{{ RESETPWD_USERNAME_LABEL }}</label>
+      <div class="col-sm-3">
+        <input type="text" ng-blur="releaseError()" data-ng-model="username" placeholder="Nom d'utilisateur" name="username" autofocus="autofocus" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email" class="control-label col-sm-2">{{ RESETPWD_MAIL_LABEL }}</label>
+      <div class="col-sm-3">
+        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="Adresse email" name="email" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10" ng-show="!loading">
+        <button type="submit" data-ng-disabled="loginForm.$invalid" class="btn" name="connection" analytics-on='click' analytics-event='Login' analytics-label='{{ username }}' analytics-category='Passive'>{{ RESETPWD_SEND_BTN_TXT }}</button>
+      </div>
+      <center>
+        <div ng-show="loading" class="loading">
+          <img src="images/loader.gif">
+        </div>
+      </center>
+    </div>
+    <div class="alert alert-success" ng-show="isSuccess">
+      <strong>{{ MSG_SUCCESS_TXT }} :&nbsp;</strong><span>{{successMessage}}</span>
+    </div>
+    <div class="alert alert-danger" ng-show="isError">
+      <strong>{{ MSG_ERROR_TXT }} :&nbsp;</strong><span>{{errorMessage}}</span>
+    </div>
+  </form>
+</div>

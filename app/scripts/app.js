@@ -29,6 +29,14 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
                       authorizedRoles: ['public']
                 }
         })
+        .state('/reset', {
+            url: '/reset',
+            templateUrl: 'views/resetPwd.html',
+            controller: 'ResetPasswordCtrl',
+                  data: {
+                      authorizedRoles: ['public']
+                }
+        })
         .state('/publicRegister', {
             url: '/publicRegister',
             templateUrl:'views/publicRegister.html',
