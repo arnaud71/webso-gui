@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('websoApp')
+    .config(function($httpProvider) { $httpProvider.defaults.useXDomain = true; delete $httpProvider.defaults.headers.common['X-Requested-With'];})
     .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg) {
 
     $scope.isSuccess = false;
     var username = $cookieStore.get('username');
     var token    = $cookieStore.get('token');
     var tokenTimeout    = $cookieStore.get('token_timeout');
-    var userId = "";
+    var userId = '';
     $scope.username = username;
 
     //Definition to avoid undefined error
@@ -28,9 +29,9 @@ angular.module('websoApp')
       });
 
     $scope.informationModify = $resource(cfg.urlServices+'db/:action',
-        {action:'change.pl', id: userId, callback:"JSON_CALLBACK"},
-        {get:{method:'JSONP'}});
-        //{post:{method:'POST'}});
+        {action:'change.pl', callback:"JSON_CALLBACK"},
+        {get:{method:'JSONP'},
+        post:{method:'POST', headers: {'Content-Type': 'application/json'}}});
 
     $scope.modifyPassword = function() {
         if($scope.password.length == 0 && $scope.passwordConfirm.length == 0){
@@ -45,7 +46,7 @@ angular.module('websoApp')
         }
         else{
             $scope.informationModify.get({id: userId, password_s: $scope.password}).$promise.then(function(user) {
-            // $scope.informationModify.post({password_s: $scope.password, email_s: $scope.email}).$promise.then(function(user) {
+            // $scope.informationModify.post({id: userId, password_s: $scope.password}).$promise.then(function(user) {
                 if(user.error){
                     $scope.isErrorPassword = true;
                     $scope.errorMessagePassword = user.error;
@@ -58,8 +59,13 @@ angular.module('websoApp')
                 }
             },
               //error
-              function () {
-                $scope.errorMessagePassword = cfg.errorConnect;
+              function(user) {
+                if(user){
+                    $scope.errorMessagePassword = user;
+                }
+                else{
+                    $scope.errorMessagePassword = cfg.errorConnect;
+                }
                 $scope.isErrorPassword = true;
 
               }
