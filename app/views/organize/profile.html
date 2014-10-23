@@ -2,6 +2,12 @@
   <div ng-include src="template.url"></div>
 </div>
 
+<ol class="breadcrumb text-center">
+    <li><a href="#/home">Webso</a></li>
+    <li><a>Organiser</a></li>
+    <li class="active">Gérer mes informations</li>
+</ol>
+
 <h1>Mon profil</h1>
 <div ng-controller="ProfileSettingCtrl">
   <form ng-submit="modifyPassword()" name="modifyFrom" role="form" class="form-horizontal">
@@ -33,7 +39,7 @@
     </div> -->
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn" name="validate">Modifier</button>
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">Modifier</button>
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessPassword">
@@ -60,7 +66,7 @@
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn" name="validate">Modifier</button>
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">Modifier</button>
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessMail">

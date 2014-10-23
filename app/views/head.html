@@ -36,7 +36,7 @@
                 </ul>
             </li> -->
 
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
+            <!-- <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Sources' analytics-label='Watch_menu' analytics-category='Passive'>Gérer les sources<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/source/add" ng-show="isVeilleurAdmin">
@@ -58,7 +58,7 @@
                         <a ui-sref="/watch/list" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Afficher les surveillances</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider<b class="caret"></b></a>
@@ -73,6 +73,7 @@
             <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
                 <li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">Tableau de bord</a></li>
             </li>
+
             <li class="dropdown" ng-show="isVeilleurAdmin" >
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">Diffuser<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -88,12 +89,33 @@
             <li class="dropdown" ng-show="isVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive'>Organiser<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li data-match-route="/organize/wfolder"><a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a></li>
-                    <li data-match-route="/organize/vfolder"><a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a></li>
-                    <li data-match-route="/organize"><a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a></li>
-                    <li data-match-route="/organize/profile"><a ui-sref="/organize/profile">Mon profil</a></li>
-                    <li data-match-route="/organize/usersList" ng-show="isAdmin"><a ui-sref="/organize/usersList">Comptes des utilisateurs</a></li>
-                    <li data-match-route="/organize/booklet" ng-show="!hideForTests"><a ui-sref="/organize/booklet" >Booklet</a></li>
+                    <li data-match-route="/organize/source" ng-show="isVeilleurAdmin">
+                        <a ui-sref="/organize/source">Sources</a>
+                    </li>
+                    <li data-match-route="/organize/watch" >
+                        <a ui-sref="/organize/watch" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Surveillances</a>
+                    </li>
+                    <li data-match-route="/organize/watchlist" >
+                        <a ui-sref="/organize/watchlist" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Liste surveillances</a>
+                    </li>
+                    <li data-match-route="/organize/wfolder">
+                        <a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a>
+                    </li>
+                    <li data-match-route="/organize/vfolder">
+                        <a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a>
+                    </li>
+                    <li data-match-route="/organize">
+                        <a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a>
+                    </li>
+                    <li data-match-route="/organize/profile">
+                        <a ui-sref="/organize/profile">Mon profil</a>
+                    </li>
+                    <li data-match-route="/organize/usersList" ng-show="isAdmin">
+                        <a ui-sref="/organize/usersList">Comptes des utilisateurs</a>
+                    </li>
+                    <li data-match-route="/organize/booklet" ng-show="!hideForTests">
+                        <a ui-sref="/organize/booklet" >Booklet</a>
+                    </li>
                     <!-- <li data-match-route="/organize/social" ng-show="!hideForTests"><a ui-sref="/organize/social">Connecter aux réseaux sociaux</a></li> -->
                 </ul>
             </li>

@@ -104,42 +104,6 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             }
         })*/
 
-        // SOURCE
-        .state('/source/list', {
-            url: '/source/list',       
-            templateUrl: 'views/source/sourceList.html' ,
-            controller:'',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-                  }
-        })
-        .state('/source/add', {
-            url: '/source/add',       
-            templateUrl: 'views/source/sourceAdd.html' ,
-            controller:'AddSourceCtrl',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur']
-                  }
-        }) 
-
-        // WATCH
-        .state('/watch/add', {
-            url: '/watch/add',            
-            templateUrl: 'views/watch/watchAdd.html',
-            controller:'AddWatchCtrl',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur']
-                  }
-        })
-        .state('/watch/list', {
-            url: '/watch/list',            
-            templateUrl: 'views/watch/watchList.html',
-            controller:'WatchListCtrl',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-                  }
-        })
-
         // VALIDATE
         .state('/validate/add', {
             url: '/validate/add',
@@ -187,6 +151,38 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
         })
 
         // ORGANIZE
+        .state('/organize/source', {
+            url: '/organize/source',       
+            templateUrl: 'views/source/sourceAdd.html' ,
+            controller:'AddSourceCtrl',
+                  data: {
+                      authorizedRoles: ['administrateur', 'veilleur']
+                  }
+        }) 
+        // .state('/organize/list', {
+        //     url: '/organize/list',       
+        //     templateUrl: 'views/source/sourceList.html' ,
+        //     controller:'',
+        //           data: {
+        //               authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+        //           }
+        // })
+        .state('/organize/watch', {
+            url: '/organize/watch',            
+            templateUrl: 'views/watch/watchAdd.html',
+            controller:'AddWatchCtrl',
+                  data: {
+                      authorizedRoles: ['administrateur', 'veilleur']
+                  }
+        })
+        .state('/organize/watchlist', {
+            url: '/organize/watchlist',            
+            templateUrl: 'views/watch/watchList.html',
+            controller:'WatchListCtrl',
+                  data: {
+                      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+                  }
+        })
         .state('/organize/wfolder', {
           url: '/organize/wfolder',
           templateUrl: 'views/organize/wfolder.html' ,
