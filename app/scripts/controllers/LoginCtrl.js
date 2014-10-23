@@ -60,8 +60,6 @@ angular.module('websoApp')
 				$cookieStore.put('Authenticated', true);
 				$scope.isAuthenticated = true;
 				$cookieStore.put('username', user.username);
-				$cookieStore.put('email', user.email);
-				//$cookieStore.put('password', $scope.password);
 				$cookieStore.put('userRole', user.role);
 				$cookieStore.put('token', user.token);
 				$cookieStore.put('token_timeout', user.token_timeout);
