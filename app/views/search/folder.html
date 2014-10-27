@@ -26,23 +26,33 @@
                     <div ng-show="searchGroup.checked == false"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-right"></span></button> &nbsp;  {{searchGroup.value}} </div>
                     <div ng-show="searchGroup.checked == true"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp; {{searchGroup.value}} </div>
                     <!-- <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}} -->
-
+                    <div ng-show="searchGroup.facetsGroup">
                     <table ng-show="searchGroup.checked" class="table table-condensed">
                         <tr ng-repeat="facet in searchGroup.facetsGroup">
                             <td> <div ng-show="facet.visible">
-                                <div ng-show="facet.checked == false"><button type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{facet.value}}</div>
-                                <div ng-show="facet.checked == true"><button  type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{facet.value}}</div>
+                                    <div ng-show="facet.checked == false"><button type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{facet.value}}</div>
+                                    <div ng-show="facet.checked == true"><button  type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{facet.value}}</div>
 
                                 <!-- <input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}} -->
                                 </div>
                                 <table ng-show="facet.checked" class="table table-condensed">
                                     <tr ng-repeat="item in facet.items">
                                         <td><input type="checkbox" ng-model="item.checked" ng-click="itemCheck(item)"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
-
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
+                    </div>
+
+                    <!--  selectgroup for online search-->
+                    <div ng-show="searchGroup.selectGroup">
+                    <table ng-show="searchGroup.checked" class="table table-condensed">
+                        <tr ng-repeat="select in searchGroup.selectGroup">
+                            <td><input type="checkbox" ng-model="select.checked" ng-change="selectCheck(select)"> &nbsp; {{select.value}}</input></td>
+                        </tr>
+                    </table>
+                    </div>
                 </td></tr>
                </table>
             </div>
@@ -56,44 +66,44 @@
                 </form>
 
 
-                <!-- collect Multisource results -->
-                <div ng-show='searchNav[idx.collectMultiSource].checked' id="solrResult">
+                <!-- online results -->
+                <div ng-show='searchNav[idx.online].checked' id="solrResult">
                     <div id="numberFound">
-                        <div results-number ng-show="collectMultiSourceResult.count>0">
-                            {{collectMultiSourceResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
+                        <div results-number ng-show="onlineResult.count>0">
+                            {{onlineResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
                             <br>
                         </div>
                     </div>
 
                     <div id="docsFound">
-                        <div collectMultiSourceResult ng-show="collectMultiSourceResult.count">
+                        <div onlineResult ng-show="onlineResult.count">
                             <table class="table table-striped">
 
-                                <tr ng-repeat="collect in collectMultiSourceResult.res | orderBy: 'pubDate' ">
+                                <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
                                     <td>
 
                                         <div id="titleFound">
-                                            <a href="{{collect.link}}" target="_blank" ng-bind-html="collect.title"></a>
+                                            <a href="{{online.link}}" target="_blank" ng-bind-html="online.title"></a>
                                         </div>
                                         <div id="contentFound">
 
-                                            <p ng-bind-html="collect.description"></p>
+                                            <p ng-bind-html="online.description"></p>
 
                                         </div>
                                         <div id="urlFound">
-                                            <span ng-if="collect.link.length<100">
-                                            {{collect.link}}
+                                            <span ng-if="online.link.length<100">
+                                            {{online.link}}
                                             </span>
-                                            <span ng-if="collect.link>100">
-                                                {{collect.link| limitTo:100}}...
+                                            <span ng-if="online.link>100">
+                                                {{online.link| limitTo:100}}...
                                             </span>
                                         </div>
 
                                         <div id="dateFound">
-                                            {{collect.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            {{online.pubDate|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+
                                             </div>
 
 
@@ -135,7 +145,7 @@
                                             <span ng-if="feed.link.length<100">
                                             {{feed.link}}
                                             </span>
-                                            <span ng-if="collect.link>100">
+                                            <span ng-if="feed.link>100">
                                                 {{feed.link| limitTo:100}}...
                                             </span>
                                         </div>
@@ -160,7 +170,7 @@
                 </div>
 
                 <!-- solr results -->
-                <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked' id="solrResult">
+                <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult">
 
                     <div id="numberFound">
                         <div solr-results-number ng-show="solrResult.response">
@@ -219,8 +229,8 @@
                                         <div id="dateFound">
                                             {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true)" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false)" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
                                                 <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
                                                 <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
 
