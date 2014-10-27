@@ -72,30 +72,45 @@ angular.module('websoApp')
     // full left search model
     $scope.searchNav = [
       {
-        name        : 'watch',
-        value       : 'Dossiers de surveillances',
-        facetsGroup : $scope.facetsGroup,
-        checked     : true
+        name          : 'source',
+        value         : 'Source',
+        facetsGroup   : $scope.facetsGroup,
+        tooltipOpen   : 'Ouvrir la recherche des sources',
+        tooltipClose  : 'Fermer la recherche des sources',
+        checked       : false
       },
 
       {
-        name        : 'validation',
-        value       : 'Dossiers de validation',
-        checked     : false
+        name          : 'watch',
+        value         : 'Dossiers de surveillances',
+        tooltipOpen   : 'Ouvrir la recherche des dossiers de surveillance',
+        tooltipClose  : 'Fermer la recherche des dossiers de surveillance',
+        facetsGroup   : $scope.facetsGroup,
+        checked       : false
       },
 
       {
-        name        : 'collectMultiSource',
-        value       : 'Collectes multisources',
-        facetsGroup : [
-          {name :'collectMultiSource',    value: 'Collectes multisources' ,  items : $scope.collectMultiSourceGroup, checked: true, visible :false }
-        ],
+        name          : 'validation',
+        value         : 'Dossiers de validation',
+        tooltipOpen   : 'Ouvrir la recherche des dossiers de validation',
+        tooltipClose  : 'Fermer la recherche des dossiers de validation',
+        checked       : false
+      },
+
+      {
+        name        : 'online',
+        value       : 'En ligne',
+        tooltipOpen   : 'Ouvrir la recherche des ressources online',
+        tooltipClose  : 'Fermer la recherche des ressources online',
+        selectGroup : $scope.onlineGroup,
         checked     : false
       },
 
       {
         name        : 'feeds',
         value       : 'Recherche de flux RSS',
+        tooltipOpen   : 'Ouvrir la recherche de flux RSS',
+        tooltipClose  : 'Fermer la recherche de flux RSS',
         checked     : false
       },
     ];
@@ -105,14 +120,14 @@ angular.module('websoApp')
 
 
 
-    $scope.collectMultiSourceGroup =  [
-      {name: 'google_news',   value: 'Google News',   nb:0, checked:false },
-     // {name: 'bing_news',     value: 'Bing News',     nb:0, checked:false },
-     // {name: 'yahoo_news',    value: 'Yahoo News',    nb:0, checked:false },
-     // {name: 'google_blogs',  value: 'Google Blog',   nb:0, checked:false },
-     // {name: 'reddit',        value: 'Reddit',        nb:0, checked:false },
-     // {name: 'faroo_news',    value: 'Faroo News',    nb:0, checked:false },
-     // {name: 'delicious',     value: 'Delicious',     nb:0, checked:false },
+    $scope.onlineGroup =  [
+      {name: 'google_news',   value: 'Google News',   nb:0, checked:true },
+      {name: 'bing_news',     value: 'Bing News',     nb:0, checked:false },
+      {name: 'yahoo_news',    value: 'Yahoo News',    nb:0, checked:false },
+      {name: 'google_blogs',  value: 'Google Blog',   nb:0, checked:false },
+      {name: 'reddit',        value: 'Reddit',        nb:0, checked:false },
+      {name: 'faroo_news',    value: 'Faroo News',    nb:0, checked:false },
+      {name: 'delicious',     value: 'Delicious',     nb:0, checked:false },
     ];
 
 
@@ -147,7 +162,7 @@ angular.module('websoApp')
       {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
-    $scope.collectMultiSourceSearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
+    $scope.onlineSearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
       {get: {method: 'JSONP'}});
 
@@ -202,16 +217,26 @@ angular.module('websoApp')
             $scope.feedResult = result;
           })
       }
-      else if (($scope.searchNav[$scope.idx.collectMultiSource].checked)) {
+      // ONLINE
+      else if (($scope.searchNav[$scope.idx.online].checked)) {
+        var typeQueryStr = '';
 
-        $scope.collectMultiSourceSearch.get({
+        angular.forEach($scope.searchNav[$scope.idx.online].selectGroup, function(value) {
+          if (value.checked) {
+            typeQueryStr += value.name+',';
+          }
+        });
+
+
+        $scope.onlineSearch.get({
           query     : $scope.searchTerm,
-          typeQuery : 'google_news'
+          typeQuery : typeQueryStr,
         }).$promise.then(function (result) {
-            $scope.collectMultiSourceResult = result;
+            $scope.onlineResult = result;
           })
 
       }
+      // VALIDATION
       else if ($scope.searchNav[$scope.idx.validation].checked) {
 
           if ($scope.searchTerm == '') {
@@ -231,6 +256,47 @@ angular.module('websoApp')
 
 
           })
+      }
+
+      // SOURCE
+      else if ($scope.searchNav[$scope.idx.source].checked) {
+        if ($scope.searchTerm == '') {
+          $scope.sort = 'date_dt desc';
+        }
+        else {
+          $scope.sort = 'score desc, date_dt desc';
+        }
+        $scope.solr.get({ q: $scope.searchTerm,
+          //start: $scope.currentPage - 1,
+          start   :($scope.currentPage-1)*10,
+          sort    : $scope.sort,
+          fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+        }).$promise.then(function (result) {
+            $scope.solrResult = result;
+            $scope.totalItems = result.response.numFound;
+            // get read / not read
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
+            //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
+
+
+            // get period data
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+            // get
+
+            // convert table lang in hash lang
+            var lang = {};
+            for (var i = 0; i < result.facet_counts.facet_fields.lang_s.length; i += 2) {
+              lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
+            }
+
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
+
+          });
+
       }
       else {
         if ($scope.searchNav[$scope.idx.watch].checked) {
@@ -347,13 +413,20 @@ angular.module('websoApp')
     //});
 
 
+    $scope.selectCheck = function(select) {
+      $scope.doSearch();
+
+    }
+
+
     $scope.groupCheck = function(searchGroup) {
       if (searchGroup == 'watch') {
         if ($scope.searchNav[$scope.idx.watch].checked == false) {
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
-          // $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.online].checked     = false;
+          $scope.searchNav[$scope.idx.feeds].checked      = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
-          $scope.searchNav[$scope.idx.watch].checked = true;
+          $scope.searchNav[$scope.idx.watch].checked      = true;
+          $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
@@ -362,25 +435,27 @@ angular.module('websoApp')
         }
 
       }
-      else if (searchGroup == 'collectMultiSource') {
-        if ($scope.searchNav[$scope.idx.collectMultiSource].checked == false) {
-          $scope.searchNav[$scope.idx.watch].checked = false;
+      else if (searchGroup == 'online') {
+        if ($scope.searchNav[$scope.idx.online].checked == false) {
+          $scope.searchNav[$scope.idx.watch].checked      = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = false;
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = true;
+          $scope.searchNav[$scope.idx.feeds].checked      = false;
+          $scope.searchNav[$scope.idx.online].checked     = true;
+          $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
         else {
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
+          $scope.searchNav[$scope.idx.online].checked = false;
         }
       }
       else if (searchGroup == 'feeds') {
         if ($scope.searchNav[$scope.idx.feeds].checked == false) {
           $scope.searchNav[$scope.idx.validation].checked = false;
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
-          $scope.searchNav[$scope.idx.watch].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = true;
+          $scope.searchNav[$scope.idx.online].checked     = false;
+          $scope.searchNav[$scope.idx.watch].checked      = false;
+          $scope.searchNav[$scope.idx.feeds].checked      = true;
+          $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
@@ -391,9 +466,10 @@ angular.module('websoApp')
       else if (searchGroup == 'validation') {
         if ($scope.searchNav[$scope.idx.validation].checked == false) {
           $scope.searchNav[$scope.idx.validation].checked = true;
-          $scope.searchNav[$scope.idx.collectMultiSource].checked = false;
-          $scope.searchNav[$scope.idx.watch].checked = false;
-          $scope.searchNav[$scope.idx.feeds].checked = false;
+          $scope.searchNav[$scope.idx.online].checked     = false;
+          $scope.searchNav[$scope.idx.watch].checked      = false;
+          $scope.searchNav[$scope.idx.feeds].checked      = false;
+          $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
           $scope.doSearch();
         }
@@ -401,7 +477,20 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.validation].checked = false;
         }
       }
-
+      else if (searchGroup == 'source') {
+        if ($scope.searchNav[$scope.idx.source].checked == false) {
+          $scope.searchNav[$scope.idx.source].checked     = true;
+          $scope.searchNav[$scope.idx.online].checked     = false;
+          $scope.searchNav[$scope.idx.watch].checked      = false;
+          $scope.searchNav[$scope.idx.feeds].checked      = false;
+          $scope.searchNav[$scope.idx.validation].checked = false;
+          $scope.currentPage            = 1;
+          $scope.doSearch();
+        }
+        else {
+          $scope.searchNav[$scope.idx.source].checked = false;
+        }
+      }
     };
 
     $scope.facetCheck = function (facet) {
@@ -554,15 +643,23 @@ angular.module('websoApp')
       ;
     };
 
-    $scope.validateDoc = function (doc, validate) {
+    $scope.validateDoc = function (doc, validate, type) {
 
 
 
       if (validate) {
+
         $scope.validationForm = {};
-        $scope.validationForm.url      = doc.url_s;
-        $scope.validationForm.title    = doc.title_t;
-        $scope.validationForm.content  = doc.content_t;
+        if (type == 'solr') {
+          $scope.validationForm.url = doc.url_s;
+          $scope.validationForm.title = doc.title_t;
+          $scope.validationForm.content = doc.content_t;
+        }
+        else if (type == 'online') {
+          $scope.validationForm.url = doc.link;
+          $scope.validationForm.title = doc.title;
+          $scope.validationForm.content = doc.description;
+        }
         $scope.validationForm.tags     = '';
         $scope.validationForm.folder   = '';
 
