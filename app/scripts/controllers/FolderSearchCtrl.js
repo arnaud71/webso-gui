@@ -34,7 +34,7 @@ angular.module('websoApp')
 
     $scope.langFacets = [
       {name: 'en', value:'anglais',     nb:0, checked:false,  fq:'+lang_s:en' },
-      {name: 'fr', value:'français',    nb:0, checked:true,   fq:'+lang_s:fr' }
+      {name: 'fr', value:'français',    nb:0, checked:false,   fq:'+lang_s:fr' }
     ];
     angular.forEach($scope.langFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -51,7 +51,7 @@ angular.module('websoApp')
 
 
     $scope.readFacets =  [
-      {name: 'notRead',  value:'non lu',    nb:0, checked:true, fq:'+read_b:false' },
+      {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:'+read_b:false' },
       {name: 'read',     value:'lu',        nb:0, checked:false, fq:'+read_b:true' }
     ];
     angular.forEach($scope.readFacets, function(value, key) {
@@ -65,6 +65,14 @@ angular.module('websoApp')
     //  {name :'folderFacet', value: 'Dossier' ,  items : $scope.folderFacets,  checked : true, visible : true}
     ];
     angular.forEach($scope.facetsGroup, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+
+    $scope.sourceGroup =  [
+      {name :'validateFacet', value : 'Validées' ,  items : $scope.validateFacets, checked : true, visible : true},
+      {name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
+    ];
+    angular.forEach($scope.sourceGroup, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
@@ -152,11 +160,17 @@ angular.module('websoApp')
       {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+    $scope.ressourceAdd = $resource(cfg.urlServices+'db/:action',
+      {action: 'put.pl', user_s: $username, callback:'JSON_CALLBACK'},
+      {put: {method: 'JSONP'}});
 
     $scope.feedSearch     = $resource(cfg.urlServices+'harvester/RSS/:action',
       {action:'get_list_rss.pl',query:'technology', callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}
       });
+    $scope.feedAdd = $resource(cfg.urlServices+'db/:action',
+      {action:'put.pl', type_s:'source', user_s:$username, level_sharing_i:'1' , source_type_s:'rss', isWatched_b:'false', callback:"JSON_CALLBACK"},
+      {put:{method:'JSONP'}});
 
     $scope.dbList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
@@ -174,6 +188,10 @@ angular.module('websoApp')
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+    $scope.checkSourceResource = $resource(cfg.urlServices+'harvester/RSS/:action',
+      {action:'check_rss.pl',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}}
+    );
 
 
     // http://albator.hesge.ch:8984/solr/collection1/select?q=*%3A*&wt=json&indent=true
@@ -278,7 +296,6 @@ angular.module('websoApp')
             $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
             $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
             //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
-
 
             // get period data
             $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
@@ -719,6 +736,67 @@ angular.module('websoApp')
       });*/
     };
 
+    /* Function to add a document in waitlist saved in database
+    */
+    $scope.waitDocument = function (doc){
+      $scope.ressourceAdd.put({
+        type_s      : 'waiting',
+        query_s    : $scope.searchTerm,
+        url_s       : doc.link,
+        title_t     : doc.title,
+        content_s   : doc.description
+      }).$promise.then(function (res) {
+        if(res.success){
+          alert('Document mis en attente');
+        }
+        else{
+          alert('Error, try again or contact webmaster.');
+        }
+      })
+    }
+
+    $scope.addFeed= function(feed){
+      $scope.validationForm = {};
+      $scope.validationForm.url = feed.url;
+      $scope.validationForm.title = feed.title;
+      $scope.validationForm.tags     = '';
+      $scope.validationForm.domain   = {};
+      $scope.validationForm.domain.name   = '';
+      $scope.validationForm.activity   = {};
+      $scope.validationForm.activity.name   = '';
+      $scope.validationForm.frequency   = {};
+      $scope.validationForm.frequency.option   = '';
+
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'validateFeedModal.html',
+        controller  : ModalInstanceCtrl,
+      });
+
+      modalInstance.result.then(function () {
+        $scope.feedAdd.put({
+          url_s:            $scope.validationForm.url,
+          title_t:          $scope.validationForm.title,
+          tags_s:           $scope.validationForm.tags,
+          refresh_s:        $scope.validationForm.frequency.option,
+          domain_s:         $scope.validationForm.domain.name,
+          activity_s:       $scope.validationForm.activity.name,
+        });
+      });
+    }
+
+    $scope.seeFeed = function(feed){
+      //$location.path(feed.url);
+      $scope.checkSourceResult = $scope.checkSourceResource.get({
+          url: feed.url
+      });
+
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'seeFeedModal.html',
+        controller  : ModalInstanceCtrl,
+      });
+    }
 
     //  ***************************************
     //  modal instance
@@ -747,7 +825,81 @@ angular.module('websoApp')
       $location.path(path);
     }
 
-
+    $scope.domains =  [
+      {name:'Technologie',activites:[
+        {name:'Publications scientifiques'},
+        {name:'Brevets/marques'}
+      ]},
+      {name:'Economie/Politique',activites:[
+        {name:'Organismes publics'},
+        {name:'Etudes de marchés'},
+        {name:'Bases de données entreprises'},
+        {name:'Appel d\'offres'},
+        {name:'Informations financières'}
+      ]},
+      {name:'Concurrence/Entreprises',activites:[
+        {name:'Agriculture, Sylviculture, et pêche'},
+        {name:'Industries extractives'},
+        {name:'Industries manufacturières'},
+        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
+        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
+        {name:'Construction'},
+        {name:'Commerce, réparation d\'automobiles, et motocycles'},
+        {name:'Transport et entreposage'},
+        {name:'Hébergement et restauration'},
+        {name:'Information et communication'},
+        {name:'Activité financières et assurances'},
+        {name:'Activités immobilières'},
+        {name:'Activités spécialisées scientifiques et techniques'},
+        {name:'Activités de service administratifs et de soutien'},
+        {name:'Administration publique'},
+        {name:'Enseignement'},
+        {name:'Santé humaine, action sociale'},
+        {name:'Arts, spectacles, activités récréatives'},
+        {name:'Autres activités de services'},
+        {name:'Activités de ménages'},
+        {name:'Activités extra territoriales'},
+      ]},
+      {name:'Juridique/réglementaire'},
+      {name:'Réseaux sociaux'},
+      {name:'Presse',activites:[
+        {name:'Agricole/Agroalimentaire'},
+        {name:'Assurance'},
+        {name:'Arts/Musique/Spectacle'},
+        {name:'Automobile'},
+        {name:'Autres services'},
+        {name:'Batiment'},
+        {name:'Bijoux'},
+        {name:'Bois, Papier, Carton'},
+        {name:'Communication'},
+        {name:'Distribution'},
+        {name:'Economie/ Finance'},
+        {name:'Environnement'},
+        {name:'Géopolitique, Défense'},
+        {name:'Industrie & Techniques'},
+        {name:'Informatique et réseaux'},
+        {name:'Jeux et Jouets'},
+        {name:'Juridique'},
+        {name:'Petite enfance'},
+        {name:'People'},
+        {name:'Photo'},
+        {name:'Restauration/Hotellerie'},
+        {name:'Relation client/Ressources humaines'},
+        {name:'Santé'},
+        {name:'Transport'},
+        {name:'Sport'},
+        {name:'Tourisme & Voyages'},
+        {name:'Urbanisme'},
+        {name:'Vin et Boissons'},
+        {name:'WebDesign et multimédia'}
+      ]}
+    ] ;
+    $scope.frequencies =  [
+      {option:'1h'},
+      {option:'12h'},
+      {option:'24h'},
+      {option:'48h'}
+    ] ;
 
   }]);
 
