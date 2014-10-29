@@ -11,6 +11,7 @@
     <form name="sourceForm" class="form-horizontal" role="form">
 
         <div class="col-md-6">
+            <h3>Ajouter une sources</h3>
             <div class="form-group" >
                 <label class="col-md-5 control-label required"> Source </label>
 
@@ -119,3 +120,17 @@
     </script>
 </div>
 
+<div ng-controller="SourceListCtrl">
+        <div class="row">
+<!--           <div class="col-md-0">
+
+            </div> -->
+            <div class="col-md-12">
+                <h3>Liste des sources</h3>
+                <div class="gridStyleSource" ng-grid="gridOptionsSource">
+
+                </div>
+            </div>
+        </div>
+
+</div>

@@ -175,14 +175,14 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
                       authorizedRoles: ['administrateur', 'veilleur']
                   }
         })
-        .state('/organize/watchlist', {
-            url: '/organize/watchlist',            
-            templateUrl: 'views/watch/watchList.html',
-            controller:'WatchListCtrl',
-                  data: {
-                      authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
-                  }
-        })
+        // .state('/organize/watchlist', {
+        //     url: '/organize/watchlist',            
+        //     templateUrl: 'views/watch/watchList.html',
+        //     controller:'WatchListCtrl',
+        //           data: {
+        //               authorizedRoles: ['administrateur', 'veilleur', 'lecteur']
+        //           }
+        // })
         .state('/organize/wfolder', {
           url: '/organize/wfolder',
           templateUrl: 'views/organize/wfolder.html' ,

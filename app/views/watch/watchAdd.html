@@ -16,6 +16,7 @@
     <form name="sourceForm" class="form-horizontal" role="form">
         <!-- source panel -->
          <div class="row">
+            <h3>Ajouter une surveillance</h3>
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -359,5 +360,19 @@
     </script>
 </div>
 
+<div ng-controller="WatchListCtrl">
 
+        <div class="row">
+            <!--           <div class="col-md-0">
+
+                            </div> -->
+            <div class="col-md-12">
+                <h3>Liste des surveillances</h3>
+                <div class="gridStyleSource" ng-grid="gridOptionsSource">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 
