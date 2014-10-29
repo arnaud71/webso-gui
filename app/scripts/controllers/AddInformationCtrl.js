@@ -26,9 +26,8 @@ angular.module('websoApp')
                 tags_s    : $scope.inputTags,
                 title_t   : $scope.inputTitle,
                 content_t : $scope.inputDetails,
-
-                //comments_s:   $scope.inputComments,
-                folder_s:    $scope.inputFolder
+                comments_t: $scope.inputComments,
+                folder_s  : $scope.inputFolder
 
             });
          //   var addInfo = alert('Information ajoutée');

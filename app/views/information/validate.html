@@ -21,7 +21,7 @@
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Titre </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <input type="text" class="form-control" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
             </div>
         </div>
@@ -30,7 +30,7 @@
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Lien </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer lien" ng-model="inputUrl" id="inputUrl" name="inputUrl">
             </div>
         </div>
@@ -38,7 +38,7 @@
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Tags </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <input type="text" class="form-control" placeholder="Entrer tags" ng-model="inputTags" id="inputTags" name="inputTags">
             </div>
         </div>
@@ -47,25 +47,25 @@
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Détails </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <textarea type="text" class="form-control" placeholder="Entrer détails" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea>
             </div>
         </div>
     </form>
 
-    <!-- <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Commentaires </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <textarea type="text" class="form-control" placeholder="Entrer commentaires" ng-model="inputComments" id="inputComments" name="inputComments"></textarea>
             </div>
         </div>
-    </form> -->
+    </form>
 
     <!-- <form class="form-horizontal" role="form"> INPUT FILE
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Détails </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <input type="file" class="form-control" placeholder="Entrer tags" ng-model="inputFile" id="inputFile" name="inputFile"></textarea>
             </div>
         </div>
@@ -74,7 +74,7 @@
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label"> Dossier </label>
-            <div class="col-sm-10">
+            <div class="col-sm-7">
                 <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
                 <select id="inputFolder" name="inputFolder" ng-model="inputFolder">
                     <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
