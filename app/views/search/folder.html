@@ -144,7 +144,7 @@
                                         </div>
                                         <div id="urlFound">
                                             <span ng-if="feed.link.length<100">
-                                            {{feed.link}}
+                                            {{feed.url}}
                                             </span>
                                             <span ng-if="feed.link>100">
                                                 {{feed.link| limitTo:100}}...
@@ -309,7 +309,7 @@
 
         <script type="text/ng-template" id="validateFeedModal.html">
             <div class="modal-header">
-            <h3> Validation de document</h3>
+            <h3> Ajout de source RSS</h3>
             </div>
             <div class="modal-body">
 
