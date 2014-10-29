@@ -1,0 +1,17 @@
+[
+    {
+        "key":"_SETTINGS_H1_",
+        "value":"My profile",
+        "description":"Div header"
+    },
+    {
+        "key":"_Greeting_",
+        "value":"Site localization example using the resource localization service",
+        "description":"Home page greeting text"
+    },
+    {
+        "key":"_HomeTitle_",
+        "value":"Resource Localization Service",
+        "description":"Home page title text"
+    }
+]
