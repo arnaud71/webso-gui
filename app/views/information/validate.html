@@ -76,9 +76,10 @@
             <label class="col-sm-2 control-label"> Dossier </label>
             <div class="col-sm-7">
                 <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
-                <select id="inputFolder" name="inputFolder" ng-model="inputFolder">
+                <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
+                <!-- <select id="inputFolder" name="inputFolder" ng-model="inputFolder" required>
                     <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
-                </select>
+                </select> -->
             </div>
         </div>
     </form>

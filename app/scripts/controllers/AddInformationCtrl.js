@@ -12,6 +12,7 @@ angular.module('websoApp')
         $scope.inputDetails = '';
         $scope.inputComments= '';
         $scope.inputFolder  = '';
+        var error = {};
 
         var $username = $cookieStore.get('username');      
 
@@ -21,22 +22,27 @@ angular.module('websoApp')
 
 
         $scope.doAdd = function () {
+          if($scope.inputUrl == '' || $scope.inputTitle == '' || $scope.inputFolder == '') {
+            alert('Erreur merci de saisir au moins un titre, une url et un dossier');
+          }
+          else{
             $scope.informationAddResult = $scope.informationAdd.get({
                 url_s     : $scope.inputUrl,
                 tags_s    : $scope.inputTags,
                 title_t   : $scope.inputTitle,
                 content_t : $scope.inputDetails,
                 comments_t: $scope.inputComments,
-                folder_s  : $scope.inputFolder
-
+                folder_i  : $scope.inputFolder.id,
+                folder_s  : $scope.inputFolder.name,
             });
-         //   var addInfo = alert('Information ajoutée');
+            // var addInfo = alert('Information ajoutée');
 
             // Testing  Modal trigger
             var modalInstance = $modal.open({
                 templateUrl: 'validateModal.html',
                 controller: ModalInstanceCtrl
             });
+          }
         };
         $scope.validationOk = false;
         //if()
