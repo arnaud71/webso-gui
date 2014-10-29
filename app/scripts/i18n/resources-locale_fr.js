@@ -61,5 +61,66 @@
     {
         "key": "_ARE_YOU_SURE_",
         "value": "Etes vous sûr de vouloir effacer cet utilisateur "
+    },
+
+    {
+        "key": "_VALIDATE_",
+        "value": "Valider"
+    },
+    {
+        "key": "_ADD_INFORMATION_",
+        "value": "Ajouter une information"
+    },
+    {
+        "key": "_TITLE_",
+        "value": "Titre"
+    },
+    {
+        "key": "_LINK_",
+        "value": "Lien"
+    },
+    {
+        "key": "TAGS",
+        "value": "Tags"
+    },
+    {
+        "key": "_DETAILS_",
+        "value": "Détails"
+    },
+    {
+        "key": "_COMMENTS_",
+        "value": "Commentaires"
+    },
+    {
+        "key": "_FOLDER_",
+        "value": "Dossier"
+    },
+    {
+        "key": "_ADD_INFORMATION_",
+        "value": "Ajouter une information"
+    },
+    {
+        "key": "_VALIDATION_SUCCESS_",
+        "value": "Validation réussie"
+    },
+    {
+        "key": "_ENTER_LINK_",
+        "value": "Enter un lien"
+    },
+    {
+        "key": "_ENTER_TAG_",
+        "value": "Entrer un/des tag(s)"
+    },
+    {
+        "key": "_ENTER_DETAILS_",
+        "value": "Entrer détails"
+    },
+    {
+        "key": "_ENTER_COMMENTS_",
+        "value": "Entrer un commentaire"
+    },
+    {
+        "key": "_INPUT_FILE_",
+        "value": "Sélectionner un fichier"
     }
 ]

@@ -8,9 +8,9 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a>Valider</a></li>
-    <li class="active">Ajouter une information</li>
+    <li><a href="#/home">{{ "_SERVICE_NAME_" | i18n }}</a></li>
+    <li><a>{{ "_VALIDATE_" | i18n }}</a></li>
+    <li class="active">{{ "_ADD_INFORMATION_" | i18n }}</li>
 </ol>
 
 
@@ -20,60 +20,60 @@
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Titre </label>
+            <label class="col-sm-2 control-label">{{ "_TITLE_" | i18n }}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+                <input type="text" class="form-control" placeholder="{{ '_TITLE_' | i18n }}" ng-model="inputTitle" id="inputTitle" name="inputTitle">
             </div>
         </div>
     </form>
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Lien </label>
+            <label class="col-sm-2 control-label">{{ "_LINK_" | i18n }}</label>
             <div class="col-sm-7">
-                <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer lien" ng-model="inputUrl" id="inputUrl" name="inputUrl">
+                <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="{{ '_ENTER_LINK_' | i18n }}" ng-model="inputUrl" id="inputUrl" name="inputUrl">
             </div>
         </div>
     </form>
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Tags </label>
+            <label class="col-sm-2 control-label">{{ "_TAGS_" | i18n }}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" placeholder="Entrer tags" ng-model="inputTags" id="inputTags" name="inputTags">
+                <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="inputTags" id="inputTags" name="inputTags">
             </div>
         </div>
     </form>
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Détails </label>
+            <label class="col-sm-2 control-label">{{ "_DETAILS_" | i18n }}</label>
             <div class="col-sm-7">
-                <textarea type="text" class="form-control" placeholder="Entrer détails" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea>
+                <textarea type="text" class="form-control" placeholder="{{ '_ENTER_DETAILS_' | i18n }}" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea>
             </div>
         </div>
     </form>
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Commentaires </label>
+            <label class="col-sm-2 control-label">{{ "_COMMENTS_" | i18n }}</label>
             <div class="col-sm-7">
-                <textarea type="text" class="form-control" placeholder="Entrer commentaires" ng-model="inputComments" id="inputComments" name="inputComments"></textarea>
+                <textarea type="text" class="form-control" placeholder="{{ '_ENTER_COMMENTS_' | i18n }}" ng-model="inputComments" id="inputComments" name="inputComments"></textarea>
             </div>
         </div>
     </form>
 
-    <!-- <form class="form-horizontal" role="form"> INPUT FILE
+    <!-- <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Détails </label>
+            <label class="col-sm-2 control-label">{{ "_INPUT_FILE_" | i18n }}</label>
             <div class="col-sm-7">
-                <input type="file" class="form-control" placeholder="Entrer tags" ng-model="inputFile" id="inputFile" name="inputFile"></textarea>
+                <input type="file" class="form-control" placeholder="{{ '_INPUT_FILE_' | i18n }}" ng-model="inputFile" id="inputFile" name="inputFile"></textarea>
             </div>
         </div>
     </form> -->
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Dossier </label>
+            <label class="col-sm-2 control-label">{{ "_FOLDER_" | i18n }}</label>
             <div class="col-sm-7">
                 <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
                 <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
@@ -86,7 +86,7 @@
 
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" class="btn btn-default" ng-click="doAdd()" name="add" analytics-on='click' analytics-event='Validate' analytics-label='Validate_add_information' analytics-category='Active'>Valider</button>
+            <button type="submit" class="btn btn-default" ng-click="doAdd()" name="add" analytics-on='click' analytics-event='Validate' analytics-label='Validate_add_information' analytics-category='Active'>{{ "_VALIDATE_" | i18n }}</button>
 
         </div>
     </div>
@@ -94,15 +94,15 @@
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="validateModal.html">
         <div class="modal-header">
-            <h3> Ajout d'une information </h3>
+            <h3>{{ "_ADD_INFORMATION_" | i18n }}</h3>
         </div>
         <div class="modal-body">
-            Validation réussie
+            {{ "_VALIDATION_SUCCESS_" | i18n }}
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ "_OK_" | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ "_CANCEL_" | i18n }}</button> -->
         </div>
     </script>
 </div>
