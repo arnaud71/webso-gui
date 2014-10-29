@@ -2,7 +2,7 @@
   <div ng-include src="template.url"></div>
 </div>
 
-<h1>Compte des utilisateurs enregistrés</h1>
+<h1>{{ '_USERLIST_H1_' | i18n }}</h1>
 <div ng-controller="UsersListCtrl">
     <div class="alert alert-danger" ng-show="isError">
         <strong>&nbsp;</strong><span>{{errorMessage}}</span>
@@ -14,25 +14,22 @@
         </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccess">
-        <strong>Succès :&nbsp;</strong><span>{{message}}</span>
+        <strong>{{ '_SUCCESS_' | i18n }} :&nbsp;</strong><span>{{message}}</span>
     </div>
 
 
-	<script type="text/ng-template" id="deleteUserModal.html">
-	    <div class="modal-header">
-	        <h3> Effacement d'un utilisateur {{userName}}</h3>
+    <script type="text/ng-template" id="deleteUserModal.html">
+        <div class="modal-header">
+            <h3>{{ '_DELETE_USER_' | i18n }} {{userName}}</h3>
+        </div>
+        <div class="modal-body">
+            {{ '_ARE_YOU_SURE_' | i18n }} {{userName}} ?
+        </div>
 
-	    </div>
-	    <div class="modal-body">
-	        Etes vous sûr de vouloir effacer cet utilisateur {{userName}} ?
-	    </div>
-
-	    <div class="modal-footer">
-	        <button class="btn btn-primary" ng-click="ok()">OK</button>
-	        <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
-
-	        <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
-	    </div>
-	</script>
-	
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+        </div>
+    </script>
+    
 </div>
