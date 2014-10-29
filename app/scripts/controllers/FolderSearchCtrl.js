@@ -18,6 +18,9 @@ angular.module('websoApp')
     $scope.errorMessage           = cfg.errorConnect;
     $scope.searchTerm             = '';
 
+    $scope.onlineSourceList       = {};
+    $scope.onlineSourceList['google_news'] = 'Google News';  // if you change that please change the appropriate check box default value
+    $scope.onlineCurrentSearchUrl = '';
 
 
     // to keep index  to adress table like a hash
@@ -148,7 +151,7 @@ angular.module('websoApp')
       {name: 'google_blogs',  value: 'Google Blog',   nb:0, checked:false },
       {name: 'reddit',        value: 'Reddit',        nb:0, checked:false },
       {name: 'faroo_news',    value: 'Faroo News',    nb:0, checked:false },
-      {name: 'delicious',     value: 'Delicious',     nb:0, checked:false },
+      {name: 'delicious',     value: 'Delicious',     nb:0, checked:false }
     ];
 
 
@@ -260,11 +263,14 @@ angular.module('websoApp')
         });
 
 
+
+
         $scope.onlineSearch.get({
           query     : $scope.searchTerm,
           typeQuery : typeQueryStr,
         }).$promise.then(function (result) {
             $scope.onlineResult = result;
+            $scope.currentOnlineSearchUrl = cfg.urlServices + 'harvester/QUERYSEARCH/get_querysearch.pl?query='+$scope.searchTerm+'&typeQuery='+typeQueryStr+'&out=rss';
           })
 
       }
@@ -448,6 +454,13 @@ angular.module('websoApp')
 
 
     $scope.selectCheck = function(select) {
+      if (select.checked) {
+        $scope.onlineSourceList[select.name] = select.value;
+      }
+      else {
+        delete $scope.onlineSourceList[select.name];
+      }
+
       $scope.doSearch();
 
     }
@@ -699,8 +712,6 @@ angular.module('websoApp')
 
     $scope.validateDoc = function (doc, validate, type) {
 
-
-
       if (validate) {
 
         $scope.validationForm = {};
@@ -773,41 +784,24 @@ angular.module('websoApp')
       });*/
     };
 
-    /* Function to add a document in waitlist saved in database
+    /* add a online search as a source
     */
-    $scope.waitDocument = function (doc){
-      $scope.ressourceAdd.put({
-        type_s      : 'waiting',
-        query_s    : $scope.searchTerm,
-        url_s       : doc.link,
-        title_t     : doc.title,
-        content_s   : doc.description
-      }).$promise.then(function (res) {
-        if(res.success){
-          alert('Document mis en attente');
-        }
-        else{
-          alert('Error, try again or contact webmaster.');
-        }
-      })
-    }
-
-    $scope.addFeed= function(feed){
-      $scope.validationForm = {};
-      $scope.validationForm.url = feed.url;
-      $scope.validationForm.title = feed.title;
-      $scope.validationForm.tags     = '';
-      $scope.validationForm.domain   = {};
-      $scope.validationForm.domain.name   = '';
-      $scope.validationForm.activity   = {};
-      $scope.validationForm.activity.name   = '';
-      $scope.validationForm.frequency   = {};
-      $scope.validationForm.frequency.option   = '';
+    $scope.waitSource = function (url){
+      $scope.validationForm                   = {};
+      $scope.validationForm.url               = url;
+      $scope.validationForm.title             = 'Recherche en ligne Webso';
+      $scope.validationForm.tags              = '';
+      $scope.validationForm.domain            = {};
+      $scope.validationForm.domain.name       = '';
+      $scope.validationForm.activity          = {};
+      $scope.validationForm.activity.name     = '';
+      $scope.validationForm.frequency         = {};
+      $scope.validationForm.frequency.option  = '';
 
       var modalInstance = $modal.open({
         scope: $scope,
-        templateUrl : 'validateFeedModal.html',
-        controller  : ModalInstanceCtrl,
+        templateUrl : 'addOnlineSearchModal.html',
+        controller  : ModalInstanceCtrl
       });
 
       modalInstance.result.then(function () {
@@ -818,6 +812,48 @@ angular.module('websoApp')
           refresh_s:        $scope.validationForm.frequency.option,
           domain_s:         $scope.validationForm.domain.name,
           activity_s:       $scope.validationForm.activity.name,
+          isWaiting_b:      true
+        });
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*  addfeed from search feed*/
+    $scope.addFeed= function(feed){
+      $scope.validationForm                   = {};
+      $scope.validationForm.url               = feed.url;
+      $scope.validationForm.title             = feed.title;
+      $scope.validationForm.tags              = '';
+      $scope.validationForm.domain            = {};
+      $scope.validationForm.domain.name       = '';
+      $scope.validationForm.activity          = {};
+      $scope.validationForm.activity.name     = '';
+      $scope.validationForm.frequency         = {};
+      $scope.validationForm.frequency.option  = '';
+
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'validateFeedModal.html',
+        controller  : ModalInstanceCtrl
+      });
+
+      modalInstance.result.then(function () {
+        $scope.feedAdd.put({
+          url_s:            $scope.validationForm.url,
+          title_t:          $scope.validationForm.title,
+          tags_s:           $scope.validationForm.tags,
+          refresh_s:        $scope.validationForm.frequency.option,
+          domain_s:         $scope.validationForm.domain.name,
+          activity_s:       $scope.validationForm.activity.name
         });
       });
     }
@@ -831,7 +867,7 @@ angular.module('websoApp')
       var modalInstance = $modal.open({
         scope: $scope,
         templateUrl : 'seeFeedModal.html',
-        controller  : ModalInstanceCtrl,
+        controller  : ModalInstanceCtrl
       });
     }
 
@@ -850,6 +886,7 @@ angular.module('websoApp')
 
     // first call,init
     $scope.initFacet();
+    //$scope.selectCheck();
     $scope.doSearch();
 
     $scope.getSummary = function(id) {
