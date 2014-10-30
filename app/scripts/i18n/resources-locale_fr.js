@@ -389,6 +389,10 @@
         "key": "_SOURCE_LIST_",
         "value": "Liste de sources"
     },
+    {
+        "key": "_DEL_CONFIRM_",
+        "value": "Suppression confirmée"
+    },
 
 
 
