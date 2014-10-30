@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-	.controller('LoginCtrl', function ($cookieStore, $scope, $resource, $location, localStorageService, cfg) {
+	.controller('LoginCtrl', function ($cookieStore, $scope, $resource, $location, localStorageService, cfg, $filter) {
 
 /****************** initialization procedure *******************/
 	var usernameStorage = localStorageService.get('username');
@@ -28,7 +28,7 @@ angular.module('websoApp')
 
 /****************** Connection procedure ***********************/  
   $scope.verifyLogin = $resource(cfg.urlServices+'db/:action',
-      {action:'login.pl', callback:"JSON_CALLBACK"},
+      {action:'login.pl', callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
 
@@ -48,7 +48,7 @@ angular.module('websoApp')
 		if(user.error){
 			$scope.loading = false;
 			$scope.isError = true;
-			$scope.errorMessage = user.error;
+			$scope.errorMessage = $filter('i18n')(user.error)+((angular.isDefined(user.error_code))? ', n° '+user.error_code : '');
 		}
 		else {
 			if(user.success){

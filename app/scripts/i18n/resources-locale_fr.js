@@ -344,6 +344,21 @@
 
 
     {
+        "key": "_RESETPWD_H1_",
+        "value": "Mot de passe oublié"
+    },
+    {
+        "key": "_SEND_",
+        "value": "Envoyer"
+    },
+    {
+        "key": "_RESETPWD_OK_MSG_",
+        "vaue": "Votre mot de passe a été changé vous allez recevoir un mail dans les prochaines minutes"
+    },
+
+
+
+    {
         "key": "_ENTER_TITLE_",
         "value": "Enter titre"
     },
@@ -366,5 +381,26 @@
     {
         "key": "_INPUT_FILE_",
         "value": "Sélectionner un fichier"
+    },
+
+
+    {
+        "key": "_LOGIN_ERROR_LENGTH_",
+        "value": "Longueur du nom d'utilisateur et/ou du mot de passe doit/doivent être superieur(s) à 6 et inférieur(s) à 20 caractères"
+    },
+    {
+        "key": "_LOGIN_ERROR_USPWD_",
+        "value": "Nom d'utilisateur et/ou mot de passe incorrect(s)"
+    },
+    {
+        "key": "_ERROR_SERVICE_",
+        "value": "Serveur ou ressource indisponnible",
+        "description": "sources server or service unavailable"
+    },
+
+
+    {
+        "key": "_ERROR_CONN_",
+        "value": "Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n'est pas disponible)"
     }
 ]

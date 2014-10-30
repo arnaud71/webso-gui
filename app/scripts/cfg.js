@@ -1,7 +1,7 @@
 angular.module('websoApp').constant('cfg', {
 
   versionWebso    : '0.8',
-  errorConnect    : 'Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n\'est pas disponible)',
+  errorConnect    : '_ERROR_CONN_',
 
 
   urlDB               : 'http://localhost:8983/',
