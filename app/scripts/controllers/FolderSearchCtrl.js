@@ -839,75 +839,7 @@ angular.module('websoApp')
       $location.path(path);
     }
 
-    $scope.domains =  [
-      {name:'Technologie',activites:[
-        {name:'Publications scientifiques'},
-        {name:'Brevets/marques'}
-      ]},
-      {name:'Economie/Politique',activites:[
-        {name:'Organismes publics'},
-        {name:'Etudes de marchés'},
-        {name:'Bases de données entreprises'},
-        {name:'Appel d\'offres'},
-        {name:'Informations financières'}
-      ]},
-      {name:'Concurrence/Entreprises',activites:[
-        {name:'Agriculture, Sylviculture, et pêche'},
-        {name:'Industries extractives'},
-        {name:'Industries manufacturières'},
-        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
-        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
-        {name:'Construction'},
-        {name:'Commerce, réparation d\'automobiles, et motocycles'},
-        {name:'Transport et entreposage'},
-        {name:'Hébergement et restauration'},
-        {name:'Information et communication'},
-        {name:'Activité financières et assurances'},
-        {name:'Activités immobilières'},
-        {name:'Activités spécialisées scientifiques et techniques'},
-        {name:'Activités de service administratifs et de soutien'},
-        {name:'Administration publique'},
-        {name:'Enseignement'},
-        {name:'Santé humaine, action sociale'},
-        {name:'Arts, spectacles, activités récréatives'},
-        {name:'Autres activités de services'},
-        {name:'Activités de ménages'},
-        {name:'Activités extra territoriales'},
-      ]},
-      {name:'Juridique/réglementaire'},
-      {name:'Réseaux sociaux'},
-      {name:'Presse',activites:[
-        {name:'Agricole/Agroalimentaire'},
-        {name:'Assurance'},
-        {name:'Arts/Musique/Spectacle'},
-        {name:'Automobile'},
-        {name:'Autres services'},
-        {name:'Batiment'},
-        {name:'Bijoux'},
-        {name:'Bois, Papier, Carton'},
-        {name:'Communication'},
-        {name:'Distribution'},
-        {name:'Economie/ Finance'},
-        {name:'Environnement'},
-        {name:'Géopolitique, Défense'},
-        {name:'Industrie & Techniques'},
-        {name:'Informatique et réseaux'},
-        {name:'Jeux et Jouets'},
-        {name:'Juridique'},
-        {name:'Petite enfance'},
-        {name:'People'},
-        {name:'Photo'},
-        {name:'Restauration/Hotellerie'},
-        {name:'Relation client/Ressources humaines'},
-        {name:'Santé'},
-        {name:'Transport'},
-        {name:'Sport'},
-        {name:'Tourisme & Voyages'},
-        {name:'Urbanisme'},
-        {name:'Vin et Boissons'},
-        {name:'WebDesign et multimédia'}
-      ]}
-    ] ;
+    $scope.domains =  $filter('i18n')('DOMAIN_AND_ACTIVITY_LIST');
     $scope.frequencies =  [
       {option:'1h'},
       {option:'12h'},
