@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddInformationCtrl', function ($cookieStore, $scope, $resource, cfg, $modal) {
+    .controller('AddInformationCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter) {
 
         /*
          Input fields - from sourceAdd & surveillanceAdd??
@@ -23,7 +23,7 @@ angular.module('websoApp')
 
         $scope.doAdd = function () {
           if($scope.inputUrl == '' || $scope.inputTitle == '' || $scope.inputFolder == '') {
-            alert('Erreur merci de saisir au moins un titre, une url et un dossier');
+            alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
           }
           else{
             $scope.informationAddResult = $scope.informationAdd.get({

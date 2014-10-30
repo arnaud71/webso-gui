@@ -92,16 +92,16 @@ angular.module('websoApp')
       //selectWithCheckboxOnly: 'true',
       //selectedItems: $scope.mySelections,
       columnDefs: [
-        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsSource.pageSize*pagingOptionsSource.currentPage-pagingOptionsSource.pageSize)}}</div>'},
-        {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
-        {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'50px',field:'', displayName:  $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsSource.pageSize*pagingOptionsSource.currentPage-pagingOptionsSource.pageSize)}}</div>'},
+        {visible:false,width:'50px',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'*',field:'url_s', displayName:  $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_s', displayName:  $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'domain_s', displayName:  $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'user_s', displayName:  $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
+        {width:'100px',field:'creation_dt', displayName:  $filter('i18n')('_CREATION_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
 
       ]
     };
@@ -135,31 +135,31 @@ angular.module('websoApp')
       //selectWithCheckboxOnly: 'true',
       //selectedItems: $scope.mySelections,
       columnDefs: [
-        {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsWatch.pageSize*pagingOptionsWatch.currentPage-pagingOptionsWatch.pageSize)}}</div>'},
-        {visible:false,width:'100px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {visible:false,width:'100px',field:'source_id_s', displayName:  'sourceId', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
-        {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_ss', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'query_s', displayName:  'Requête', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="watchDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
+        {width:'50px',field:'', displayName:  $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptionsWatch.pageSize*pagingOptionsWatch.currentPage-pagingOptionsWatch.pageSize)}}</div>'},
+        {visible:false,width:'100px',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {visible:false,width:'100px',field:'source_id_s', displayName:  $filter('i18n')('_SOURCE_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'*',field:'url_s', displayName:  $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_ss', displayName:  $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'domain_s', displayName:  $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'user_s', displayName:  $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'folder_s', displayName:  $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'query_s', displayName:  $filter('i18n')('_REQUEST_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'creation_dt', displayName:  $filter('i18n')('_CREATION_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="watchDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
 
       ]
     };
 
 
     $scope.tabsSource = [
-      { title:"Ajouter source"},
-      { title:"Sélectionner source"}
+      { title:$filter('i18n')('_ADD_SOURCE_')},
+      { title:$filter('i18n')('_SELECT_SOURCE_')}
     ];
 
     $scope.tabsWatch = [
-      { title:"Ajouter surveillance"},
-      { title:"Sélectionner surveillance"}
+      { title:$filter('i18n')('_WATCH_ADD_')},
+      { title:$filter('i18n')('_SELECT_WATCH_')}
     ];
 
 
@@ -650,75 +650,7 @@ angular.module('websoApp')
     /*
      Domains menu
      */
-    $scope.domains =  [
-      {name:'Technologie',activites:[
-        {name:'Publications scientifiques'},
-        {name:'Brevets/marques'}
-      ]},
-      {name:'Economie/Politique',activites:[
-        {name:'Organismes publics'},
-        {name:'Etudes de marchés'},
-        {name:'Bases de données entreprises'},
-        {name:'Appel d\'offres'},
-        {name:'Informations financières'}
-      ]},
-      {name:'Concurrence/Entreprises',activites:[
-        {name:'Agriculture, Sylviculture, et pêche'},
-        {name:'Industries extractives'},
-        {name:'Industries manufacturières'},
-        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
-        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
-        {name:'Construction'},
-        {name:'Commerce, réparation d\'automobiles, et motocycles'},
-        {name:'Transport et entreposage'},
-        {name:'Hébergement et restauration'},
-        {name:'Information et communication'},
-        {name:'Activité financières et assurances'},
-        {name:'Activités immobilières'},
-        {name:'Activités spécialisées scientifiques et techniques'},
-        {name:'Activités de service administratifs et de soutien'},
-        {name:'Administration publique'},
-        {name:'Enseignement'},
-        {name:'Santé humaine, action sociale'},
-        {name:'Arts, spectacles, activités récréatives'},
-        {name:'Autres activités de services'},
-        {name:'Activités de ménages'},
-        {name:'Activités extra territoriales'},
-      ]},
-      {name:'Juridique/réglementaire'},
-      {name:'Réseaux sociaux'},
-      {name:'Presse',activites:[
-        {name:'Agricole/Agroalimentaire'},
-        {name:'Assurance'},
-        {name:'Arts/Musique/Spectacle'},
-        {name:'Automobile'},
-        {name:'Autres services'},
-        {name:'Batiment'},
-        {name:'Bijoux'},
-        {name:'Bois, Papier, Carton'},
-        {name:'Communication'},
-        {name:'Distribution'},
-        {name:'Economie/ Finance'},
-        {name:'Environnement'},
-        {name:'Géopolitique, Défense'},
-        {name:'Industrie & Techniques'},
-        {name:'Informatique et réseaux'},
-        {name:'Jeux et Jouets'},
-        {name:'Juridique'},
-        {name:'Petite enfance'},
-        {name:'People'},
-        {name:'Photo'},
-        {name:'Restauration/Hotellerie'},
-        {name:'Relation client/Ressources humaines'},
-        {name:'Santé'},
-        {name:'Transport'},
-        {name:'Sport'},
-        {name:'Tourisme & Voyages'},
-        {name:'Urbanisme'},
-        {name:'Vin et Boissons'},
-        {name:'WebDesign et multimédia'}
-      ]}
-    ] ;
+    $scope.domains =  $filter('i18n')('_DOMAIN_AND_ACTIVITY_LIST_');
     $scope.domain = ''; //= $scope.domains[0];
     /*
      Activities menu
