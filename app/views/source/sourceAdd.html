@@ -3,21 +3,21 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a>Organiser</a></li>
-    <li class="active">Ajouter une source</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li><a href="#">{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</li>
 </ol>
 <div ng-controller="AddWatchCtrl"> <!-- AddSourceCtrl -->
     <form name="sourceForm" class="form-horizontal" role="form">
 
         <div class="col-md-6">
-            <h3>Ajouter une sources</h3>
+            <h3>{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</h3>
             <div class="form-group" >
-                <label class="col-md-5 control-label required"> Source </label>
+                <label class="col-md-5 control-label required">{{ '_SOURCE_' | i18n }}</label>
 
 
                 <div class="col-md-7">
-                    <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
+                    <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="{{ '_ENTER_LINK_' | i18n }}" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
 
                 </div>
                 <div class="col-md-1">
@@ -27,15 +27,15 @@
 
             </div>
             <div class="form-group" >
-                <label class="col-md-5 control-label"> Nom de la source </label>
+                <label class="col-md-5 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
+                    <input type="text" class="form-control" placeholder="{{ '_ENTER_TITLE_' | i18n }}" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
                 </div>
             </div>
 
 
             <div class="form-group" >
-                <label class="col-md-5 control-label"> Fréquence de la source </label>
+                <label class="col-md-5 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                 <div class="col-md-7">
                     <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
                 </div>
@@ -43,16 +43,16 @@
 
 
             <div class="form-group" >
-                <label class="col-md-5 control-label"> Tags </label>
+                <label class="col-md-5 control-label">{{ '_TAGS_' | i18n }}</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
+                    <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="model.inputTags" id="inputTags" name="inputTags">
                 </div>
 
             </div>
 
             <div class="form-group" >
                 <div class="form-group" >
-                    <label class="col-md-5 control-label"> Domaine </label>
+                    <label class="col-md-5 control-label">{{ '_DOMAIN_' | i18n }}</label>
                     <div  class="col-md-7">
                         <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
                     </div>
@@ -61,7 +61,7 @@
 
 
             <div class="form-group">
-                <label class="col-md-5 control-label"> Secteur d'activité </label>
+                <label class="col-md-5 control-label">{{ '_ACTIVITY_DOMAIN_' | i18n }}</label>
                 <div class="col-md-7">
                     <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
                     <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
@@ -73,21 +73,22 @@
               <label class="checkbox">
                 <div class="col-sm-offset-5 col-sm-10">
                     <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxSource" name="valueCheckBox"> 
-                    Ajouter le widget source au tableau de bord
+                    {{ '_ADD_WIDGET_TO_DASHBOARD_' | i18n }}
                 </div>
               </label>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-5 col-md-7">
-                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
+                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>{{ '_ADD_SOURCE_' | i18n }}</button>
                 </div>
             </div>
         </div>
         <div class="col-md-6" id="displaySample">
             <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                 <div ng-show="sourceChecked">
-                    {{checkSourceResult.count}} élément(s) trouvé(s)
+                    {{checkSourceResult.count}} 
+                    {{ '_ELEMENTS_FOUND_' | i18n }}
                     <div ng-repeat="item in checkSourceResult.items">
                         <div class row>
 
@@ -107,15 +108,15 @@
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="addSourceModal.html">
         <div class="modal-header">
-            <h3> Ajout de Source</h3>
+            <h3>{{ '_MODAL_SOURCE_ADD_' | i18n }}</h3>
         </div>
         <div class="modal-body">
-            Source ajoutée  avec succès
+            {{ '_MODAL_SOURCE_ADD_OK_' | i18n }}
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 </div>
@@ -126,7 +127,7 @@
 
             </div> -->
             <div class="col-md-12">
-                <h3>Liste des sources</h3>
+                <h3>{{ "_SOURCE_LIST_" | i18n }}</h3>
                 <div class="gridStyleSource" ng-grid="gridOptionsSource">
 
                 </div>

@@ -83,6 +83,22 @@
         "key": "_EXPAND_ALL_",
         "value": "Déplier tout"
     },
+    {
+        "key": "_SOURCE_",
+        "value": "Source"
+    },
+    {
+        "key": "_DOMAIN_",
+        "value": "Domaine"
+    },
+    {
+        "key": "_ACTIVITY_DOMAIN_",
+        "value": "Secteur d'activité"
+    },
+    {
+        "key": "_ADD_SOURCE_",
+        "value": "Ajouter source"
+    },
 
 
 
@@ -138,6 +154,52 @@
 
 
     {
+        "key": "_ELEMENT_FOUND_",
+        "value": "Element trouvé"
+    },
+    {
+        "key": "_ELEMENTS_FOUND_",
+        "value": "Element(s) trouvé(s)"
+    },
+
+
+
+    {
+        "key": "_ORGANIZE_BAR_SOURCE_ADD_",
+        "value": "Ajouter une source"
+    },
+    {
+        "key": "_ORGANIZE_BAR_SOURCE_LIST_",
+        "value": "Afficher les sources"
+    },
+    {
+        "key": "_SOURCE_NAME_",
+        "value": "Nom de la source"
+    },
+    {
+        "key": "_FREQUENCY_CHECK_",
+        "value": "Fréquence d'actualisation"
+    },
+    {
+        "key": "_ADD_WIDGET_TO_DASHBOARD_",
+        "value": "Ajouter le widget source au tableau de bord"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_",
+        "value": "Ajout de source"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_OK_",
+        "value": "Source ajoutée  avec succès"
+    },
+    {
+        "key": "_SOURCE_LIST_",
+        "value": "Liste de sources"
+    },
+
+
+
+    {
         "key": "_USERLIST_H1_",
         "value": "Compte des utilisateurs enregistrés"
     },
@@ -159,6 +221,10 @@
     {
         "key": "_VALIDATION_SUCCESS_",
         "value": "Validation réussie"
+    },
+    {
+        "key": "_ENTER_TITLE_",
+        "value": "Enter titre"
     },
     {
         "key": "_ENTER_LINK_",
