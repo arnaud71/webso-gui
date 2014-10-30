@@ -2,7 +2,7 @@
   <div ng-include src="template.url"></div>
 </div>
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li class="active">Tableau de bord</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li class="active">{{ '_DASHBOARD_BAR_NAME_' | i18n }}</li>
 </ol>
 <adf-dashboard name="{{name}}" structure="4-8" adf-model="model" />

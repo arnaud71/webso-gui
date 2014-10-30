@@ -123,6 +123,17 @@
 
 
     {
+        "key": "_SIGN_IN_",
+        "value": "Enregistrement"
+    },
+    {
+        "key": "_SIGN_IN_BTN_",
+        "value": "S'enregistrer"
+    },
+
+
+
+    {
         "key": "_SERVICE_NAME_",
         "value": "Webso",
         "description": "Nom de la plateforme"
@@ -298,6 +309,36 @@
     {
         "key": "_ARE_YOU_SURE_DEL_USER_",
         "value": "Etes vous sûr de vouloir effacer cet utilisateur "
+    },
+
+
+
+    {
+        "key":"_DASHBOARD_BAR_NAME_",
+        "value": "Tableau de bord"
+    },
+
+
+
+    {
+        "key": "_LOGIN_",
+        "value": "Connexion"
+    },
+    {
+        "key": "_USERNAME_" ,
+        "value": "Nom d'utilisateur"
+    },
+    {
+        "key": "_REMEMBER_ME_",
+        "value": "Se souvenir de moi"
+    },
+    {
+        "key": "_FORGOT_PASSWORD_",
+        "value": "Mot de passe oublié"
+    },
+    {
+        "key": "_LOGIN_BTN_",
+        "value": "Se connecter"
     },
 
 
