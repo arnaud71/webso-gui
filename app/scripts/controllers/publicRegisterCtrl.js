@@ -84,7 +84,7 @@ angular.module('websoApp')
         },
           //error
           function () {
-            $scope.errorMessage = cfg.errorConnect;
+            $scope.errorMessage = $filter('i18n')(cfg.errorConnect);
             $scope.isError = true;
 
           }

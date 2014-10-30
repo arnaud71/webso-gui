@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('ValidationListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal) {
+  .controller('ValidationListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal,$filter) {
 
         $scope.mySelections = [];
         var $username = $cookieStore.get('username');
         var $userRole = $cookieStore.get('userRole');
         $scope.isError                = false;
-        $scope.errorMessage           = cfg.errorConnect;
+        $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
 
         /*
         Getting validation doc

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('administratorRegisterCtrl', function ($scope, $resource, cfg) {
+    .controller('administratorRegisterCtrl', function ($scope, $resource, cfg, $filter) {
 
     $scope.isSuccess = false;
     /*
@@ -35,7 +35,7 @@ angular.module('websoApp')
         },
           //error
           function () {
-            $scope.errorMessage = cfg.errorConnect;
+            $scope.errorMessage = $filter('i18n')(cfg.errorConnect);
             $scope.isError = true;
 
           }

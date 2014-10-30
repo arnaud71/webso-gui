@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard) {
+  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard, $filter) {
 
     var $username = $cookieStore.get('username');
 
     $scope.heg                    = cfg.heg;
     $scope.isError                = false;
-    $scope.errorMessage           = cfg.errorConnect;
+    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
 
     $scope.filterOptions = {
       filterText        : "",

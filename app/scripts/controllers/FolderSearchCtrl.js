@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal) {
+  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal', '$filter' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal, $filter) {
 
     var $username                 = $cookieStore.get('username');
 
@@ -15,7 +15,7 @@ angular.module('websoApp')
     paginationConfig.lastText     = 'Fin';
     $scope.isCollapsed            = true;
     $scope.isError                = false;
-    $scope.errorMessage           = cfg.errorConnect;
+    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
     $scope.searchTerm             = '';
 
 

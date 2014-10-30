@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('CollectCtrl', function ($scope,$resource,cfg,$cookieStore,$modal) {
+  .controller('CollectCtrl', function ($scope, $resource, cfg, $cookieStore, $modal, $filter) {
 
     var $username = $cookieStore.get('username');
     var $token    = $cookieStore.get('token');
@@ -16,7 +16,7 @@ angular.module('websoApp')
     };
 
     $scope.isError                = false;
-    $scope.errorMessage           = cfg.errorConnect;
+    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
 
 
    /* $scope.googleFeed = $resource('https://ajax.googleapis.com/ajax/services/feed/:action',

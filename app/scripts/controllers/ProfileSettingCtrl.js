@@ -2,7 +2,7 @@
 
 angular.module('websoApp')
     .config(function($httpProvider) { $httpProvider.defaults.useXDomain = true; delete $httpProvider.defaults.headers.common['X-Requested-With'];})
-    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg) {
+    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg, $filter) {
 
     $scope.isSuccess = false;
     var username = $cookieStore.get('username');
@@ -64,7 +64,7 @@ angular.module('websoApp')
                     $scope.errorMessagePassword = user;
                 }
                 else{
-                    $scope.errorMessagePassword = cfg.errorConnect;
+                    $scope.errorMessagePassword = $filter('i18n')(cfg.errorConnect);
                 }
                 $scope.isErrorPassword = true;
 
@@ -94,7 +94,7 @@ angular.module('websoApp')
             },
               //error
               function () {
-                $scope.errorMessageMail = cfg.errorConnect;
+                $scope.errorMessageMail = $filter('i18n')(cfg.errorConnect);
                 $scope.isErrorMail = true;
               }
             );

@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('UsersListCtrl', function ($log, $cookieStore, $location, $scope,$resource,cfg,$modal) {
+    .controller('UsersListCtrl', function ($log, $cookieStore, $location, $scope,$resource,cfg,$modal,$filter) {
 
     // default sort function
 
 
     $scope.isSuccess              = false;
     $scope.isError                = false;
-    $scope.errorMessage           = cfg.errorConnect;
+    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
     $scope.myData = [];
 
     /*
