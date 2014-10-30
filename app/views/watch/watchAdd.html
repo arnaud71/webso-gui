@@ -3,9 +3,9 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a>Organiser</a></li>
-    <li class="active">Ajouter une surveillance</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li><a href="#">{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ '_ORGANIZE_BAR_WATCH_' | i18n }}</li>
 </ol>
 
 <div ng-controller="AddWatchCtrl">
@@ -16,7 +16,7 @@
     <form name="sourceForm" class="form-horizontal" role="form">
         <!-- source panel -->
          <div class="row">
-            <h3>Ajouter une surveillance</h3>
+            <h3>{{ '_ADD_WATCH_' | i18n }}</h3>
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -24,11 +24,11 @@
                         <tab heading="{{tabsSource[0].title}}" ng-show="heg">
                             <div class="col-md-6" ng-show="heg">
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label required"> Source </label>
+                                    <label class="col-md-5 control-label required">{{ '_SOURCE_' | i18n }}</label>
 
 
                                     <div class="col-md-6">
-                                        <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
+                                        <input type="url" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="{{ '_ENTER_LINK_' | i18n }}" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
 
                                     </div>
                                     <div class="col-md-1">
@@ -38,15 +38,15 @@
 
                                 </div>
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Nom de la source </label>
+                                    <label class="col-md-5 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
+                                        <input type="text" class="form-control" placeholder="{{ '_ENTER_TITLE_' | i18n }}" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
                                     </div>
                                 </div>
 
 
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Fréquence de la source </label>
+                                    <label class="col-md-5 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                                     <div class="col-md-7">
                                         <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
                                     </div>
@@ -54,16 +54,16 @@
 
 
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Tags </label>
+                                    <label class="col-md-5 control-label">{{ '_TAG_' | i18n }}</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
+                                        <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="model.inputTags" id="inputTags" name="inputTags">
                                     </div>
 
                                 </div>
 
                                 <div class="form-group" >
                                     <div class="form-group" >
-                                        <label class="col-md-5 control-label"> Domaine </label>
+                                        <label class="col-md-5 control-label">{{ '_DOMAIN_' | i18n }}</label>
                                         <div  class="col-md-7">
                                             <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
                                         </div>
@@ -72,7 +72,7 @@
 
 
                                 <div class="form-group">
-                                    <label class="col-md-5 control-label"> Secteur d'activité </label>
+                                    <label class="col-md-5 control-label">{{ '_ACTIVITY_DOMAIN_' | i18n }}</label>
                                     <div class="col-md-7">
                                         <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
                                         <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
@@ -84,21 +84,21 @@
                                   <label class="checkbox">
                                     <div class="col-sm-offset-5 col-sm-10">
                                         <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxSource" name="valueCheckBox"> 
-                                        Ajouter le widget source au tableau de bord
+                                        {{ '_ADD_WIDGET_TO_DASHBOARD_' | i18n }}
                                     </div>
                                   </label>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-5 col-md-7">
-                                        <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
+                                        <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>{{ '_ADD_SOURCE_' | i18n }}</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6" id="displaySample">
                                 <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                                     <div ng-show="sourceChecked">
-                                        {{checkSourceResult.count}} élément(s) trouvé(s)
+                                        {{checkSourceResult.count}} {{ '_ELEMENTS_FOUND_' | i18n }}
                                         <div ng-repeat="item in checkSourceResult.items">
                                             <div class row>
 
@@ -141,7 +141,7 @@
             <div class="panel panel-default" ng-show="heg">
                 <div class="panel-body">
                     <div ng-show="model.inputUrl">
-                        Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
+                        {{ '_SOURCE_' | i18n }}: {{model.inputUrl}}, {{ '_TITLE_' | i18n }}: {{model.inputTitle}}
                     </div>
                     <tabset>
                         <tab heading="{{tabsWatch[0].title}}">
@@ -149,7 +149,7 @@
 
 
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Dossier </label>
+                                    <label class="col-md-5 control-label">{{ '_FOLDER_' | i18n }}</label>
                                     <div  class="col-md-7">
                                         <select id="inputFolder" name="inputFolder" ng-model="model.inputFolder" ng-options="folder.name for folder in folders"></select>
                                     </div>
@@ -157,16 +157,16 @@
 
 
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Requête </label>
+                                    <label class="col-md-5 control-label">{{ '_REQUEST_' | i18n }}</label>
                                     <div class="col-md-7">
                                         <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
-                                        <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
+                                        <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">{{ '__' | i18n }}Tester</button>
                                     </div>
                                 </div>
 
 
                                 <div class="form-group" >
-                                    <label class="col-md-5 control-label"> Notification </label>
+                                    <label class="col-md-5 control-label">{{ '_NOTIFICATION_' | i18n }}</label>
 
                                     <div class="col-md-7">
                                         <select id="inputNotification" ng-model="model.inputNotification" ng-options="notification.option for notification in notifications"></select>
@@ -177,21 +177,21 @@
                                   <label class="checkbox">
                                     <div class="col-sm-offset-5 col-sm-10">
                                         <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxWatch" name="valueCheckBox"> 
-                                        Ajouter le widget surveillance au tableau de bord
+                                        {{ '_ADD_WIDGET_TO_DASHBOARD_' | i18n }}
                                     </div>
                                   </label>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-5 col-md-7">
-                                        <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
+                                        <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">{{ '_WATCH_' | i18n }}</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6" id="displaySolrTest">
                                 <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                                     <div ng-show="solrResult.response">
-                                        {{solrResult.response.numFound||0}} documents(s) trouvé(s)
+                                        {{solrResult.response.numFound||0}} {{ '_DOCUMENTS_FOUND_' | i18n }}
                                     <div ng-show="solrResult.response.numFound">
 
                                         <div ng-repeat="doc in solrResult.response.docs">
@@ -223,11 +223,11 @@
 
             <div ng-hide="heg">
                 <div ng-show="model.inputUrl">
-                    Source: {{model.inputUrl}}, Titre: {{model.inputTitle}}
+                    {{ '_SOURCE_' | i18n }}: {{model.inputUrl}}, {{ '_TITLE_' | i18n }}: {{model.inputTitle}}
                 </div>
                 <div class="col-md-6">
                     <div class="form-group" >
-                        <label class="col-md-5 control-label"> Dossier </label>
+                        <label class="col-md-5 control-label">{{ '_FOLDER_' | i18n }}</label>
                         <div  class="col-md-7">
                             <select id="inputFolder" name="inputFolder" ng-model="model.inputFolder" ng-options="folder.name for folder in folders"></select>
                         </div>
@@ -235,16 +235,16 @@
 
 
                     <div class="form-group" >
-                        <label class="col-md-5 control-label"> Requête </label>
+                        <label class="col-md-5 control-label">{{ '_REQUEST_' | i18n }}</label>
                         <div class="col-md-7">
                             <input type="text" name ="inputQuery" id="inputQuery" ng-model="model.inputQuery">
-                            <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">Tester</button>
+                            <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">{{ '_TEST_' | i18n }}</button>
                         </div>
                     </div>
 
 
                     <div class="form-group" >
-                        <label class="col-md-5 control-label"> Notification </label>
+                        <label class="col-md-5 control-label">{{ '_NOTIFICATION_' | i18n }}</label>
 
                         <div class="col-md-7">
                             <select id="inputNotification" ng-model="model.inputNotification" ng-options="notification.option for notification in notifications"></select>
@@ -255,21 +255,21 @@
                       <label class="checkbox">
                         <div class="col-sm-offset-5 col-sm-10">
                             <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxWatch" name="valueCheckBox"> 
-                            Ajouter le widget surveillance au tableau de bord
+                            {{ '_ADD_WIDGET_TO_DASHBOARD_' | i18n }}
                         </div>
                       </label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-5 col-md-7">
-                            <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">Surveiller</button>
+                            <button analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_add_surveillance' analytics-category='Active' type="submit" class="btn btn-default" ng-click="doAddWatch()" name ="surveiller">{{ '_WATCH_' | i18n }}</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" id="displaySolrTest">
                     <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                         <div ng-show="solrResult.response">
-                            {{solrResult.response.numFound||0}} documents(s) trouvé(s)
+                            {{solrResult.response.numFound||0}} {{ '_DOCUMENTS_FOUND_' | i18n }}
                         <div ng-show="solrResult.response.numFound">
 
                             <div ng-repeat="doc in solrResult.response.docs">
@@ -294,31 +294,31 @@
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="addWatchModal.html">
         <div class="modal-header">
-            <h3> Ajout de Surveillance</h3>
+            <h3>{{ '_MODAL_WATCH_ADD_' | i18n }}</h3>
         </div>
         <div class="modal-body">
-            Surveillance ajoutée avec succès
+            {{ '_MODAL_WATCH_ADD_OK_' | i18n }}
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 
     <script type="text/ng-template" id="addSourceModal.html">
         <div class="modal-header">
-            <h3> Ajout de Source</h3>
+            <h3>{{ '_MODAL_SOURCE_ADD_' | i18n }}</h3>
 
         </div>
         <div class="modal-body">
-            Source ajoutée avec succès
+            {{ '_MODAL_SOURCE_ADD_OK_' | i18n }}
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 
@@ -326,36 +326,36 @@
 
     <script type="text/ng-template" id="deleteSourceModal.html">
         <div class="modal-header">
-            <h3> Effacement de la Source</h3>
+            <h3>{{ '_MODAL_SOURCE_DEL_' | i18n }}</h3>
 
         </div>
         <div class="modal-body">
-            Etes vous sûr de vouloir effacer cette source
+            {{ '_ARE_YOU_SURE_DEL_SOURCE_' | i18n }}
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_CANCEL_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 
 
     <script type="text/ng-template" id="deleteWatchModal.html">
         <div class="modal-header">
-            <h3> Effacement de la Surveillance</h3>
+            <h3>{{ '_MODAL_WATCH_DEL_' | i18n }}</h3>
 
         </div>
         <div class="modal-body">
-            Etes vous sûr de vouloir effacer cette surveillance
+            {{ '_ARE_YOU_SURE_DEL_WATCH_' | i18n }}
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 </div>
@@ -367,7 +367,7 @@
 
                             </div> -->
             <div class="col-md-12">
-                <h3>Liste des surveillances</h3>
+                <h3>{{ '_WATCH_LIST_' | i18n }}</h3>
                 <div class="gridStyleSource" ng-grid="gridOptionsSource">
 
                 </div>

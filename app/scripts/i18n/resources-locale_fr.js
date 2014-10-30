@@ -96,6 +96,22 @@
         "value": "Aperçu"
     },
     {
+        "key": "_REQUEST_",
+        "value": "Requête"
+    },
+    {
+        "key": "_NOTIFICATION_",
+        "value": "Notification"
+    },
+    {
+        "key": "_WATCH_",
+        "value": "Surveiller"
+    },
+    {
+        "key": "_TEST_",
+        "value": "Tester"
+    },
+    {
         "key": "_ACTIVITY_DOMAIN_",
         "value": "Secteur d'activité"
     },
@@ -131,11 +147,14 @@
         "value": "Dossiers de surveillance"
     },
 
+
+
     {
         "key":"_SETTINGS_H1_",
         "value":"Mon profil",
         "description":"entête de div"
     },
+
 
 
     {
@@ -158,8 +177,8 @@
 
 
     {
-        "key": "_ELEMENT_FOUND_",
-        "value": "Element trouvé"
+        "key": "_DOCUMENTS_FOUND_",
+        "value": "Document(s) trouvé(s)"
     },
     {
         "key": "_ELEMENTS_FOUND_",
@@ -173,9 +192,16 @@
         "value": "Ajouter une source"
     },
     {
-        "key": "_ORGANIZE_BAR_SOURCE_LIST_",
+        "key": "_ORGANIZE_BAR_SOURCELIST_",
         "value": "Afficher les sources"
     },
+    {
+        "key": "_ORGANIZE_BAR_WATCH_",
+        "value": "Ajouter une surveillance"
+    },
+
+
+
     {
         "key": "_SOURCE_NAME_",
         "value": "Nom de la source"
@@ -186,7 +212,7 @@
     },
     {
         "key": "_ADD_WIDGET_TO_DASHBOARD_",
-        "value": "Ajouter le widget source au tableau de bord"
+        "value": "Ajouter le widget au tableau de bord"
     },
     {
         "key": "_MODAL_SOURCE_ADD_",
@@ -197,11 +223,28 @@
         "value": "Source ajoutée  avec succès"
     },
     {
+        "key": "_MODAL_SOURCE_DEL_",
+        "value": "Effacement de la Source"
+    },
+    {
+        "key": "_ARE_YOU_SURE_DEL_SOURCE_",
+        "value": "Etes vous sûr de vouloir effacer cette source"
+    },
+    {
         "key": "_SOURCE_LIST_",
         "value": "Liste de sources"
     },
 
 
+
+    {
+        "key": "_ADD_INFORMATION_",
+        "value": "Ajouter une information"
+    },
+    {
+        "key": "_VALIDATION_SUCCESS_",
+        "value": "Validation réussie"
+    },
     {
         "key": "_VIEW_VALIDATE_INFOS_",
         "value": "Afficher informations validées"
@@ -218,6 +261,33 @@
 
 
     {
+        "key": "_ADD_WATCH_",
+        "value": "Ajouter une surveillance"
+    },
+    {
+        "key": "_MODAL_WATCH_ADD_",
+        "value": "Ajout de Surveillance"
+    },
+    {
+        "key": "_MODAL_WATCH_ADD_OK_",
+        "value": "Surveillance ajoutée avec succès"
+    },
+    {
+        "key": "_MODAL_WATCH_DEL_",
+        "value": "Effacement de la Surveillance"
+    },
+    {
+        "key": "_ARE_YOU_SURE_DEL_WATCH_",
+        "value": "Etes vous sûr de vouloir effacer cette surveillance"
+    },
+    {
+        "key": "_WATCH_LIST_",
+        "value": "Liste des surveillances"
+    },
+
+
+
+    {
         "key": "_USERLIST_H1_",
         "value": "Compte des utilisateurs enregistrés"
     },
@@ -226,20 +296,12 @@
         "value": "Effacement de l'utilisateur "
     },
     {
-        "key": "_ARE_YOU_SURE_",
+        "key": "_ARE_YOU_SURE_DEL_USER_",
         "value": "Etes vous sûr de vouloir effacer cet utilisateur "
     },
 
 
 
-    {
-        "key": "_ADD_INFORMATION_",
-        "value": "Ajouter une information"
-    },
-    {
-        "key": "_VALIDATION_SUCCESS_",
-        "value": "Validation réussie"
-    },
     {
         "key": "_ENTER_TITLE_",
         "value": "Enter titre"
