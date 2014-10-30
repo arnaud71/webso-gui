@@ -123,7 +123,11 @@
         "value": "Organiser les dossiers de validation"
     },
     {
-        "key": "_VFOLDER_INFORMATION_",
+        "key": "_WFOLDER_H2_",
+        "value": "Organiser les dossiers de surveillance"
+    },
+    {
+        "key": "_FOLDER_INFORMATION_",
         "value": "Contenu du dossier"
     },
     {
