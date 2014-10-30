@@ -32,9 +32,9 @@ angular.module('websoApp')
              Confirm dialogs
              */
 
-            var deleteWatch = confirm('Etes vous sûr de vouloir supprimer cette surveillance?');
+            var deleteWatch = confirm($filter('i18n')('_ARE_YOU_SURE_DEL_WATCH_'));
             if (deleteWatch) {
-                alert('Suppression confirmée');
+                alert($filter('i18n')('_DEL_CONFIRM_'));
 
                 /*
                  Delete
