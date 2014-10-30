@@ -52,6 +52,15 @@ angular.module('websoApp')
       $scope.idx[value.name] = key;
     });
 
+    $scope.sourceFacets =  [
+      {name: 'selection',  value:'selection',   nb:0, checked:false, fq:'+waiting_b:false'},
+      {name: 'waiting',       value:'en attente', nb:0, checked:false,fq:'+waiting_b:true' }
+    ];
+    angular.forEach($scope.sourceFacets, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+
+
 
     $scope.readFacets =  [
       {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:'+read_b:false' },
@@ -72,26 +81,15 @@ angular.module('websoApp')
     });
 
     $scope.sourceGroup =  [
-      {name :'validateFacet', value : 'Validées' ,  items : $scope.validateFacets, checked : true, visible : true},
-      {name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
+      {name :'sourceFacet', value : 'Source' ,  items : $scope.sourceFacets, checked : true, visible : false},
+      //{name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
     ];
     angular.forEach($scope.sourceGroup, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
-    $scope.validateFacets = [
-      {name: 'validate', value:'validées', nb:0, checked:true}
-    ];
-    angular.forEach($scope.validateFacets, function(value, key) {
-      $scope.idx[value.name] = key;
-    });
 
-    $scope.waitingFacets = [
-      {name: 'waiting', value:'en attente', nb:0, checked:false}
-    ];
-    angular.forEach($scope.waitingFacets, function(value, key) {
-      $scope.idx[value.name] = key;
-    });
+
 
     // full left search model
     $scope.searchNav = [
@@ -317,9 +315,9 @@ angular.module('websoApp')
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
             //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.validateFacet].items[$scope.idx.validate].nb     = result.facet_counts.facet_queries['type_s:validation'];
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].nb     = result.facet_counts.facet_queries['waiting_b:false'];
 
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.waitFacet].items[$scope.idx.waiting].nb     = result.facet_counts.facet_queries[''];
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].nb     = result.facet_counts.facet_queries['waiting_b:true'];
             // get period data
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
@@ -646,7 +644,7 @@ angular.module('websoApp')
       }
       else if (item.name == 'waiting') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.validateFacet].items[$scope.idx.validate].checked = false;
+          $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].checked = false;
           $scope.sourceFacetFq = item.fq;
           //$scope.typeFq = '+type_s:waiting';
         }
@@ -655,9 +653,9 @@ angular.module('websoApp')
           //$scope.typeFq = '';
         }
       }
-      else if (item.name == 'validate') {
+      else if (item.name == 'selection') {
         if (item.checked == false) {
-          $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.waitFacet].items[$scope.idx.waiting].checked = false;
+          $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].checked = false;
           $scope.sourceFacetFq = item.fq;
         }
         else {
@@ -806,13 +804,15 @@ angular.module('websoApp')
 
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
+          //source_type_s     : 'rss', already in the resource
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
           domain_s:         $scope.validationForm.domain.name,
           activity_s:       $scope.validationForm.activity.name,
-          isWaiting_b:      true
+          waiting_b:        true
+
         });
       });
     }
@@ -848,12 +848,14 @@ angular.module('websoApp')
 
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
+          //source_type_s     : 'rss', already in the resource
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
           domain_s:         $scope.validationForm.domain.name,
-          activity_s:       $scope.validationForm.activity.name
+          activity_s:       $scope.validationForm.activity.name,
+          waiting_b:        false
         });
       });
     }
