@@ -4,16 +4,16 @@
 
 <div id="list-search">
     <ol class="breadcrumb text-center">
-        <li><a href="#/home">Webso</a></li>
-        <li><a>Valider</a></li>
-        <li class="active">Afficher informations validées</li>
+    <li><a href="#/home">{{ "_SERVICE_NAME_" | i18n }}</a></li>
+    <li><a>{{ "_VALIDATE_" | i18n }}</a></li>
+    <li class="active">{{ "_VIEW_VALIDATE_INFOS_" | i18n }}</li>
     </ol>
     <div ng-controller="ValidationListCtrl">
         <div class="alert alert-danger" ng-show="isError">
             <strong>&nbsp;</strong><span>{{errorMessage}}</span>
         </div>
         <!-- <div class="selectedItems">Items: {{mySelections}}</div><br><br> -->
-        <div class="selectedItems">Aperçu: {{selectedIDs}}</div><br><br>
+        <div class="selectedItems">{{ '_PREVIEW_' | i18n }}: {{selectedIDs}}</div><br><br>
 
         <div class="row">
             <!--           <div class="col-md-0">
@@ -28,18 +28,18 @@
 
         <script type="text/ng-template" id="deleteValidationModal.html">
             <div class="modal-header">
-                <h3> Effacement d'une validation {{userName}}</h3>
+                <h3>{{ '_DELETE_VALIDATION_' | i18n }} {{userName}}</h3>
 
             </div>
             <div class="modal-body">
-                Etes vous sûr de vouloir effacer cette validation {{userName}} ?
+                {{ '_ARE_YOU_SURE_DEL_VALIDATION' | i18n }} {{userName}} ?
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
 
-                <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+                <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
             </div>
         </script>
     </div>
@@ -53,7 +53,7 @@
     <ol class="breadcrumb text-center">
         <li><a href="#/home">Webso</a></li>
         <li><a href="#">Valider</a></li>
-        <li class="active">Afficher les informations validées</li>
+        <li class="active">{{ '__' | i18n }}Afficher les informations validées</li>
     </ol>
 
     <div ng-controller="ValidationDataCtrl">
@@ -66,11 +66,11 @@
 
                     <table class="table table-bordered table-striped">
                         <tr >
-                            <th>Titre</th>
-                            <th>Lien</th>
-                            <th>Auteur</th>
-                            <th>Dossier de validation </th>
-                            <th>Date </th>
+                            <th>{{ '__' | i18n }}Titre</th>
+                            <th>{{ '__' | i18n }}Lien</th>
+                            <th>{{ '__' | i18n }}Auteur</th>
+                            <th>{{ '__' | i18n }}Dossier de validation </th>
+                            <th>{{ '__' | i18n }}Date </th>
                         </tr>
 
                         <tr ng-repeat="validation in validationResult.success.response.docs">
@@ -81,7 +81,7 @@
                             <td></td>
                         </tr>
                     </table>
-                    Nombre de résultats trouvés:
+                    {{ '__' | i18n }}Nombre de résultats trouvés:
                     {{Result.success.response.numFound}}
                 </div>
             </div>

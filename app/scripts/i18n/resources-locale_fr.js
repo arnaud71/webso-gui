@@ -92,6 +92,10 @@
         "value": "Domaine"
     },
     {
+        "key": "_PREVIEW_",
+        "value": "Aperçu"
+    },
+    {
         "key": "_ACTIVITY_DOMAIN_",
         "value": "Secteur d'activité"
     },
@@ -195,6 +199,20 @@
     {
         "key": "_SOURCE_LIST_",
         "value": "Liste de sources"
+    },
+
+
+    {
+        "key": "_VIEW_VALIDATE_INFOS_",
+        "value": "Afficher informations validées"
+    },
+    {
+        "key": "_DELETE_VALIDATION_",
+        "value": "Effacement d'une validation"
+    },
+    {
+        "key": "_ARE_YOU_SURE_DEL_VALIDATION",
+        "value": "Etes vous sûr de vouloir effacer cette validation "
     },
 
 
