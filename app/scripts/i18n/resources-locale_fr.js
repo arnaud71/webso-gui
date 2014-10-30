@@ -588,6 +588,26 @@
         "key": "_ERROR_VALIDATE_ADD_",
         "value": "Erreur merci de saisir au moins un titre, une url et un dossier"
     },
+    {
+        "key": "_EMPTY_PASSWORD_",
+        "value": "Mots de passe vide"
+    },
+    {
+        "key": "_PASSWORD_LENGTH_",
+        "value": "Longueur du mot de passe doit être superieur à 6 et inférieur à 20 caractères"
+    },
+    {
+        "key": "_DIFF_PASSWORD_",
+        "value": "Les mots de passe ne correspondent pas"
+    },
+    {
+        "key": "_UPDATE_INFO_OK_",
+        "value": "Vos informations on été mises à jour avec succès"
+    },
+    {
+        "key": "_EMPTY_MAIL_",
+        "value": "Email vide"
+    },
 
 
 
