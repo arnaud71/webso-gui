@@ -92,8 +92,16 @@
         "value": "Source"
     },
     {
+        "key": "_SOURCES_",
+        "value": "Sources"
+    },
+    {
         "key": "_DOMAIN_",
         "value": "Domaine"
+    },
+    {
+        "key": "_ACTIVITY_DOMAIN_",
+        "value": "Secteur d'activité"
     },
     {
         "key": "_PREVIEW_",
@@ -110,6 +118,10 @@
     {
         "key": "_WATCH_",
         "value": "Surveiller"
+    },
+    {
+        "key": "_WATCHES_",
+        "value": "Surveillances"
     },
     {
         "key": "_TEST_",
@@ -132,8 +144,11 @@
         "value": "en"
     },
     {
-        "key": "_ACTIVITY_DOMAIN_",
-        "value": "Secteur d'activité"
+        "key": "_AUTHENTICATE_",
+        "value": "Authentification"
+    },
+    {
+        "key": ""
     },
     {
         "key": "_ADD_SOURCE_",
@@ -157,6 +172,77 @@
         "key": "_SERVICE_NAME_",
         "value": "Webso",
         "description": "Nom de la plateforme"
+    },
+
+
+
+    {
+        "key": "_NAV_VALIDATE_",
+        "value": "Valider"
+    },
+    {
+        "key": "_NAV_VALIDATION_ADD_",
+        "value": "Ajouter information"
+    },
+    {
+        "key": "_NAV_VALIDATE_LIST_",
+        "value": "Afficher informations validées"
+    },
+    {
+        "key": "_NAV_DASHBOARD_",
+        "value": "Tableau de bord"
+    },
+    {
+        "key": "_NAV_BROADCAST_",
+        "value": "Diffuser"
+    },
+    {
+        "key": "_NAV_NEWSLETTER_",
+        "value": "Newsletter"
+    },
+    {
+        "key": "_NAV_REPORT_",
+        "value": "Rapport"
+    },
+    {
+        "key": "_NAV_ORGANIZE_",
+        "value": "Organiser"
+    },
+    {
+        "key": "_NAV_SOURCES_",
+        "value": "Sources"
+    },
+    {
+        "key": "_NAV_WATCHES_",
+        "value": "Surveillances"
+    },
+    {
+        "key": "_NAV_WATCHES_FOLDER_",
+        "value": "Dossiers de surveillance"
+    },
+    {
+        "key": "_NAV_VALIDATING_FOLDER_",
+        "value": "Dossiers de validation"
+    },
+    {
+        "key": "_NAV_TEMPLATES_",
+        "value": "Templates"
+    },
+    {
+        "key": "_NAV_PROFILE_",
+        "value": "Mon profil"
+    },
+    {
+        "key": "_NAV_USERS_LIST_",
+        "value": "Comptes utilisateurs"
+    },
+    {
+        "key": "_NAV_BOOKLET_",
+        "value": "Bookmarklet"
+    },
+    {
+        "key": "_WELCOME_",
+        "value": "Bienvenue"
     },
 
 
@@ -343,6 +429,10 @@
     {
         "key": "_LOGIN_",
         "value": "Connexion"
+    },
+    {
+        "key": "_LOGOUT_",
+        "value": "Déconnexion"
     },
     {
         "key": "_USERNAME_" ,
