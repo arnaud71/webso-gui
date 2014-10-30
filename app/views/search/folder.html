@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb text-center">
-                <li><a href="#/home">Webso</a></li>
-                <li class="active">Rechercher</li>
+                <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+                <li class="active">{{ '_SEARCH_' | i18n }}</li>
                 <!-- <li class="active"> - </li> -->
             </ol>
         </div>
@@ -62,8 +62,8 @@
             <div class="col-md-9">
 
                 <form class="form-horizontal" ng-submit="doSearch()">
-                    <input type="text" placeholder="Chercher" ng-model="searchTerm">
-                    <button class="btn btn-default" ng-click="doSearch()" name="searchButton" analytics-on='click' analytics-event='Search' analytics-label='Search_folder' analytics-category='Passive'><i class="icon-search"></i>Chercher</button>
+                    <input type="text" placeholder="{{ '_SEARCH_' | i18n }}" ng-model="searchTerm">
+                    <button class="btn btn-default" ng-click="doSearch()" name="searchButton" analytics-on='click' analytics-event='Search' analytics-label='Search_folder' analytics-category='Passive'><i class="icon-search"></i>{{ '_SEARCH_' | i18n }}</button>
                 </form>
 
 
@@ -71,7 +71,7 @@
                 <div ng-show='searchNav[idx.online].checked' id="solrResult">
                     <div id="numberFound">
                         <div results-number ng-show="onlineResult.count>0">
-                            {{onlineResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
+                            {{onlineResult.count}} {{ '_REQUEST_RESULT_' | i18n }} <b>'{{searchTerm}}'</b>
                             <br>
                         </div>
                     </div>
@@ -103,8 +103,8 @@
                                         <div id="dateFound">
                                             {{online.pubDate|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                                <button type="button" class="btn btn-xs" ng-click="waitDocument(online)" tooltip="Mettre le document en attente"> <span class="glyphicon glyphicon-flag"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="waitDocument(online)" tooltip="{{ '_WAIT_DOC_' | i18n }}"> <span class="glyphicon glyphicon-flag"></span></button>
                                             </div>
 
 
@@ -124,7 +124,7 @@
                 <div ng-show='searchNav[idx.feeds].checked' id="solrResult">
                     <div id="numberFound">
                         <div results-number ng-show="feedResult.count>0">
-                            {{feedResult.count}} résultats pour la requête <b>'{{searchTerm}}'</b>
+                            {{feedResult.count}} {{ '_REQUEST_RESULT_' | i18n }} <b>'{{searchTerm}}'</b>
                             <br>
                         </div>
                     </div>
@@ -154,8 +154,8 @@
                                         <div id="dateFound">
                                             {{feed.pubDate|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button type="button" class="btn btn-xs" ng-click="addFeed(feed)" tooltip="Ajouter le flux"> <span class="glyphicon glyphicon-plus"></span></button>
-                                                <button type="button" class="btn btn-xs" ng-click="seeFeed(feed)" tooltip="Voir le flux"> <span class="glyphicon glyphicon-search"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="addFeed(feed)" tooltip="{{ '_ADD_FEED_' | i18n }}"> <span class="glyphicon glyphicon-plus"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="seeFeed(feed)" tooltip="{{ '_SEE_FEED_' | i18n }}"> <span class="glyphicon glyphicon-search"></span></button>
                                             </div>
 
 
@@ -175,7 +175,7 @@
 
                     <div id="numberFound">
                         <div solr-results-number ng-show="solrResult.response">
-                            Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
+                            {{ '_Page_' | i18n }}: {{currentPage}} {{ '_OF_' | i18n }} {{solrResult.response.numFound}} {{ '_REQUEST_RESULT_' | i18n }}<b>'{{solrResult.responseHeader.params.q}}'</b> {{ '_IN_' | i18n }} {{solrResult.responseHeader.QTime}} ms
                             <br>
                         </div>
                     </div>
@@ -230,12 +230,12 @@
                                         <div id="dateFound">
                                             {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
                                             <div id="actionList">
-                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
-                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
-                                                <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
-                                                <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="{{ '_UNVALDIATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="{{ '_MARK_AS_READ_' | i18n }}"> <span class="glyphicon glyphicon-eye-open"></span></button>
+                                                <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="{{ '_MARK_AS_UNREAD_' | i18n }}"> <span class="glyphicon glyphicon-eye-close"></span></button>
 
-                                                <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
+                                                <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="{{ '_DELETE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-trash"></span></button></div>
                                             </div>
 
 
@@ -253,39 +253,39 @@
         <!-- validation Modal  -->
         <script type="text/ng-template" id="validateModal.html">
             <div class="modal-header">
-            <h3> Validation de document</h3>
+            <h3>{{ '_VALIDATE_FILE_' | i18n }}</h3>
             </div>
             <div class="modal-body">
 
 
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Titre </label>
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.title">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Url </label>
+                        <label class="col-sm-2 control-label">{{ '_URL_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="url" class="form-control" ng-model="validationForm.url">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Tags </label>
+                        <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.tags">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Content </label>
+                        <label class="col-sm-2 control-label">{{ '_CONTENT_' | i18n }}</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" rows="6" ng-model="validationForm.content"></textarea>
 
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Dossiers </label>
+                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
                         <div class="col-sm-10">
 
                             <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
@@ -301,52 +301,52 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
 
         <script type="text/ng-template" id="validateFeedModal.html">
             <div class="modal-header">
-            <h3> Ajout de source RSS</h3>
+            <h3>{{ '_ADD_RSS_FEED_' | i18n }}</h3>
             </div>
             <div class="modal-body">
 
 
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Titre </label>
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.title">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Url </label>
+                        <label class="col-sm-2 control-label">{{ '_URL_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="url" class="form-control" ng-model="validationForm.url">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Fréquence d'actualisation </label>
+                        <label class="col-sm-2 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                         <div class="col-sm-10">
                             <select ng-model="validationForm.frequency" ng-options="frequency.option for frequency in frequencies" require></select>
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Tags </label>
+                        <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.tags">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Domaine </label>
+                        <label class="col-sm-2 control-label">{{ '_DOMAIN_' | i18n }}</label>
                         <div  class="col-sm-10">
                             <select id="inputDomain" name="inputDomain" ng-model="validationForm.domain" ng-options="domain.name for domain in domains" require></select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"> Secteur d'activité </label>
+                        <label class="col-sm-2 control-label">{{ '_ACTIVITY_DOMAIN_' | i18n }}</label>
                         <div class="col-sm-10">
                             <select id="inputActivity" name="inputActivity" ng-model="validationForm.activity" ng-options="activity.name for activity in validationForm.domain.activites"></select>
                             {{activity}}
@@ -356,19 +356,19 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
 
         <script type="text/ng-template" id="seeFeedModal.html">
             <div class="modal-header">
-                <h4> Flux RSS </h4>
+                <h4>{{ '_RSS_FEED_' | i18n }}</h4>
             </div>
             <div class="modal-body">
                     <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                        {{checkSourceResult.count}} élément(s) trouvé(s)
+                        {{checkSourceResult.count}} {{ '_ELEMENTS_FOUND_' | i18n }}
                         <div ng-repeat="item in checkSourceResult.items">
                             <div class row>
                                 <h4>{{item.title}}</h4>
@@ -379,7 +379,7 @@
                     </div>
             </div>
              <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
             </div>
         </script>
     </div>

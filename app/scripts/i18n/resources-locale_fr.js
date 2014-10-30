@@ -40,6 +40,10 @@
         "value": "Lien"
     },
     {
+        "key": "_URL_",
+        "value": "URL"
+    },
+    {
         "key": "TAGS",
         "value": "Tags"
     },
@@ -110,6 +114,22 @@
     {
         "key": "_TEST_",
         "value": "Tester"
+    },
+    {
+        "key": "_CONTENT_",
+        "value": "Contenu"
+    },
+    {
+        "key": "_PAGE_",
+        "value": "Page"
+    },
+    {
+        "key": "_OF_",
+        "value": "de"
+    },
+    {
+        "key": "_IN_",
+        "value": "en"
     },
     {
         "key": "_ACTIVITY_DOMAIN_",
@@ -382,6 +402,58 @@
         "key": "_INPUT_FILE_",
         "value": "Sélectionner un fichier"
     },
+
+
+
+    {
+        "key": "_RSS_FEED_",
+        "value": "Flux RSS"
+    },
+    {
+        "key": "_ADD_RSS_FEED_",
+        "value": "Ajout de flux RSS"
+    },
+    {
+        "key": "_ADD_FEED_",
+        "value": "Ajouter le flux"
+    },
+    {
+        "key": "_SEE_FEED_",
+        "value": "Voir le flux"
+    },
+    {
+        "key": "_VALIDATE_FILE_",
+        "value": "Validation de document"
+    },
+    {
+        "key": "_DELETE_DOC_",
+        "value": "Effacer le document"
+    },
+    {
+        "key": "_VALIDATE_DOC_",
+        "value": "Valider le document"
+    },
+    {
+        "key": "_UNVALDIATE_DOC_",
+        "value": "Invalider le document"
+    },
+    {
+        "key": "_WAIT_DOC_",
+        "value": "Mettre le document en attente"
+    },
+    {
+        "key": "_MARK_AS_READ_",
+        "value": "Marquer comme lu"
+    },
+    {
+        "key": "_MARK_AS_UNREAD_",
+        "value": "Marquer comme non lu"
+    },
+    {
+        "key": "_REQUEST_RESULT_",
+        "value": "Résultat(s) de la requête "
+    },
+
 
 
     {
