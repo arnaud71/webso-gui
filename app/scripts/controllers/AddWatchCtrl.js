@@ -373,6 +373,7 @@ angular.module('websoApp')
         title_t         : $scope.model.inputTitle,
         domain_s        : $scope.model.inputDomain.name,
         activity_s      : $scope.model.inputActivity.name,
+        waiting_b       : false,
         refresh_s       : $scope.model.inputFrequency.option
 
       },function () {

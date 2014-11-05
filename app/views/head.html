@@ -48,17 +48,27 @@
                 </ul>
             </li>
 
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="heg">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
                         <a ui-sref="/watch/add">Ajouter une surveillance</a>
                     </li>
-                    <li data-match-route="/watch/list" >
+                    <li data-match-route="/watch/list"  ng-show="isVeilleurAdmin">
                         <a ui-sref="/watch/list" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Afficher les surveillances</a>
                     </li>
                 </ul>
             </li> -->
+
+            <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
+                        <a ui-sref="/watch/add">Ajouter et Lister</a>
+                    </li>
+
+                </ul>
+            </li>
 
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider<b class="caret"></b></a>

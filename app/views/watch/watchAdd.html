@@ -102,9 +102,9 @@
                                         <div ng-repeat="item in checkSourceResult.items">
                                             <div class row>
 
-                                                <h5>{{item.title}}</h5>
+                                                <h5 ng-bind-html="item.title"></h5>
 
-                                                <p>{{item.description}}</p>
+                                                <p ng-bind-html="item.description"></p>
 
 
                                             </div>
