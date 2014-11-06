@@ -54,10 +54,16 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
   }).controller('surveillanceCtrl', function($scope, id_source, $resource, cfg){
     $scope.data = id_source;
     $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}});
+        {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+        {get:{method:'JSONP'}});
+    
+    $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch +id:'+id_source});
+    // $scope.solr = $resource(cfg.urlServices+'db/:action',
+    //     {action:'get.pl',callback:'JSON_CALLBACK'},
+    //     //{action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    //     {get:{method:'JSONP'}});
 
-      $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch +id:'+id_source});
+    // $scope.solr.get({sort:'updating_dt desc', start:'0', type_s:'watch', id:id_source}).$promise.then(function(result) {$scope.solrResult = result.success}); //
 
   }).controller('surveillanceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
@@ -132,14 +138,16 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
             selectedItems: $scope.mySelections,
             columnDefs: [
                 {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-                {visible:true,width:'*',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'title_t', displayName:  'Titre de la surveillance',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' }
+                {visible:false ,width:'*',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'*',field:'title_t', displayName:  'Titre de la surveillance',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+                {width:'*',field:'query_s', displayName:  'Requête', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'},
             ],
         beforeSelectionChange: function (rowItem) { return true; },
         afterSelectionChange: function () {
             angular.forEach($scope.mySelections, function ( item ) {
                 $scope.config.content = item.id;
                 $scope.config.title = item.title_t;
+                $scope.config.query = item.query_s;
             });
         }             
     };

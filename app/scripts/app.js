@@ -2,7 +2,7 @@
 // app.js
 var websoApp = angular.module('websoApp', ['sample.widgets.affichageSurveillance', 
     'sample.widgets.affichageDossiersValidation','sample.widgets.affichageDossiersSurveillance',
-    'sample.widgets.affichageCollectesMultisources',
+    'sample.widgets.affichageCollectesEnAttente',
     'adf', 'checklist-model', 'ngCookies',
     'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router',
     'LocalStorageModule', 'ui.tree', 'xeditable','ui.select','angulartics', 'angulartics.google.analytics',

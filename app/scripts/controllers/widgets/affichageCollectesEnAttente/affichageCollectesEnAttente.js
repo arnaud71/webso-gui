@@ -24,14 +24,14 @@
 
 'use strict';
 
-angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider'])
+angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
   .config(function(dashboardProvider){
     dashboardProvider
       .widget('affichageCollectesMultisources', {
-        title: 'Collectes multisources',
-        description: 'Collectes multisources',
+        title: 'Collectes en attente',
+        description: 'Collectes en attente',
         controller: 'collectesMultisourcesCtrl',
-        templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/affichageCollectesMultisources.html',
+        templateUrl: 'scripts/controllers/widgets/affichageCollectesEnAttente/affichageCollectesEnAttente.html',
         reload: true,
         resolve: {
           data: function(config){
@@ -50,7 +50,7 @@ angular.module('sample.widgets.affichageCollectesMultisources', ['adf.provider']
         },
 
         edit: {
-          templateUrl: 'scripts/controllers/widgets/affichageCollectesMultisources/edit.html',
+          templateUrl: 'scripts/controllers/widgets/affichageCollectesEnAttente/edit.html',
           controller: 'collectesMultisourcesEditCtrl'
 
         }
