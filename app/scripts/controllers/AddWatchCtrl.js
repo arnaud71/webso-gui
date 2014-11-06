@@ -437,23 +437,34 @@ angular.module('websoApp')
     // ***************************************************************
     // checkSourceUrl
     // check if the rss exist and get the content in checkSourceResult
+    $scope.hideFrequencyField = true;
     $scope.checkSourceUrl = function (){
       //$scope.$emit('CHECKRSS');
+      $scope.sourceChecked = false;
 
       if ($scope.model.inputUrl.length>5) {
         $scope.checkingSource = true;
         $scope.checkSourceResult = $scope.checkSourceResource.get({
           url: $scope.model.inputUrl
         }, function () {
-          if ($scope.checkSourceResult.title) {
+          if ($scope.checkSourceResult.sourceType == 'RSS') {
             $scope.model.inputTitle = $scope.checkSourceResult.title;
+            $scope.checkingSource = false;
+            if ($scope.checkSourceResult.count>0) {
+              $scope.sourceChecked = true;
+              $scope.sourceType = 'info(s) dans ce flux rss';
+              $scope.hideFrequencyField = false;
+            }
           }
-          //$scope.$emit('UNCHECKRSS');
-          $scope.checkingSource = false;
-          if ($scope.checkSourceResult.count>0) {
-            $scope.sourceChecked = true;
+          else{
+            if ($scope.checkSourceResult.sourceType == 'HTTP') {
+              $scope.model.inputTitle = $scope.checkSourceResult.title;
+              $scope.sourceChecked = true;
+              $scope.sourceType = 'page web';
+              $scope.hideFrequencyField = true;
+            }
+            $scope.checkingSource = false;
           }
-
         },function (){$scope.sourceChecked = false});
       }
       else {
