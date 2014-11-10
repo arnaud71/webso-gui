@@ -53,14 +53,12 @@ angular.module('websoApp')
     });
 
     $scope.sourceFacets =  [
-      {name: 'selection',  value:'selection',   nb:0, checked:false, fq:'+waiting_b:false'},
+      {name: 'selection',  value:'enregistrée(s)',   nb:0, checked:false, fq:'+waiting_b:false'},
       {name: 'waiting',       value:'en attente', nb:0, checked:false,fq:'+waiting_b:true' }
     ];
     angular.forEach($scope.sourceFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
-
-
 
     $scope.readFacets =  [
       {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:'+read_b:false' },
@@ -88,7 +86,68 @@ angular.module('websoApp')
       $scope.idx[value.name] = key;
     });
 
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
 
+    // ***************************************************************
+    // doSearchFolder
+    // list the available sources
+    $scope.folders = [];
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
+
+      $scope.dbList.get({
+        type_s      : 'tree',
+        title_t     : 'vfolder',
+        user_s      : $username,
+      }).$promise.then(function(result) {
+
+          $scope.folders = [];
+          var tmp = JSON.parse(result.success.response.docs[0].content_s);
+          var log = [];
+          angular.forEach(tmp[0].nodes, function(value1, key1) {
+            // if(angular.isArray(value1)){
+
+            $scope.folders.push({"id":value1.id ,"name":value1.title});
+            angular.forEach(value1.nodes, function(value2, key2){
+              $scope.folders.push({"id":value2.id , "name":value2.title});
+              angular.forEach(value2.nodes, function(value3, key3){
+                $scope.folders.push({"id":value3.id, "name":value3.title});
+                if(angular.isArray(value3.nodes)){
+                  angular.forEach(value3.nodes, function(value4, key4){
+                    $scope.folders.push({"id":value4.id, "name":value4.title});
+                  }, log);
+                }
+              }, log);
+            }, log);
+          }, log);
+          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
+
+    $scope.doSearchFolder();
+    $scope.facetFolder = [];
+    //$scope.folders = [];
+    $scope.folders = [{'id':1, 'title': 'dossier.1'},{'id':11, 'title':'dossier.1.1'}];
+    angular.forEach($scope.folders, function(value, key){
+      $scope.facetFolder.push({'name': value.id, 'value': value.name, nb:0, checked:false, fq:'+folder_i:'+value.id});
+    });
+    angular.forEach($scope.facetFolder, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+    $scope.folderGroup =  [
+      {name :'FolderFacet', value : 'Folder' ,  items : $scope.facetFolder, checked : true, visible : false},
+      //{name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
+    ];
+    angular.forEach($scope.sourceGroup, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+    
 
 
     // full left search model
@@ -114,6 +173,7 @@ angular.module('websoApp')
       {
         name          : 'validation',
         value         : 'Dossiers de validation',
+        facetsGroup   : $scope.folderGroup,
         tooltipOpen   : 'Ouvrir la recherche des dossiers de validation',
         tooltipClose  : 'Fermer la recherche des dossiers de validation',
         checked       : false
@@ -187,9 +247,9 @@ angular.module('websoApp')
       {action:'put.pl', type_s:'source', user_s:$username, level_sharing_i:'1' , source_type_s:'rss', isWatched_b:'false', callback:"JSON_CALLBACK"},
       {put:{method:'JSONP'}});
 
-    $scope.dbList = $resource(cfg.urlServices+'db/:action',
-      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
-      {get:{method:'JSONP'}});
+    // $scope.dbList = $resource(cfg.urlServices+'db/:action',
+    //   {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+    //   {get:{method:'JSONP'}});
 
     $scope.onlineSearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
@@ -307,7 +367,7 @@ angular.module('websoApp')
           start   :($scope.currentPage-1)*10,
           sort    : $scope.sort,
           // fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
-          fq:  $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.sourceFacetFq 
+          fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.sourceFacetFq 
         }).$promise.then(function (result) {
             $scope.solrResult = result;
             $scope.totalItems = result.response.numFound;
@@ -381,46 +441,46 @@ angular.module('websoApp')
 
 
 
-    // ***************************************************************
-    // doSearchFolder
-    // list the available sources
-    $scope.doSearchFolder = function () {
-      $scope.isError = false;
+    // // ***************************************************************
+    // // doSearchFolder
+    // // list the available sources
+    // $scope.doSearchFolder = function () {
+    //   $scope.isError = false;
 
-      $scope.dbList.get({
-        type_s      : 'tree',
-        title_t     : 'vfolder',
-        user_s      : $username,
-      }).$promise.then(function(result) {
+    //   $scope.dbList.get({
+    //     type_s      : 'tree',
+    //     title_t     : 'vfolder',
+    //     user_s      : $username,
+    //   }).$promise.then(function(result) {
 
-          $scope.folders = [];
-          var tmp = JSON.parse(result.success.response.docs[0].content_s);
-          var log = [];
-          angular.forEach(tmp[0].nodes, function(value1, key1) {
-            // if(angular.isArray(value1)){
+    //       $scope.folders = [];
+    //       var tmp = JSON.parse(result.success.response.docs[0].content_s);
+    //       var log = [];
+    //       angular.forEach(tmp[0].nodes, function(value1, key1) {
+    //         // if(angular.isArray(value1)){
 
-            $scope.folders.push({"id":value1.id ,"name":value1.title});
-            angular.forEach(value1.nodes, function(value2, key2){
-              $scope.folders.push({"id":value2.id , "name":value2.title});
-              angular.forEach(value2.nodes, function(value3, key3){
-                $scope.folders.push({"id":value3.id, "name":value3.title});
-                if(angular.isArray(value3.nodes)){
-                  angular.forEach(value3.nodes, function(value4, key4){
-                    $scope.folders.push({"id":value4.id, "name":value4.title});
-                  }, log);
-                }
-              }, log);
-            }, log);
-          }, log);
-          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
-          //$scope.folder = $scope.folders[1];
+    //         $scope.folders.push({"id":value1.id ,"name":value1.title});
+    //         angular.forEach(value1.nodes, function(value2, key2){
+    //           $scope.folders.push({"id":value2.id , "name":value2.title});
+    //           angular.forEach(value2.nodes, function(value3, key3){
+    //             $scope.folders.push({"id":value3.id, "name":value3.title});
+    //             if(angular.isArray(value3.nodes)){
+    //               angular.forEach(value3.nodes, function(value4, key4){
+    //                 $scope.folders.push({"id":value4.id, "name":value4.title});
+    //               }, log);
+    //             }
+    //           }, log);
+    //         }, log);
+    //       }, log);
+    //       //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+    //       //$scope.folder = $scope.folders[1];
 
-        }, function(reason) {
-          alert('Failed: ' + reason);
-        });
-    };
+    //     }, function(reason) {
+    //       alert('Failed: ' + reason);
+    //     });
+    // };
 
-    $scope.doSearchFolder();
+    // $scope.doSearchFolder();
 
     $scope.doSearchFromPage = function () {
       $scope.isCollapsed = false;
@@ -442,12 +502,12 @@ angular.module('websoApp')
 
     // do an new ontology search if user select an other period of time and if ontology is defined
     //$scope.$watch('currentPeriod', function() {
-    //  $scope.doSearch();
+    // $scope.doSearch();
     //});
 
 
     //$scope.$watch('searchNav[$scope.idx.facets].checked', function() {
-    //  alert('hey, myVar has changed!');
+    // alert('hey, myVar has changed!');
     //});
 
 
@@ -646,11 +706,11 @@ angular.module('websoApp')
         if (item.checked == false) {
           $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].checked = false;
           $scope.sourceFacetFq = item.fq;
-          //$scope.typeFq = '+type_s:waiting';
+          $scope.typeFq = '+type_s:source';
         }
         else {
           $scope.sourceFacetFq = '';
-          //$scope.typeFq = '';
+          $scope.typeFq = '+type_s:document';
         }
       }
       else if (item.name == 'selection') {
@@ -725,13 +785,12 @@ angular.module('websoApp')
         }
         $scope.validationForm.tags     = '';
         $scope.validationForm.folder   = '';
+        $scope.validationForm.coment   = '';
 
         var modalInstance = $modal.open({
           scope: $scope,
           templateUrl : 'validateModal.html',
           controller  : ModalInstanceCtrl,
-
-
         });
 
         modalInstance.result.then(function () {
@@ -743,6 +802,7 @@ angular.module('websoApp')
             content_en    : $scope.validationForm.content,
             content_t     : $scope.validationForm.content,
             content_fr    : $scope.validationForm.content,
+            comment_s     : $scope.validationForm.coment,
             folder_s      : $scope.validationForm.folder.name,
             folder_i      : $scope.validationForm.folder.id,
             lang_s        : doc.lang_s,
