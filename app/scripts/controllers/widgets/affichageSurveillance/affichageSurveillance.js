@@ -53,17 +53,17 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
 
   }).controller('surveillanceCtrl', function($scope, id_source, $resource, cfg){
     $scope.data = id_source;
-    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-        {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-        {get:{method:'JSONP'}});
-    
-    $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch +id:'+id_source});
-    // $scope.solr = $resource(cfg.urlServices+'db/:action',
-    //     {action:'get.pl',callback:'JSON_CALLBACK'},
-    //     //{action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    // $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+    //     {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
     //     {get:{method:'JSONP'}});
+    
+    // $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch +id:'+id_source});
+    $scope.solr = $resource(cfg.urlServices+'db/:action',
+        {action:'get.pl',callback:'JSON_CALLBACK'},
+        //{action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+        {get:{method:'JSONP'}});
 
-    // $scope.solr.get({sort:'updating_dt desc', start:'0', type_s:'watch', id:id_source}).$promise.then(function(result) {$scope.solrResult = result.success}); //
+    $scope.solr.get({sort:'updating_dt desc', start:'0', type_s:'watch', id:id_source}).$promise.then(function(result) {$scope.solrResult = result.success}); //
 
   }).controller('surveillanceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
