@@ -366,7 +366,7 @@ angular.module('websoApp')
     // add a source in the DB
     $scope.doAddSource = function () {
       $scope.sourceAddResult = $scope.addResource.get({
-        source_type_s   : 'rss',
+        source_type_s   : $scope.checkSourceResult.sourceType,
         type_s          : 'source',
         url_s           : $scope.model.inputUrl,
         tags_s          : $scope.model.inputTags,
