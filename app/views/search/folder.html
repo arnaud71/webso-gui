@@ -178,10 +178,19 @@
                 <!-- solr results -->
                 <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult">
 
-                    <div id="numberFound">
+                    <div ng-if="!affichageSource" id="numberFound">
                         <div solr-results-number ng-show="solrResult.response">
                             Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
                             <br>
+                        </div>
+                    </div>
+                    <div ng-if="affichageSource" id="numberFound">
+                        <div solr-results-number ng-show="solrResult.response">
+                            Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
+                            <br>
+                        </div>
+                        <div align="right">
+                            Source: {{sourceTitle}} - <a ng-click="resetList()">Revenir aux sources</a>
                         </div>
                     </div>
                     <div id="docsFound">
@@ -192,10 +201,13 @@
                                     <td>
 
 
-                                        <div id="titleFound">
+                                        <div ng-if="!searchNav[idx.source].checked" id="titleFound">
                                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
-                                        <div id="contentFound">
+                                        <div ng-if="searchNav[idx.source].checked" id="titleFound">
+                                            <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
+                                        </div>
+                                        <div id="contentFound" ng-if="affichageSource || !searchNav[idx.source].checked">
                                             <div ng-controller="CollapseSolrCtrl">
 
                                                 <div collapse="!isCollapsed">

@@ -533,6 +533,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.watch].checked      = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
+          $scope.typeFq = '+type_s:document';
           $scope.doSearch();
         }
         else {
@@ -548,6 +549,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.online].checked     = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
+          $scope.typeFq = '+type_s:document';
           $scope.doSearch();
         }
         else {
@@ -562,6 +564,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
+          $scope.typeFq = '+type_s:document';
           $scope.doSearch();
         }
         else {
@@ -576,6 +579,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = false;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
+          $scope.typeFq = '+type_s:document';
           $scope.doSearch();
         }
         else {
@@ -590,6 +594,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.currentPage            = 1;
+          $scope.typeFq = '+type_s:source';
           $scope.doSearch();
         }
         else {
@@ -706,11 +711,9 @@ angular.module('websoApp')
         if (item.checked == false) {
           $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].checked = false;
           $scope.sourceFacetFq = item.fq;
-          $scope.typeFq = '+type_s:source';
         }
         else {
           $scope.sourceFacetFq = '';
-          $scope.typeFq = '+type_s:document';
         }
       }
       else if (item.name == 'selection') {
@@ -877,10 +880,20 @@ angular.module('websoApp')
       });
     }
 
+    $scope.seeDocuments = function (id, titre){
+      $scope.typeFq = '+type_s:document +source_id_ss:'+id;
+      $scope.affichageSource = true;
+      $scope.sourceTitle = titre;
+      $scope.doSearch();
+    }
 
 
-
-
+    $scope.resetList = function (){
+      $scope.typeFq = '+type_s:source';
+      $scope.affichageSource = false;
+      $scope.sourceTitle = '';
+      $scope.doSearch();
+    }
 
 
 
