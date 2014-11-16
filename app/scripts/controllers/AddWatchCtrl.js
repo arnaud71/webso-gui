@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard) {
+  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard, $filter) {
 
     var $username = $cookieStore.get('username');
 
@@ -441,11 +441,19 @@ angular.module('websoApp')
     $scope.checkSourceUrl = function (){
       //$scope.$emit('CHECKRSS');
       $scope.sourceChecked = false;
+      var url = '';
+      if($filter('limitTo')($scope.model.inputUrl, 7) == 'http://'){
+        url = $scope.model.inputUrl;
+      }
+      else{
+        url = 'http://'+$scope.model.inputUrl;
+      }
+      alert(url);
 
-      if ($scope.model.inputUrl.length>5) {
+      if (url.length>5) {
         $scope.checkingSource = true;
         $scope.checkSourceResult = $scope.checkSourceResource.get({
-          url: $scope.model.inputUrl
+          url: url
         }, function () {
           if ($scope.checkSourceResult.sourceType == 'RSS') {
             $scope.model.inputTitle = $scope.checkSourceResult.title;
