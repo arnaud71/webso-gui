@@ -244,7 +244,7 @@ angular.module('websoApp')
       {get:{method:'JSONP'}
       });
     $scope.feedAdd = $resource(cfg.urlServices+'db/:action',
-      {action:'put.pl', type_s:'source', user_s:$username, level_sharing_i:'1' , source_type_s:'rss', isWatched_b:'false', callback:"JSON_CALLBACK"},
+      {action:'put.pl', type_s:'source', user_s:$username, level_sharing_i:'1' , isWatched_b:'false', callback:"JSON_CALLBACK"},
       {put:{method:'JSONP'}});
 
     // $scope.dbList = $resource(cfg.urlServices+'db/:action',
@@ -312,11 +312,11 @@ angular.module('websoApp')
       }
       // ONLINE
       else if (($scope.searchNav[$scope.idx.online].checked)) {
-        var typeQueryStr = '';
+        $scope.typeQueryStr = '';
 
         angular.forEach($scope.searchNav[$scope.idx.online].selectGroup, function(value) {
           if (value.checked) {
-            typeQueryStr += value.name+',';
+            $scope.typeQueryStr += value.name+',';
           }
         });
 
@@ -325,10 +325,10 @@ angular.module('websoApp')
 
         $scope.onlineSearch.get({
           query     : $scope.searchTerm,
-          typeQuery : typeQueryStr,
+          typeQuery : $scope.typeQueryStr,
         }).$promise.then(function (result) {
             $scope.onlineResult = result;
-            $scope.currentOnlineSearchUrl = cfg.urlServices + 'harvester/QUERYSEARCH/get_querysearch.pl?query='+$scope.searchTerm+'&typeQuery='+typeQueryStr+'&out=rss';
+            $scope.currentOnlineSearchUrl = cfg.urlServices + 'harvester/QUERYSEARCH/get_querysearch.pl?query='+$scope.searchTerm+'&typeQuery='+$scope.typeQueryStr;//+'&out=rss';
           })
 
       }
@@ -867,13 +867,15 @@ angular.module('websoApp')
 
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
-          //source_type_s     : 'rss', already in the resource
+          source_type_s     : 'online',
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
           domain_s:         $scope.validationForm.domain.name,
           activity_s:       $scope.validationForm.activity.name,
+          query_s:          $scope.searchTerm,
+          ressources_s:     $scope.typeQueryStr,
           waiting_b:        true
 
         });
@@ -895,10 +897,24 @@ angular.module('websoApp')
       $scope.doSearch();
     }
 
+    $scope.seeWaitings = function (title, query, source){
+      $scope.waitingTitle = title;
+      $scope.onlineSearch.get({
+        query     : query,
+        typeQuery : source,
+      }).$promise.then(function (result) {
+        $scope.affichageWaiting = true;
+        $scope.onlineResult = result;
+      });
+    }
 
-
-
-
+    $scope.resetWaiting = function (){
+      //$scope.typeFq = '+type_s:source';
+      $scope.affichageWaiting = false;
+      $scope.onlineResult = '';
+      $scope.waitingTitle = '';
+      $scope.doSearch();
+    }
 
     /*  addfeed from search feed*/
     $scope.addFeed= function(feed){
@@ -921,7 +937,7 @@ angular.module('websoApp')
 
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
-          //source_type_s     : 'rss', already in the resource
+          source_type_s     : 'rss',
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,

@@ -178,36 +178,69 @@
                 <!-- solr results -->
                 <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult">
 
-                    <div ng-if="!affichageSource" id="numberFound">
+                    <div id="numberFound">
                         <div solr-results-number ng-show="solrResult.response">
                             Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
                             <br>
                         </div>
-                    </div>
-                    <div ng-if="affichageSource" id="numberFound">
-                        <div solr-results-number ng-show="solrResult.response">
-                            Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
-                            <br>
-                        </div>
-                        <div align="right">
+                        <div ng-if="affichageSource" align="right">
                             Source: {{sourceTitle}} - <a ng-click="resetList()">Revenir aux sources</a>
+                        </div>
+                        <div ng-if="affichageWaiting" align="right">
+                            {{waitingTitle}} - <a ng-click="resetWaiting()">Revenir aux recherches en attentes</a>
                         </div>
                     </div>
                     <div id="docsFound">
+                        <div onlineResult ng-show="onlineResult.count">
+                            <table class="table table-striped">
+                                <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
+                                    <td>
+                                        <div id="titleFound">
+                                            <a href="{{online.link}}" target="_blank" ng-bind-html="online.title"></a>
+                                        </div>
+
+                                        <div id="contentFound">
+                                            <p ng-bind-html="online.description"></p>
+                                        </div>
+
+                                        <div id="urlFound">
+                                            <span ng-if="online.link.length<100">
+                                            {{online.link}}
+                                            </span>
+                                            <span ng-if="online.link>100">
+                                                {{online.link| limitTo:100}}...
+                                            </span>
+                                        </div>
+
+                                        <div id="dateFound">
+                                            {{online.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            <div id="actionList">
+                                                <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <div solr-result ng-show="solrResult.response.numFound">
                             <table class="table table-striped">
 
                                 <tr ng-repeat="doc in solrResult.response.docs">
                                     <td>
 
-
+                                        <div ng-if="doc.waiting_b" id="titleFound">
+                                            <a ng-click="seeWaitings(doc.title_t, doc.query_s, doc.ressources_s)">{{doc.title_t}}</a>
+                                        </div>
                                         <div ng-if="!searchNav[idx.source].checked" id="titleFound">
                                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
-                                        <div ng-if="searchNav[idx.source].checked" id="titleFound">
-                                            <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
+                                        <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
+                                            Rss: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
-                                        <div id="contentFound" ng-if="affichageSource || !searchNav[idx.source].checked">
+                                        <div ng-if="(searchNav[idx.source].checked) && (doc.source_type_s=='HTTP')" id="titleFound">
+                                            Site: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                        </div>
+                                        <div id="contentFound" ng-if="(doc.source_type_s=='rss') || affichageSource || !(searchNav[idx.source].checked)">
                                             <div ng-controller="CollapseSolrCtrl">
 
                                                 <div collapse="!isCollapsed">
@@ -223,9 +256,6 @@
                                                            &gt;&gt;&gt;&gt;
                                                             <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                         </span>
-
-
-
                                                 </div>
                                                 <div collapse="isCollapsed">
                                                         <span ng-click="isCollapsed = !isCollapsed">
@@ -235,7 +265,12 @@
 
                                             </div>
                                         </div>
-                                        <div id="urlFound">
+                                        <div ng-if="doc.source_type_s == 'online'" id="urlFound">
+                                            Recherche : {{doc.query_s}}<br>
+                                            Sources : {{doc.ressources_s}}<br>
+                                            Ajouté le : {{doc.creation_dt|date:'dd-MM-yyyy hh:mm'}}<br>
+                                        </div>
+                                        <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
                                             <span ng-if="doc.url_s.length<100">
                                             {{doc.url_s}}
                                             </span>
@@ -252,7 +287,7 @@
                                                 <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
                                                 <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
 
-                                                <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
+                                                <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')||(doc.source_type_s == 'online')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div>
                                             </div>
 
 
