@@ -448,7 +448,6 @@ angular.module('websoApp')
       else{
         url = 'http://'+$scope.model.inputUrl;
       }
-      alert(url);
 
       if (url.length>5) {
         $scope.checkingSource = true;
