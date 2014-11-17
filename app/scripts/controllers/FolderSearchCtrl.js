@@ -356,6 +356,7 @@ angular.module('websoApp')
 
       // SOURCE
       else if ($scope.searchNav[$scope.idx.source].checked) {
+        $scope.onlineResult= '';
         if ($scope.searchTerm == '') {
           $scope.sort = 'date_dt desc';
         }
