@@ -6,7 +6,7 @@ var websoApp = angular.module('websoApp', ['sample.widgets.affichageSurveillance
     'adf', 'checklist-model', 'ngCookies',
     'ngRoute','ui.bootstrap','ngResource','ngSanitize','ngGrid','ui.bootstrap.pagination', 'ui.router',
     'LocalStorageModule', 'ui.tree', 'xeditable','ui.select','angulartics', 'angulartics.google.analytics',
-    'angulartics.piwik','angular-loading-bar', 'ngAnimate']);
+    'angulartics.piwik','angular-loading-bar', 'ngAnimate', 'angularFileUpload']);
 
 websoApp.config(function($stateProvider, $urlRouterProvider) {
     

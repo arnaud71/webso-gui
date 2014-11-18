@@ -15,12 +15,12 @@
 
 
 <div class="hero-unit-bis" ng-controller="AddInformationCtrl">
-
+    (*: champ obligatoire)
 
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Titre </label>
+            <label class="col-sm-2 control-label"> Titre* </label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" placeholder="titre" ng-model="inputTitle" id="inputTitle" name="inputTitle">
             </div>
@@ -55,7 +55,7 @@
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Commentaires </label>
+            <label class="col-sm-2 control-label"> Commentaires* </label>
             <div class="col-sm-7">
                 <textarea type="text" class="form-control" placeholder="Entrer commentaires" ng-model="inputComments" id="inputComments" name="inputComments"></textarea>
             </div>
@@ -70,10 +70,36 @@
             </div>
         </div>
     </form> -->
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label"> Fichier </label>
+
+            <div class="col-sm-2" style="border: 5px dashed #ddd; margin-left: 15px; padding-top: 16px; height: 65px; text-align: center; width: 200px;" ng-file-drop="onFileSelect($files)" ng-file-drag-over-delay="100" ng-file-drag-over-class="dragOverClass($event)" ng-file-drop-available="dropSupported=true" ng-show="dropSupported">
+                glissez un fichier ici
+            </div>
+
+            <div class="col-sm-2" style="border: 5px dashed #ddd; margin-left: 15px; padding-top: 16px; height: 65px; text-align: center; width: 200px;" ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+                HTML5 Drop File is not supported!
+            </div>
+            <div class="col-xs-1" style="text-align:center; padding-top: 16px;">
+                OU
+            </div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" ng-model="myModelObj">
+                <input type="file" ng-file-select="onFileSelect($files)">
+                <!-- <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*"> -->
+            </div>
+
+            <!-- <div class="col-sm-7" ng-file-select="onFileSelect($files)" data-multiple="true"></div> -->
+
+            
+            <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
+        </div>
+    </form>
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
-            <label class="col-sm-2 control-label"> Dossier </label>
+            <label class="col-sm-2 control-label"> Dossier* </label>
             <div class="col-sm-7">
                 <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
                 <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
