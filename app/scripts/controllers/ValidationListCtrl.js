@@ -3,30 +3,33 @@
 angular.module('websoApp')
   .controller('ValidationListCtrl', function ($cookieStore, $scope,$resource,cfg,$modal) {
 
-        $scope.mySelections = [];
-        var $username = $cookieStore.get('username');
-        var $userRole = $cookieStore.get('userRole');
-        $scope.isError                = false;
-        $scope.errorMessage           = cfg.errorConnect;
+    $scope.mySelections = [];
+    var $username = $cookieStore.get('username');
+    var $userRole = $cookieStore.get('userRole');
+    $scope.isError                = false;
+    $scope.errorMessage           = cfg.errorConnect;
 
-        /*
-        Getting validation doc
-         */
-        /*if($userRole === 'administrateur'){
-          $scope.validationList = $resource(cfg.urlServices+'db/:action',
-              {action:'get.pl', type_s:'validation',user_s:'*',callback:"JSON_CALLBACK"},
-              {get:{method:'JSONP'}});
-        }else{*/
-          $scope.validationList = $resource(cfg.urlServices+'db/:action',
-              {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
-              {get:{method:'JSONP'}});
-       // }
+    /*
+    Getting validation doc
+     */
+    /*if($userRole === 'administrateur'){
+      $scope.validationList = $resource(cfg.urlServices+'db/:action',
+          {action:'get.pl', type_s:'validation',user_s:'*',callback:"JSON_CALLBACK"},
+          {get:{method:'JSONP'}});
+    }else{*/
+      $scope.validationList = $resource(cfg.urlServices+'db/:action',
+          {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
+          {get:{method:'JSONP'}});
+    // }
+    $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
+      {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
+      {put: {method: 'JSONP'}});
 
-        $scope.doSearch = function () {
-            $scope.validationResult = $scope.validationList.get();
-        };
+    $scope.doSearch = function () {
+        $scope.validationResult = $scope.validationList.get();
+    };
 
-        $scope.doSearch();
+    $scope.doSearch();
 
     /*
      COPY source list
@@ -123,36 +126,37 @@ angular.module('websoApp')
       //selectWithCheckboxOnly: 'true',
       selectedItems: $scope.mySelections,
         afterSelectionChange: function () {
-            $scope.selectedIDs = [];
+            $scope.selectedIDs = '';
             angular.forEach($scope.mySelections, function ( item ) {
-                $scope.selectedIDs.push( item.content_t ) ;
+                $scope.selectedIDs = item ;
             });
         },
       sortInfo            : $scope.sortInfo,
       columnDefs: [
         {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
         {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
+        // {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-     //   {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        // {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'200px',field:'comment_s', displayName:  'Commentaires', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
 
         // {width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
-
+        {width:'100px',field:'date_dt', displayName:  'Date', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
       ]
     };
 
 
-    $scope.doSearch = function () {
-      $scope.sourceResult = $scope.sourceList.get({type_s:'source'},
+    $scope.doSearch2 = function () {
+      $scope.validationResult = $scope.validationList.get({type_s:'validation'},
         function() {        //call back function for asynchronous
           $scope.isError = false;
-          if (typeof $scope.sourceResult.success.response === "undefined") {}
+          if (typeof $scope.validationResult.success.response === "undefined") {}
           else {
-            $scope.myData = $scope.sourceResult.success.response.docs;
+            $scope.myData = $scope.validationResult.success.response.docs;
 
             $('.row').trigger('resize');
           }
@@ -204,18 +208,60 @@ angular.module('websoApp')
                 }, function (reason) {
                   alert('Failed id: ' + reason);
                 })
-
             })
-
-
-
     };
 
-    var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
+    $scope.edit = function(obj){
+      $scope.validationForm                   = {};
+      $scope.validationForm.url               = '';
+      $scope.validationForm.title             = '';
+      $scope.validationForm.tags              = '';
+      $scope.validationForm.detail            = '';
+      $scope.validationForm.comment           = '';
+      $scope.validationForm.folder            = {};
+      $scope.validationForm.folder.name       = '';
+      $scope.validationForm.folder.id         = '';
+
+      var modalInstance = $modal.open({
+        templateUrl: 'editValidationModal.html',
+        controller: ModalInstanceEditCtrl,
+        resolve: {
+          data: function () {
+            return obj.entity;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+          $scope.atomicChange.put({
+            id            : result.id,
+            url_s         : result.url,
+            tags_s        : result.tags,
+            title_t       : result.title,
+            detail_s      : result.detail,
+            comment_s     : result.comment,
+            // folder_s      : result.folder.name,
+            // folder_i      : result.folder.id,
+          });
+          $scope.doSearch2();
+      });
+    }
+
+    var ModalInstanceEditCtrl = function ($scope, $modalInstance, data) {
+      $scope.validationForm                   = {};
+      $scope.validationForm.id                = data.id;
+      $scope.validationForm.url               = data.url_s;
+      $scope.validationForm.title             = data.title_t;
+      $scope.validationForm.tags              = data.tags_s;
+      $scope.validationForm.detail            = data.detail_s;
+      $scope.validationForm.comment           = data.comment_s;
+      $scope.validationForm.folder            = {};
+      $scope.validationForm.folder.name       = data.folder_s;
+      $scope.validationForm.folder.id         = data.folder_i;
+
 
       $scope.ok = function () {
-
-        $modalInstance.close();//($scope.selected.item);
+        $modalInstance.close($scope.validationForm);
       };
 
       $scope.cancel = function () {
@@ -223,6 +269,50 @@ angular.module('websoApp')
       };
 
     };
+
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
+    // ***************************************************************
+    // doSearchFolder
+    // list the available sources
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
+
+      $scope.dbList.get({
+        type_s      : 'tree',
+        title_t     : 'vfolder',
+        user_s      : $username,
+      }).$promise.then(function(result) {
+
+          $scope.folders = [];
+          var tmp = JSON.parse(result.success.response.docs[0].content_s);
+          var log = [];
+          angular.forEach(tmp[0].nodes, function(value1, key1) {
+            // if(angular.isArray(value1)){
+
+            $scope.folders.push({"id":value1.id ,"name":value1.title});
+            angular.forEach(value1.nodes, function(value2, key2){
+              $scope.folders.push({"id":value2.id , "name":value2.title});
+              angular.forEach(value2.nodes, function(value3, key3){
+                $scope.folders.push({"id":value3.id, "name":value3.title});
+                if(angular.isArray(value3.nodes)){
+                  angular.forEach(value3.nodes, function(value4, key4){
+                    $scope.folders.push({"id":value4.id, "name":value4.title});
+                  }, log);
+                }
+              }, log);
+            }, log);
+          }, log);
+          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
+    $scope.doSearchFolder();
 
 
 
