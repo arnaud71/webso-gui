@@ -109,6 +109,7 @@ angular.module('websoApp')
           for (var i = 0; i < $files.length; i++) {
             var file = $files[i];
             $scope.upload = $upload.upload({
+              //url: cfg.urlServices+'file/upload-test1.py',
               url: cfg.urlServices+'file/file_upload.pl', //upload.php script, node.js route, or servlet url
               //method: 'POST' or 'PUT',
               method: 'PUT',

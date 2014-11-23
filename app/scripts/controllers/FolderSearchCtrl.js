@@ -4,6 +4,8 @@ angular.module('websoApp')
   .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal) {
 
     var $username                 = $cookieStore.get('username');
+    var $token                    = $cookieStore.get('token');
+    var $token_timeout            = $cookieStore.get('token_timeout');
 
     $scope.showFound              = false;
     $scope.totalItems             = 0;
@@ -267,6 +269,10 @@ angular.module('websoApp')
       {action:'check_rss.pl',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}}
     );
+
+    $scope.sendMail = $resource(cfg.urlServices+'mail/:action',
+      {action: 'send.pl', callback:'JSON_CALLBACK', token_s: $token, token_timeout_l: $token_timeout},
+      {send: {method: 'JSONP'}});
 
 
     // http://albator.hesge.ch:8984/solr/collection1/select?q=*%3A*&wt=json&indent=true
@@ -789,7 +795,7 @@ angular.module('websoApp')
         }
         $scope.validationForm.tags     = '';
         $scope.validationForm.folder   = '';
-        $scope.validationForm.coment   = '';
+        $scope.validationForm.comment  = '';
 
         var modalInstance = $modal.open({
           scope: $scope,
@@ -806,7 +812,7 @@ angular.module('websoApp')
             content_en    : $scope.validationForm.content,
             content_t     : $scope.validationForm.content,
             content_fr    : $scope.validationForm.content,
-            comment_s     : $scope.validationForm.coment,
+            comment_s     : $scope.validationForm.comment,
             folder_s      : $scope.validationForm.folder.name,
             folder_i      : $scope.validationForm.folder.id,
             lang_s        : doc.lang_s,
@@ -844,6 +850,49 @@ angular.module('websoApp')
         templateUrl: 'validateModal.html',
         controller: ModalInstanceCtrl
       });*/
+    };
+
+      $scope.shareDoc = function (doc, type) {
+
+        $scope.shareForm = {};
+        if (type == 'solr') {
+          $scope.shareForm.url = doc.url_s;
+          $scope.shareForm.title = doc.title_t;
+          $scope.shareForm.content = doc.content_t;
+        }
+        else if (type == 'online') {
+          $scope.shareForm.url = doc.link;
+          $scope.shareForm.title = doc.title;
+          $scope.shareForm.content = doc.description;
+        }
+        $scope.shareForm.tags     = '';
+        $scope.shareForm.folder   = '';
+        $scope.shareForm.comment   = '';
+        $scope.shareForm.mail     = '';
+
+        var modalInstance = $modal.open({
+          scope: $scope,
+          templateUrl : 'shareModal.html',
+          controller  : ModalInstanceCtrl,
+        });
+
+        modalInstance.result.then(function () {
+
+          $scope.sendMail.send({
+            url_s         : $scope.shareForm.url,
+            tags_s        : $scope.shareForm.tags,
+            title_t       : $scope.shareForm.title,
+            content_en    : $scope.shareForm.content,
+            content_t     : $scope.shareForm.content,
+            content_fr    : $scope.shareForm.content,
+            comment_s     : $scope.shareForm.coment,
+            folder_s      : $scope.shareForm.folder.name,
+            folder_i      : $scope.shareForm.folder.id,
+            lang_s        : doc.lang_s,
+            date_dt       : doc.date_dt,
+            mail          : $scope.shareForm.mail
+          });
+        });
     };
 
     /* add a online search as a source
