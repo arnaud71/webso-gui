@@ -17,6 +17,10 @@ angular.module('websoApp')
             {action:'get.pl', type_s:'watch',user_s:$username,callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
+        $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
+          {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
+          {put: {method: 'JSONP'}});
+
         $scope.filterOptions = {
             filterText: "",
             useExternalFilter: false
@@ -129,15 +133,15 @@ angular.module('websoApp')
             columnDefs: [
                 {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
                 {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
+                //{width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
                 {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'*',field:'query_s', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'tags_ss', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'150px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'150px',field:'activity_s', displayName:  'Activité', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'query_s', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>'}
-
+                {width:'100px',field:'', displayName:  'Gestion', cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
             ]
         };
 
@@ -199,6 +203,58 @@ angular.module('websoApp')
                  */
                 $scope.watchResult.success.response.docs.splice(index, 1);
             }
+
+        };
+
+        $scope.edit = function(obj){
+            $scope.ModalForm                = {};
+            $scope.ModalForm.folder         = {id: '', name: ''};
+            $scope.ModalForm.query          = '';
+            $scope.ModalForm.notification   = '';
+
+            var modalInstance = $modal.open({
+                templateUrl: 'editWatchModal.html',
+                controller: ModalInstanceEditCtrl,
+                scope: $scope,
+                resolve: {
+                    data: function () {
+                        return obj.entity;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                $scope.atomicChange.put({
+                    id            : result.id,
+                    query_s       : result.query,
+                    tags_ss       : result.tags,
+                    folder_s      : result.folder.id,
+                    domain_s      : result.domain.name,
+                    activity_s    : result.activity.name,
+                    notification_s : result.notification.option
+                });
+            });
+        }
+
+        var ModalInstanceEditCtrl = function ($scope, $modalInstance, data) {
+            $scope.ModalForm                   = {};
+            $scope.ModalForm.id                = data.id;
+            $scope.ModalForm.query             = data.query_s;
+            $scope.ModalForm.tags              = data.tags_ss;
+            $scope.ModalForm.folder            = {'name': data.folder_s};
+            $scope.ModalForm.domains           = $scope.domains;
+            $scope.ModalForm.domain            = {'name': data.domain_s};
+            $scope.ModalForm.activity          = {'name': data.activity_s};
+            $scope.ModalForm.notification      = {'option': data.notification_s};
+
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.ModalForm);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
 
         };
 

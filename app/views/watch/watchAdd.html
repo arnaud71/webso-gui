@@ -354,12 +354,80 @@
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+        </div>
+    </script>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+    <!-- Edit Modal -->
+    <script type="text/ng-template" id="editWatchModal.html">
+        <div class="modal-header">
+            <h3> Modification d une surveillance</h3>
+
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <!-- <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Source </label>
+                        <div class="col-sm-9">
+                            <input type="url" class="form-control" ng-model="ModalForm.url">
+                        </div>
+                    </div>-->
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Requête </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="ModalForm.query">
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Tags </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="ModalForm.tags">
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Dossier </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.folder.name}}" disabled>
+                            <select id="inputFolder" ng-model="ModalForm.folder" ng-options="folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Domaine </label>
+                        <div  class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.domain.name}}" disabled>
+                            <select ng-model="ModalForm.domain" ng-options="domain.name for domain in ModalForm.domains"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Activité </label>
+                        <div  class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.activity.name}}" disabled>
+                            <select ng-model="ModalForm.activity" ng-options="activity.name for activity in ModalForm.domain.activites"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Notification </label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.notification.option}}" disabled>
+                            <select id="inputNotification" ng-model="ModalForm.notification" ng-options="notification.option for notification in notifications"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
         </div>
     </script>
 </div>
 
+                
 <div ng-controller="WatchListCtrl">
 
         <div class="row">
