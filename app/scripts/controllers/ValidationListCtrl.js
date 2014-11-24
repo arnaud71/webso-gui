@@ -225,6 +225,7 @@ angular.module('websoApp')
       var modalInstance = $modal.open({
         templateUrl: 'editValidationModal.html',
         controller: ModalInstanceEditCtrl,
+        scope: $scope,
         resolve: {
           data: function () {
             return obj.entity;
@@ -255,9 +256,8 @@ angular.module('websoApp')
       $scope.validationForm.tags              = data.tags_s;
       $scope.validationForm.detail            = data.detail_s;
       $scope.validationForm.comment           = data.comment_s;
-      $scope.validationForm.folder            = {};
-      $scope.validationForm.folder.name       = data.folder_s;
-      $scope.validationForm.folder.id         = data.folder_i;
+      $scope.validationForm.folder            = {'id': data.folder_i,'name': data.folder_s};
+      $scope.validationForm.folders           = $scope.folders;
 
 
       $scope.ok = function () {
