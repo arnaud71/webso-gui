@@ -25,8 +25,18 @@
                 <td>
                     <div ng-show="searchGroup.checked == false"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-right"></span></button> &nbsp;  {{searchGroup.value}} </div>
                     <div ng-show="searchGroup.checked == true"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp; {{searchGroup.value}} </div>
-                    <!-- <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}} 
-                    <span ng-click="groupCheck(searchGroup.name)"> &nbsp; {{searchGroup.value}} </span>-->
+
+
+
+                    <!--  folderNav for validation, watches-->
+                    <div ng-show="searchGroup.folderNav">
+                        <table class="table table-condensed">
+                            <tr ng-repeat="item in searchGroup.folderNav">
+                                <td>{{item.name}}</td>
+                            </tr>
+                         </table>
+                    </div>
+                    <!--  facetgroup for online search-->
                     <div ng-show="searchGroup.facetsGroup">
                     <table ng-show="searchGroup.checked" class="table table-condensed">
                         <tr ng-repeat="facet in searchGroup.facetsGroup">

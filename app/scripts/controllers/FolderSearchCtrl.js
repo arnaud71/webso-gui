@@ -88,8 +88,55 @@ angular.module('websoApp')
       $scope.idx[value.name] = key;
     });
 
+//folderValidation
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
 
+    $scope.validationFolder = [
+      {name :'vfvsvfsd'},
+      {name :'rtgwrtwth'}
+    ];
 
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
+
+      $scope.dbList.get({
+        type_s      : 'tree',
+        title_t     : 'vfolder',
+        user_s      : $username,
+      }).$promise.then(function(result) {
+
+          //$scope.validationFolder.$apply();
+          /*var tmp = JSON.parse(result.success.response.docs[0].content_s);
+          var log = [];
+          angular.forEach(tmp[0].nodes, function(value1, key1) {
+            // if(angular.isArray(value1)){
+
+            $scope.validationFolder.push({"id":value1.id ,"name":value1.title});
+            $scope.validationFolder.$apply();
+            angular.forEach(value1.nodes, function(value2, key2){
+              $scope.validationFolder.push({"id":value2.id , "name":value2.title});
+              angular.forEach(value2.nodes, function(value3, key3){
+                $scope.validationFolder.push({"id":value3.id, "name":value3.title});
+                if(angular.isArray(value3.nodes)){
+                  angular.forEach(value3.nodes, function(value4, key4){
+                    $scope.folders.push({"id":value4.id, "name":value4.title});
+                  }, log);
+                }
+              }, log);
+            }, log);
+          }, log);
+*/
+          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
+
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
+
+    $scope.doSearchFolder();
 
     // full left search model
     $scope.searchNav = [
@@ -97,6 +144,7 @@ angular.module('websoApp')
         name          : 'source',
         value         : 'Source',
         facetsGroup   : $scope.sourceGroup,//$scope.facetsGroup,
+
         tooltipOpen   : 'Ouvrir la recherche des sources',
         tooltipClose  : 'Fermer la recherche des sources',
         checked       : false
@@ -105,6 +153,7 @@ angular.module('websoApp')
       {
         name          : 'watch',
         value         : 'Dossiers de surveillances',
+
         tooltipOpen   : 'Ouvrir la recherche des dossiers de surveillance',
         tooltipClose  : 'Fermer la recherche des dossiers de surveillance',
         facetsGroup   : $scope.facetsGroup,
@@ -116,6 +165,7 @@ angular.module('websoApp')
         value         : 'Dossiers de validation',
         tooltipOpen   : 'Ouvrir la recherche des dossiers de validation',
         tooltipClose  : 'Fermer la recherche des dossiers de validation',
+        folderNav     : $scope.validationFolder,
         checked       : false
       },
 
@@ -510,6 +560,9 @@ angular.module('websoApp')
       }
       else if (searchGroup == 'validation') {
         if ($scope.searchNav[$scope.idx.validation].checked == false) {
+
+
+          $scope.$apply();
           $scope.searchNav[$scope.idx.validation].checked = true;
           $scope.searchNav[$scope.idx.online].checked     = false;
           $scope.searchNav[$scope.idx.watch].checked      = false;
