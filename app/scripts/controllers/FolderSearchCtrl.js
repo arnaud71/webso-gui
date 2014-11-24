@@ -175,7 +175,8 @@ angular.module('websoApp')
       {
         name          : 'validation',
         value         : 'Dossiers de validation',
-        facetsGroup   : $scope.folderGroup,
+        //facetsGroup   : $scope.folderGroup,
+        facetsGroup   : $scope.facetsGroup,
         tooltipOpen   : 'Ouvrir la recherche des dossiers de validation',
         tooltipClose  : 'Fermer la recherche des dossiers de validation',
         checked       : false
