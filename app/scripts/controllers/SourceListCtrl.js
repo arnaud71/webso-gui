@@ -12,6 +12,10 @@ angular.module('websoApp')
       {action:'get.pl', type_s:'source',user_s:$username, callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
+    $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
+      {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
+      {put: {method: 'JSONP'}});
+
     $scope.filterOptions = {
       filterText: "",
       useExternalFilter: false
@@ -89,8 +93,7 @@ angular.module('websoApp')
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" tooltip="Effacer le document"><span class="glyphicon glyphicon-trash"></span></button>'}
-        //<button type="button" class="btn btn-xs" ng-click="edit(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>
+        {width:'100px',field:'', displayName:  'Gestion', cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" tooltip="Effacer le document"><span class="glyphicon glyphicon-trash"></span></button>'}
       ]
     };
 
@@ -125,8 +128,6 @@ angular.module('websoApp')
       {get:{method:'JSONP'}});
 
     $scope.doDelete = function (sourceId,index) {
-
-
         /*
          Confirm dialogs
          */
@@ -149,23 +150,138 @@ angular.module('websoApp')
 
         //  $('#myModal').modal('show');
 
-
-
       //$('.row').trigger('resize');
       //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+    };
+
+    $scope.edit = function(obj){
+      $scope.ModalForm                   = {};
+      $scope.ModalForm.url               = '';
+      $scope.ModalForm.title             = '';
+      $scope.ModalForm.tags              = '';
+      $scope.ModalForm.frequency         = {option: ''};
+      $scope.ModalForm.domain            = {name: ''};
+      $scope.ModalForm.activity          = {name: ''};
+
+      var modalInstance = $modal.open({
+        templateUrl: 'editSourceModal.html',
+        controller: ModalInstanceEditCtrl,
+        scope: $scope,
+        resolve: {
+          data: function () {
+            return obj.entity;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+          $scope.atomicChange.put({
+            id            : result.id,
+            url_s         : result.url,
+            tags_s        : result.tags,
+            title_t       : result.title,
+            refresh_s     : result.frequency.option,
+            domain_s      : result.domain.name,
+            activity_s    : result.activity.name,
+          });
+      });
+    }
+
+    var ModalInstanceEditCtrl = function ($scope, $modalInstance, data) {
+      $scope.ModalForm                   = {};
+      $scope.ModalForm.id                = data.id;
+      $scope.ModalForm.url               = data.url_s;
+      $scope.ModalForm.title             = data.title_t;
+      $scope.ModalForm.tags              = data.tags_s;
+      $scope.ModalForm.frequency         = {option: data.refresh_s};
+      $scope.ModalForm.frequencies       = [{option:'1h'}, {option:'12h'}, {option:'24h'}, {option:'48h'}];
+      $scope.ModalForm.domain            = {'name': data.domain_s};
+      $scope.ModalForm.domains           = $scope.domains;
+      $scope.ModalForm.activity          = {'name': data.activity_s};
 
 
+      $scope.ok = function () {
+        $modalInstance.close($scope.ModalForm);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
 
     };
 
-
-
-
-
     //$scope.doSearch();
-
-
+            /*
+     Domains menu
+     */
+    $scope.domains =  [
+      {name:'Technologie',activites:[
+        {name:'Publications scientifiques'},
+        {name:'Brevets/marques'}
+      ]},
+      {name:'Economie/Politique',activites:[
+        {name:'Organismes publics'},
+        {name:'Etudes de marchés'},
+        {name:'Bases de données entreprises'},
+        {name:'Appel d\'offres'},
+        {name:'Informations financières'}
+      ]},
+      {name:'Concurrence/Entreprises',activites:[
+        {name:'Agriculture, Sylviculture, et pêche'},
+        {name:'Industries extractives'},
+        {name:'Industries manufacturières'},
+        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
+        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
+        {name:'Construction'},
+        {name:'Commerce, réparation d\'automobiles, et motocycles'},
+        {name:'Transport et entreposage'},
+        {name:'Hébergement et restauration'},
+        {name:'Information et communication'},
+        {name:'Activité financières et assurances'},
+        {name:'Activités immobilières'},
+        {name:'Activités spécialisées scientifiques et techniques'},
+        {name:'Activités de service administratifs et de soutien'},
+        {name:'Administration publique'},
+        {name:'Enseignement'},
+        {name:'Santé humaine, action sociale'},
+        {name:'Arts, spectacles, activités récréatives'},
+        {name:'Autres activités de services'},
+        {name:'Activités de ménages'},
+        {name:'Activités extra territoriales'},
+      ]},
+      {name:'Juridique/réglementaire'},
+      {name:'Réseaux sociaux'},
+      {name:'Presse',activites:[
+        {name:'Agricole/Agroalimentaire'},
+        {name:'Assurance'},
+        {name:'Arts/Musique/Spectacle'},
+        {name:'Automobile'},
+        {name:'Autres services'},
+        {name:'Batiment'},
+        {name:'Bijoux'},
+        {name:'Bois, Papier, Carton'},
+        {name:'Communication'},
+        {name:'Distribution'},
+        {name:'Economie/ Finance'},
+        {name:'Environnement'},
+        {name:'Géopolitique, Défense'},
+        {name:'Industrie & Techniques'},
+        {name:'Informatique et réseaux'},
+        {name:'Jeux et Jouets'},
+        {name:'Juridique'},
+        {name:'Petite enfance'},
+        {name:'People'},
+        {name:'Photo'},
+        {name:'Restauration/Hotellerie'},
+        {name:'Relation client/Ressources humaines'},
+        {name:'Santé'},
+        {name:'Transport'},
+        {name:'Sport'},
+        {name:'Tourisme & Voyages'},
+        {name:'Urbanisme'},
+        {name:'Vin et Boissons'},
+        {name:'WebDesign et multimédia'}
+      ]}
+    ] ;
 
   });
-
-//http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1

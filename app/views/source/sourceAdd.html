@@ -118,6 +118,63 @@
             <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
         </div>
     </script>
+
+    <!-- Edit Modal -->
+    <script type="text/ng-template" id="editSourceModal.html">
+            <div class="modal-header">
+                <h3> Modification d'une source</h3>
+
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Source </label>
+                        <div class="col-sm-9">
+                            <input type="url" class="form-control" ng-model="ModalForm.url">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Nom de la source </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="ModalForm.title">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Fréquence de la source </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form" value="{{ModalForm.frequency.option}}" disabled>
+                            <select ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in ModalForm.frequencies"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Tags </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="ModalForm.tags">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Domaine </label>
+                        <div  class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.domain.name}}" disabled>
+                            <select ng-model="ModalForm.domain" ng-options="domain.name for domain in ModalForm.domains"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"> Activité </label>
+                        <div  class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ModalForm.activity.name}}" disabled>
+                            <select ng-model="ModalForm.activity" ng-options="activity.name for activity in ModalForm.domain.activites"></select>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+            </div>
+        </script>
 </div>
 
 <div ng-controller="SourceListCtrl">
