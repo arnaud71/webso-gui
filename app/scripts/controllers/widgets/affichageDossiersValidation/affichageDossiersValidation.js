@@ -42,8 +42,11 @@ angular.module('sample.widgets.affichageDossiersValidation', ['adf.provider'])
 
     var currentUsername = serviceWidgets.getUserIdents();
 
-    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    // $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+    //   {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    //   {get:{method:'JSONP'}});
+    $scope.solr = $resource(cfg.urlServices+'db/:action',
+      {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
     $scope.solrResult       = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:validation'});

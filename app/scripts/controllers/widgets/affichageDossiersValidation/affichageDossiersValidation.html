@@ -1,11 +1,11 @@
-<div class="alert alert-info" ng-if="!solrResult.response.numFound">
+<div class="alert alert-info" ng-if="!solrResult.success.response.numFound">
 	Aucune information n'est validée
 </div>
 <div ng-if="solrResult">
     <div id="docsFound">
-        <div solr-result ng-show="solrResult.response.numFound">
+        <div solr-result ng-show="solrResult.success.response.numFound">
             <table class="table table-striped">
-                <tr ng-repeat="doc in solrResult.response.docs">
+                <tr ng-repeat="doc in solrResult.success.response.docs">
                     <td>
                         <div id="titleFound">
                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>

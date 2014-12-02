@@ -62,13 +62,16 @@ angular.module('adf')
                 config: widg.query_s,
                 param: widg.param_s
             };
-            $rootScope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-              {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+            // $rootScope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+            //   {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+            //   {get:{method:'JSONP'}});
+            $rootScope.solr = $resource(cfg.urlServices+'db/:action',
+              {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
               {get:{method:'JSONP'}});
 
             $rootScope.solr.get({q:'type_s:widget'}).$promise.then(function(widg) {
               // add the widget to the front-end dashboard
-              var array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.response.numFound - 1);
+              var array = serviceWidgets.getNbWidgetsMaxInWichColumn(widg.success.response.numFound - 1);
               if(array[0] === array[1] && array[0] === array[2]){
                 addScope.model.rows[0].columns[0].widgets.unshift(w);
               }else{
