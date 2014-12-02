@@ -63,12 +63,14 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
     // $scope.Result = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch AND id:'+id_source});
     $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch AND id:'+id_source})
         .$promise.then(function(result){
-            // Result = result.success.response.docs[0].source_id_s;
-            $scope.watchData = result.success.response.docs[0];
-            $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND source_id_ss:'+result.success.response.docs[0].source_id_s})
-                .$promise.then(function(data){
-                    $scope.solrResult = data;
-                });
+            if(result.success.response.numFound){
+                // Result = result.success.response.docs[0].source_id_s;
+                $scope.watchData = result.success.response.docs[0];
+                $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND source_id_ss:'+result.success.response.docs[0].source_id_s})
+                    .$promise.then(function(data){
+                        $scope.solrResult = data;
+                    });
+            }
         });
     // $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch AND id:'+id_source});
 
