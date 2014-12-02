@@ -1,39 +1,40 @@
 <div class="alert alert-info" ng-if="!data">
 	Sélectionnez un ID de surveillance dans la configuration du widget
 </div>
-<div ng-if="solrResult">
+<div id="solrResult">
     <div id="docsFound">
-        <div solr-result ng-show="solrResult.response.numFound">
+
+        <div solr-result ng-show="solrResult.success.response.numFound">
+            <div id="activityFound">
+                activité : {{watchData.activity_s}}
+            </div>
+            <div id="domainFound">
+                domaine : {{watchData.domain_s}}
+            </div>
+            <div id="queryFound">
+                requête : {{watchData.query_s}}
+            </div>
+            <div id="folderFound">
+                dossier : {{watchData.folder_s}}
+            </div>
+            <div id="notificationFound">
+                notification : {{watchData.notification_s}}
+            </div><br>
             <table class="table table-striped">
-                <tr ng-repeat="doc in solrResult.response.docs">
+                <tr ng-repeat="doc in solrResult.success.response.docs">
                     <td>
                         <div id="titleFound">
                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                         </div>
                         <div id="dateFound">
-                            date : {{doc.creation_dt|date:'dd-MM-yyyy hh:mm'}}
+                            date : {{doc.date_dt|date:'dd-MM-yyyy HH:mm'}}
                         </div>
                         <!-- <div id="updateFound">
                             update : {{doc.updating_dt|date:'dd-MM-yyyy hh:mm'}}
                             {{doc}}
                         </div> -->
-                        <div id="activityFound">
-                            activité : {{doc.activity_s}}
-                        </div>
-                        <div id="domainFound">
-                            domaine : {{doc.domain_s}}
-                        </div>
-                        <div id="queryFound">
-                            requête : {{doc.query_s}}
-                        </div>
-                        <!-- <div id="folderFound">
-                            dossier : {{doc.folder_s}}
-                        </div> -->
-                        <div id="notificationFound">
-                            notification : {{doc.notification_s}}
-                        </div>
                         <div id="contentFound">
-                            <!-- <div ng-controller="CollapseSolrCtrl">
+                            <div ng-controller="CollapseSolrCtrl">
                                 <div collapse="!isCollapsed">
                                         <span ng-click="isCollapsed = !isCollapsed">
                                            &gt;&gt;&gt;&gt;
@@ -41,10 +42,10 @@
                                 </div>
                                 <div collapse="isCollapsed">
                                         <span ng-click="isCollapsed = !isCollapsed">
-                                        {{solrResult.highlighting[doc.id].content_en[0]}} &lt;&lt;&lt;&lt;
+                                        {{solrResult.success.highlighting[doc.id].content_en[0]}} &lt;&lt;&lt;&lt;
                                         </span>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </td>
                 </tr>
