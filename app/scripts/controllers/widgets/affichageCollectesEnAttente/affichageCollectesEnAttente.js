@@ -52,18 +52,33 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
       });
 
   }).controller('collectesMultisourcesCtrl', function($scope, data, $resource, cfg) {
-
-    if ($scope.config.content) {
+    if (data) {
+      //alert($scope.config.content);
 
       //$scope.query = $scope.data.query;
       //$scope.typeQuery = $scope.data.param.value;
+      $scope.querySearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
+        {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
+        {get: {method: 'JSONP'}});
 
-
-    $scope.querySearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
-      {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
-      {get: {method: 'JSONP'}});
-
-    $scope.querySearchResult = $scope.querySearch.get({query: $scope.config.content, typeQuery: 'google_news'});
+      $scope.solr = $resource(cfg.urlServices+'db/:action',
+        {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+        {get:{method:'JSONP'}});
+    
+      // $scope.Result = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch AND id:'+id_source});
+      $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:source AND id:'+data})
+          .$promise.then(function(result){
+              if(result.success.response.numFound){
+                  // Result = result.success.response.docs[0].source_id_s;
+                  var OnlineData = result.success.response.docs[0];
+                  $scope.querySearchResult = $scope.querySearch.get({query: result.success.response.docs[0].query_s, typeQuery: result.success.response.docs[0].ressources_s});
+                  // $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND source_id_ss:'+result.success.response.docs[0].source_id_s})
+                  //     .$promise.then(function(data){
+                  //         $scope.solrResult = data;
+                  //     });
+              }
+          });
+    // $scope.querySearchResult = $scope.querySearch.get({query: $scope.config.content, typeQuery: 'google_news'});
   }
 
 
@@ -104,6 +119,9 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
 
         $scope.sourcesList = $resource(cfg.urlServices+'db/:action',
             {action:'get.pl', type_s:'source', waiting_b: true, user_s: usernameCookie, callback:"JSON_CALLBACK"},
+            {get:{method:'JSONP'}});
+        $scope.solr = $resource(cfg.urlServices+'db/:action',
+            {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
             {get:{method:'JSONP'}});
 
         $scope.filterOptions = {
@@ -177,10 +195,10 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
         beforeSelectionChange: function (rowItem) { return true; },
         afterSelectionChange: function () {
             angular.forEach($scope.mySelections, function ( item ) {
-                //$scope.config.content = item.id;
+                $scope.config.content = item.id;
                 $scope.config.title = item.title_t;
                 $scope.config.query = item.query_s;
             });
-        }             
+        }
     };
 });
