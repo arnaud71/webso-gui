@@ -183,10 +183,13 @@ angular.module('websoApp')
     );
 
     // to query solr as a search engine
-    $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}}
-    );
+    // $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
+    //   {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    //   {get:{method:'JSONP'}}
+    // );
+    $scope.solrResource = $resource(cfg.urlServices+'db/:action',
+      {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
 
     // to check a rss source
     $scope.checkSourceResource = $resource(cfg.urlServices+'harvester/RSS/:action',
@@ -501,7 +504,7 @@ angular.module('websoApp')
       $scope.isError = false;
       $scope.solrResult       = $scope.solrResource.get({
                                     q   : $scope.model.inputQuery,
-                                    fq  : '+source_id_ss:'+$scope.model.sourceId+' +type_s:document'
+                                    fq  : 'source_id_ss:'+$scope.model.sourceId+' AND type_s:document'
 
       },
         function () {

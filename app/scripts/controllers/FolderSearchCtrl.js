@@ -38,8 +38,8 @@ angular.module('websoApp')
     });
 
     $scope.langFacets = [
-      {name: 'en', value:'anglais',     nb:0, checked:false,  fq:'+lang_s:en' },
-      {name: 'fr', value:'français',    nb:0, checked:false,   fq:'+lang_s:fr' }
+      {name: 'en', value:'anglais',     nb:0, checked:false,  fq:' AND lang_s:en' },
+      {name: 'fr', value:'français',    nb:0, checked:false,   fq:' AND lang_s:fr' }
     ];
     angular.forEach($scope.langFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -55,16 +55,16 @@ angular.module('websoApp')
     });
 
     $scope.sourceFacets =  [
-      {name: 'selection',  value:'enregistrée(s)',   nb:0, checked:false, fq:'+waiting_b:false'},
-      {name: 'waiting',       value:'en attente', nb:0, checked:false,fq:'+waiting_b:true' }
+      {name: 'selection',  value:'enregistrée(s)',   nb:0, checked:false, fq:' AND waiting_b:false'},
+      {name: 'waiting',       value:'en attente', nb:0, checked:false,fq:' AND waiting_b:true' }
     ];
     angular.forEach($scope.sourceFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.readFacets =  [
-      {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:'+read_b:false' },
-      {name: 'read',     value:'lu',        nb:0, checked:false, fq:'+read_b:true' }
+      {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:' AND read_b:false' },
+      {name: 'read',     value:'lu',        nb:0, checked:false, fq:' AND read_b:true' }
     ];
     angular.forEach($scope.readFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -229,9 +229,11 @@ angular.module('websoApp')
     $scope.folderFacetFq      = '';
     $scope.sourceFacetFq      = '';
 
-    //$scope.solr             = $resource('http://albator.hesge.ch\\:8984/solr/collection1/:action',
-    $scope.solr             = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    // $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+    //   {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+    //   {get:{method:'JSONP'}});
+    $scope.solr = $resource(cfg.urlServices+'db/:action',
+      {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
 
     $scope.validationAdd = $resource(cfg.urlServices+'db/:action',
@@ -352,10 +354,10 @@ angular.module('websoApp')
             //start: $scope.currentPage - 1,
             start: ($scope.currentPage - 1) * 10,
             sort: $scope.sort,
-            fq: ' +type_s:validation' + ' +user_s:' + $username
+            fq: 'type_s:validation' + ' AND user_s:' + $username
           }).$promise.then(function (result) {
-              $scope.solrResult = result;
-              $scope.totalItems = result.response.numFound;
+              $scope.solrResult = result.success;
+              $scope.totalItems = result.success.response.numFound;
 
 
           })
@@ -375,17 +377,17 @@ angular.module('websoApp')
           start   :($scope.currentPage-1)*10,
           sort    : $scope.sort,
           // fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
-          fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.sourceFacetFq 
+          fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.sourceFacetFq 
         }).$promise.then(function (result) {
-            $scope.solrResult = result;
-            $scope.totalItems = result.response.numFound;
+            $scope.solrResult = result.success;
+            $scope.totalItems = result.success.response.numFound;
             // get read / not read
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
             //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].nb     = result.facet_counts.facet_queries['waiting_b:false'];
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].nb     = result.success.facet_counts.facet_queries['waiting_b:false'];
 
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].nb     = result.facet_counts.facet_queries['waiting_b:true'];
+            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].nb     = result.success.facet_counts.facet_queries['waiting_b:true'];
             // get period data
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
             // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
@@ -416,26 +418,26 @@ angular.module('websoApp')
             //start: $scope.currentPage - 1,
             start   :($scope.currentPage-1)*10,
             sort    : $scope.sort,
-            fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+            fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
           }).$promise.then(function (result) {
-              $scope.solrResult = result;
-              $scope.totalItems = result.response.numFound;
+              $scope.solrResult = result.success;
+              $scope.totalItems = result.success.response.numFound;
               // get read / not read
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.facet_counts.facet_queries['read_b:true'];
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.success.response.numFound - result.success.facet_counts.facet_queries['read_b:true'];
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.success.facet_counts.facet_queries['read_b:true'];
               //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
 
 
               // get period data
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
               // get
 
               // convert table lang in hash lang
               var lang = {};
-              for (var i = 0; i < result.facet_counts.facet_fields.lang_s.length; i += 2) {
-                lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
+              for (var i = 0; i < result.success.facet_counts.facet_fields.lang_s.length; i += 2) {
+                lang[result.success.facet_counts.facet_fields.lang_s[i]] = result.success.facet_counts.facet_fields.lang_s[i + 1];
               }
 
               $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
@@ -498,8 +500,8 @@ angular.module('websoApp')
                         start   :($scope.currentPage-1)*10,
                         fq      :$scope.currentFq
                       }).$promise.then(function (result) {
-                                                    $scope.solrResult = result;
-                                                    $scope.totalItems = result.response.numFound;
+                                                    $scope.solrResult = result.success;
+                                                    $scope.totalItems = result.success.response.numFound;
 
                                                         }
       );
@@ -541,7 +543,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.watch].checked      = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
-          $scope.typeFq = '+type_s:document';
+          $scope.typeFq = 'type_s:document';
           $scope.doSearch();
         }
         else {
@@ -557,7 +559,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.online].checked     = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
-          $scope.typeFq = '+type_s:document';
+          $scope.typeFq = 'type_s:document';
           $scope.doSearch();
         }
         else {
@@ -572,7 +574,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = true;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
-          $scope.typeFq = '+type_s:document';
+          $scope.typeFq = 'type_s:document';
           $scope.doSearch();
         }
         else {
@@ -587,7 +589,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = false;
           $scope.searchNav[$scope.idx.source].checked     = false;
           $scope.currentPage            = 1;
-          $scope.typeFq = '+type_s:document';
+          $scope.typeFq = 'type_s:document';
           $scope.doSearch();
         }
         else {
@@ -602,7 +604,7 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.feeds].checked      = false;
           $scope.searchNav[$scope.idx.validation].checked = false;
           $scope.currentPage            = 1;
-          $scope.typeFq = '+type_s:source';
+          $scope.typeFq = 'type_s:source';
           $scope.doSearch();
         }
         else {
@@ -698,11 +700,11 @@ angular.module('websoApp')
         if (item.checked == false) {
           //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.watch].checked = false;
           //$scope.folderFacetFq = item.fq;
-          $scope.typeFq = '+type_s:validation ';
+          $scope.typeFq = 'type_s:validation ';
         }
         else {
           $scope.folderFacetFq = '';
-          $scope.typeFq = '+type_s:document';
+          $scope.typeFq = 'type_s:document';
         }
       }
 

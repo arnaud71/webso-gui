@@ -10,12 +10,6 @@ angular.module('websoApp')
       {get:{method:'JSONP'}}
     );
 
-    // to query solr as a search engine
-    $scope.solrResource = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}}
-    );
-
     $scope.dbList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',user_s:$username,callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}});

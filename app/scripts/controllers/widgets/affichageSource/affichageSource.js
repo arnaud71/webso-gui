@@ -51,15 +51,18 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
         }
       });
 
-  }).controller('sourceCtrl', function($scope, data, $resource, cfg){
-    $scope.data = data;
-    $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
-      {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-      {get:{method:'JSONP'}});
+    }).controller('sourceCtrl', function($scope, data, $resource, cfg){
+        $scope.data = data;
+            // $scope.solr = $resource(cfg.urlDB+'solr/collection1/:action',
+            //   {action:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+            //   {get:{method:'JSONP'}});
+        $scope.solr = $resource(cfg.urlServices+'db/:action',
+            {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+            {get:{method:'JSONP'}});
 
-      $scope.solrResult       = $scope.solr.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
+            $scope.solrResult       = $scope.solr.get({sort:'date_dt desc', rows:5, fq:'type_s:document +source_id_ss:'+data});
 
-  }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
+    }).controller('sourceEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
 
         $scope.mySelections = [];
         var usernameCookie = $cookieStore.get('username');
@@ -119,7 +122,7 @@ angular.module('sample.widgets.affichageSource', ['adf.provider'])
             }
         }, true);
 
-    $scope.gridOptionsSource = {
+        $scope.gridOptionsSource = {
             data: 'myData',
             enablePaging: true,
             enableRowSelection : true,

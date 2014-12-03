@@ -190,16 +190,16 @@
                             </div>
                             <div class="col-md-6" id="displaySolrTest">
                                 <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                                    <div ng-show="solrResult.response">
-                                        {{solrResult.response.numFound||0}} documents(s) trouvé(s)
-                                    <div ng-show="solrResult.response.numFound">
+                                    <div ng-show="solrResult.success.response">
+                                        {{solrResult.success.response.numFound||0}} documents(s) trouvé(s)
+                                    <div ng-show="solrResult.success.response.numFound">
 
-                                        <div ng-repeat="doc in solrResult.response.docs">
+                                        <div ng-repeat="doc in solrResult.success.response.docs">
                                             <div class row>
 
                                                 </p><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
 
-                                                <p><span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                                                <p><span ng-if="solrResult.success.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.success.highlighting[doc.id].content_en[0]+'...'"></span>
                                                 </p>
 
 
@@ -268,16 +268,16 @@
                 </div>
                 <div class="col-md-6" id="displaySolrTest">
                     <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
-                        <div ng-show="solrResult.response">
-                            {{solrResult.response.numFound||0}} documents(s) trouvé(s)
-                        <div ng-show="solrResult.response.numFound">
+                        <div ng-show="solrResult.success.response">
+                            {{solrResult.success.response.numFound||0}} documents(s) trouvé(s)
+                        <div ng-show="solrResult.success.response.numFound">
 
-                            <div ng-repeat="doc in solrResult.response.docs">
+                            <div ng-repeat="doc in solrResult.success.response.docs">
                                 <div class row>
 
                                     </p><a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
 
-                                    <p><span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+                                    <p><span ng-if="solrResult.success.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.success.highlighting[doc.id].content_en[0]+'...'"></span>
                                     </p>
 
 
