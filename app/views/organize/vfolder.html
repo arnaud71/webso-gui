@@ -66,7 +66,9 @@
                                 <a href="{{fold.url_s}}" target="_blank">{{fold.title_t}}</a>
                             </div>
                             <div id="contentFound">
-                                <span>Recherche : {{ fold.query_s }} | {{ fold.notification_s }}</span>
+                                <!-- <span>Recherche : {{ fold.query_s }} | {{ fold.notification_s }}</span><br> -->
+                                <span>Validée le : {{ fold.creation_dt | date:'dd-MM-yyyy HH:mm' }}</span><br>
+                                <span>Mise à jour : {{ fold.updating_dt | date:'dd-MM-yyyy HH:mm' }}</span>
                             </div>
                             <div id="actionList">
                                 <!-- <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button> -->
