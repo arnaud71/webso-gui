@@ -106,7 +106,7 @@
                                         </div>
 
                                         <div id="dateFound">
-                                            {{online.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            {{online.pubDate|date:'dd-MM-yyyy HH:mm'}}
                                             <div id="actionList">
                                                 <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
 
@@ -157,7 +157,7 @@
                                         </div>
 
                                         <div id="dateFound">
-                                            {{feed.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            {{feed.pubDate|date:'dd-MM-yyyy HH:mm'}}
                                             <div id="actionList">
                                                 <button type="button" class="btn btn-xs" ng-click="addFeed(feed)" tooltip="Ajouter le flux"> <span class="glyphicon glyphicon-plus"></span></button>
                                                 <button type="button" class="btn btn-xs" ng-click="seeFeed(feed)" tooltip="Voir le flux"> <span class="glyphicon glyphicon-search"></span></button>
@@ -213,7 +213,7 @@
                                         </div>
 
                                         <div id="dateFound">
-                                            {{online.pubDate|date:'dd-MM-yyyy hh:mm'}}
+                                            {{online.pubDate|date:'dd-MM-yyyy HH:mm'}}
                                             <div id="actionList">
                                                 <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
                                                 <button type="button" class="btn btn-xs" ng-click="shareDoc(online,'online')" tooltip="Partager le document"> <span class="glyphicon glyphicon-envelope"></span></button>
@@ -269,7 +269,7 @@
                                         <div ng-if="doc.source_type_s == 'online'" id="urlFound">
                                             Recherche : {{doc.query_s}}<br>
                                             Sources : {{doc.ressources_s}}<br>
-                                            Ajouté le : {{doc.creation_dt|date:'dd-MM-yyyy hh:mm'}}<br>
+                                            Ajouté le : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                         </div>
                                         <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
                                             <span ng-if="doc.url_s.length<100">
@@ -281,7 +281,7 @@
                                         </div>
 
                                         <div id="dateFound">
-                                            {{doc.date_dt|date:'dd-MM-yyyy hh:mm'}}
+                                            {{doc.date_dt|date:'dd-MM-yyyy HH:mm'}}
                                             <div id="actionList">
                                                 <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button>
                                                 <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
