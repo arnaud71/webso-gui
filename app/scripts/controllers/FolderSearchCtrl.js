@@ -971,34 +971,46 @@ angular.module('websoApp')
 
     /*  addfeed from search feed*/
     $scope.addFeed= function(feed){
-      $scope.validationForm                   = {};
-      $scope.validationForm.url               = feed.url;
-      $scope.validationForm.title             = feed.title;
-      $scope.validationForm.tags              = '';
-      $scope.validationForm.domain            = {};
-      $scope.validationForm.domain.name       = '';
-      $scope.validationForm.activity          = {};
-      $scope.validationForm.activity.name     = '';
-      $scope.validationForm.frequency         = {};
-      $scope.validationForm.frequency.option  = '';
+      $scope.dbList.get({
+        type_s :'source',
+        url_s  : '"'+feed.url+'"'
+      })
+      .$promise.then(function(result) {
 
-      var modalInstance = $modal.open({
-        scope: $scope,
-        templateUrl : 'validateFeedModal.html',
-        controller  : ModalInstanceCtrl
-      });
+        if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+          $scope.validationForm                   = {};
+          $scope.validationForm.url               = feed.url;
+          $scope.validationForm.title             = feed.title;
+          $scope.validationForm.tags              = '';
+          $scope.validationForm.domain            = {};
+          $scope.validationForm.domain.name       = '';
+          $scope.validationForm.activity          = {};
+          $scope.validationForm.activity.name     = '';
+          $scope.validationForm.frequency         = {};
+          $scope.validationForm.frequency.option  = '';
 
-      modalInstance.result.then(function () {
-        $scope.feedAdd.put({
-          source_type_s     : 'rss',
-          url_s:            $scope.validationForm.url,
-          title_t:          $scope.validationForm.title,
-          tags_s:           $scope.validationForm.tags,
-          refresh_s:        $scope.validationForm.frequency.option,
-          domain_s:         $scope.validationForm.domain.name,
-          activity_s:       $scope.validationForm.activity.name,
-          waiting_b:        false
-        });
+          var modalInstance = $modal.open({
+            scope: $scope,
+            templateUrl : 'validateFeedModal.html',
+            controller  : ModalInstanceCtrl
+          });
+
+          modalInstance.result.then(function () {
+            $scope.feedAdd.put({
+              source_type_s     : 'rss',
+              url_s:            $scope.validationForm.url,
+              title_t:          $scope.validationForm.title,
+              tags_s:           $scope.validationForm.tags,
+              refresh_s:        $scope.validationForm.frequency.option,
+              domain_s:         $scope.validationForm.domain.name,
+              activity_s:       $scope.validationForm.activity.name,
+              waiting_b:        false
+            });
+          });
+        }
+        else{
+          alert('Source déjà enregistrée.');
+        }
       });
     }
 

@@ -368,39 +368,51 @@ angular.module('websoApp')
     // doAddSource
     // add a source in the DB
     $scope.doAddSource = function () {
-      $scope.sourceAddResult = $scope.addResource.get({
-        source_type_s   : $scope.checkSourceResult.sourceType,
-        type_s          : 'source',
-        url_s           : $scope.model.inputUrl,
-        tags_s          : $scope.model.inputTags,
-        title_t         : $scope.model.inputTitle,
-        domain_s        : $scope.model.inputDomain.name,
-        activity_s      : $scope.model.inputActivity.name,
-        waiting_b       : false,
-        refresh_s       : $scope.model.inputFrequency.option
+      $scope.dbList.get({
+        type_s :'source',
+        url_s  : '"'+$scope.model.inputUrl+'"'
+      })
+      .$promise.then(function(result) {
 
-      },function () {
-          if (typeof $scope.sourceAddResult.success === "undefined") {}
-          else {
-            $scope.model.sourceId = $scope.sourceAddResult.success.id;
-            if ($scope.sourceAddResult.nb_doc_added>0) {
-              $scope.model.docAvailable = 1;
-            }
+        if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+          $scope.sourceAddResult = $scope.addResource.get({
+            source_type_s   : $scope.checkSourceResult.sourceType,
+            type_s          : 'source',
+            url_s           : $scope.model.inputUrl,
+            tags_s          : $scope.model.inputTags,
+            title_t         : $scope.model.inputTitle,
+            domain_s        : $scope.model.inputDomain.name,
+            activity_s      : $scope.model.inputActivity.name,
+            waiting_b       : false,
+            refresh_s       : $scope.model.inputFrequency.option
+
+          },function () {
+              if (typeof $scope.sourceAddResult.success === "undefined") {}
+              else {
+                $scope.model.sourceId = $scope.sourceAddResult.success.id;
+                if ($scope.sourceAddResult.nb_doc_added>0) {
+                  $scope.model.docAvailable = 1;
+                }
+              }
+          });
+
+          if($scope.model.valueCheckBoxSource === true){
+            addWidget('affichageSource', $scope.model.inputTitle);
           }
+
+          var modalInstance = $modal.open({
+            templateUrl: 'addSourceModal.html',
+            controller: ModalInstanceCtrl
+          });
+        }
+        else{
+          var modalInstance = $modal.open({
+            templateUrl: 'addSourceModalPresent.html',
+            controller: ModalInstanceCtrl
+          });
+        }
       });
-
-      if($scope.model.valueCheckBoxSource === true){
-        addWidget('affichageSource', $scope.model.inputTitle);
-      }
-
-      var modalInstance = $modal.open({
-        templateUrl: 'addSourceModal.html',
-        controller: ModalInstanceCtrl
-      });
-
-
     };
-
 
 
     // ***************************************************************
@@ -441,43 +453,48 @@ angular.module('websoApp')
     // checkSourceUrl
     // check if the rss exist and get the content in checkSourceResult
     $scope.checkSourceUrl = function (){
-      //$scope.$emit('CHECKRSS');
-      $scope.sourceChecked = false;
-      var url = '';
-      if($filter('limitTo')($scope.model.inputUrl, 7) == 'http://'){
-        url = $scope.model.inputUrl;
+      if($scope.model.inputUrl != ""){
+        //$scope.$emit('CHECKRSS');
+        $scope.sourceChecked = false;
+        var url = '';
+        if($filter('limitTo')($scope.model.inputUrl, 7) == 'http://'){
+          url = $scope.model.inputUrl;
+        }
+        else{
+          url = 'http://'+$scope.model.inputUrl;
+          $scope.model.inputUrl = 'http://'+$scope.model.inputUrl;
+        }
+
+        if (url.length>5) {
+          $scope.checkingSource = true;
+          $scope.checkSourceResult = $scope.checkSourceResource.get({
+            url: url
+          }, function () {
+            if ($scope.checkSourceResult.sourceType == 'RSS') {
+              $scope.model.inputTitle = $scope.checkSourceResult.title;
+              $scope.checkingSource = false;
+              if ($scope.checkSourceResult.count>0) {
+                $scope.sourceChecked = true;
+                $scope.sourceType = 'info(s) dans ce flux rss';
+              }
+            }
+            else{
+              if ($scope.checkSourceResult.sourceType == 'HTTP') {
+                $scope.model.inputTitle = $scope.checkSourceResult.title;
+                $scope.sourceChecked = true;
+                $scope.sourceType = 'page web';
+              }
+              $scope.checkingSource = false;
+            }
+          },function (){$scope.sourceChecked = false});
+        }
+        else {
+          $scope.sourceChecked = false;
+        }
       }
       else{
-        url = 'http://'+$scope.model.inputUrl;
-      }
-
-      if (url.length>5) {
-        $scope.checkingSource = true;
-        $scope.checkSourceResult = $scope.checkSourceResource.get({
-          url: url
-        }, function () {
-          if ($scope.checkSourceResult.sourceType == 'RSS') {
-            $scope.model.inputTitle = $scope.checkSourceResult.title;
-            $scope.checkingSource = false;
-            if ($scope.checkSourceResult.count>0) {
-              $scope.sourceChecked = true;
-              $scope.sourceType = 'info(s) dans ce flux rss';
-            }
-          }
-          else{
-            if ($scope.checkSourceResult.sourceType == 'HTTP') {
-              $scope.model.inputTitle = $scope.checkSourceResult.title;
-              $scope.sourceChecked = true;
-              $scope.sourceType = 'page web';
-            }
-            $scope.checkingSource = false;
-          }
-        },function (){$scope.sourceChecked = false});
-      }
-      else {
         $scope.sourceChecked = false;
       }
-
     };
 
 

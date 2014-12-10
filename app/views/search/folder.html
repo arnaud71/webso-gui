@@ -18,6 +18,7 @@
             <strong>&nbsp;</strong><span>{{errorMessage}}</span>
         </div>
         <div class="row">
+        {{test}}
             <!-- searchNav box -->
             <div class="col-md-3">
                 <table class="table table-condensed">
@@ -254,13 +255,14 @@
                                                             <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
                                                             <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
 
-                                                           &gt;&gt;&gt;&gt;
+                                                           <!-- &gt;&gt;&gt;&gt; -->
+                                                           <a>afficher &gt;</a>
                                                             <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                         </span>
                                                 </div>
                                                 <div collapse="isCollapsed">
                                                         <span ng-click="isCollapsed = !isCollapsed">
-                                                        {{doc.content_en}} &lt;&lt;&lt;&lt;
+                                                        {{doc.content_en}} <a>&lt; masquer</a>
                                                         </span>
                                                 </div>
 
