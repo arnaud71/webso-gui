@@ -256,13 +256,13 @@
                                                             <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
 
                                                            <!-- &gt;&gt;&gt;&gt; -->
-                                                           <a>afficher &gt;</a>
+                                                           <a>afficher&NonBreakingSpace;&gt;</a>
                                                             <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                         </span>
                                                 </div>
                                                 <div collapse="isCollapsed">
                                                         <span ng-click="isCollapsed = !isCollapsed">
-                                                        {{doc.content_en}} <a>&lt; masquer</a>
+                                                        {{doc.content_en}} <a>&lt;&NonBreakingSpace;masquer</a>
                                                         </span>
                                                 </div>
 

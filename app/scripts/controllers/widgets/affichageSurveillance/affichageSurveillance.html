@@ -36,14 +36,17 @@
                         <div id="contentFound">
                             <div ng-controller="CollapseSolrCtrl">
                                 <div collapse="!isCollapsed">
-                                        <span ng-click="isCollapsed = !isCollapsed">
-                                           &gt;&gt;&gt;&gt;
-                                        </span>
+                                    <a ng-click="isCollapsed = !isCollapsed">
+                                       Afficher&NonBreakingSpace;&gt;
+                                    </a>
                                 </div>
                                 <div collapse="isCollapsed">
-                                        <span ng-click="isCollapsed = !isCollapsed">
-                                        {{solrResult.success.highlighting[doc.id].content_en[0]}} &lt;&lt;&lt;&lt;
-                                        </span>
+                                    <span ng-click="isCollapsed = !isCollapsed">
+                                        {{solrResult.success.highlighting[doc.id].content_en[0]}}
+                                    </span>
+                                    <a ng-click="isCollapsed = !isCollapsed">
+                                         &lt;&NonBreakingSpace;Masquer
+                                    </a>
                                 </div>
                             </div>
                         </div>
