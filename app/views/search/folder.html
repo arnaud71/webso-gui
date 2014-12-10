@@ -163,16 +163,12 @@
                                                 <button type="button" class="btn btn-xs" ng-click="addFeed(feed)" tooltip="Ajouter le flux"> <span class="glyphicon glyphicon-plus"></span></button>
                                                 <button type="button" class="btn btn-xs" ng-click="seeFeed(feed)" tooltip="Voir le flux"> <span class="glyphicon glyphicon-search"></span></button>
                                             </div>
-
-
                                         </div>
 
                                     </td>
                                 </tr>
                             </table>
-
                         </div>
-
                     </div>
                 </div>
 
@@ -289,21 +285,20 @@
                                                 <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="Invalider le document"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
                                                 <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="Mettre comme lu"> <span class="glyphicon glyphicon-eye-open"></span></button>
                                                 <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="Mettre comme non-lu"> <span class="glyphicon glyphicon-eye-close"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="shareDoc(doc,'solr')" tooltip="Partager le document"> <span class="glyphicon glyphicon-envelope"></span></button>
 
                                                 <!-- <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')||(doc.source_type_s == 'online')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="Effacer le document"> <span class="glyphicon glyphicon-trash"></span></button></div> -->
                                             </div>
-
-
                                         </div>
 
-                        </td>
-                        </tr>
-                        </table>
-                        <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
+                                    </td>
+                                </tr>
+                            </table>
+                            <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <!-- validation Modal  -->
         <script type="text/ng-template" id="validateModal.html">
