@@ -273,8 +273,8 @@ angular.module('websoApp')
       {get:{method:'JSONP'}}
     );
 
-    $scope.sendMail = $resource(cfg.urlServices+'mail/:action',
-      {action: 'send.pl', callback:'JSON_CALLBACK', token_s: $token, token_timeout_l: $token_timeout},
+    $scope.sendMail = $resource(cfg.urlServices+':action',
+      {action: 'send.pl', callback:'JSON_CALLBACK', token: $token, token_timeout: $token_timeout},
       {send: {method: 'JSONP'}});
 
 
@@ -870,7 +870,7 @@ angular.module('websoApp')
         }
         $scope.shareForm.tags     = '';
         $scope.shareForm.folder   = '';
-        $scope.shareForm.comment   = '';
+        $scope.shareForm.comment  = '';
         $scope.shareForm.mail     = '';
 
         var modalInstance = $modal.open({
@@ -880,21 +880,25 @@ angular.module('websoApp')
         });
 
         modalInstance.result.then(function () {
-
-          $scope.sendMail.send({
-            url_s         : $scope.shareForm.url,
-            tags_s        : $scope.shareForm.tags,
-            title_t       : $scope.shareForm.title,
-            content_en    : $scope.shareForm.content,
-            content_t     : $scope.shareForm.content,
-            content_fr    : $scope.shareForm.content,
-            comment_s     : $scope.shareForm.coment,
-            folder_s      : $scope.shareForm.folder.name,
-            folder_i      : $scope.shareForm.folder.id,
-            lang_s        : doc.lang_s,
-            date_dt       : doc.date_dt,
-            mail          : $scope.shareForm.mail
-          });
+          if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert("Mauvais mail");
+          else{
+            $scope.sendMail.send({
+              token         : $token,
+              token_timeout : $token_timeout,
+              url_s         : $scope.shareForm.url,
+              tags          : $scope.shareForm.tags,
+              titre         : $scope.shareForm.title,
+              // content_en    : $scope.shareForm.content,
+              content       : $scope.shareForm.content,
+              // content_fr    : $scope.shareForm.content,
+              commentaire   : $scope.shareForm.coment,
+              // folder_s      : $scope.shareForm.folder.name,
+              // folder_i      : $scope.shareForm.folder.id,
+              langue        : doc.lang_s,
+              date          : doc.date_dt,
+              mail          : $scope.shareForm.mail
+            });
+          }
         });
     };
 
