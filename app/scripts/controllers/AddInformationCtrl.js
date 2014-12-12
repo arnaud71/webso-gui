@@ -30,8 +30,8 @@ angular.module('websoApp')
                 url_s     : $scope.inputUrl,
                 tags_s    : $scope.inputTags,
                 title_t   : $scope.inputTitle,
-                content_t : $scope.inputDetails,
-                comments_t: $scope.inputComments,
+                detail_s  : $scope.inputDetails,
+                comment_s : $scope.inputComments,
                 folder_i  : $scope.inputFolder.id,
                 folder_s  : $scope.inputFolder.name,
             });
@@ -112,7 +112,7 @@ angular.module('websoApp')
               //url: cfg.urlServices+'file/upload-test1.py',
               url: cfg.urlServices+'file/file_upload.pl', //upload.php script, node.js route, or servlet url
               //method: 'POST' or 'PUT',
-              method: 'PUT',
+              method: 'POST',
               headers: {'Access-Control-Request-Method': 'PUT, POST, OPTIONS'},
               //withCredentials: true,
               data: {myObj: $scope.myModelObj},
