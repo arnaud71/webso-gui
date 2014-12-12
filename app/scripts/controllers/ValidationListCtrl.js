@@ -211,6 +211,18 @@ angular.module('websoApp')
             })
     };
 
+    var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
+      $scope.ok = function () {
+        $modalInstance.close();//($scope.selected.item);
+      };
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+    };
+
+    /*
+      Edition
+    */
     $scope.edit = function(obj){
       $scope.validationForm                   = {};
       $scope.validationForm.url               = '';
@@ -234,17 +246,17 @@ angular.module('websoApp')
       });
 
       modalInstance.result.then(function (result) {
-          $scope.atomicChange.put({
-            id            : result.id,
-            url_s         : result.url,
-            tags_s        : result.tags,
-            title_t       : result.title,
-            detail_s      : result.detail,
-            comment_s     : result.comment,
-            // folder_s      : result.folder.name,
-            // folder_i      : result.folder.id,
-          });
-          $scope.doSearch2();
+        $scope.atomicChange.put({
+          id            : result.id,
+          url_s         : result.url,
+          tags_s        : result.tags,
+          title_t       : result.title,
+          detail_s      : result.detail,
+          comment_s     : result.comment,
+          folder_s      : result.folder.name,
+          folder_i      : result.folder.id,
+        });
+        $scope.doSearch2();
       });
     }
 
