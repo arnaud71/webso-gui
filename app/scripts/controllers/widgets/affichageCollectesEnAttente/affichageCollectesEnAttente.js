@@ -66,18 +66,19 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
         {get:{method:'JSONP'}});
     
       // $scope.Result = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:watch AND id:'+id_source});
-      $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:source AND id:'+data})
+      $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:document AND source_id_ss:'+data});
+      /*$scope.solr.get({sort:'updating_dt desc', rows:5, fq:'type_s:source AND id:'+data})
           .$promise.then(function(result){
               if(result.success.response.numFound){
                   // Result = result.success.response.docs[0].source_id_s;
                   var OnlineData = result.success.response.docs[0];
-                  $scope.querySearchResult = $scope.querySearch.get({query: result.success.response.docs[0].query_s, typeQuery: result.success.response.docs[0].ressources_s});
+                  // $scope.querySearchResult = $scope.querySearch.get({query: result.success.response.docs[0].query_s, typeQuery: result.success.response.docs[0].ressources_s});
                   // $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND source_id_ss:'+result.success.response.docs[0].source_id_s})
                   //     .$promise.then(function(data){
                   //         $scope.solrResult = data;
                   //     });
               }
-          });
+          });*/
     // $scope.querySearchResult = $scope.querySearch.get({query: $scope.config.content, typeQuery: 'google_news'});
   }
 

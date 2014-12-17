@@ -904,7 +904,7 @@ angular.module('websoApp')
 
     /* add a online search as a source
     */
-    $scope.waitSource = function (url){
+    $scope.waitSource = function (url, liste){
       $scope.validationForm                   = {};
       $scope.validationForm.url               = url;
       $scope.validationForm.title             = 'Recherche en ligne Webso';
@@ -924,7 +924,7 @@ angular.module('websoApp')
 
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
-          source_type_s     : 'online',
+          source_type_s:    'online',
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,
@@ -934,7 +934,25 @@ angular.module('websoApp')
           query_s:          $scope.searchTerm,
           ressources_s:     $scope.typeQueryStr,
           waiting_b:        true
-
+        }).$promise.then(function(result){
+          angular.forEach(liste, function(value, key) {
+            // alert(result.id+' '+value.pubDate);
+            $scope.ressourceAdd.put({
+              type_s:           'document',
+              source_id_ss:     result.id,
+              url_s:            value.link,
+              title_t:          value.title,
+              title_fr:         value.title,
+              title_en:         value.title,
+              content_t:        value.description,
+              content_fr:       value.description,
+              content_en:       value.description,
+              // date_dt:          value.pubDate,
+              read_b:           false,
+              validated_b:      false,
+              waiting_b:        true,
+            });
+          });
         });
       });
     }

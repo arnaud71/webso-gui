@@ -76,8 +76,7 @@
                             <span ng-repeat="(key, value) in onlineSourceList">
                                 {{value}},  &NonBreakingSpace;
                             </span>
-                            <button type="button" class="btn btn-xs" ng-click="waitSource(currentOnlineSearchUrl)" tooltip="Ajouter en source en attente la recherche courante"> <span class="glyphicon glyphicon-plus"></span></button>
-
+                            <button type="button" class="btn btn-xs" ng-click="waitSource(currentOnlineSearchUrl, onlineResult.res)" tooltip="Ajouter en source en attente la recherche courante"> <span class="glyphicon glyphicon-plus"></span></button>
                             <br>
                         </div>
                     </div>
