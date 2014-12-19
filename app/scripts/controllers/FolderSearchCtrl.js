@@ -29,9 +29,9 @@ angular.module('websoApp')
     $scope.idx = {};
 
     $scope.periodFacets = [
-      {name: 'day',   value: 'jour',    nb:0, checked:false, fq:'+date_dt:[NOW-1DAY TO NOW]'},
-      {name: 'week',  value: 'semaine', nb:0, checked:false, fq:'+date_dt:[NOW-7DAY TO NOW]'},
-      {name: 'month', value: 'mois',    nb:0, checked:false, fq:'+date_dt:[NOW-30DAY TO NOW]'}
+      {name: 'day',   value: 'jour',    nb:0, checked:false, fq:' AND date_dt:[NOW-1DAY TO NOW]'},
+      {name: 'week',  value: 'semaine', nb:0, checked:false, fq:' AND date_dt:[NOW-7DAY TO NOW]'},
+      {name: 'month', value: 'mois',    nb:0, checked:false, fq:' AND date_dt:[NOW-30DAY TO NOW]'}
     ];
     angular.forEach($scope.periodFacets, function(value, key) {
       $scope.idx[value.name] = key;
