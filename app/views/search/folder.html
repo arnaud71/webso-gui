@@ -175,8 +175,12 @@
                 <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult">
 
                     <div id="numberFound">
-                        <div solr-results-number ng-show="solrResult.response">
+                        <div ng-if="!affichageWaiting" solr-results-number ng-show="solrResult.response">
                             Page: {{currentPage}} de {{solrResult.response.numFound}} résultats pour la requête <b>'{{solrResult.responseHeader.params.q}}'</b> en {{solrResult.responseHeader.QTime}} ms
+                            <br>
+                        </div>
+                        <div ng-if="affichageWaiting" solr-results-number ng-show="solrResult.response">
+                            Page: {{currentPage}} de {{solrResult.response.numFound}} résultats en {{solrResult.responseHeader.QTime}} ms
                             <br>
                         </div>
                         <div ng-if="affichageSource" align="right">
@@ -225,8 +229,8 @@
                                 <tr ng-repeat="doc in solrResult.response.docs">
                                     <td>
 
-                                        <div ng-if="doc.waiting_b" id="titleFound">
-                                            <a ng-click="seeWaitings(doc.title_t, doc.query_s, doc.ressources_s)">{{doc.title_t}}</a>
+                                        <div ng-if="(searchNav[idx.source].checked) && (doc.waiting_b) && (doc.type_s !='document')" id="titleFound">
+                                            <a ng-click="seeWaitings(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="!searchNav[idx.source].checked" id="titleFound">
                                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
@@ -234,7 +238,7 @@
                                         <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
                                             Rss: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
-                                        <div ng-if="(searchNav[idx.source].checked) && (doc.source_type_s=='HTTP')" id="titleFound">
+                                        <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
                                             Site: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
                                         <div id="contentFound" ng-if="(doc.source_type_s=='rss') || affichageSource || !(searchNav[idx.source].checked)">

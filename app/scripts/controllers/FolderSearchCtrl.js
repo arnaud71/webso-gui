@@ -358,53 +358,55 @@ angular.module('websoApp')
           }).$promise.then(function (result) {
               $scope.solrResult = result.success;
               $scope.totalItems = result.success.response.numFound;
-
-
           })
       }
 
       // SOURCE
       else if ($scope.searchNav[$scope.idx.source].checked) {
-        $scope.onlineResult= '';
-        if ($scope.searchTerm == '') {
-          $scope.sort = 'date_dt desc';
+        if($scope.affichageWaiting){
+          $scope.seeWaitings($scope.waitingID, $scope.waitingTitle);
         }
-        else {
-          $scope.sort = 'score desc, date_dt desc';
-        }
-        $scope.solr.get({ q: $scope.searchTerm,
-          //start: $scope.currentPage - 1,
-          start   :($scope.currentPage-1)*10,
-          sort    : $scope.sort,
-          // fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
-          fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.sourceFacetFq 
-        }).$promise.then(function (result) {
-            $scope.solrResult = result.success;
-            $scope.totalItems = result.success.response.numFound;
-            // get read / not read
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
-            //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].nb     = result.success.facet_counts.facet_queries['waiting_b:false'];
+        else{
+          $scope.onlineResult= '';
+          if ($scope.searchTerm == '') {
+            $scope.sort = 'date_dt desc';
+          }
+          else {
+            $scope.sort = 'score desc, date_dt desc';
+          }
+          $scope.solr.get({ q: $scope.searchTerm,
+            //start: $scope.currentPage - 1,
+            start   :($scope.currentPage-1)*10,
+            sort    : $scope.sort,
+            // fq: $scope.typeFq + ' +user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+            fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.sourceFacetFq 
+          }).$promise.then(function (result) {
+              $scope.solrResult = result.success;
+              $scope.totalItems = result.success.response.numFound;
+              // get read / not read
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb  = result.response.numFound - result.facet_counts.facet_queries['read_b:true'];
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb     = result.facet_counts.facet_queries['read_b:true'];
+              //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
+              $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.selection].nb     = result.success.facet_counts.facet_queries['waiting_b:false'];
 
-            $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].nb     = result.success.facet_counts.facet_queries['waiting_b:true'];
-            // get period data
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
-            // get
+              $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.sourceFacet].items[$scope.idx.waiting].nb     = result.success.facet_counts.facet_queries['waiting_b:true'];
+              // get period data
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+              // get
 
-            // convert table lang in hash lang
-            // var lang = {};
-            // for (var i = 0; i < result.facet_counts.facet_fields.lang_s.length; i += 2) {
-            //   lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
-            // }
+              // convert table lang in hash lang
+              // var lang = {};
+              // for (var i = 0; i < result.facet_counts.facet_fields.lang_s.length; i += 2) {
+              //   lang[result.facet_counts.facet_fields.lang_s[i]] = result.facet_counts.facet_fields.lang_s[i + 1];
+              // }
 
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
-            // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
+              // $scope.searchNav[$scope.idx.source].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
 
-          });
-
+            });
+          }
       }
       else {
         if ($scope.searchNav[$scope.idx.watch].checked) {
@@ -855,51 +857,51 @@ angular.module('websoApp')
       });*/
     };
 
-      $scope.shareDoc = function (doc, type) {
+    $scope.shareDoc = function (doc, type) {
 
-        $scope.shareForm = {};
-        if (type == 'solr') {
-          $scope.shareForm.url = doc.url_s;
-          $scope.shareForm.title = doc.title_t;
-          $scope.shareForm.content = doc.content_t;
+      $scope.shareForm = {};
+      if (type == 'solr') {
+        $scope.shareForm.url = doc.url_s;
+        $scope.shareForm.title = doc.title_t;
+        $scope.shareForm.content = doc.content_t;
+      }
+      else if (type == 'online') {
+        $scope.shareForm.url = doc.link;
+        $scope.shareForm.title = doc.title;
+        $scope.shareForm.content = doc.description;
+      }
+      $scope.shareForm.tags     = '';
+      $scope.shareForm.folder   = '';
+      $scope.shareForm.comment  = '';
+      $scope.shareForm.mail     = '';
+
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'shareModal.html',
+        controller  : ModalInstanceCtrl,
+      });
+
+      modalInstance.result.then(function () {
+        if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert("Mauvais mail");
+        else{
+          $scope.sendMail.send({
+            token         : $token,
+            token_timeout : $token_timeout,
+            url_s         : $scope.shareForm.url,
+            tags          : $scope.shareForm.tags,
+            titre         : $scope.shareForm.title,
+            // content_en    : $scope.shareForm.content,
+            content       : $scope.shareForm.content,
+            // content_fr    : $scope.shareForm.content,
+            commentaire   : $scope.shareForm.coment,
+            // folder_s      : $scope.shareForm.folder.name,
+            // folder_i      : $scope.shareForm.folder.id,
+            langue        : doc.lang_s,
+            date          : doc.date_dt,
+            mail          : $scope.shareForm.mail
+          });
         }
-        else if (type == 'online') {
-          $scope.shareForm.url = doc.link;
-          $scope.shareForm.title = doc.title;
-          $scope.shareForm.content = doc.description;
-        }
-        $scope.shareForm.tags     = '';
-        $scope.shareForm.folder   = '';
-        $scope.shareForm.comment  = '';
-        $scope.shareForm.mail     = '';
-
-        var modalInstance = $modal.open({
-          scope: $scope,
-          templateUrl : 'shareModal.html',
-          controller  : ModalInstanceCtrl,
-        });
-
-        modalInstance.result.then(function () {
-          if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert("Mauvais mail");
-          else{
-            $scope.sendMail.send({
-              token         : $token,
-              token_timeout : $token_timeout,
-              url_s         : $scope.shareForm.url,
-              tags          : $scope.shareForm.tags,
-              titre         : $scope.shareForm.title,
-              // content_en    : $scope.shareForm.content,
-              content       : $scope.shareForm.content,
-              // content_fr    : $scope.shareForm.content,
-              commentaire   : $scope.shareForm.coment,
-              // folder_s      : $scope.shareForm.folder.name,
-              // folder_i      : $scope.shareForm.folder.id,
-              langue        : doc.lang_s,
-              date          : doc.date_dt,
-              mail          : $scope.shareForm.mail
-            });
-          }
-        });
+      });
     };
 
     /* add a online search as a source
@@ -972,14 +974,21 @@ angular.module('websoApp')
       $scope.doSearch();
     }
 
-    $scope.seeWaitings = function (title, query, source){
+    $scope.seeWaitings = function (id, title){
       $scope.waitingTitle = title;
-      $scope.onlineSearch.get({
-        query     : query,
-        typeQuery : source,
+      $scope.waitingID = id;
+      // $scope.onlineSearch.get({
+      //   query     : query,
+      //   typeQuery : source,
+      // }).$promise.then(function (result) {
+      $scope.solr.get({
+        start   :($scope.currentPage-1)*10,
+        q: 'type_s:document AND source_id_ss:'+id,
       }).$promise.then(function (result) {
         $scope.affichageWaiting = true;
-        $scope.onlineResult = result;
+        // $scope.onlineResult = result;
+        $scope.solrResult = result.success;
+        $scope.totalItems = result.success.response.numFound;
       });
     }
 
