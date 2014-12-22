@@ -17,9 +17,10 @@ angular.module('websoApp').constant('cfg', {
                 {value:'delicious'    ,displayName:'delicious'}
                       ],
   hideForTest         : true,
-  heg                 : false
+  heg                 : false,
 
   //urlDB           : 'http://inelio.fr:8983/',
   //urlServices     : 'http://cgi.inelio.fr/',
   //urlBookmarklet  : 'http://beta.inelio.fr/'
+  plateformName     : 'Inélio'
 });

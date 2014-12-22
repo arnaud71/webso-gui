@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal) {
+  .controller('FolderSearchCtrl', ['$scope', '$resource','cfg','paginationConfig','$location','$cookieStore','$modal', '$filter' ,function ($scope,$resource,cfg,paginationConfig, $location, $cookieStore, $modal, $filter) {
 
     var $username                 = $cookieStore.get('username');
     var $token                    = $cookieStore.get('token');
@@ -17,7 +17,7 @@ angular.module('websoApp')
     paginationConfig.lastText     = 'Fin';
     $scope.isCollapsed            = true;
     $scope.isError                = false;
-    $scope.errorMessage           = cfg.errorConnect;
+    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
     $scope.searchTerm             = '';
 
     $scope.onlineSourceList       = {};
@@ -39,7 +39,7 @@ angular.module('websoApp')
 
     $scope.langFacets = [
       {name: 'en', value:'anglais',     nb:0, checked:false,  fq:' AND lang_s:en' },
-      {name: 'fr', value:'français',    nb:0, checked:false,   fq:' AND lang_s:fr' }
+      {name: 'fr', value:'français',    nb:0, checked:false,  fq:' AND lang_s:fr' }
     ];
     angular.forEach($scope.langFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -911,10 +911,10 @@ angular.module('websoApp')
       $scope.validationForm.url               = url;
       $scope.validationForm.title             = 'Recherche en ligne Webso';
       $scope.validationForm.tags              = '';
-      $scope.validationForm.domain            = {};
-      $scope.validationForm.domain.name       = '';
-      $scope.validationForm.activity          = {};
-      $scope.validationForm.activity.name     = '';
+      // $scope.validationForm.domain            = {};
+      // $scope.validationForm.domain.name       = '';
+      // $scope.validationForm.activity          = {};
+      // $scope.validationForm.activity.name     = '';
       $scope.validationForm.frequency         = {};
       $scope.validationForm.frequency.option  = '';
 
@@ -931,8 +931,8 @@ angular.module('websoApp')
           title_t:          $scope.validationForm.title,
           tags_s:           $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
-          domain_s:         $scope.validationForm.domain.name,
-          activity_s:       $scope.validationForm.activity.name,
+          // domain_s:         $scope.validationForm.domain.name,
+          // activity_s:       $scope.validationForm.activity.name,
           query_s:          $scope.searchTerm,
           ressources_s:     $scope.typeQueryStr,
           waiting_b:        true
@@ -1013,10 +1013,10 @@ angular.module('websoApp')
           $scope.validationForm.url               = feed.url;
           $scope.validationForm.title             = feed.title;
           $scope.validationForm.tags              = '';
-          $scope.validationForm.domain            = {};
-          $scope.validationForm.domain.name       = '';
-          $scope.validationForm.activity          = {};
-          $scope.validationForm.activity.name     = '';
+          // $scope.validationForm.domain            = {};
+          // $scope.validationForm.domain.name       = '';
+          // $scope.validationForm.activity          = {};
+          // $scope.validationForm.activity.name     = '';
           $scope.validationForm.frequency         = {};
           $scope.validationForm.frequency.option  = '';
 
@@ -1033,8 +1033,8 @@ angular.module('websoApp')
               title_t:          $scope.validationForm.title,
               tags_s:           $scope.validationForm.tags,
               refresh_s:        $scope.validationForm.frequency.option,
-              domain_s:         $scope.validationForm.domain.name,
-              activity_s:       $scope.validationForm.activity.name,
+              // domain_s:         $scope.validationForm.domain.name,
+              // activity_s:       $scope.validationForm.activity.name,
               waiting_b:        false
             });
           });
@@ -1057,6 +1057,50 @@ angular.module('websoApp')
         controller  : ModalInstanceCtrl
       });
     }
+
+    // $scope.watchFeed = function(feed){
+    //   $scope.dbList.get({
+    //     type_s :'source',
+    //     url_s  : '"'+feed.url+'"'
+    //   })
+    //   .$promise.then(function(result) {
+
+    //     $scope.WatchForm                   = {};
+    //     $scope.WatchForm.url               = feed.url;
+    //     $scope.WatchForm.title             = feed.title;
+    //     $scope.WatchForm.tags              = '';
+    //     $scope.WatchForm.frequency         = {option:''};
+    //     // $scope.WatchForm.frequency.option  = '';
+    //     $scope.WatchForm.inputForlder      = {id:'', name:''};
+
+    //     var modalInstance = $modal.open({
+    //       scope: $scope,
+    //       templateUrl : 'watchFeedModal.html',
+    //       controller  : ModalInstanceCtrl
+    //     });
+    //     if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+    //       modalInstance.result.then(function () {
+    //         $scope.feedAdd.put({
+    //           source_type_s     : 'RSS',
+    //           url_s:            $scope.WatchForm.url,
+    //           title_t:          $scope.WatchForm.title,
+    //           tags_s:           $scope.WatchForm.tags,
+    //           refresh_s:        $scope.WatchForm.frequency.option,
+    //           waiting_b:        false
+    //         });
+    //         $scope.add({
+    //           folder_i:         $scope.WatchForm.inputFolder.id,
+    //           folder_s:         $scope.WatchForm.inputFolder.name,
+    //           query_s       :  $scope.model.inputQuery,
+    //           source_id_s   :  $scope.model.sourceId,
+    //         })
+    //       });
+    //     }
+    //     else{
+    //       alert('Source déjà enregistrée.');
+    //     }
+    //   });
+    // }
 
     //  ***************************************
     //  modal instance
@@ -1086,75 +1130,7 @@ angular.module('websoApp')
       $location.path(path);
     }
 
-    $scope.domains =  [
-      {name:'Technologie',activites:[
-        {name:'Publications scientifiques'},
-        {name:'Brevets/marques'}
-      ]},
-      {name:'Economie/Politique',activites:[
-        {name:'Organismes publics'},
-        {name:'Etudes de marchés'},
-        {name:'Bases de données entreprises'},
-        {name:'Appel d\'offres'},
-        {name:'Informations financières'}
-      ]},
-      {name:'Concurrence/Entreprises',activites:[
-        {name:'Agriculture, Sylviculture, et pêche'},
-        {name:'Industries extractives'},
-        {name:'Industries manufacturières'},
-        {name:'Production et distribution d\'électricité, gaz, vapeur, air conditionné'},
-        {name:'Production et distribution d\'eau, assainissement, gestion des déchets et dépollution'},
-        {name:'Construction'},
-        {name:'Commerce, réparation d\'automobiles, et motocycles'},
-        {name:'Transport et entreposage'},
-        {name:'Hébergement et restauration'},
-        {name:'Information et communication'},
-        {name:'Activité financières et assurances'},
-        {name:'Activités immobilières'},
-        {name:'Activités spécialisées scientifiques et techniques'},
-        {name:'Activités de service administratifs et de soutien'},
-        {name:'Administration publique'},
-        {name:'Enseignement'},
-        {name:'Santé humaine, action sociale'},
-        {name:'Arts, spectacles, activités récréatives'},
-        {name:'Autres activités de services'},
-        {name:'Activités de ménages'},
-        {name:'Activités extra territoriales'},
-      ]},
-      {name:'Juridique/réglementaire'},
-      {name:'Réseaux sociaux'},
-      {name:'Presse',activites:[
-        {name:'Agricole/Agroalimentaire'},
-        {name:'Assurance'},
-        {name:'Arts/Musique/Spectacle'},
-        {name:'Automobile'},
-        {name:'Autres services'},
-        {name:'Batiment'},
-        {name:'Bijoux'},
-        {name:'Bois, Papier, Carton'},
-        {name:'Communication'},
-        {name:'Distribution'},
-        {name:'Economie/ Finance'},
-        {name:'Environnement'},
-        {name:'Géopolitique, Défense'},
-        {name:'Industrie & Techniques'},
-        {name:'Informatique et réseaux'},
-        {name:'Jeux et Jouets'},
-        {name:'Juridique'},
-        {name:'Petite enfance'},
-        {name:'People'},
-        {name:'Photo'},
-        {name:'Restauration/Hotellerie'},
-        {name:'Relation client/Ressources humaines'},
-        {name:'Santé'},
-        {name:'Transport'},
-        {name:'Sport'},
-        {name:'Tourisme & Voyages'},
-        {name:'Urbanisme'},
-        {name:'Vin et Boissons'},
-        {name:'WebDesign et multimédia'}
-      ]}
-    ] ;
+    $scope.domains =  $filter('i18n')('_DOMAIN_AND_ACTIVITY_LIST_');
     $scope.frequencies =  [
       {option:'1h'},
       {option:'12h'},
@@ -1164,10 +1140,6 @@ angular.module('websoApp')
 
   }]);
 
-
-
-
-// http://albator.hesge.ch:8587/solr/collection1/select?q='+query+'&wt=json&json.wrf=?&callback=?'
 
 /*
  Controller for Collapsing solr results

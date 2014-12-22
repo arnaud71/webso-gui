@@ -2,15 +2,15 @@
 <div ng-controller = "headerCtrl">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" analytics-on='click' analytics-event='Home' analytics-label='Home' analytics-category='Passive' href="#">WebSo</a>
+            <a class="navbar-brand" analytics-on='click' analytics-event='Home' analytics-label='Home' analytics-category='Passive' href="#">{{ '_SERVICE_NAME_' | i18n }}</a>
         </div>
         <ul class="nav navbar-nav">
             <!-- <li data-match-route="/home" ng-show="isPublic"><a ui-sref="/home">Home</a></li> -->
             <li class="dropdown" ng-show="isPublicNotAuthenticated">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authentification<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ '_AUTHENTICATE_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu" analytics-on='click' analytics-event='Authenticate' analytics-label='Authentication' analytics-category='Passive'>
-                    <li data-match-route="/publicRegister" ><a ui-sref="/publicRegister">Enregistrement</a></li> 
-                    <li data-match-route="/login" ><a ui-sref="/login">Connexion</a></li>
+                    <li data-match-route="/publicRegister" ><a ui-sref="/publicRegister">{{ '_SIGN_IN_' | i18n }}</a></li> 
+                    <li data-match-route="/login" ><a ui-sref="/login">{{ '_LOGIN_' | i18n }}</a></li>
                 </ul>
             </li>
 
@@ -23,7 +23,7 @@
             </li> -->
 
             <li data-match-route="/search" ng-show="isVeilleurAdmin">
-                <li data-match-route="/search" ng-show="isVeilleurAdmin"><a ui-sref="/search">Rechercher</a></li>
+                <li data-match-route="/search" ng-show="isVeilleurAdmin"><a ui-sref="/search">{{ '_SEARCH_' | i18n }}</a></li>
             </li>
 
             <!-- <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
@@ -61,70 +61,70 @@
             </li> -->
 
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin" ng-hide="!heg">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>Surveiller<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_menu' analytics-category='Passive'>{{ '_WATCH_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/watch/add" ng-show="isVeilleurAdmin">
-                        <a ui-sref="/watch/add">Ajouter et Lister</a>
+                        <a ui-sref="/watch/add">{{ '_NAV_WATCH AND_LIST_' | i18n }}</a>
                     </li>
 
                 </ul>
             </li>
 
             <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>Valider<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>{{ '_NAV_VALIDATE_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/validate/add" ng-show="isVeilleurAdmin">
-                        <a ui-sref="/validate/add">Ajouter information</a></li>
+                        <a ui-sref="/validate/add">{{ '_NAV_VALIDATION_ADD_' | i18n }}</a></li>
                     <li data-match-route="/validate/display">
-                        <a ui-sref="/validate/display" analytics-on='click' analytics-event='Validate' analytics-label='Validate_show_information' analytics-category='Passive'>Afficher informations validées</a></li>
+                        <a ui-sref="/validate/display" analytics-on='click' analytics-event='Validate' analytics-label='Validate_show_information' analytics-category='Passive'>{{ '_NAV_VALIDATE_LIST_' | i18n }}</a></li>
                 </ul>
             </li>
 
             <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
-                <li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">Tableau de bord</a></li>
+                <li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">{{ '_NAV_DASHBOARD_' | i18n }}</a></li>
             </li>
 
             <li class="dropdown" ng-show="isVeilleurAdmin" >
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">Diffuser<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Dispatch' analytics-label='Diffuse_Menu' analytics-category='Passive' ng-show="!hideForTests">{{ '_NAV_BROADCAST_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/createNL">
-                        <a ui-sref="/publish/newsletter">Newsletter</a>
+                        <a ui-sref="/publish/newsletter">{{ '_NAV_NEWSLETTER_' | i18n }}</a>
                     </li>
                     <li data-match-route="/createReport">
-                        <a ui-sref="/publish/report">Rapport</a>
+                        <a ui-sref="/publish/report">{{ '_NAV_REPORT_' | i18n }}</a>
                     </li>
                 </ul>
             </li>
 
             <li class="dropdown" ng-show="isVeilleurAdmin">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive'>Organiser<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Manage' analytics-label='Manage_menu' analytics-category='Passive'>{{ '_NAV_ORGANIZE_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/organize/source" ng-show="isVeilleurAdmin">
-                        <a ui-sref="/organize/source">Sources</a>
+                        <a ui-sref="/organize/source">{{ '_NAV_SOURCES_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize/watch" >
-                        <a ui-sref="/organize/watch" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Surveillances</a>
+                        <a ui-sref="/organize/watch" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>{{ '_NAV_WATCHES_' | i18n }}</a>
                     </li>
                     <!-- <li data-match-route="/organize/watchlist" >
                         <a ui-sref="/organize/watchlist" analytics-on='click' analytics-event='Surveillance' analytics-label='Watch_list_surveillance' analytics-category='Passive'>Liste surveillances</a>
                     </li> -->
                     <li data-match-route="/organize/wfolder">
-                        <a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>Dossiers de surveillance</a>
+                        <a ui-sref="/organize/wfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Surveillance' analytics-category='Active'>{{ '_NAV_WATCHES_FOLDER_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize/vfolder">
-                        <a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>Dossiers de validation</a>
+                        <a ui-sref="/organize/vfolder" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Validation' analytics-category='Active'>{{ '_NAV_VALIDATING_FOLDER_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize">
-                        <a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">Templates</a>
+                        <a ui-sref="/organize" analytics-on='click' analytics-event='Manage' analytics-label='Manage_Templates' analytics-category='Passive' ng-show="!hideForTests">{{ '_NAV_TEMPLATES_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize/profile">
-                        <a ui-sref="/organize/profile">Mon profil</a>
+                        <a ui-sref="/organize/profile">{{ '_NAV_PROFILE_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize/usersList" ng-show="isAdmin">
-                        <a ui-sref="/organize/usersList">Comptes des utilisateurs</a>
+                        <a ui-sref="/organize/usersList">{{ '_NAV_USERS_LIST_' | i18n }}</a>
                     </li>
                     <li data-match-route="/organize/booklet" ng-show="!hideForTests">
-                        <a ui-sref="/organize/booklet" >Booklet</a>
+                        <a ui-sref="/organize/booklet" >{{ '_NAV_BOOKLET_' | i18n }}</a>
                     </li>
                     <!-- <li data-match-route="/organize/social" ng-show="!hideForTests"><a ui-sref="/organize/social">Connecter aux réseaux sociaux</a></li> -->
                 </ul>
@@ -136,7 +136,7 @@
                 </ul>
             </li> -->
              <li class="dropdown" ng-show="!isPublicNotAuthenticated">
-                <a ui-sref="/deconnexion" ng-click="logout()">Déconnexion</a>
+                <a ui-sref="/deconnexion" ng-click="logout()">{{ '_LOGOUT_' | i18n }}</a>
             </li>
         </ul>
     </nav>
@@ -145,7 +145,7 @@
             <img src="images/loader.gif">
         </div>
     </center>
-    <div ng-show="!isPublicNotAuthenticated" class="pull-right">Bienvenue&nbsp;<strong>{{ username }}&nbsp;</strong>
+    <div ng-show="!isPublicNotAuthenticated" class="pull-right">{{ '_WELCOME_' | i18n }}&nbsp;<strong>{{ username }}&nbsp;</strong>
         <span data-ng-class="{&quot;label-success&quot;: userRole}" class="label">{{ userRole }}</span>
     </div>
 </div>
