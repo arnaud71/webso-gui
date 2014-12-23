@@ -203,6 +203,10 @@
         "key": "_HIDE_",
         "value": "Masquer"
     },
+    {
+        "key": "_DATE_",
+        "value": "Date"
+    },
 
 
 
@@ -430,6 +434,10 @@
     {
         "key": "_ARE_YOU_SURE_DEL_VALIDATION",
         "value": "Etes vous sûr de vouloir effacer cette validation "
+    },
+    {
+        "key": "_EDIT_VALIDATION_",
+        "value": "Modification d'une validation"
     },
 
 

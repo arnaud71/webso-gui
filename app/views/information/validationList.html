@@ -4,9 +4,9 @@
 
 <div id="list-search">
     <ol class="breadcrumb text-center">
-        <li><a href="#/home">Webso</a></li>
-        <li><a>Valider</a></li>
-        <li class="active">Afficher informations validées</li>
+        <li><a href="#/home">{{ "_SERVICE_NAME_" | i18n }}</a></li>
+        <li><a>{{ "_VALIDATE_" | i18n }}</a></li>
+        <li class="active">{{ "_VIEW_VALIDATE_INFOS_" | i18n }}</li>
     </ol>
     <div ng-controller="ValidationListCtrl">
         <div class="alert alert-danger" ng-show="isError">
@@ -16,9 +16,9 @@
         <div class="selectedItems" ng-if="selectedIDs">
             <h3>{{selectedIDs.title_t}}</h3>
             <p>{{selectedIDs.content_t}}</p>
-            <p>Tags: {{selectedIDs.tags_s}}</p>
-            <p>Détails: {{selectedIDs.detail_s}}</p>
-            <p>Commentaire: {{selectedIDs.comment_s}}</p>
+            <p>{{ '_TAGS_' | i18n }}: {{selectedIDs.tags_s}}</p>
+            <p>{{ '_DETAILS_' | i18n }}: {{selectedIDs.detail_s}}</p>
+            <p>{{ '_COMMENTS_' | i18n }}: {{selectedIDs.comment_s}}</p>
 
         </div><br><br>
 
@@ -35,61 +35,61 @@
 
         <script type="text/ng-template" id="deleteValidationModal.html">
             <div class="modal-header">
-                <h3> Effacement d'une validation {{userName}}</h3>
+                <h3>{{ '_DELETE_VALIDATION_' | i18n }} {{userName}}</h3>
 
             </div>
             <div class="modal-body">
-                Etes vous sûr de vouloir effacer cette validation {{userName}} ?
+                {{ '_ARE_YOU_SURE_DEL_VALIDATION' | i18n }} {{userName}} ?
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
 
-                <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+                <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
             </div>
         </script>
 
         <script type="text/ng-template" id="editValidationModal.html">
             <div class="modal-header">
-                <h3> Modification d'une validation {{userName}}</h3>
+                <h3>{{ '_EDIT_VALIDATION_' | i18n }}</h3>
 
             </div>
             <div class="modal-body">
             {{test}}
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Titre </label>
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.title">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Url </label>
+                        <label class="col-sm-2 control-label">{{ '_URL_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="url" class="form-control" ng-model="validationForm.url">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Tags </label>
+                        <label class="col-sm-2 control-label">{{ '_TAGS_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.tags">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Détail </label>
+                        <label class="col-sm-2 control-label">{{ '_DETAILS_' | i18n }}</label>
                         <div  class="col-sm-10">
                             <textarea class="form-control" id="inputDetail" name="inputDetail" ng-model="validationForm.detail"></textarea>
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Commentaires </label>
+                        <label class="col-sm-2 control-label">{{ '_COMMENTS_' | i18n }}</label>
                         <div  class="col-sm-10">
                             <textarea class="form-control" id="inputComments" name="inputComments" ng-model="validationForm.comment"></textarea>
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label"> Dossiers </label>
+                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" value="{{validationForm.folder.name}}" disabled>
                             <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
@@ -99,8 +99,8 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
     </div>
