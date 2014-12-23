@@ -211,6 +211,10 @@
         "key": "_ADDED_ON_",
         "value": "Ajouté le"
     },
+    {
+        "key": "_QUERY_",
+        "value": "Requête"
+    },
 
 
 
@@ -491,6 +495,22 @@
     {
         "key":"_DASHBOARD_BAR_NAME_",
         "value": "Tableau de bord"
+    },
+    {
+        "comment": "Widgets"
+    },
+    {
+        "Comment": "Widget Recherche en attente",
+        "key": "_WAITING_SEARCH_",
+        "value": "Recherche en attente"
+    },
+    {
+        "key": "_EMPTY_WIDGET_WAITING_SEARCH_",
+        "value": "Sélectionnez une requête et un type dans la configuration du widget"
+    },
+    {
+        "key": "_SELECTED_SOURCE_",
+        "value": "Source sélectionnée"
     },
 
 

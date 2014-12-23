@@ -1,10 +1,10 @@
-<label>Collectes en attente</label><br>
+<label>{{ '_WAITING_SEARCH_' | i18n }}</label><br>
     <div ng-controller="collectesMultisourcesEditCtrl">
         
-        Source sélectionnée : <br>
+        {{ '_SELECTED_SOURCE_' | i18n }} : <br>
         <!-- Identifiant : <input type="content" id="content" ng-model="config.content" readonly> -->
-        Titre : <input type="title" id="title" ng-model="config.title" readonly>
-        Requête : <input type="query" id="query" ng-model="config.query" readonly>
+        {{ '_TITLE_' | i18n }} : <input type="title" id="title" ng-model="config.title" readonly>
+        {{ '_QUERY_' | i18n }} : <input type="query" id="query" ng-model="config.query" readonly>
 
         <div class="row">
             <div class="col-md-12">

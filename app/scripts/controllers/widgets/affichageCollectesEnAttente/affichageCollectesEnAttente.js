@@ -28,8 +28,8 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
   .config(function(dashboardProvider){
     dashboardProvider
       .widget('affichageCollectesMultisources', {
-        title: 'Collectes en attente',
-        description: 'Collectes en attente',
+        title: 'Recherche en attente',
+        description: 'Recherche en attente',
         controller: 'collectesMultisourcesCtrl',
         templateUrl: 'scripts/controllers/widgets/affichageCollectesEnAttente/affichageCollectesEnAttente.html',
         reload: true,
@@ -106,12 +106,12 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
 
 
   // });
-  }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal){
+  }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal, $filter){
 
         $scope.mySelections = [];
         var usernameCookie = $cookieStore.get('username');
         var token = $cookieStore.get('token');
-        var token_timeout = $cookieStore.get('token');
+        var token_timeout = $cookieStore.get('token_timeout');
 
         // $ressource(cfg.urlServices+'db/:action',
         //   {action:'get.pl', type_s:'user', token_s:token, token_timeout_s:token_timeout, callback:"JSON_CALLBACK"},
@@ -188,10 +188,10 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
             showFilter: true,
             selectedItems: $scope.mySelections,
             columnDefs: [
-                {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-                {visible:false,width:'*',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'title_t', displayName:  'Titre de la source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'},
-                {width:'*',field:'query_s', displayName:  'Requête  ',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'}
+                {width:'50px',field:'', displayName:  $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+                {visible:false,width:'*',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'},
+                {width:'*',field:'query_s', displayName:  $filter('i18n')('_QUERY_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'}
             ],
         beforeSelectionChange: function (rowItem) { return true; },
         afterSelectionChange: function () {
