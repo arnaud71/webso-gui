@@ -178,37 +178,30 @@ angular.module('websoApp')
     $scope.validationDelete = $resource(cfg.urlServices+'db/:action',
       {action:'delete.pl', id:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
-
+    /*
+     ** Confirm dialogs
+     */
     $scope.doDelete = function (sourceId,index) {
+      //var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette validation?');
 
+      var modalInstance = $modal.open({
+        templateUrl: 'deleteValidationModal.html',
+        controller: ModalInstanceDeleteCtrl
 
-        /*
-         Confirm dialogs
-         */
+      });
 
-        //var deleteSource = confirm('Etes vous sûr de vouloir supprimer cette validation?');
+      modalInstance.result.then(function () {
+        $scope.validationDelete.get({
+          id: sourceId,
+          user_s: $username
+        }).$promise.then(function () {
 
+          $scope.myData.splice(index, 1);
 
-
-            var modalInstance = $modal.open({
-              templateUrl: 'deleteValidationModal.html',
-              controller: ModalInstanceDeleteCtrl
-
-            });
-
-            modalInstance.result.then(function () {
-              $scope.validationDelete.get({
-                id: sourceId,
-                user_s: $username
-              }).$promise.then(function () {
-
-                  $scope.myData.splice(index, 1);
-
-
-                }, function (reason) {
-                  alert('Failed id: ' + reason);
-                })
-            })
+        }, function (reason) {
+          alert('Failed id: ' + reason);
+        })
+      })
     };
 
     var ModalInstanceDeleteCtrl = function ($scope, $modalInstance) {
@@ -255,8 +248,9 @@ angular.module('websoApp')
           comment_s     : result.comment,
           folder_s      : result.folder.name,
           folder_i      : result.folder.id,
+        }).$promise.then(function () {
+          $scope.doSearch2();
         });
-        $scope.doSearch2();
       });
     }
 
