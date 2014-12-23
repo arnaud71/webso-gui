@@ -809,31 +809,32 @@ angular.module('websoApp')
         });
 
         modalInstance.result.then(function () {
+          if($scope.validationForm.url == '' || $scope.validationForm.folder.id == '' || $scope.validationForm.comment == '') {
+            alert('Erreur merci de saisir au moins un titre, un dossier et un commentaire');
+          }
+          else{
+            $scope.validationAdd.get({
+              url_s         : $scope.validationForm.url,
+              tags_s        : $scope.validationForm.tags,
+              title_t       : $scope.validationForm.title,
+              content_en    : $scope.validationForm.content,
+              content_t     : $scope.validationForm.content,
+              content_fr    : $scope.validationForm.content,
+              comment_s     : $scope.validationForm.comment,
+              folder_s      : $scope.validationForm.folder.name,
+              folder_i      : $scope.validationForm.folder.id,
+              lang_s        : doc.lang_s,
+              date_dt       : doc.date_dt
+            });
 
-          $scope.validationAdd.get({
-            url_s         : $scope.validationForm.url,
-            tags_s        : $scope.validationForm.tags,
-            title_t       : $scope.validationForm.title,
-            content_en    : $scope.validationForm.content,
-            content_t     : $scope.validationForm.content,
-            content_fr    : $scope.validationForm.content,
-            comment_s     : $scope.validationForm.comment,
-            folder_s      : $scope.validationForm.folder.name,
-            folder_i      : $scope.validationForm.folder.id,
-            lang_s        : doc.lang_s,
-            date_dt       : doc.date_dt
-          });
-
-          $scope.atomicChange.get({
-            id            : doc.id,
-            validated_b   : validate
-          }).$promise.then(function (result) {
+            $scope.atomicChange.get({
+              id            : doc.id,
+              validated_b   : validate
+            }).$promise.then(function (result) {
               $scope.doSearch();
-            }
-          );
-
+            });
+          }
         });
-
 
       }
       else {

@@ -18,7 +18,6 @@
             <strong>&nbsp;</strong><span>{{errorMessage}}</span>
         </div>
         <div class="row">
-        {{test}}
             <!-- searchNav box -->
             <div class="col-md-3">
                 <table class="table table-condensed">
@@ -237,10 +236,10 @@
                                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
-                                            Rss: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
+                                            {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
-                                            Site: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                            {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
                                         <div id="contentFound" ng-if="(doc.source_type_s=='rss') || affichageSource || !(searchNav[idx.source].checked)">
                                             <div ng-controller="CollapseSolrCtrl">
@@ -268,10 +267,13 @@
 
                                             </div>
                                         </div>
+                                        <div ng-if="(searchNav[idx.validation].checked)">
+                                            {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
+                                        </div>
                                         <div ng-if="doc.source_type_s == 'online'" id="urlFound">
-                                            Recherche : {{doc.query_s}}<br>
-                                            Sources : {{doc.ressources_s}}<br>
-                                            Ajouté le : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
+                                            {{ '_SHOW_' | i18n }} : {{doc.query_s}}<br>
+                                            {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
+                                            {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                         </div>
                                         <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
                                             <span ng-if="doc.url_s.length<100">
@@ -454,7 +456,7 @@
         <!-- share info Modal  -->
         <script type="text/ng-template" id="shareModal.html">
             <div class="modal-header">
-                <h3> Partage de document</h3>
+                <h3>{{ '_SHARE_DOCUMENT_' | i18n }}</h3>
             </div>
             <div class="modal-body">
 
@@ -508,7 +510,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_SEND_' | i18n }}</button>
 
                 <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>

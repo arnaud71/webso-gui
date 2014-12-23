@@ -207,6 +207,10 @@
         "key": "_DATE_",
         "value": "Date"
     },
+    {
+        "key": "_ADDED_ON_",
+        "value": "Ajouté le"
+    },
 
 
 
@@ -627,6 +631,10 @@
     {
         "key": "_ADD_WAITING_QUERY_",
         "value": "Mise en attente de la recherche"
+    },
+    {
+        "key": "_WEBSITE_",
+        "value": "Site web"
     },
 
 
