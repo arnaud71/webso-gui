@@ -6,7 +6,7 @@
 
   <form class="modal-body form-horizontal" role="form">
     <div class="form-group">
-      <label for="widgetTitle">Titre</label>
+      <label for="widgetTitle">{{ '_TITLE_' | i18n }}</label>
       <input type="text" class="form-control" id="widgetTitle" ng-model="definition.title" placeholder="Enter title" required="">
     </div>
 
@@ -16,6 +16,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" ng-click="valideDialog()">Valider</button>
-  <button type="button" class="btn btn-primary" ng-click="closeDialog()">Annuler</button>
+  <button type="button" class="btn btn-primary" ng-click="valideDialog()">{{ '_VALIDATE_' | i18n }}</button>
+  <button type="button" class="btn btn-primary" ng-click="closeDialog()">{{ '_CANCEL_' | i18n }}</button>
 </div>

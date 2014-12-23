@@ -506,7 +506,7 @@
     },
     {
         "key": "_EMPTY_WIDGET_WAITING_SEARCH_",
-        "value": "Sélectionnez une requête et un type dans la configuration du widget"
+        "value": "Sélectionnez une recherche à afficher dans la configuration du widget"
     },
     {
         "key": "_SELECTED_SOURCE_",
