@@ -1,5 +1,5 @@
 <div class="alert alert-info" ng-if="!solrResult.success.response.numFound">
-	Aucune information n'est validée
+    {{ '_SELECTED_VALIDATION_' | i18n }}
 </div>
 <div ng-if="solrResult">
     <div id="docsFound">

@@ -1,5 +1,5 @@
 <div class="alert alert-info" ng-if="!data">
-	Sélectionnez un ID de surveillance dans la configuration du widget
+    {{ '_SELECTED_WATCH_' | i18n }}
 </div>
 <div id="solrResult">
     <div id="docsFound">
@@ -12,13 +12,13 @@
                 domaine : {{watchData.domain_s}}
             </div> -->
             <div id="queryFound">
-                requête : {{watchData.query_s}}
+                {{ '_QUERY_' | i18n }} : {{watchData.query_s}}
             </div>
             <div id="folderFound">
-                dossier : {{watchData.folder_s}}
+                {{ '_FOLDER_' | i18n }} : {{watchData.folder_s}}
             </div>
             <div id="notificationFound">
-                notification : {{watchData.notification_s}}
+                {{ '_NOTIFICATION_' | i18n }} : {{watchData.notification_s}}
             </div><br>
             <table class="table table-striped">
                 <tr ng-repeat="doc in solrResult.success.response.docs">
@@ -27,7 +27,7 @@
                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                         </div>
                         <div id="dateFound">
-                            date : {{doc.date_dt|date:'dd-MM-yyyy HH:mm'}}
+                            {{ '_DATE_' | i18n }} : {{doc.date_dt|date:'dd-MM-yyyy HH:mm'}}
                         </div>
                         <!-- <div id="updateFound">
                             update : {{doc.updating_dt|date:'dd-MM-yyyy HH:mm'}}
@@ -37,7 +37,7 @@
                             <div ng-controller="CollapseSolrCtrl">
                                 <div collapse="!isCollapsed">
                                     <a ng-click="isCollapsed = !isCollapsed">
-                                       Afficher&NonBreakingSpace;&gt;
+                                       {{ '_SHOW_' | i18n }}&NonBreakingSpace;&gt;
                                     </a>
                                 </div>
                                 <div collapse="isCollapsed">
@@ -45,7 +45,7 @@
                                         {{solrResult.success.highlighting[doc.id].content_en[0]}}
                                     </span>
                                     <a ng-click="isCollapsed = !isCollapsed">
-                                         &lt;&NonBreakingSpace;Masquer
+                                         &lt;&NonBreakingSpace;{{ '_HIDE_' | i18n }}
                                     </a>
                                 </div>
                             </div>

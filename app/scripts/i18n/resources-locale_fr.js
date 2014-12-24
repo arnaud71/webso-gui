@@ -513,8 +513,16 @@
         "value": "Source sélectionnée"
     },
     {
-        "key": "_SELECTED_SOURCE_",
+        "key": "_SELECTED_VALIDATION_",
+        "value": "Aucune information n'est validée"
+    },
+    {
+        "key": "_SELECTED_WATCH_FOLDER_",
         "value": "Aucun dossier de surveillance"
+    },
+    {
+        "key": "_SELECTED_WATCH_",
+        "value": "Sélectionnez une surveillance dans la configuration du widget"
     },
     {
         "key": "_WATCHING_FOLDER_WIDGET_",
