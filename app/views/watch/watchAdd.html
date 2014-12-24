@@ -61,25 +61,6 @@
 
                                 </div>
 
-                                <div class="form-group" >
-                                    <div class="form-group" >
-                                        <label class="col-md-5 control-label"> Domaine </label>
-                                        <div  class="col-md-7">
-                                            <select id="inputDomain" name="inputDomain" ng-model="model.inputDomain" ng-options="domain.name for domain in domains" require></select>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="col-md-5 control-label"> Secteur d'activité </label>
-                                    <div class="col-md-7">
-                                        <!-- <select id="inputActivity" ng-model="activity" ng-options="activity.name for activity in activities"></select> -->
-                                        <select id="inputActivity" name="inputActivity" ng-model="model.inputActivity" ng-options="activity.name for activity in model.inputDomain.activites"></select>
-                                        {{activity}}
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                   <label class="checkbox">
                                     <div class="col-sm-offset-5 col-sm-10">
@@ -233,6 +214,12 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-md-5 control-label"> Fréquence d'actualisation </label>
+                        <div class="col-md-7">
+                            <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
+                        </div>
+                    </div>
 
                     <div class="form-group" >
                         <label class="col-md-5 control-label"> Requête </label>
@@ -391,21 +378,6 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" value="{{ModalForm.folder.name}}" disabled>
                             <select id="inputFolder" ng-model="ModalForm.folder" ng-options="folder.name for folder in folders"></select>
-                        </div>
-                    </div>
-
-                    <div class="form-group" >
-                        <label class="col-sm-3 control-label"> Domaine </label>
-                        <div  class="col-sm-9">
-                            <input type="text" class="form-control" value="{{ModalForm.domain.name}}" disabled>
-                            <select ng-model="ModalForm.domain" ng-options="domain.name for domain in ModalForm.domains"></select>
-                        </div>
-                    </div>
-                    <div class="form-group" >
-                        <label class="col-sm-3 control-label"> Activité </label>
-                        <div  class="col-sm-9">
-                            <input type="text" class="form-control" value="{{ModalForm.activity.name}}" disabled>
-                            <select ng-model="ModalForm.activity" ng-options="activity.name for activity in ModalForm.domain.activites"></select>
                         </div>
                     </div>
 

@@ -89,7 +89,7 @@ angular.module('websoApp')
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        // {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -181,8 +181,8 @@ angular.module('websoApp')
             tags_s        : result.tags,
             title_t       : result.title,
             refresh_s     : result.frequency.option,
-            domain_s      : result.domain.name,
-            activity_s    : result.activity.name,
+            // domain_s      : result.domain.name,
+            // activity_s    : result.activity.name,
           });
       });
     }
@@ -195,9 +195,9 @@ angular.module('websoApp')
       $scope.ModalForm.tags              = data.tags_s;
       $scope.ModalForm.frequency         = {option: data.refresh_s};
       $scope.ModalForm.frequencies       = [{option:'1h'}, {option:'12h'}, {option:'24h'}, {option:'48h'}];
-      $scope.ModalForm.domain            = {'name': data.domain_s};
-      $scope.ModalForm.domains           = $scope.domains;
-      $scope.ModalForm.activity          = {'name': data.activity_s};
+      // $scope.ModalForm.domain            = {'name': data.domain_s};
+      // $scope.ModalForm.domains           = $scope.domains;
+      // $scope.ModalForm.activity          = {'name': data.activity_s};
 
 
       $scope.ok = function () {

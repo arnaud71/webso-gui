@@ -70,8 +70,8 @@ angular.module('websoApp')
           $scope.model.inputTags  = item.tags_s;
           //$scope.domain.name      = item.domain_s;
           //$scope.activity.name    = item.activity_s;
-          $scope.model.inputDomain.name  = item.domain_s;
-          $scope.model.inputActivity.name    = item.activity_s;
+          // $scope.model.inputDomain.name  = item.domain_s;
+          // $scope.model.inputActivity.name    = item.activity_s;
           $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
         });
@@ -97,7 +97,7 @@ angular.module('websoApp')
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_s', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        // {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  'Création', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -141,7 +141,7 @@ angular.module('websoApp')
         {width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'tags_ss', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        // {width:'100px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'query_s', displayName:  'Requête', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -381,8 +381,8 @@ angular.module('websoApp')
             url_s           : $scope.model.inputUrl,
             tags_s          : $scope.model.inputTags,
             title_t         : $scope.model.inputTitle,
-            domain_s        : $scope.model.inputDomain.name,
-            activity_s      : $scope.model.inputActivity.name,
+            // domain_s        : $scope.model.inputDomain.name,
+            // activity_s      : $scope.model.inputActivity.name,
             waiting_b       : false,
             refresh_s       : $scope.model.inputFrequency.option
 
@@ -426,8 +426,8 @@ angular.module('websoApp')
           url_s         :  $scope.model.inputUrl,
           title_t       :  $scope.model.inputTitle,
           tags_ss       :  $scope.model.inputTags,
-          domain_s      :  $scope.model.inputDomain.name,
-          activity_s    :  $scope.model.inputActivity.name,
+          // domain_s      :  $scope.model.inputDomain.name,
+          // activity_s    :  $scope.model.inputActivity.name,
           folder_s      :  $scope.model.inputFolder.id,
           query_s       :  $scope.model.inputQuery,
           source_id_s   :  $scope.model.sourceId,
