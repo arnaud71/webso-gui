@@ -1,5 +1,5 @@
 <div class="alert alert-info" ng-if="!solrResult.success.response.numFound">
-	Aucun dossier de surveillance
+    {{ '_SELECTED_SOURCE_' | i18n }}
 </div>
 <div ng-if="solrResult">
     <div id="docsFound">
@@ -11,13 +11,13 @@
                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                         </div>
                         <div id="dateFound">
-                            Dossier : {{doc.folder_s}}
+                            {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
                         </div>
                         <div id="domainFound">
-                        	Domaine : {{doc.domain_s}}
+                        	{{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><u>{{tag}}</u></span>
                         </div>
                         <div id="domainFound">
-                            Requête : {{doc.query_s}}
+                            {{ '_QUERY_' | i18n }} : {{doc.query_s}}
                         </div>
 
                     </td>

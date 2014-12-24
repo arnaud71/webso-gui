@@ -1,0 +1,11 @@
+<label>{{ '_VALIDATING_FOLDER_WIDGET_' | i18n }}</label><br>
+<div ng-controller="dossiersValidationEditCtrl">
+    <div class="form-group" >
+        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
+        <div class="col-sm-10">
+            <select ng-model="config.content" ng-options="folder as folder.name for folder in folders">
+                <option value="">Tous</option>
+            </select>
+        </div>
+    </div>
+</div>

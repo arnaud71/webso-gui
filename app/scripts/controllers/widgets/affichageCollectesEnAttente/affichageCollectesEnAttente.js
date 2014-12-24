@@ -108,98 +108,98 @@ angular.module('sample.widgets.affichageCollectesEnAttente', ['adf.provider'])
   // });
   }).controller('collectesMultisourcesEditCtrl', function($rootScope, $cookieStore, $location, $scope, $resource, cfg, $modal, $filter){
 
-        $scope.mySelections = [];
-        var usernameCookie = $cookieStore.get('username');
-        var token = $cookieStore.get('token');
-        var token_timeout = $cookieStore.get('token_timeout');
+    $scope.mySelections = [];
+    var usernameCookie = $cookieStore.get('username');
+    var token = $cookieStore.get('token');
+    var token_timeout = $cookieStore.get('token_timeout');
 
-        // $ressource(cfg.urlServices+'db/:action',
-        //   {action:'get.pl', type_s:'user', token_s:token, token_timeout_s:token_timeout, callback:"JSON_CALLBACK"},
-        //   {get:{method:'JSONP'}}).success()
-        // ;
+    // $ressource(cfg.urlServices+'db/:action',
+    //   {action:'get.pl', type_s:'user', token_s:token, token_timeout_s:token_timeout, callback:"JSON_CALLBACK"},
+    //   {get:{method:'JSONP'}}).success()
+    // ;
 
-        $scope.sourcesList = $resource(cfg.urlServices+'db/:action',
-            {action:'get.pl', type_s:'source', waiting_b: true, user_s: usernameCookie, callback:"JSON_CALLBACK"},
-            {get:{method:'JSONP'}});
-        $scope.solr = $resource(cfg.urlServices+'db/:action',
-            {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
-            {get:{method:'JSONP'}});
+    $scope.sourcesList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl', type_s:'source', waiting_b: true, user_s: usernameCookie, callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+    $scope.solr = $resource(cfg.urlServices+'db/:action',
+      {action:'query.pl', qt:'browse', q:'', fq:'', wt:'json' , hl:'true' , start:'0', 'indent':'true','json.wrf':'JSON_CALLBACK'},
+      {get:{method:'JSONP'}});
 
-        $scope.filterOptions = {
-            filterText: "",
-            useExternalFilter: false
-        };
+    $scope.filterOptions = {
+      filterText: "",
+      useExternalFilter: false
+    };
 
-        $scope.totalServerItems = 0;
-        $scope.pagingOptions = {
-            pageSizes: [10,100,1000],
-            pageSize: 10,
-            currentPage: 1
-        };
+    $scope.totalServerItems = 0;
+    $scope.pagingOptions = {
+      pageSizes: [10,100,1000],
+      pageSize: 10,
+      currentPage: 1
+    };
 
-        $scope.setPagingData = function(data, page, pageSize){
-            $scope.totalServerItems = data.success.response.numFound;
-            data = data.success.response.docs;
-            $scope.myData = data;
-            if($rootScope.$$phase !== '$digest'){
-              $rootScope.$digest(); 
-            }
-        };
+    $scope.setPagingData = function(data, page, pageSize){
+      $scope.totalServerItems = data.success.response.numFound;
+      data = data.success.response.docs;
+      $scope.myData = data;
+      if($rootScope.$$phase !== '$digest'){
+        $rootScope.$digest(); 
+      }
+    };
 
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            // setTimeout(function () {
-            var data;
-            $scope.sourceResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
-                function() {        //call back function for asynchronous
-                    if (typeof $scope.sourceResult.success.response === "undefined") {}
-                    else {
-                        data = $scope.sourceResult;
-                        $scope.setPagingData(data,page,pageSize);
-                        //$('.row').trigger('resize');
-                    }
-                }
-            );
-            //}, 100);
-        };
+    $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+      // setTimeout(function () {
+      var data;
+      $scope.sourceResult = $scope.sourcesList.get({rows:pageSize,start:(page*pageSize-pageSize)},
+        function() {        //call back function for asynchronous
+          if (typeof $scope.sourceResult.success.response === "undefined") {}
+          else {
+            data = $scope.sourceResult;
+            $scope.setPagingData(data,page,pageSize);
+            //$('.row').trigger('resize');
+          }
+        }
+      );
+      //}, 100);
+    };
 
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            if ((newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) || (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize)) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
+    $scope.$watch('pagingOptions', function (newVal, oldVal) {
+      if ((newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) || (newVal !== oldVal && newVal.pageSize !== oldVal.pageSize)) {
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+      }
+    }, true);
 
-        $scope.$watch('filterOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-            }
-        }, true);
+    $scope.$watch('filterOptions', function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+      }
+    }, true);
 
     $scope.gridOptionsSource = {
-            data: 'myData',
-            enablePaging: true,
-            enableRowSelection : true,
-            multiSelect: false,
-            showFooter: true,
-            totalServerItems: 'totalServerItems',
-            pagingOptions: $scope.pagingOptions,
-            filterOptions: $scope.filterOptions,
-            showFilter: true,
-            selectedItems: $scope.mySelections,
-            columnDefs: [
-                {width:'50px',field:'', displayName:  $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-                {visible:false,width:'*',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'},
-                {width:'*',field:'query_s', displayName:  $filter('i18n')('_QUERY_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'}
-            ],
-        beforeSelectionChange: function (rowItem) { return true; },
-        afterSelectionChange: function () {
-            angular.forEach($scope.mySelections, function ( item ) {
-                $scope.config.content = item.id;
-                $scope.config.title = item.title_t;
-                $scope.config.query = item.query_s;
-            });
-        }
+      data: 'myData',
+      enablePaging: true,
+      enableRowSelection : true,
+      multiSelect: false,
+      showFooter: true,
+      totalServerItems: 'totalServerItems',
+      pagingOptions: $scope.pagingOptions,
+      filterOptions: $scope.filterOptions,
+      showFilter: true,
+      selectedItems: $scope.mySelections,
+      columnDefs: [
+        {width:'50px',field:'', displayName:  $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+        {visible:false,width:'*',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'},
+        {width:'*',field:'query_s', displayName:  $filter('i18n')('_QUERY_'), cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>'}
+      ],
+      beforeSelectionChange: function (rowItem) { return true; },
+      afterSelectionChange: function () {
+        angular.forEach($scope.mySelections, function ( item ) {
+          $scope.config.content = item.id;
+          $scope.config.title = item.title_t;
+          $scope.config.query = item.query_s;
+        });
+      }
     };
 });

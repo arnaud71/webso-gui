@@ -512,6 +512,18 @@
         "key": "_SELECTED_SOURCE_",
         "value": "Source sélectionnée"
     },
+    {
+        "key": "_SELECTED_SOURCE_",
+        "value": "Aucun dossier de surveillance"
+    },
+    {
+        "key": "_WATCHING_FOLDER_WIDGET_",
+        "value": "Dossier de surveillance"
+    },
+    {
+        "key": "_VALIDATING_FOLDER_WIDGET_",
+        "value": "Dossier de validation"
+    },
 
 
 
