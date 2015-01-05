@@ -67,6 +67,8 @@ angular.module('websoApp')
 					$cookieStore.remove('userRole');
 					$cookieStore.remove('token');
 					$cookieStore.remove('token_timeout');
+					$cookieStore.remove('vfolder');
+					$cookieStore.remove('wfolder');
 					$scope.message = '';
 					$location.path('/home');
 				}
