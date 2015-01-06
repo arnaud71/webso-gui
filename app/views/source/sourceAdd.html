@@ -3,21 +3,21 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a>Organiser</a></li>
-    <li class="active">Ajouter une source</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li><a href="#">{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</li>
 </ol>
 <div ng-controller="AddWatchCtrl"> <!-- AddSourceCtrl -->
     <form name="sourceForm" class="form-horizontal" role="form">
 
         <div class="col-md-6">
-            <h3>Ajouter une sources</h3>
+            <h3>{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</h3>
             <div class="form-group" >
-                <label class="col-md-5 control-label required"> Source </label>
+                <label class="col-md-5 control-label required"> {{ '_SOURCE_' | i18n }}</label>
 
 
                 <div class="col-md-7">
-                    <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="Entrer URL" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
+                    <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="{{ '_ENTER_LINK_' | i18n }}" ng-model="model.inputUrl" id="inputUrl" name="inputUrl">
 
                 </div>
                 <div class="col-md-1">
@@ -27,23 +27,23 @@
 
             </div>
             <div class="form-group" >
-                <label class="col-md-5 control-label"> Nom de la source </label>
+                <label class="col-md-5 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" placeholder="Entrer Titre" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
+                    <input type="text" class="form-control" placeholder="{{ '_ENTER_TITLE_' | i18n }}" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
                 </div>
             </div>
 
 <!--             <div class="form-group">
-                <label class="col-md-5 control-label"> Fréquence de la source </label>
+                <label class="col-md-5 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                 <div class="col-md-7">
                     <select ng-model="model.inputFrequency" ng-options="frequency.option for frequency in frequencies" require></select>
                 </div>
             </div> -->
 
             <div class="form-group" >
-                <label class="col-md-5 control-label"> Tags </label>
+                <label class="col-md-5 control-label">{{ '_TAGS_' | i18n }}</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" placeholder="Entrer tags" ng-model="model.inputTags" id="inputTags" name="inputTags">
+                    <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="model.inputTags" id="inputTags" name="inputTags">
                 </div>
 
             </div>
@@ -52,21 +52,21 @@
               <label class="checkbox">
                 <div class="col-sm-offset-5 col-sm-10">
                     <input type="checkbox" class="checkbox-control" ng-model="model.valueCheckBoxSource" name="valueCheckBox"> 
-                    Ajouter le widget source au tableau de bord
+                    {{ '_ADD_WIDGET_TO_DASHBOARD_' | i18n }}
                 </div>
               </label>
             </div> -->
 
             <div class="form-group">
                 <div class="col-md-offset-5 col-md-7">
-                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>Ajouter source</button>
+                    <button ng-disabled="!sourceChecked" type="submit" class="btn btn-default" ng-click="doAddSource() " name ="watch" required>{{ '_ADD_SOURCE_' | i18n }}</button>
                 </div>
             </div>
         </div>
         <div class="col-md-6" id="displaySample">
             <div class="scroll-area" data-spy="scroll" data-target="#myNavbar" data-offset="0">
                 <div ng-show="sourceChecked">
-                    {{checkSourceResult.count}} {{sourceType}} trouvé(s)
+                    {{checkSourceResult.count}} {{sourceType}} trouvé(s) {{ '_ELEMENTS_FOUND_' | i18n }}
                     <div ng-repeat="item in checkSourceResult.items">
                         <div class row>
 
@@ -86,15 +86,15 @@
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="addSourceModal.html">
         <div class="modal-header">
-            <h3>Ajout de Source</h3>
+            <h3>{{ '_MODAL_SOURCE_ADD_' | i18n }}</h3>
         </div>
         <div class="modal-body">
-            Source ajoutée avec succès
+            {{ '_MODAL_SOURCE_ADD_OK_' | i18n }}
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
 
-            <!-- <button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
         </div>
     </script>
 
@@ -106,39 +106,39 @@
             Source déjà ajoutée
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
         </div>
     </script>
 
     <!-- Edit Modal -->
     <script type="text/ng-template" id="editSourceModal.html">
             <div class="modal-header">
-                <h3> Modification d'une source</h3>
+                <h3>{{ '_MODAL_EDIT_SOURCE_' | i18n }}</h3>
 
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-3 control-label"> Source </label>
+                        <label class="col-sm-3 control-label">{{ '_SOURCE_' | i18n }}</label>
                         <div class="col-sm-9">
                             <input type="url" class="form-control" ng-model="ModalForm.url">
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-3 control-label"> Nom de la source </label>
+                        <label class="col-sm-3 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" ng-model="ModalForm.title">
                         </div>
                     </div>
                     <!--<div class="form-group" >
-                        <label class="col-sm-3 control-label"> Fréquence de la source </label>
+                        <label class="col-sm-3 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                         <div class="col-sm-9">
                             <input type="text" class="form" value="{{ModalForm.frequency.option}}" disabled>
                             <select ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in ModalForm.frequencies"></select>
                         </div>
                     </div>-->
                     <div class="form-group" >
-                        <label class="col-sm-3 control-label"> Tags </label>
+                        <label class="col-sm-3 control-label">{{ '_TAGS_' | i18n }}</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" ng-model="ModalForm.tags">
                         </div>
@@ -148,8 +148,8 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
 </div>
@@ -160,7 +160,7 @@
 
             </div> -->
             <div class="col-md-12">
-                <h3>Liste des sources</h3>
+                <h3>{{ "_SOURCE_LIST_" | i18n }}</h3>
                 <div class="gridStyleSource" ng-grid="gridOptionsSource">
 
                 </div>

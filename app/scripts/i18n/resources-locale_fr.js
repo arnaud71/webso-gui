@@ -409,6 +409,10 @@
         "value": "Effacement de la Source"
     },
     {
+        "key": "_MODAL_EDIT_SOURCE_",
+        "value": "Modification de la source"
+    },
+    {
         "key": "_ARE_YOU_SURE_DEL_SOURCE_",
         "value": "Etes vous sûr de vouloir effacer cette source"
     },
