@@ -3,29 +3,29 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a>Organiser</a></li>
-    <li class="active">Gérer mes informations</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li><a>{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ '_ORGANIZE_BAR_PROFILE_' | i18n }}</li>
 </ol>
 
-<h1>Mon profil</h1>
+<h1>{{ '_SETTINGS_H1_' | i18n }}</h1>
 <div ng-controller="ProfileSettingCtrl">
   <form ng-submit="modifyPassword()" name="modifyFrom" role="form" class="form-horizontal">
     <div class="form-group">
-      <label for="password" class="control-label col-sm-2">Mot de passe</label>
+      <label for="password" class="control-label col-sm-2">{{ '_PASSWORD_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="password" ng-blur="releaseError()" data-ng-model="password" placeholder="Mot de passe" name="password" class="form-control"/>
+        <input type="password" ng-blur="releaseError()" data-ng-model="password" placeholder="{{ '_PASSWORD_' | i18n }}" name="password" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
-      <label for="passwordConfirm" class="control-label col-sm-2">Confirmation mot de passe</label>
+      <label for="passwordConfirm" class="control-label col-sm-2">{{ '_CONFIRM_PASSWORD_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="password" ng-blur="releaseError()" data-ng-model="passwordConfirm" placeholder="Confirmation mot de passe" name="passwordConfirm" class="form-control"/>
+        <input type="password" ng-blur="releaseError()" data-ng-model="passwordConfirm" placeholder="{{ '_CONFIRM_PASSWORD_' | i18n }}" name="passwordConfirm" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">Modifier</button>
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">{{ '_EDIT_' | i18n }}</button>
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessPassword">
@@ -38,15 +38,15 @@
 
   <form ng-submit="modifyEmail()" name="modifyFrom" role="form" class="form-horizontal">
     <div class="form-group">
-      <label for="email" class="control-label col-sm-2">Adresse email</label>
+      <label for="email" class="control-label col-sm-2">{{ '_EMAIL_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="Adresse email" name="email" 
+        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="{{ '_EMAIL_' | i18n }}" name="email" 
          class="form-control"/>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">Modifier</button>
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">{{ '_EDIT_' | i18n }}</button>
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessMail">

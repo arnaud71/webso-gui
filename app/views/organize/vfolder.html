@@ -3,22 +3,22 @@
 </div>
 
 <ol class="breadcrumb text-center">
-    <li><a href="#/home">Webso</a></li>
-    <li><a href="#">Organiser</a></li>
-    <li class="active">Dossiers de validation</li>
+    <li><a href="#/home">{{ '_SERVICE_NAME_' | i18n }}</a></li>
+    <li><a href="#">{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ '_ORGANIZE_BAR_VFOLDER_' | i18n }}</li>
 </ol>
 
 
 <div id="validation-folder" ng-controller="vfolderCtrl">
-    <h2>Organiser les dossiers de validation</h2>
+    <h2>{{ '_VFOLDER_H2_' | i18n }}</h2>
 
     <link rel="stylesheet" href="styles/treeview.css">
 
     <div class="row">
         <div class="col-lg-4">
-            <h3>Arborescence
-                <a href="" class="btn btn-sm btn-default pull-right" ng-click="collapseAll()">Replier tout</a>
-                <a href="" class="btn btn-sm btn-default pull-right" ng-click="expandAll()">Déplier  tout</a>
+            <h3>{{ '_TREE_STRUCTURE_' | i18n }}
+                <a href="" class="btn btn-sm btn-default pull-right" ng-click="collapseAll()">{{ '_COLLAPSE_ALL_' | i18n }}</a>
+                <a href="" class="btn btn-sm btn-default pull-right" ng-click="expandAll()">{{ '_EXPAND_ALL_' | i18n }}</a>
                     <!-- <a href="" class="btn btn-default btn-warning pull-right" ng-click="moveLastToTheBegginig()">Move Last To The Beginning</a> -->
 
             </h3>
@@ -49,13 +49,13 @@
                     <li ng-repeat="node in model.data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
                 </ol>
             </div>
-            <a ng-show="!model.edit" href="" class="btn btn-default pull-left" ng-click="editTree()">Editer</a>
-            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="saveTree()">Sauvegarder</a>
-            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="cancelTree()">Annuler</a>
+            <a ng-show="!model.edit" href="" class="btn btn-default pull-left" ng-click="editTree()">{{ '_EDIT_' | i18n }}</a>
+            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="saveTree()">{{ '_SAVE_' | i18n }}</a>
+            <a ng-show="model.edit" href="" class="btn btn-default pull-left" ng-click="cancelTree()">{{ '_CANCEL_' | i18n }}</a>
         </div>
 
         <div class="col-lg-8">
-            <h3> File information </h3>
+            <h3>{{ '_FOLDER_INFORMATION_' | i18n }}</h3>
             <!-- <div class="info">
                 {{info}}
             </div> -->
@@ -66,9 +66,9 @@
                                 <a href="{{fold.url_s}}" target="_blank">{{fold.title_t}}</a>
                             </div>
                             <div id="contentFound">
-                                <!-- <span>Recherche : {{ fold.query_s }} | {{ fold.notification_s }}</span><br> -->
-                                <span>Validée le : {{ fold.creation_dt | date:'dd-MM-yyyy HH:mm' }}</span><br>
-                                <span>Mise à jour : {{ fold.updating_dt | date:'dd-MM-yyyy HH:mm' }}</span>
+                                <!-- <span>{{ '_SEARCH_' | i18n }} : {{ fold.query_s }} | {{ fold.notification_s }}</span><br> -->
+                                <span>{{ '_VALIDATE_ON_' | i18n }} : {{ fold.creation_dt | date:'dd-MM-yyyy HH:mm' }}</span><br>
+                                <span>{{ '_UPDATED_ON_' | i18n }} : {{ fold.updating_dt | date:'dd-MM-yyyy HH:mm' }}</span>
                             </div>
                             <div id="actionList">
                                 <!-- <button type="button" class="btn btn-xs" ng-click="pathValidate('{{doc.url_s}}')" tooltip="Valider le document"> <span class="glyphicon glyphicon-saved"></span></button> -->

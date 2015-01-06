@@ -355,6 +355,18 @@
         "key": "_TREE_STRUCTURE_",
         "value": "Arborescence"
     },
+    {
+        "key": "_VALIDATE_ON_",
+        "value": "Validé le"
+    },
+    {
+        "key": "_UPDATED_ON_",
+        "value": "Mis à jour le"
+    },
+    {
+        "key": "_WATCH_DATE_",
+        "value": "Date Surveillance"
+    },
 
 
 

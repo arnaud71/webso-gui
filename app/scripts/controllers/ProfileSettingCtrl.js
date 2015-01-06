@@ -2,7 +2,7 @@
 
 angular.module('websoApp')
     .config(function($httpProvider) { $httpProvider.defaults.useXDomain = true; delete $httpProvider.defaults.headers.common['X-Requested-With'];})
-    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg) {
+    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg, $filter) {
 
     $scope.isSuccess = false;
     var username = $cookieStore.get('username');
@@ -35,13 +35,13 @@ angular.module('websoApp')
 
     $scope.modifyPassword = function() {
         if($scope.password.length == 0 && $scope.passwordConfirm.length == 0){
-            $scope.errorMessagePassword = 'Mots de passe vide.';
+            $scope.errorMessagePassword = $filter('i18n')('_EMPTY_PASSWORD_');
             $scope.isErrorPassword = true;
         }else if($scope.password.length < 6 || $scope.password.length > 20){
-            $scope.errorMessagePassword = 'Longueur du mot de passe doit être superieur à 6 et inférieur à 20 caractères';
+            $scope.errorMessagePassword = $filter('i18n')('_PASSWORD_LENGTH_');
             $scope.isErrorPassword = true;
         }else if($scope.password !== $scope.passwordConfirm){
-            $scope.errorMessagePassword = 'Les mots de passe ne correspondent pas.';
+            $scope.errorMessagePassword = $filter('i18n')('_DIFF_PASSWORD_');
             $scope.isErrorPassword = true;
         }
         else{
@@ -54,7 +54,7 @@ angular.module('websoApp')
                 else {
                     if(user.success){
                         $scope.isSuccessPassword = true;
-                        $scope.messagePassword = 'Vos informations on été mises à jour avec succès.';
+                        $scope.messagePassword = $filter('i18n')('_UPDATE_INFO_OK_');
                     }
                 }
             },
@@ -64,7 +64,7 @@ angular.module('websoApp')
                     $scope.errorMessagePassword = user;
                 }
                 else{
-                    $scope.errorMessagePassword = cfg.errorConnect;
+                    $scope.errorMessagePassword = $filter('i18n')(cfg.errorConnect);
                 }
                 $scope.isErrorPassword = true;
 
@@ -75,7 +75,7 @@ angular.module('websoApp')
 
     $scope.modifyEmail = function() {
         if($scope.email.length == 0){
-            $scope.errorMessageMail = 'Email vide.';
+            $scope.errorMessageMail = $filter('i18n')('_EMPTY_MAIL_');
             $scope.isErrorMail = true;
         }   
         else{
@@ -88,13 +88,13 @@ angular.module('websoApp')
                 else {
                     if(user.success){   
                         $scope.isSuccessMail = true;
-                        $scope.messageMail = 'Vos informations on été mises à jour avec succès.';
+                        $scope.errorMessageMail = $filter('i18n')('_EMPTY_MAIL_');
                     }
                 }
             },
               //error
               function () {
-                $scope.errorMessageMail = cfg.errorConnect;
+                $scope.errorMessageMail = $filter('i18n')(cfg.errorConnect);
                 $scope.isErrorMail = true;
               }
             );
