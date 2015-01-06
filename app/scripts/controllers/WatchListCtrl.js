@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('WatchListCtrl', function ($cookieStore, $scope, $resource,cfg,$modal) {
+    .controller('WatchListCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter) {
 
         var $username = $cookieStore.get('username');
         /*
@@ -130,18 +130,17 @@ angular.module('websoApp')
 
             //selectWithCheckboxOnly: 'true',
             //selectedItems: $scope.mySelections,
-            columnDefs: [
-                {width:'50px',field:'', displayName:  'Nb', cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
-                {visible:false,width:'50px',field:'id', displayName:  'Id', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                //{width:'*',field:'url_s', displayName:  'Source',cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
-                {width:'*',field:'title_t', displayName:  'Title', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'*',field:'query_s', displayName:  'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'tags_ss', displayName:  'Tag', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                // {width:'150px',field:'domain_s', displayName:  'Domaine', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                // {width:'150px',field:'activity_s', displayName:  'Activité', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'user_s', displayName:  'Auteur', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'folder_s', displayName:  'Dossier', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'', displayName:  'Gestion', cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
+            columnDefs: [                
+                {width:'50px',field:'', displayName: $filter('i18n')('_NB_'), cellTemplate: '<div class="ngCellText">{{(row.rowIndex+1)+(pagingOptions.pageSize*pagingOptions.currentPage-pagingOptions.pageSize)}}</div>'},
+                {visible:false,width:'50px',field:'id', displayName: $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                // {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
+                {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'100px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'100px',field:'folder_s', displayName: $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                // {width:'100px',field:'query_s', displayName: $filter('i18n')('_WATCHES_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button>  <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>    <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
             ]
         };
 
@@ -187,11 +186,9 @@ angular.module('websoApp')
             /*
              Confirm dialogs
              */
-
-            var deleteWatch = confirm('Etes vous sûr de vouloir supprimer cette surveillance?');
+            var deleteWatch = confirm($filter('i18n')('_ARE_YOU_SURE_DEL_WATCH_'));
             if (deleteWatch) {
-                alert('Suppression confirmée');
-
+                alert($filter('i18n')('_DEL_CONFIRM_'));
                 /*
                  Delete
                  */

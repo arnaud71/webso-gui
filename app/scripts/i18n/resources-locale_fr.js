@@ -474,6 +474,10 @@
         "key": "_WATCH_LIST_",
         "value": "Liste des surveillances"
     },
+    {
+        "key": "_MODAL_EDIT_WATCH_",
+        "value": "Modification de la surveillance"
+    },
 
 
 
@@ -680,8 +684,12 @@
 
 
     {
+        "key": "_SOURCE_ALREADY_EXISTS_",
+        "value": "Source déjà enregistrée."
+    },
+    {
         "key": "_ERROR_VALIDATE_ADD_",
-        "value": "Erreur merci de saisir au moins un titre, une url et un dossier"
+        "value": "Erreur merci de saisir au moins un titre, un dossier et un commentaire"
     },
     {
         "key": "_EMPTY_PASSWORD_",
@@ -702,6 +710,10 @@
     {
         "key": "_EMPTY_MAIL_",
         "value": "Email vide"
+    },
+    {
+        "key": "_WRONG_MAIL_FORMAT_",
+        "value": "Erreur dans l'adresse email"
     },
 
 
@@ -724,6 +736,13 @@
     {
         "key": "_ERROR_CONN_",
         "value": "Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n'est pas disponible)"
+    },
+    {
+        "key": "_NOTIFICATION_TYPES_",
+        "value": [
+          {"option":"Pas de notification"},
+          {"option":"email"}
+        ]
     },
     {
         "key": "_DOMAIN_AND_ACTIVITY_LIST_",
