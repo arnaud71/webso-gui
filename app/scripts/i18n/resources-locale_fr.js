@@ -621,6 +621,14 @@
         "key": "_INPUT_FILE_",
         "value": "Sélectionner un fichier"
     },
+    {
+        "key": "_DROP_FILE_HERE_",
+        "value": "Glissez un fichier ici"
+    },
+    {
+        "key": "_HTML5_NOt_SUPPORTED_",
+        "value": "Le glisser/déposer n'est pas pris en charge par votre ordinateur."
+    },
 
 
 
