@@ -9,10 +9,12 @@
  */
 
 angular.module('localization', []).
-    factory('localize', ['$http', '$rootScope', '$window', '$filter', function ($http, $rootScope, $window, $filter) {
+    factory('localize', ['$http', '$rootScope', '$window', '$filter', '$cookieStore', function ($http, $rootScope, $window, $filter, $cookieStore) {
     var localize = {
         // use the $window service to get the language of the user's browser
-        language:$window.navigator.userLanguage || $window.navigator.language,
+        cookie_lang: $cookieStore.get('lang'),
+        browser_lang:$window.navigator.userLanguage || $window.navigator.language,
+        language:'',
         // array to hold the localized resource string entries
         dictionary:[],
         // flag to indicate if the service hs loaded the resource file
@@ -29,6 +31,12 @@ angular.module('localization', []).
 
         initLocalizedResources:function () {
             // build the url to retrieve the localized resource file
+            if(localize.cookie_lang && angular.isDefined(localize.cookie_lang)){
+                localize.language = localize.cookie_lang;
+            }
+            else{
+                localize.language = localize.browser_lang;
+            }
             var url = 'scripts/i18n/resources-locale_' + localize.language + '.js';
             // request the resource file
             $http({ method:"GET", url:url, cache:false }).success(localize.successCallback).error(function () {

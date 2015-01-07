@@ -7,7 +7,7 @@ angular.module('websoApp')
 
     $scope.heg                    = cfg.heg;
     $scope.isError                = false;
-    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
+    $scope.errorMessage           = $filter('i18n')('_ERROR_CONNECTION_');
 
     $scope.filterOptions = {
       filterText        : "",

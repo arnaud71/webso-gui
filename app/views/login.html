@@ -4,34 +4,34 @@
 
 <div ng-controller="LoginCtrl">
   <form ng-show="!isAuthenticated" ng-submit="login()" name="loginForm" role="form" class="form-horizontal">
-    <h1>Connexion</h1>
+    <h1>{{ '_LOGIN_' | i18n }}</h1>
     <div class="form-group">
-      <label for="username" class="control-label col-sm-2">Nom d'utilisateur</label>
+      <label for="username" class="control-label col-sm-2">{{ '_USERNAME_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="text" ng-blur="releaseError()" data-ng-model="username" placeholder="Nom d'utilisateur" name="username" autofocus="autofocus" class="form-control"/>
+        <input type="text" ng-blur="releaseError()" data-ng-model="username" placeholder="{{ '_USERNAME_' | i18n }}" name="username" autofocus="autofocus" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
-      <label for="password" class="control-label col-sm-2">Mot de passe</label>
+      <label for="password" class="control-label col-sm-2">{{ '_PASSWORD_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="password" ng-blur="releaseError()" data-ng-model="password" placeholder="Mot de passe" name="password" class="form-control"/>
+        <input type="password" ng-blur="releaseError()" data-ng-model="password" placeholder="{{ '_PASSWORD_' | i18n }}" name="password" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
       <label class="checkbox">
         <div class="col-sm-offset-2 col-sm-10">
-          <input type="checkbox" ng-model="valueCheckBox"> Se souvenir de moi
+          <input type="checkbox" ng-model="valueCheckBox">{{ '_REMEMBER_ME_' | i18n }}
         </div>
       </label>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <a ui-sref="/reset">Mot de passe oublié</a>
+        <a ui-sref="/reset">{{ '_FORGOT_PASSWORD_' | i18n }}</a>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10" ng-show="!loading">
-        <button type="submit" data-ng-disabled="loginForm.$invalid" class="btn btn-default" name="connection" analytics-on='click' analytics-event='Login' analytics-label='{{ username }}' analytics-category='Passive'>Se connecter</button>
+        <button type="submit" data-ng-disabled="loginForm.$invalid" class="btn btn-default" name="connection" analytics-on='click' analytics-event='Login' analytics-label='{{ username }}' analytics-category='Passive'>{{ '_LOGIN_BTN_' | i18n }}</button>
       </div>
       <center>
         <div ng-show="loading" class="loading">
@@ -40,7 +40,7 @@
       </center>
     </div>
     <div class="alert alert-danger" ng-show="isError">
-      <strong>erreur :&nbsp;</strong><span>{{errorMessage}}</span>
+      <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessage}}</span>
     </div>
   </form>
 </div>

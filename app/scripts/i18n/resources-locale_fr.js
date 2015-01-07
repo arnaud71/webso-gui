@@ -215,6 +215,10 @@
         "key": "_QUERY_",
         "value": "Requête"
     },
+    {
+        "key": "_LANG_",
+        "value": "Langue"
+    },
 
 
 
@@ -231,7 +235,7 @@
 
     {
         "key": "_SERVICE_NAME_",
-        "value": "Inélio",
+        "value": "Inelio",
         "description": "Nom de la plateforme"
     },
 
@@ -762,7 +766,7 @@
 
 
     {
-        "key": "_ERROR_CONN_",
+        "key": "_ERROR_CONNECTION_",
         "value": "Problème de connexion avec le server, veuillez tester votre connexion à internet (ou le server n'est pas disponible)"
     },
     {

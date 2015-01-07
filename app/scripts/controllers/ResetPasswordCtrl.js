@@ -1,16 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('ResetPasswordCtrl', function ($cookieStore, $scope, $resource, $location, localStorageService, cfg, $http) {
-
-    // Start Localization for new dev
-    $scope.RESETPWD_H1_TXT           = 'Mot de passe oublié';
-    $scope.RESETPWD_USERNAME_LABEL   = 'Nom d\'utilisateur';
-    $scope.RESETPWD_MAIL_LABEL       = 'adresse email';
-    $scope.RESETPWD_SEND_BTN_TXT     = 'Envoyer';
-    $scope.MSG_SUCCESS_TXT           = 'Message';
-    $scope.MSG_ERROR_TXT             = 'Erreur';
-    var $SUCCESS_TXT                 = 'Votre mot de passe a été changé vous allez recevoir un mail dans les prochaines minutes';
+    .controller('ResetPasswordCtrl', function ($cookieStore, $scope, $resource, $location, localStorageService, cfg, $http, $filter) {
 
     /****************** Reset procedure ***********************/  
     $scope.resetPassword = $resource(cfg.urlServices+'db/:action',
@@ -32,13 +23,13 @@ angular.module('websoApp')
             else {
                 if(user.success){
                     $scope.isSuccess = true;
-                    $scope.successMessage = $SUCCESS_TXT;
+                    $scope.successMessage = $filter('i18n')('_RESETPWD_OK_MSG_');
                 }
             }
         },
         // Error sending request
         function () {
-          $scope.errorMessage = cfg.errorConnect;
+          $scope.errorMessage = $filter('i18n')('_ERROR_CONNECTION_');
           $scope.isError = true;
         }
         );

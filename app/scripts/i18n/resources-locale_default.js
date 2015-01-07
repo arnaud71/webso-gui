@@ -117,7 +117,7 @@
     },
     {
         "key": "_WATCH_",
-        "value": "Watch"
+        "value": "monitor"
     },
     {
         "key": "_WATCHES_",
@@ -157,7 +157,7 @@
     },
     {
         "key": "_WATCH_ADD_",
-        "value": "Add watch"
+        "value": "Add monitor"
     },
     {
         "key": "_CREATION_",
@@ -185,7 +185,7 @@
     },
     {
         "key": "_SELECT_WATCH_",
-        "value": "Select watch"
+        "value": "Select monitor"
     },
     {
         "key": "_TAB_TAGS_",
@@ -215,6 +215,10 @@
         "key": "_QUERY_",
         "value": "Query"
     },
+    {
+        "key": "_LANG_",
+        "value": "Language"
+    },
 
 
 
@@ -231,7 +235,7 @@
 
     {
         "key": "_SERVICE_NAME_",
-        "value": "Inélio",
+        "value": "Inelio",
         "description": "Plateform name"
     },
 
@@ -283,7 +287,7 @@
     },
     {
         "key": "_NAV_WATCHES_FOLDER_",
-        "value": "Watch folder"
+        "value": "monitor folder"
     },
     {
         "key": "_NAV_VALIDATING_FOLDER_",
@@ -326,7 +330,7 @@
     },
     {
         "key": "_ORGANIZE_BAR_WFOLDER_",
-        "value": "Watch folder"
+        "value": "monitor folder"
     },
 
 
@@ -345,7 +349,7 @@
     },
     {
         "key": "_WFOLDER_H2_",
-        "value": "Organize watch folder"
+        "value": "Organize monitor folder"
     },
     {
         "key": "_FOLDER_INFORMATION_",
@@ -391,7 +395,7 @@
     },
     {
         "key": "_ORGANIZE_BAR_WATCH_",
-        "value": "Add watch"
+        "value": "Add monitor"
     },
 
 
@@ -468,31 +472,31 @@
 
     {
         "key": "_ADD_WATCH_",
-        "value": "Add watch"
+        "value": "Add monitor"
     },
     {
         "key": "_MODAL_WATCH_ADD_",
-        "value": "Add watch"
+        "value": "Add monitor"
     },
     {
         "key": "_MODAL_WATCH_ADD_OK_",
-        "value": "Watch added confirm"
+        "value": "monitor added confirm"
     },
     {
         "key": "_MODAL_WATCH_DEL_",
-        "value": "Delete watch"
+        "value": "Delete monitor"
     },
     {
         "key": "_ARE_YOU_SURE_DEL_WATCH_",
-        "value": "Are you sur you want to  delete this watch"
+        "value": "Are you sur you want to delete this monitor"
     },
     {
         "key": "_WATCH_LIST_",
-        "value": "Watch list"
+        "value": "monitor list"
     },
     {
         "key": "_MODAL_EDIT_WATCH_",
-        "value": "Edit watch"
+        "value": "Edit monitor"
     },
 
 
@@ -538,15 +542,15 @@
     },
     {
         "key": "_SELECTED_WATCH_FOLDER_",
-        "value": "No watch folder selected"
+        "value": "No monitor folder selected"
     },
     {
         "key": "_SELECTED_WATCH_",
-        "value": "Select a watch in widget config"
+        "value": "Select a monitor in widget config"
     },
     {
         "key": "_WATCHING_FOLDER_WIDGET_",
-        "value": "Watch folder"
+        "value": "monitor folder"
     },
     {
         "key": "_VALIDATING_FOLDER_WIDGET_",
@@ -650,7 +654,7 @@
     },
     {
         "key": "_WATCH_FEED_",
-        "value": "Watch feed"
+        "value": "monitor feed"
     },
     {
         "key": "_VALIDATE_FILE_",
@@ -694,7 +698,7 @@
     },
     {
         "key": "_SHARE_DOCUMENT_",
-        "value": "Sahre document"
+        "value": "Share document"
     },
     {
         "key": "_ADD_WAITING_QUERY_",
@@ -706,7 +710,7 @@
     },
         {
         "key":"_WATCH_DOCUMENT_",
-        "value": "Add and watch source"
+        "value": "Add and monitor source"
     },
 
 
@@ -762,7 +766,7 @@
 
 
     {
-        "key": "_ERROR_CONN_",
+        "key": "_ERROR_CONNECTION_",
         "value": "Error connecting to the serveur, please try again later"
     },
     {

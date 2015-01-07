@@ -4,22 +4,22 @@
 
 <div ng-controller="ResetPasswordCtrl">
   <form ng-show="!isAuthenticated" ng-submit="send()" name="loginForm" role="form" class="form-horizontal">
-    <h1>{{ RESETPWD_H1_TXT }}</h1>
+    <h1>{{ '_RESETPWD_H1_' | i18n }}</h1>
     <div class="form-group">
-      <label for="username" class="control-label col-sm-2">{{ RESETPWD_USERNAME_LABEL }}</label>
+      <label for="username" class="control-label col-sm-2">{{ '_USERNAME_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="text" ng-blur="releaseError()" data-ng-model="username" placeholder="Nom d'utilisateur" name="username" autofocus="autofocus" class="form-control"/>
+        <input type="text" ng-blur="releaseError()" data-ng-model="username" placeholder="{{ '_USERNAME_' | i18n }}" name="username" autofocus="autofocus" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
-      <label for="email" class="control-label col-sm-2">{{ RESETPWD_MAIL_LABEL }}</label>
+      <label for="email" class="control-label col-sm-2">{{ '_EMAIL_' | i18n }}</label>
       <div class="col-sm-3">
-        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="Adresse email" name="email" class="form-control"/>
+        <input type="email" ng-blur="releaseError()" data-ng-model="email" placeholder="{{ '_EMAIL_' | i18n }}" name="email" class="form-control"/>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10" ng-show="!loading">
-        <button type="submit" data-ng-disabled="loginForm.$invalid" class="btn" name="connection" analytics-on='click' analytics-event='Login' analytics-label='{{ username }}' analytics-category='Passive'>{{ RESETPWD_SEND_BTN_TXT }}</button>
+        <button type="submit" data-ng-disabled="loginForm.$invalid" class="btn btn-default" name="connection" analytics-on='click' analytics-event='Login' analytics-label='{{ username }}' analytics-category='Passive'>{{ '_SEND_' | i18n }}</button>
       </div>
       <center>
         <div ng-show="loading" class="loading">
@@ -28,10 +28,10 @@
       </center>
     </div>
     <div class="alert alert-success" ng-show="isSuccess">
-      <strong>{{ MSG_SUCCESS_TXT }} :&nbsp;</strong><span>{{successMessage}}</span>
+      <strong>{{ '_SUCCESS_' | i18n }} :&nbsp;</strong><span>{{successMessage}}</span>
     </div>
     <div class="alert alert-danger" ng-show="isError">
-      <strong>{{ MSG_ERROR_TXT }} :&nbsp;</strong><span>{{errorMessage}}</span>
+      <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessage}}</span>
     </div>
   </form>
 </div>

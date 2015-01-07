@@ -64,7 +64,7 @@ angular.module('websoApp')
                     $scope.errorMessagePassword = user;
                 }
                 else{
-                    $scope.errorMessagePassword = $filter('i18n')(cfg.errorConnect);
+                    $scope.errorMessagePassword = $filter('i18n')('_ERROR_CONNECTION_');
                 }
                 $scope.isErrorPassword = true;
 
@@ -94,7 +94,7 @@ angular.module('websoApp')
             },
               //error
               function () {
-                $scope.errorMessageMail = $filter('i18n')(cfg.errorConnect);
+                $scope.errorMessageMail = $filter('i18n')('_ERROR_CONNECTION_');
                 $scope.isErrorMail = true;
               }
             );

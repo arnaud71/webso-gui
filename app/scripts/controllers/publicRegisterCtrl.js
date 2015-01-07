@@ -42,6 +42,7 @@ angular.module('websoApp')
         ],
       }]
     };
+    $scope.langs = $filter('i18n')('_LANG_LIST_');
 
 
     var login = function (username, password) {
@@ -52,12 +53,13 @@ angular.module('websoApp')
             $cookieStore.put('userRole', user.role);
             $cookieStore.put('token', user.token);
             $cookieStore.put('token_timeout', user.token_timeout);
+            $cookieStore.put('lang', user.lang);
             $location.path('/home');
         });
     };
 
     $scope.register = function() {
-        $scope.informationAdd.get({user_s  : $scope.username, password_s : $scope.password, email_s : $scope.email, role_s : 'veilleur'}).$promise.then(function(user) {
+        $scope.informationAdd.get({user_s  : $scope.username, password_s : $scope.password, email_s : $scope.email, role_s : 'veilleur', lang_s: $scope.lang.id}).$promise.then(function(user) {
             if(user.error){
                 $scope.isError = true;
                 $scope.errorMessage = user.error;
