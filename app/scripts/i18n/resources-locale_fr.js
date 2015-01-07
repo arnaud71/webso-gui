@@ -161,7 +161,7 @@
     },
     {
         "key": "_CREATION_",
-        "value": "Crétaion"
+        "value": "Création"
     },
     {
         "key": "_CRUD_MANAGEMENT_",
@@ -599,11 +599,11 @@
 
     {
         "key": "_ENTER_TITLE_",
-        "value": "Enter titre"
+        "value": "Entrer un titre"
     },
     {
         "key": "_ENTER_LINK_",
-        "value": "Enter un lien"
+        "value": "Entrer un lien"
     },
     {
         "key": "_ENTER_TAG_",
@@ -626,7 +626,7 @@
         "value": "Glissez un fichier ici"
     },
     {
-        "key": "_HTML5_NOt_SUPPORTED_",
+        "key": "_HTML5_NOT_SUPPORTED_",
         "value": "Le glisser/déposer n'est pas pris en charge par votre ordinateur."
     },
 
@@ -704,6 +704,10 @@
         "key": "_WEBSITE_",
         "value": "Site web"
     },
+    {
+        "key":"_WATCH_DOCUMENT_",
+        "value": "Ajout et surveillance de la source"
+    },
 
 
 
@@ -766,6 +770,13 @@
         "value": [
           {"option":"Pas de notification"},
           {"option":"email"}
+        ]
+    },
+    {
+        "key": "_LANG_LIST_",
+        "value": [
+          {"name":"Français", "id": "fr"},
+          {"name":"Anglais", "id": "en"}
         ]
     },
     {
