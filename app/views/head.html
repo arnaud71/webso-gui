@@ -70,7 +70,7 @@
                 </ul>
             </li>
 
-            <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
+            <!-- <li class="dropdown" ng-show="isLecteurVeilleurAdmin">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" analytics-on='click' analytics-event='Validate' analytics-label='Validate_menu' analytics-category='Passive'>{{ '_NAV_VALIDATE_' | i18n }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li data-match-route="/validate/add" ng-show="isVeilleurAdmin">
@@ -78,7 +78,11 @@
                     <li data-match-route="/validate/display">
                         <a ui-sref="/validate/display" analytics-on='click' analytics-event='Validate' analytics-label='Validate_show_information' analytics-category='Passive'>{{ '_NAV_VALIDATE_LIST_' | i18n }}</a></li>
                 </ul>
+            </li> -->
+            <li data-match-route="/validate" ng-show="isLecteurVeilleurAdmin">
+                <li data-match-route="/validate" ng-show="isLecteurVeilleurAdmin"><a ui-sref="/validate">{{ '_NAV_VALIDATE_' | i18n }}</a></li></li>
             </li>
+
 
             <li data-match-route="/dashboard" ng-show="isVeilleurAdmin">
                 <li data-match-route="/dashboard" ng-show="isVeilleurAdmin"><a ui-sref="/dashboard">{{ '_NAV_DASHBOARD_' | i18n }}</a></li>

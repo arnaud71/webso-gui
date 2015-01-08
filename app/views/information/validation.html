@@ -1,0 +1,246 @@
+<div ng-controller="headerCtrl">
+    <div ng-include src="template.url"></div>
+</div>
+
+<ol class="breadcrumb text-center">
+    <li><a href="#/home">{{ "_SERVICE_NAME_" | i18n }}</a></li>
+    <li class="active">{{ "_VALIDATE_" | i18n }}</li>
+    <!-- <li><a>{{ "_VALIDATE_" | i18n }}</a></li> -->
+    <!-- <li class="active">{{ "_ADD_INFORMATION_" | i18n }}</li> -->
+</ol>
+
+
+<div class="hero-unit-bis" ng-controller="AddInformationCtrl">
+    <h3>{{ '_NAV_VALIDATION_ADD_' | i18n }}</h3>
+    (*: champ obligatoire)
+
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_TITLE_" | i18n }}*</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" placeholder="{{ '_TITLE_' | i18n }}" ng-model="inputTitle" id="inputTitle" name="inputTitle">
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_LINK_" | i18n }}</label>
+            <div class="col-sm-7">
+                <input type="text" ng-blur="checkSourceUrl(inputUrl)" class="form-control" placeholder="{{ '_ENTER_LINK_' | i18n }}" ng-model="inputUrl" id="inputUrl" name="inputUrl">
+            </div>
+        </div>
+    </form>
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_TAGS_" | i18n }}</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="inputTags" id="inputTags" name="inputTags">
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_DETAILS_" | i18n }}</label>
+            <div class="col-sm-7">
+                <textarea type="text" class="form-control" placeholder="{{ '_ENTER_DETAILS_' | i18n }}" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea>
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_COMMENTS_" | i18n }}*</label>
+            <div class="col-sm-7">
+                <textarea type="text" class="form-control" placeholder="{{ '_ENTER_COMMENTS_' | i18n }}" ng-model="inputComments" id="inputComments" name="inputComments"></textarea>
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_INPUT_FILE_" | i18n }}</label>
+
+            <div class="col-sm-2" style="border: 5px dashed #ddd; margin-left: 15px; padding-top: 16px; height: 65px; text-align: center; width: 200px;" ng-file-drop="onFileSelect($files)" ng-file-drag-over-delay="100" ng-file-drag-over-class="dragOverClass($event)" ng-file-drop-available="dropSupported=true" ng-show="dropSupported">
+                {{ "_DROP_FILE_HERE_" | i18n }}
+            </div>
+
+            <div class="col-sm-2" style="border: 5px dashed #ddd; margin-left: 15px; padding-top: 16px; height: 65px; text-align: center; width: 200px;" ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+                {{ "_HTML5_NOT_SUPPORTED_" | i18n }}
+            </div>
+            <div class="col-xs-1" style="text-align:center; padding-top: 16px;">
+                OU
+            </div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" ng-model="myModelObj">
+                <input type="file" ng-file-select="onFileSelect($files)"> <!-- multiple accept="image/*"> -->
+            </div>
+            <!-- <fieldset><legend>Upload right away</legend>
+                <div class="up-buttons">
+                    <div ng-file-select="" ng-model="files" class="upload-button" ng-file-change="upload(files)" ng-multiple="false" ng-accept="'image/*,application/pdf'" tabindex="0">Attach an Image or PDF</div><br>
+                    <button ng-file-select="" ng-model="files" ng-multiple="true">Attach Any File</button>
+                </div>
+                <div ng-file-select="" ng-model="files" class="drop-box" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" ng-multiple="true" allow-dir="true" accept="image/*,*pdf">
+                        Drop Images or PDFs<div>here</div>
+                </div>
+                <div ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your browser</div>
+            </fieldset> -->
+
+            <div class="col-sm-7" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
+            
+            <!-- <button class="btn btn-default" ng-click="upload.abort()">Cancel Upload</button> -->
+            <span class="progress" ng-show="picFile[0].progress >= 0">      
+                <div class="ng-binding" style="width:{{picFile[0].progress}}%" ng-bind="picFile[0].progress + '%'"></div>
+            </span> 
+            <span ng-show="picFile[0].result">Upload Successful</span>
+        </div>
+            <span class="progress" ng-show="file.progress >= 0">      
+                <div class="ng-binding" style="width:{{file.progress}}%" ng-bind="file.progress + '%'"></div>
+            </span>
+            <span ng-show="file.result">Upload Successful</span><br>
+            <span ng-show="errorMsg" ng-bind-html="errorMsg">{{errorMsg}}</span>
+        <!-- </div> -->
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_FOLDER_" | i18n }}*</label>
+            <div class="col-sm-7">
+                <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
+                <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
+                <!-- <select id="inputFolder" name="inputFolder" ng-model="inputFolder" required>
+                    <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
+                </select> -->
+            </div>
+        </div>
+    </form>
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-default" ng-click="doAdd()" name="add" analytics-on='click' analytics-event='Validate' analytics-label='Validate_add_information' analytics-category='Active'>{{ "_VALIDATE_" | i18n }}</button>
+
+        </div>
+    </div>
+
+    <!-- Testing Modal  -->
+    <script type="text/ng-template" id="validateModal.html">
+        <div class="modal-header">
+            <h3>{{ "_ADD_INFORMATION_" | i18n }}</h3>
+        </div>
+        <div class="modal-body">
+            {{ "_VALIDATION_SUCCESS_" | i18n }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ "_OK_" | i18n }}</button>
+
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ "_CANCEL_" | i18n }}</button> -->
+        </div>
+    </script>
+</div>
+
+<div id="list-search">
+    <div ng-controller="ValidationListCtrl">
+        <div class="row">
+            <div class="col-md-12">
+        <h3>{{ '_NAV_VALIDATE_LIST_' | i18n }}</h3>
+        
+        <div class="alert alert-danger" ng-show="isError">
+            <strong>&nbsp;</strong><span>{{errorMessage}}</span>
+        </div>
+        <!-- <div class="selectedItems">Items: {{mySelections}}</div><br><br> -->
+        <div class="selectedItems" ng-if="selectedIDs">
+            <h3>{{selectedIDs.title_t}}</h3>
+            <p>{{selectedIDs.content_t}}</p>
+            <p>{{ '_TAGS_' | i18n }}: {{selectedIDs.tags_s}}</p>
+            <p>{{ '_DETAILS_' | i18n }}: {{selectedIDs.detail_s}}</p>
+            <p>{{ '_COMMENTS_' | i18n }}: {{selectedIDs.comment_s}}</p>
+
+        </div><br><br>
+
+        <div class="row">
+            <!--           <div class="col-md-0">
+
+                            </div> -->
+            <div class="col-md-12">
+                <div class="gridStyleSource" ng-grid="gridOptionsSource">
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="deleteValidationModal.html">
+            <div class="modal-header">
+                <h3>{{ '_DELETE_VALIDATION_' | i18n }} {{userName}}</h3>
+
+            </div>
+            <div class="modal-body">
+                {{ '_ARE_YOU_SURE_DEL_VALIDATION' | i18n }} {{userName}} ?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+
+                <!-- <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button> -->
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="editValidationModal.html">
+            <div class="modal-header">
+                <h3>{{ '_EDIT_VALIDATION_' | i18n }}</h3>
+
+            </div>
+            <div class="modal-body">
+            {{test}}
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="validationForm.title">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_URL_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="url" class="form-control" ng-model="validationForm.url">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_TAGS_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="validationForm.tags">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_DETAILS_' | i18n }}</label>
+                        <div  class="col-sm-10">
+                            <textarea class="form-control" id="inputDetail" name="inputDetail" ng-model="validationForm.detail"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_COMMENTS_' | i18n }}</label>
+                        <div  class="col-sm-10">
+                            <textarea class="form-control" id="inputComments" name="inputComments" ng-model="validationForm.comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{validationForm.folder.name}}" disabled>
+                            <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+            </div>
+        </script>
+        </div>
+        </div>
+    </div>
+</<div>
