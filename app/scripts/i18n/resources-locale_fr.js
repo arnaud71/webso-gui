@@ -467,6 +467,10 @@
         "key": "_EDIT_VALIDATION_",
         "value": "Modification d'une validation"
     },
+    {
+        "key": "_REQUIRE_FIELDS_",
+        "value": "(*: champ obligatoire)"
+    },
 
 
 
@@ -657,6 +661,10 @@
         "value": "Surveiller le flux"
     },
     {
+        "key": "_SEARCH_FEED_",
+        "value": "Recherche de flux RSS"
+    },
+    {
         "key": "_VALIDATE_FILE_",
         "value": "Validation de document"
     },
@@ -711,6 +719,18 @@
     {
         "key":"_WATCH_DOCUMENT_",
         "value": "Ajout et surveillance de la source"
+    },
+    {
+        "key": "_ONLINE_",
+        "value": "En ligne"
+    },
+    {
+        "key": "_SEARCH_VALIDATING_FOLDER_",
+        "value": "Dossier de validation"
+    },
+    {
+        "key": "_SEARCH_WATCHING_FOLDER_",
+        "value": "Dossier de surveillance"
     },
 
 

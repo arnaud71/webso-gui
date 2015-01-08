@@ -467,6 +467,10 @@
         "key": "_EDIT_VALIDATION_",
         "value": "Edit validation"
     },
+    {
+        "key": "_REQUIRE_FIELDS_",
+        "value": "(*: required field)"
+    },
 
 
 
@@ -657,6 +661,10 @@
         "value": "monitor feed"
     },
     {
+        "key": "_SEARCH_FEED_",
+        "value": "Search for RSS feed"
+    },
+    {
         "key": "_VALIDATE_FILE_",
         "value": "Validate document"
     },
@@ -711,6 +719,18 @@
         {
         "key":"_WATCH_DOCUMENT_",
         "value": "Add and monitor source"
+    },
+    {
+        "key": "_ONLINE_",
+        "value": "Online"
+    },
+    {
+        "key": "_SEARCH_VALIDATING_FOLDER_",
+        "value": "Validating folder"
+    },
+    {
+        "key": "_SEARCH_WATCHING_FOLDER_",
+        "value": "Monitor folder"
     },
 
 
