@@ -13,6 +13,7 @@
 <div class="hero-unit-bis" ng-controller="AddInformationCtrl">
     <h3>{{ '_NAV_VALIDATION_ADD_' | i18n }}</h3>
     {{ '_REQUIRE_FIELDS_' | i18n }}
+    {{test}}
 
 
     <form class="form-horizontal" role="form">
@@ -74,45 +75,34 @@
                 OU
             </div>
             <div class="col-sm-3">
-                <input type="text" class="form-control" ng-model="myModelObj">
+                <!-- <input type="text" class="form-control" ng-model="myModelObj"> -->
                 <input type="file" ng-file-select="onFileSelect($files)"> <!-- multiple accept="image/*"> -->
-            </div>
-            <!-- <fieldset><legend>Upload right away</legend>
-                <div class="up-buttons">
-                    <div ng-file-select="" ng-model="files" class="upload-button" ng-file-change="upload(files)" ng-multiple="false" ng-accept="'image/*,application/pdf'" tabindex="0">Attach an Image or PDF</div><br>
-                    <button ng-file-select="" ng-model="files" ng-multiple="true">Attach Any File</button>
-                </div>
-                <div ng-file-select="" ng-model="files" class="drop-box" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" ng-multiple="true" allow-dir="true" accept="image/*,*pdf">
-                        Drop Images or PDFs<div>here</div>
-                </div>
-                <div ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your browser</div>
-            </fieldset> -->
 
+                <div class="progress" ng-show="file.progress >= 0">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="{{file.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{file.progress}}%;">
+                    {{file.progress}}%
+                  </div>
+                </div>
+                <!-- <button class="btn-xs btn-default" ng-show="file.progress >= 0" ng-click="upload.abort()">Cancel Upload</button> -->
+            </div>
             <div class="col-sm-7" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
             
-            <!-- <button class="btn btn-default" ng-click="upload.abort()">Cancel Upload</button> -->
-            <span class="progress" ng-show="picFile[0].progress >= 0">      
-                <div class="ng-binding" style="width:{{picFile[0].progress}}%" ng-bind="picFile[0].progress + '%'"></div>
-            </span> 
-            <span ng-show="picFile[0].result">Upload Successful</span>
         </div>
-            <span class="progress" ng-show="file.progress >= 0">      
-                <div class="ng-binding" style="width:{{file.progress}}%" ng-bind="file.progress + '%'"></div>
-            </span>
-            <span ng-show="file.result">Upload Successful</span><br>
-            <span ng-show="errorMsg" ng-bind-html="errorMsg">{{errorMsg}}</span>
-        <!-- </div> -->
+        <div class="form-group" >
+            <span class="col-sm-2">&nbsp;</span>
+            <div class="col-sm-7">
+                <span ng-show="file.result">Upload Successful</span><br>
+                <div class="alert alert-danger" ng-show="errorMsg" ng-bind-html="errorMsg"></div>
+                <div class="alert alert-success" ng-show="successMsg" ng-bind-html="successMsg"></div>
+            </div>
+        </div>
     </form>
 
     <form class="form-horizontal" role="form">
         <div class="form-group" >
             <label class="col-sm-2 control-label">{{ "_FOLDER_" | i18n }}*</label>
             <div class="col-sm-7">
-                <!-- <textarea type="text" class="form-control" placeholder="Entrer tags" ng-model="inputDetails" id="inputDetails" name="inputDetails"></textarea> -->
                 <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
-                <!-- <select id="inputFolder" name="inputFolder" ng-model="inputFolder" required>
-                    <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
-                </select> -->
             </div>
         </div>
     </form>

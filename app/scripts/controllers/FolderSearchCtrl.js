@@ -6,6 +6,8 @@ angular.module('websoApp')
     var $username                 = $cookieStore.get('username');
     var $token                    = $cookieStore.get('token');
     var $token_timeout            = $cookieStore.get('token_timeout');
+    var $vfolder                  = $cookieStore.get('vfolder');
+    var $wfolder                  = $cookieStore.get('wfolder');
 
     $scope.showFound              = false;
     $scope.totalItems             = 0;
@@ -17,7 +19,7 @@ angular.module('websoApp')
     paginationConfig.lastText     = 'Fin';
     $scope.isCollapsed            = true;
     $scope.isError                = false;
-    $scope.errorMessage           = $filter('i18n')(cfg.errorConnect);
+    $scope.errorMessage           = $filter('i18n')('_ERROR_CONNECTION_');
     $scope.searchTerm             = '';
 
     $scope.onlineSourceList       = {};
@@ -55,16 +57,16 @@ angular.module('websoApp')
     });
 
     $scope.sourceFacets =  [
-      {name: 'selection',  value:'enregistrée(s)',   nb:0, checked:false, fq:' AND waiting_b:false'},
-      {name: 'waiting',       value:'en attente', nb:0, checked:false,fq:' AND waiting_b:true' }
+      {name: 'selection',  value:'enregistrée(s)',  nb:0, checked:false, fq:' AND waiting_b:false'},
+      {name: 'waiting',    value:'en attente',      nb:0, checked:false, fq:' AND waiting_b:true' }
     ];
     angular.forEach($scope.sourceFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.readFacets =  [
-      {name: 'notRead',  value:'non lu',    nb:0, checked:false, fq:' AND read_b:false' },
-      {name: 'read',     value:'lu',        nb:0, checked:false, fq:' AND read_b:true' }
+      {name: 'notRead',  value:'non lu',  nb:0, checked:false, fq:' AND read_b:false' },
+      {name: 'read',     value:'lu',      nb:0, checked:false, fq:' AND read_b:true' }
     ];
     angular.forEach($scope.readFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -88,64 +90,29 @@ angular.module('websoApp')
       $scope.idx[value.name] = key;
     });
 
-    $scope.dbList = $resource(cfg.urlServices+'db/:action',
-      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
-      {get:{method:'JSONP'}});
 
-    // ***************************************************************
-    // doSearchFolder
-    // list the available sources
-    $scope.folders = [];
-    $scope.doSearchFolder = function () {
-      $scope.isError = false;
-
-      $scope.dbList.get({
-        type_s      : 'tree',
-        title_t     : 'vfolder',
-        user_s      : $username,
-      }).$promise.then(function(result) {
-
-          $scope.folders = [];
-          var tmp = JSON.parse(result.success.response.docs[0].content_s);
-          var log = [];
-          angular.forEach(tmp[0].nodes, function(value1, key1) {
-            // if(angular.isArray(value1)){
-
-            $scope.folders.push({"id":value1.id ,"name":value1.title});
-            angular.forEach(value1.nodes, function(value2, key2){
-              $scope.folders.push({"id":value2.id , "name":value2.title});
-              angular.forEach(value2.nodes, function(value3, key3){
-                $scope.folders.push({"id":value3.id, "name":value3.title});
-                if(angular.isArray(value3.nodes)){
-                  angular.forEach(value3.nodes, function(value4, key4){
-                    $scope.folders.push({"id":value4.id, "name":value4.title});
-                  }, log);
-                }
-              }, log);
-            }, log);
-          }, log);
-          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
-          //$scope.folder = $scope.folders[1];
-
-        }, function(reason) {
-          alert('Failed: ' + reason);
-        });
-    };
-
-    $scope.doSearchFolder();
-    $scope.facetFolder = [];
-    //$scope.folders = [];
-    $scope.folders = [{'id':1, 'title': 'dossier.1'},{'id':11, 'title':'dossier.1.1'}];
-    angular.forEach($scope.folders, function(value, key){
-      $scope.facetFolder.push({'name': value.id, 'value': value.name, nb:0, checked:false, fq:'+folder_i:'+value.id});
+    $scope.vfolderGroup = [];
+    angular.forEach($vfolder, function(value, key){
+      $scope.vfolderGroup.push({'name': value.id, 'value': value.name, items:$scope.facetsGroup, checked:false, fq:' AND folder_i:'+value.id, visible:true, type:'vfolderGroup' });
     });
-    angular.forEach($scope.facetFolder, function(value, key) {
+
+    angular.forEach($scope.vfolderGroup, function(value, key) {
       $scope.idx[value.name] = key;
     });
-    $scope.folderGroup =  [
-      {name :'FolderFacet', value : 'Folder' ,  items : $scope.facetFolder, checked : true, visible : false},
-      //{name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
-    ];
+
+    angular.forEach($scope.sourceGroup, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+
+    $scope.wfolderGroup = [];
+    angular.forEach($wfolder, function(value, key){
+      $scope.wfolderGroup.push({'name': value.id, 'value': value.name, items:$scope.facetsGroup, checked:false, fq:' AND folder_s:'+value.id, visible:true, type:'wfolderGroup' });
+    });
+
+    angular.forEach($scope.wfolderGroup, function(value, key) {
+      $scope.idx[value.name] = key;
+    });
+
     angular.forEach($scope.sourceGroup, function(value, key) {
       $scope.idx[value.name] = key;
     });
@@ -156,7 +123,8 @@ angular.module('websoApp')
     $scope.searchNav = [
       {
         name          : 'source',
-        value         : 'Source',
+        // value         : 'Source',
+        value         : $filter('i18n')('_SOURCE_'),
         facetsGroup   : $scope.sourceGroup,//$scope.facetsGroup,
         tooltipOpen   : 'Ouvrir la recherche des sources',
         tooltipClose  : 'Fermer la recherche des sources',
@@ -165,18 +133,20 @@ angular.module('websoApp')
 
       {
         name          : 'watch',
-        value         : 'Dossiers de surveillances',
+        // value         : 'Dossiers de surveillances',
+        value         : $filter('i18n')('_SEARCH_WATCHING_FOLDER_'),
         tooltipOpen   : 'Ouvrir la recherche des dossiers de surveillance',
         tooltipClose  : 'Fermer la recherche des dossiers de surveillance',
-        facetsGroup   : $scope.facetsGroup,
+        foldersGroup  : $scope.wfolderGroup,
+        // facetsGroup   : $scope.facetGroup,
         checked       : false
       },
 
       {
         name          : 'validation',
-        value         : 'Dossiers de validation',
-        //facetsGroup   : $scope.folderGroup,
-        facetsGroup   : $scope.facetsGroup,
+        // value         : 'Dossiers de validation',
+        value         : $filter('i18n')('_SEARCH_VALIDATING_FOLDER_'),
+        foldersGroup  : $scope.vfolderGroup,
         tooltipOpen   : 'Ouvrir la recherche des dossiers de validation',
         tooltipClose  : 'Fermer la recherche des dossiers de validation',
         checked       : false
@@ -184,7 +154,8 @@ angular.module('websoApp')
 
       {
         name        : 'online',
-        value       : 'En ligne',
+        // value       : 'En ligne',
+        value       : $filter('i18n')('_ONLINE_'),
         tooltipOpen   : 'Ouvrir la recherche des ressources online',
         tooltipClose  : 'Fermer la recherche des ressources online',
         selectGroup : $scope.onlineGroup,
@@ -193,7 +164,8 @@ angular.module('websoApp')
 
       {
         name        : 'feeds',
-        value       : 'Recherche de flux RSS',
+        // value       : 'Recherche de flux RSS',
+        value       : $filter('i18n')('_SEARCH_FEED_'),
         tooltipOpen   : 'Ouvrir la recherche de flux RSS',
         tooltipClose  : 'Fermer la recherche de flux RSS',
         checked     : false
@@ -252,9 +224,9 @@ angular.module('websoApp')
       {action:'put.pl', type_s:'source', user_s:$username, level_sharing_i:'1' , isWatched_b:'false', callback:"JSON_CALLBACK"},
       {put:{method:'JSONP'}});
 
-    // $scope.dbList = $resource(cfg.urlServices+'db/:action',
-    //   {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
-    //   {get:{method:'JSONP'}});
+    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl',user_s:$username,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
 
     $scope.onlineSearch = $resource(cfg.urlServices + 'harvester/QUERYSEARCH/:action',
       {action: 'get_querysearch.pl', query: '', typeQuery: '', callback: "JSON_CALLBACK"},
@@ -354,7 +326,8 @@ angular.module('websoApp')
             //start: $scope.currentPage - 1,
             start: ($scope.currentPage - 1) * 10,
             sort: $scope.sort,
-            fq: 'type_s:validation' + ' AND user_s:' + $username
+            // fq: 'type_s:validation' + ' AND user_s:' + $username
+            fq: 'type_s:validation' + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
           }).$promise.then(function (result) {
               $scope.solrResult = result.success;
               $scope.totalItems = result.success.response.numFound;
@@ -420,20 +393,37 @@ angular.module('websoApp')
             //start: $scope.currentPage - 1,
             start   :($scope.currentPage-1)*10,
             sort    : $scope.sort,
-            fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+            fq: ' type_s: watch ' + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
           }).$promise.then(function (result) {
               $scope.solrResult = result.success;
               $scope.totalItems = result.success.response.numFound;
               // get read / not read
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.success.response.numFound - result.success.facet_counts.facet_queries['read_b:true'];
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.read].nb = result.success.facet_counts.facet_queries['read_b:true'];
+              var $i=0;
+              angular.forEach($scope.wfolderGroup, function(value, key) {
+                // $scope.solr.get({ q: $scope.searchTerm,
+                //   //start: $scope.currentPage - 1,
+                //   start   :($scope.currentPage-1)*10,
+                //   sort    : $scope.sort,
+                //   fq: $scope.typeFq + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq
+                // }).$promise.then(function (result) {
+              
+                $scope.searchNav[$scope.idx.watch].foldersGroup[$i].items[$scope.idx.readFacet].items[$scope.idx.notRead].nb = 4;
+                $i++;
+              
+              });
+
+
+
+
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.readFacet].items[$scope.idx.notRead].nb = result.success.response.numFound - result.success.facet_counts.facet_queries['read_b:true'];
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.readFacet].items[$scope.idx.read].nb = result.success.facet_counts.facet_queries['read_b:true'];
               //$scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.folderFacet].items[$scope.idx.validation].nb = result.facet_counts.facet_queries['type_s:validation'];
 
 
               // get period data
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.periodFacet].items[$scope.idx.day].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-1DAY TO NOW]'] | 0;
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.periodFacet].items[$scope.idx.week].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-7DAY TO NOW]'] | 0;
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.periodFacet].items[$scope.idx.month].nb = result.success.facet_counts.facet_queries['date_dt:[NOW-30DAY TO NOW]'] | 0;
               // get
 
               // convert table lang in hash lang
@@ -442,8 +432,8 @@ angular.module('websoApp')
                 lang[result.success.facet_counts.facet_fields.lang_s[i]] = result.success.facet_counts.facet_fields.lang_s[i + 1];
               }
 
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
-              $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.langFacet].items[$scope.idx.en].nb = lang.en | 0;
+              // $scope.searchNav[$scope.idx.watch].foldersGroup[$scope.idx.facetsGroup].items[$scope.idx.langFacet].items[$scope.idx.fr].nb = lang.fr | 0;
 
             });
 
@@ -613,6 +603,35 @@ angular.module('websoApp')
           $scope.searchNav[$scope.idx.source].checked = false;
         }
       }
+    };
+
+    $scope.folderCheck = function (folder, dir) {
+      var $obj = '';
+      var $folder_query = '';
+      if($scope.searchNav[$scope.idx.watch].checked){
+        $obj = $scope.idx.watch;
+        $folder_query = ' AND folder_s:';
+      }
+      else{
+        $obj = $scope.idx.validation;
+        $folder_query = ' AND folder_i:';
+      }
+      angular.forEach($scope.searchNav[$obj].foldersGroup, function(value, key) {
+        if(folder.name == value.name){
+          if(value.checked == false){
+            value.checked = true;
+            $scope.folderFacetFq = $folder_query+folder.name;
+          }
+          else{
+            value.checked = false;
+            $scope.folderFacetFq = '';
+          }
+        }
+        else{
+          value.checked = false;
+        }
+      });
+      $scope.doSearch();
     };
 
     $scope.facetCheck = function (facet) {
@@ -810,7 +829,7 @@ angular.module('websoApp')
 
         modalInstance.result.then(function () {
           if($scope.validationForm.url == '' || $scope.validationForm.folder.id == '' || $scope.validationForm.comment == '') {
-            alert('Erreur merci de saisir au moins un titre, un dossier et un commentaire');
+            alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
           }
           else{
             $scope.validationAdd.get({
@@ -883,7 +902,7 @@ angular.module('websoApp')
       });
 
       modalInstance.result.then(function () {
-        if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert("Mauvais mail");
+        if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert($filter('i18n')('_WRONG_MAIL_FORMAT_'));
         else{
           $scope.sendMail.send({
             token         : $token,
@@ -961,7 +980,14 @@ angular.module('websoApp')
     }
 
     $scope.seeDocuments = function (id, titre){
-      $scope.typeFq = '+type_s:document +source_id_ss:'+id;
+      $scope.typeFq = '+type_s:document AND source_id_ss:'+id;
+      $scope.affichageSource = true;
+      $scope.sourceTitle = titre;
+      $scope.doSearch();
+    }
+
+    $scope.seeDocs = function (id, titre, type){
+      $scope.typeFq = 'type_s:'+type+' AND source_id_ss:'+id;
       $scope.affichageSource = true;
       $scope.sourceTitle = titre;
       $scope.doSearch();
@@ -1041,7 +1067,7 @@ angular.module('websoApp')
           });
         }
         else{
-          alert('Source déjà enregistrée.');
+          alert($filter('i18n')('_SOURCE_ALREADY_EXISTS_'));
         }
       });
     }
@@ -1059,49 +1085,62 @@ angular.module('websoApp')
       });
     }
 
-    // $scope.watchFeed = function(feed){
-    //   $scope.dbList.get({
-    //     type_s :'source',
-    //     url_s  : '"'+feed.url+'"'
-    //   })
-    //   .$promise.then(function(result) {
+    $scope.watchFeed = function(feed){
+      $scope.dbList.get({
+        type_s :'source',
+        url_s  : '"'+feed.url+'"'
+      })
+      .$promise.then(function(result) {
 
-    //     $scope.WatchForm                   = {};
-    //     $scope.WatchForm.url               = feed.url;
-    //     $scope.WatchForm.title             = feed.title;
-    //     $scope.WatchForm.tags              = '';
-    //     $scope.WatchForm.frequency         = {option:''};
-    //     // $scope.WatchForm.frequency.option  = '';
-    //     $scope.WatchForm.inputForlder      = {id:'', name:''};
+        $scope.WatchForm                   = {};
+        $scope.WatchForm.url               = feed.url;
+        $scope.WatchForm.title             = String(feed.title).replace(/<[^>]+>/gm, ''); //Remove html tags from text
+        $scope.WatchForm.tags              = '';
+        $scope.WatchForm.query             = '';
+        $scope.WatchForm.frequency         = {option:''};
+        $scope.WatchForm.forlder           = {id:'', name:''};
+        $scope.WatchForm.notification      = {option:''};
 
-    //     var modalInstance = $modal.open({
-    //       scope: $scope,
-    //       templateUrl : 'watchFeedModal.html',
-    //       controller  : ModalInstanceCtrl
-    //     });
-    //     if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
-    //       modalInstance.result.then(function () {
-    //         $scope.feedAdd.put({
-    //           source_type_s     : 'RSS',
-    //           url_s:            $scope.WatchForm.url,
-    //           title_t:          $scope.WatchForm.title,
-    //           tags_s:           $scope.WatchForm.tags,
-    //           refresh_s:        $scope.WatchForm.frequency.option,
-    //           waiting_b:        false
-    //         });
-    //         $scope.add({
-    //           folder_i:         $scope.WatchForm.inputFolder.id,
-    //           folder_s:         $scope.WatchForm.inputFolder.name,
-    //           query_s       :  $scope.model.inputQuery,
-    //           source_id_s   :  $scope.model.sourceId,
-    //         })
-    //       });
-    //     }
-    //     else{
-    //       alert('Source déjà enregistrée.');
-    //     }
-    //   });
-    // }
+        if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+          var modalInstance = $modal.open({
+            scope: $scope,
+            templateUrl : 'watchFeedModal.html',
+            controller  : ModalInstanceCtrl
+          });
+
+          modalInstance.result.then(function () {
+            if($scope.WatchForm.url == '' || $scope.WatchForm.folder.id == '' || $scope.WatchForm.comment == '') {
+              alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
+            }
+            else{
+              $scope.feedAdd.put({
+                source_type_s     : 'RSS',
+                url_s:            $scope.WatchForm.url,
+                title_t:          $scope.WatchForm.title,
+                tags_s:           $scope.WatchForm.tags,
+                refresh_s:        $scope.WatchForm.frequency.option,
+                waiting_b:        false
+              }).$promise.then(function(result) {
+                $scope.ressourceAdd.put({
+                  type_s:           'watch',
+                  title_t:          $scope.WatchForm.title,
+                  url_s:            $scope.WatchForm.url,
+                  tags_s:           $scope.WatchForm.tags,
+                  folder_s:         $scope.WatchForm.folder.id,
+                  // folder_s:         $scope.WatchForm.folder.name,
+                  query_s:          $scope.WatchForm.query,
+                  source_id_s:      result.id,
+                  notification_s:   $scope.WatchForm.notification.option
+                });
+              });
+            }
+          });
+        }
+        else{
+          alert($filter('i18n')('_SOURCE_ALREADY_EXISTS_'));
+        }
+      });
+    }
 
     //  ***************************************
     //  modal instance
@@ -1138,6 +1177,12 @@ angular.module('websoApp')
       {option:'24h'},
       {option:'48h'}
     ] ;
+
+    // $scope.notifications =  [
+    //   {option:'Pas de notification'},
+    //   {option:'email'}
+    // ];
+    $scope.notifications = $filter('i18n')('_NOTIFICATION_TYPES_');
 
   }]);
 
