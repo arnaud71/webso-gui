@@ -425,7 +425,7 @@ angular.module('websoApp')
             $scope.solrResult = result.success;
             $scope.totalItems = result.success.response.numFound;
             // get read / not read
-            alert($scope.typeWatch + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq);
+            // alert($scope.typeWatch + ' AND user_s:' + $username + ' ' + $scope.langFacetFq + ' ' + $scope.periodFacetFq + ' ' + $scope.folderFacetFq + ' ' + $scope.readFacetFq);
             var $i=0;
             angular.forEach($scope.wfolderGroup, function(value, key) {
 
@@ -696,7 +696,6 @@ angular.module('websoApp')
         if (item.checked == false) {
           // $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.readFacet].items[$scope.idx.notRead].checked = false;
           $scope.readFacetFq = item.fq;
-          alert(item.fq);
         }
         else {
           $scope.readFacetFq = '';
