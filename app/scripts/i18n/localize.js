@@ -12,8 +12,8 @@ angular.module('localization', []).
     factory('localize', ['$http', '$rootScope', '$window', '$filter', '$cookieStore', function ($http, $rootScope, $window, $filter, $cookieStore) {
     var localize = {
         // use the $window service to get the language of the user's browser
-        cookie_lang: $cookieStore.get('lang'),
-        browser_lang:$window.navigator.userLanguage || $window.navigator.language,
+        cookieLang: $cookieStore.get('lang'),
+        browserLang:$window.navigator.userLanguage || $window.navigator.language,
         language:'',
         // array to hold the localized resource string entries
         dictionary:[],
@@ -31,19 +31,19 @@ angular.module('localization', []).
 
         initLocalizedResources:function () {
             // build the url to retrieve the localized resource file
-            if(localize.cookie_lang && angular.isDefined(localize.cookie_lang)){
-                localize.language = localize.cookie_lang;
+            if(localize.cookieLang && angular.isDefined(localize.cookieLang)){
+                localize.language = localize.cookieLang;
             }
             else{
-                localize.language = localize.browser_lang;
+                localize.language = localize.browserLang;
             }
             var url = 'scripts/i18n/resources-locale_' + localize.language + '.js';
             // request the resource file
-            $http({ method:"GET", url:url, cache:false }).success(localize.successCallback).error(function () {
+            $http({ method:'GET', url:url, cache:false }).success(localize.successCallback).error(function () {
                 // the request failed set the url to the default resource file
                 var url = 'scripts/i18n/resources-locale_default.js';//http://codingsmackdown.tv/?p=104&preview=true
                 // request the default resource file
-                $http({ method:"GET", url:url, cache:false }).success(localize.successCallback);
+                $http({ method:'GET', url:url, cache:false }).success(localize.successCallback);
             });
         },
 
@@ -65,7 +65,7 @@ angular.module('localization', []).
                 // and only take the first result
                 var entry = $filter('filter')(localize.dictionary, {key:value})[0];
                 // check to make sure we have a valid entry
-                if ((entry !== null) && (entry != undefined)) {
+                if ((entry !== null) && (entry !== undefined)) {
                     // set the result
                     result = entry.value;
                 }

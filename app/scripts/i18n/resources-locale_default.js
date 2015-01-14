@@ -283,11 +283,11 @@
     },
     {
         "key": "_NAV_WATCHES_",
-        "value": "Watches"
+        "value": "Monitor"
     },
     {
         "key": "_NAV_WATCHES_FOLDER_",
-        "value": "monitor folder"
+        "value": "Monitor folder"
     },
     {
         "key": "_NAV_VALIDATING_FOLDER_",
@@ -330,7 +330,7 @@
     },
     {
         "key": "_ORGANIZE_BAR_WFOLDER_",
-        "value": "monitor folder"
+        "value": "Monitor folder"
     },
 
 
@@ -799,8 +799,8 @@
         {
         "key": "_LANG_LIST_",
         "value": [
-          {"name":"Français", "id": "fr"},
-          {"name":"Anglais", "id": "en"}
+          {"name":"French", "id": "fr"},
+          {"name":"English", "id": "en"}
         ]
     },
     {
