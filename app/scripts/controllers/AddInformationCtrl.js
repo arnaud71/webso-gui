@@ -139,6 +139,11 @@ angular.module('websoApp')
         //   // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
         // };
 $scope.onFileSelect = function(file) {
+        $scope.errorMsg = '';
+        $scope.successMsg = '';
+        $scope.file='';
+        file.progress = '';
+
         var data = $scope.formUpload ? {
           username: $scope.username
         } : {};
@@ -146,6 +151,7 @@ $scope.onFileSelect = function(file) {
         file.upload = $upload.upload({
           // url: 'https://angular-file-upload-cors-srv.appspot.com/upload' + $scope.getReqParams(),
           url: cfg.urlServices+'file/file_upload_2.pl',
+          // url: cfg.urlServices+'file/file_upload.pl',
           method: 'POST',
           headers: {
             'Access-Control-Request-Method': 'PUT, POST, OPTIONS'
@@ -157,16 +163,25 @@ $scope.onFileSelect = function(file) {
 
         file.upload.then(function(response) {
           // $timeout(function() {
-            file.result = response.data;
+            // file.result = response.data;
+            if(response.data.error){
+              $scope.errorMsg = response.data.error;
+            }
+            else if(response.data.success){
+              $scope.successMsg = response.data.success;
+            }
           // });
         }, function(response) {
-          if (response.status > 0)
-            $scope.errorMsg = response.status + ': ' + response.data;
+          // if (response.status > 0)
+          //   $scope.errorMsg = response.status + ': ' + response.data;
+          // else
+          // $scope.errorMsg = response;
         });
 
         file.upload.progress(function(evt) {
           // Math.min is to fix IE which reports 200% sometimes
           file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          $scope.progress=file.progress;
         });
 
         file.upload.xhr(function(xhr) {
