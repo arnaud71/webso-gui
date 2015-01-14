@@ -59,6 +59,9 @@
             <!-- <div class="info">
                 {{info}}
             </div> -->
+            <div class="alert alert-danger" ng-show="isError">
+                <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessage}}</span>
+            </div>
                 <table class="table table-striped">
                     <tr ng-repeat="fold in folder">
                         <td>

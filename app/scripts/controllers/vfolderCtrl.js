@@ -116,23 +116,30 @@ angular.module('websoApp')
 
     $scope.folderList = function(scope) {
       //alert('+folder_s:'+scope.$modelValue.title);
+      if(scope.$modelValue.id == 1){
+        scope.$modelValue.id = '*';
+      }
       $scope.dbList.get({
-        folder_i    : scope.$modelValue.id,
-        type_s     : 'validation',
-        user_s      : $username,
+        folder_i  : scope.$modelValue.id,
+        type_s    : 'validation',
+        user_s    : $username,
       }).$promise.then(function(result) {
-        $scope.isError = false;
-
-        if (typeof result.success.response !== 'undefined') {
-          //if (typeof solrResult !== 'undefined') {
-            //if ($scope.solrResult.response.numFound !== 'undefined') {
-            $scope.folder = angular.fromJson(result.success.response.docs);
-            //alert($scope.folder);
-            //log($scope.solrResult.response.docs[0].content_s);
-          //}
+        if(result.error){
+          $scope.isError = true;
+          $scope.errorMessage = result.error;
+        }
+        else{
+          $scope.isError = false;
+          if (typeof result.success.response !== 'undefined') {
+            //if (typeof solrResult !== 'undefined') {
+              //if ($scope.solrResult.response.numFound !== 'undefined') {
+              $scope.folder = angular.fromJson(result.success.response.docs);
+              //alert($scope.folder);
+              //log($scope.solrResult.response.docs[0].content_s);
+            //}
+          }
         }
       },
-
       //error
       function () {
         $scope.isError = true;
