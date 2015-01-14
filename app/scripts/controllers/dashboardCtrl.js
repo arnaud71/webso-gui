@@ -1,6 +1,6 @@
 'use strict';
 
-websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, serviceWidgets, cfg){
+websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, serviceWidgets, cfg, $filter){
   // function who gets the user's widgets
   // and place them on the dashboard according the structure :
   // 1 line and 3 columns : each column will be sized col-md-4
@@ -53,7 +53,7 @@ websoApp.controller('dashboardCtrl', function($scope, $cookieStore, $resource, s
     };
 
     var model = {
-      title: "Tableau de bord",
+      title: $filter('i18n')('_DASHBOARD_'),
       structure: "4-8",
       // line 1
       rows: [{

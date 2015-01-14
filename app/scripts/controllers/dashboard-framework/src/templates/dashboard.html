@@ -2,12 +2,12 @@
   <h1>
     {{model.title}}
     <span style="font-size: 20px" class="pull-center">
-      <a analytics-on='click' analytics-event='Manage' analytics-label='Manage_Dashboard' analytics-category='Passive' href="" title="{{editMode ? 'disable edit mode' : 'enable edit mode'}}" ng-click="toggleEditMode()">
+      <!-- <a analytics-on='click' analytics-event='Manage' analytics-label='Manage_Dashboard' analytics-category='Passive' href="" title="{{editMode ? 'disable edit mode' : 'enable edit mode'}}" ng-click="toggleEditMode()">
         <i class="fa fa-edit"></i>
-      </a>
-      <!-- <a href="" ng-if="editMode" title="edit dashboard" ng-click="editDashboardDialog()">
-        <i class="fa fa-cog"></i>
       </a> -->
+      <a href="" ng-if="editMode" title="edit dashboard" ng-click="editDashboardDialog()">
+        <i class="fa fa-cog"></i>
+      </a>
       <a href="" ng-if="editMode" title="add new widget" ng-click="addWidgetDialog()">
         <i class="fa fa-plus-circle"></i>
       </a>
