@@ -14,6 +14,7 @@
         </div>
     </div>
     <div ng-controller="FolderSearchCtrl">
+    <!-- {{searchNav}} -->
         <div class="alert alert-danger" ng-show="isError">
             <strong>&nbsp;</strong><span>{{errorMessage}}</span>
         </div>
@@ -23,14 +24,47 @@
                 <table class="table table-condensed">
                 <tr ng-repeat="searchGroup in searchNav">
                 <td>
+                    <!-- {{searchGroup}} -->
                     <div ng-show="searchGroup.checked == false"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-right"></span></button> &nbsp;  {{searchGroup.value}} </div>
                     <div ng-show="searchGroup.checked == true"><button type="button" class="btn btn-xs" ng-click="groupCheck(searchGroup.name)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp; {{searchGroup.value}} </div>
                     <!-- <input type="checkbox" ng-model="searchGroup.checked" ng-click="groupCheck(searchGroup.name)">&nbsp; {{searchGroup.value}} 
                     <span ng-click="groupCheck(searchGroup.name)"> &nbsp; {{searchGroup.value}} </span>-->
+                    <div ng-show="searchGroup.foldersGroup">
+                    <table ng-show="searchGroup.checked" class="table table-condensed">
+                        <tr ng-repeat="folder in searchGroup.foldersGroup">
+                            <td>
+                            <!-- {{folder.checked}} -->
+                                <div ng-show="folder.visible">
+                                    <div ng-show="folder.checked == false"><button type="button" class="btn btn-xs" ng-click="folderCheck(folder, folder.type)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{folder.value}}</div>
+                                    <div ng-show="folder.checked == true"><button  type="button" class="btn btn-xs" ng-click="folderCheck(folder, folder.type)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{folder.value}}</div>
+
+                                <!-- <input type="checkbox" ng-model="facet.checked">&nbsp;  {{facet.value}} -->
+                                </div>
+                                <table ng-show="folder.checked" class="table table-condensed">
+                                    <tr ng-repeat="facet in folder.items">
+                                        <td>
+                                            <div ng-show="facet.visible">
+                                                <div ng-show="facet.checked == false"><button type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{facet.value}}</div>
+                                                <div ng-show="facet.checked == true"><button  type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{facet.value}}</div>
+                                            </div>
+                                            <table ng-show="facet.checked" class="table table-condensed">
+                                                <tr ng-repeat="item in facet.items">
+                                                    <td><input type="checkbox" ng-model="item.checked" ng-click="itemCheck(item)"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+
                     <div ng-show="searchGroup.facetsGroup">
                     <table ng-show="searchGroup.checked" class="table table-condensed">
                         <tr ng-repeat="facet in searchGroup.facetsGroup">
-                            <td> <div ng-show="facet.visible">
+                            <td>
+                                <div ng-show="facet.visible">
                                     <div ng-show="facet.checked == false"><button type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-right"></span></button>&nbsp;  {{facet.value}}</div>
                                     <div ng-show="facet.checked == true"><button  type="button" class="btn btn-xs" ng-click="facetCheck(facet)" > <span class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;  {{facet.value}}</div>
 
@@ -39,6 +73,7 @@
                                 <table ng-show="facet.checked" class="table table-condensed">
                                     <tr ng-repeat="item in facet.items">
                                         <td><input type="checkbox" ng-model="item.checked" ng-click="itemCheck(item)"> &nbsp; {{item.value}}: {{item.nb}}</input></td>
+                                        <!-- <span class="badge">{{item.nb}}</span> -->
                                     </tr>
                                 </table>
                             </td>
@@ -171,9 +206,153 @@
                     </div>
                 </div>
 
-                <!-- solr results -->
-                <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult">
+                <!-- Result solr for folders -->
+                <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked' id="solrResult">
+                    <div id="numberFound">
+                        <div ng-if="!affichageWaiting" solr-results-number ng-show="solrResult.response">
+                            {{ '_Page_' | i18n }}: {{currentPage}} {{ '_OF_' | i18n }} {{solrResult.response.numFound}} {{ '_REQUEST_RESULT_' | i18n }} <b>'{{solrResult.responseHeader.params.q}}'</b> {{ '_IN_' | i18n }} {{solrResult.responseHeader.QTime}} ms
+                            <br>
+                        </div>
+                        <div ng-if="affichageWaiting" solr-results-number ng-show="solrResult.response">
+                            {{ '_Page_' | i18n }}: {{currentPage}} {{ '_OF_' | i18n }} {{solrResult.response.numFound}} {{ '_IN_' | i18n }} {{solrResult.responseHeader.QTime}} ms
+                            <br>
+                        </div>
+                        <div ng-if="affichageSource" align="right">
+                            {{ '_REFERER_' | i18n }}: {{sourceTitle}} - <a ng-click="resetList()">{{ '_BACK_TO_SOURCES_' | i18n }}</a>
+                        </div>
+                        <div ng-if="affichageWatch" align="right">
+                            {{ '_WATCH_' | i18n }}: {{watchTitle}} - <a ng-click="resetWatch()">{{ '_BACK_TO_SOURCES_' | i18n }}</a>
+                        </div>
+                        <div ng-if="affichageValidate" align="right">
+                            {{ '_VALIDATE_' | i18n }}: {{validateTitle}} - <a ng-click="resetValidate()">{{ '_BACK_TO_SOURCES_' | i18n }}</a>
+                        </div>
+                        <!-- <div ng-if="affichageWaiting" align="right">
+                            {{waitingTitle}} - <a ng-click="resetWaiting()">{{ '_BACK_TO_WAITINGS_' | i18n }}</a>
+                        </div> -->
+                    </div>
+                    <div id="docsFound">
+                        <div onlineResult ng-show="onlineResult.count">
+                            <table class="table table-striped">
+                                <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
+                                    <td>
+                                        <div id="titleFound">
+                                            <a href="{{online.link}}" target="_blank" ng-bind-html="online.title"></a>
+                                        </div>
 
+                                        <div id="contentFound">
+                                            <p ng-bind-html="online.description"></p>
+                                        </div>
+
+                                        <div id="urlFound">
+                                            <span ng-if="online.link.length<100">
+                                            {{online.link}}
+                                            </span>
+                                            <span ng-if="online.link>100">
+                                                {{online.link| limitTo:100}}...
+                                            </span>
+                                        </div>
+
+                                        <div id="dateFound">
+                                            {{online.pubDate|date:'dd-MM-yyyy HH:mm'}}
+                                            <div id="actionList">
+                                                <button type="button" class="btn btn-xs" ng-click="validateDoc(online,true,'online')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="shareDoc(online,'online')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div solr-result ng-show="solrResult.response.numFound">
+                            <table class="table table-striped">
+                                <tr ng-repeat="doc in solrResult.response.docs">
+                                    <td>
+                                    <!-- {{doc}} -->
+                                        <div ng-if="(doc.type_s =='watch')" id="titleFound">
+                                            <a ng-click="seeWatch(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a>
+                                        </div>
+                                        <div ng-if="(doc.type_s =='validation')" id="titleFound">
+                                            <!-- <a ng-click="seeValidate(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a> -->
+                                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                        </div>
+                                        <!-- <div ng-if="!searchNav[idx.source].checked" id="titleFound">
+                                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                        </div> -->
+                                        <div ng-if="((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
+                                            {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
+                                        </div>
+                                        <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
+                                            {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                        </div>
+                                        <div id="contentFound" ng-if="(doc.source_type_s=='rss') || (doc.source_type_s=='RSS') || (affichageSource) || affichageWatch">
+                                         <!-- || !(searchNav[idx.source].checked)"> -->
+                                            <div ng-controller="CollapseSolrCtrl">
+
+                                                <div collapse="!isCollapsed">
+                                                        <span ng-click="isCollapsed = !isCollapsed">
+                                                        <!-- {{solrResult.response.highlighting}}[{{doc.id}}][]{{ doc.content_en | limitTo:300 }} &gt;&gt;&gt;&gt; -->
+                                                            <span ng-if="solrResult.highlighting[doc.id].content_en[0]" ng-bind-html="solrResult.highlighting[doc.id].content_en[0]+'...'"></span>
+
+                                                            <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[0]=== \"undefined\"">{{ doc.content_en | limitTo:500 }} &gt;&gt;&gt;&gt;</span> -->
+
+                                                            <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
+                                                            <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
+
+                                                           <!-- &gt;&gt;&gt;&gt; -->
+                                                           <a>{{ '_SHOW_' | i18n }}&NonBreakingSpace;&gt;</a>
+                                                            <!-- <span ng-bind="getSummary(doc.id)"></span> -->
+                                                        </span>
+                                                </div>
+                                                <div collapse="isCollapsed">
+                                                        <span ng-click="isCollapsed = !isCollapsed">
+                                                        {{doc.content_en}} <a>&lt;&NonBreakingSpace;{{ '_HIDE_' | i18n }}</a>
+                                                        </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div ng-if="(searchNav[idx.validation].checked)">
+                                            {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
+                                        </div>
+                                        <div ng-if="doc.source_type_s == 'online'" id="urlFound">
+                                            {{ '_SHOW_' | i18n }} : {{doc.query_s}}<br>
+                                            {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
+                                            {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
+                                        </div>
+                                        <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
+                                            <span ng-if="doc.url_s.length<100">
+                                            {{doc.url_s}}
+                                            </span>
+                                            <span ng-if="doc.url_s.length>100">
+                                                {{doc.url_s| limitTo:100}}...
+                                            </span>
+                                        </div>
+
+                                        <div id="dateFound">
+                                            {{doc.date_dt|date:'dd-MM-yyyy HH:mm'}}
+                                            <div id="actionList">
+                                                <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                                                <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="{{ '_UNVALDIATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                                                <button ng-show="doc.read_b == false" type="button" class="btn btn-xs" ng-click="setRead(doc.id,true)" tooltip="{{ '_MARK_AS_READ_' | i18n }}"> <span class="glyphicon glyphicon-eye-open"></span></button>
+                                                <button ng-show="doc.read_b == true" type="button" class="btn btn-xs" ng-click="setRead(doc.id,false)" tooltip="{{ '_MARK_AS_UNREAD_' | i18n }}"> <span class="glyphicon glyphicon-eye-close"></span></button>
+                                                <button type="button" class="btn btn-xs" ng-click="shareDoc(doc,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button>
+
+                                                <!-- <div class="pull-right"><button ng-show="(doc.type_s == 'document')||(doc.type_s == 'validation')||(doc.source_type_s == 'online')" type="button" class="btn btn-xs" ng-click="deleteDoc(doc.id)" tooltip="{{ '_DELETE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-trash"></span></button></div> -->
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <pagination max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()" total-items="totalItems"></pagination>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- solr results for source -->
+                <!-- <div ng-show='searchNav[idx.validation].checked || searchNav[idx.watch].checked || searchNav[idx.source].checked' id="solrResult"> -->
+                <div ng-show='searchNav[idx.source].checked' id="solrResult">
                     <div id="numberFound">
                         <div ng-if="!affichageWaiting" solr-results-number ng-show="solrResult.response">
                             {{ '_Page_' | i18n }}: {{currentPage}} {{ '_OF_' | i18n }} {{solrResult.response.numFound}} {{ '_REQUEST_RESULT_' | i18n }} <b>'{{solrResult.responseHeader.params.q}}'</b> {{ '_IN_' | i18n }} {{solrResult.responseHeader.QTime}} ms
@@ -387,12 +566,12 @@
                             <input type="url" class="form-control" ng-model="validationForm.url">
                         </div>
                     </div>
-                    <div class="form-group" >
+                    <!--<div class="form-group" >
                         <label class="col-sm-2 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                         <div class="col-sm-10">
                             <select ng-model="validationForm.frequency" ng-options="frequency.option for frequency in frequencies" require></select>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}</label>
                         <div class="col-sm-10">
@@ -410,13 +589,12 @@
         </script>
 
 
-        <!-- modal for validate rss source -->
+        <!-- modal for waiting source -->
         <script type="text/ng-template" id="addOnlineSearchModal.html">
             <div class="modal-header">
                 <h3>{{ '_ADD_WAITING_QUERY_' | i18n }}</h3>
             </div>
             <div class="modal-body">
-
 
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
@@ -434,7 +612,7 @@
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
                         <div class="col-sm-10">
-                            <select ng-model="validationForm.frequency" ng-options="frequency.option for frequency in frequencies" require></select>
+                            <select ng-model="validationForm.frequency" ng-options="frequency.option for frequency in frequencies" required></select>
                         </div>
                     </div>
                     <div class="form-group" >
@@ -452,6 +630,7 @@
                 <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
+
 
         <!-- share info Modal  -->
         <script type="text/ng-template" id="shareModal.html">
@@ -480,12 +659,12 @@
                             <input type="text" class="form-control" ng-model="shareForm.tags">
                         </div>
                     </div>
-                    <div class="form-group" >
+                    <!--<div class="form-group" >
                         <label class="col-sm-2 control-label">{{ '_CONTENT_' | i18n }}</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" rows="6" ng-model="shareForm.content"></textarea>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group" >
                         <label class="col-sm-2 control-label">{{ '_COMMENTS_' | i18n }}</label>
                         <div class="col-sm-10">
@@ -504,10 +683,7 @@
                             <input type="email" class="form-control" rows="6" ng-model="shareForm.mail">
                         </div>
                     </div>
-
-
                 </form>
-
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="ok()">{{ '_SEND_' | i18n }}</button>
@@ -515,7 +691,6 @@
                 <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
-
 
 
         <!-- modal to see rss feed-->
@@ -538,6 +713,67 @@
             </div>
              <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            </div>
+        </script>
+
+
+        <!-- Add and watch feed modal -->
+        <script type="text/ng-template" id="watchFeedModal.html">
+            <div class="modal-header">
+                <h3>{{ '_WATCH_DOCUMENT_' | i18n }}</h3>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="WatchForm.title">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_URL_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="url" class="form-control" ng-model="WatchForm.url">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="WatchForm.tags">
+                        </div>
+                    </div>
+                     <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <select ng-model="WatchForm.frequency" ng-options="frequency.option for frequency in frequencies" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_QUERY_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="WatchForm.query">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <select ng-model="WatchForm.folder" ng-options="folder as folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ '_NOTIFICATION_' | i18n }}</label>
+                        <div class="col-sm-10">
+                            <select id="Notification" ng-model="WatchForm.notification" ng-options="notification.option for notification in notifications"></select>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">{{ '_SEND_' | i18n }}</button>
+
+                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
             </div>
         </script>
     </div>
