@@ -29,10 +29,10 @@
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessPassword">
-      <strong>Succès :&nbsp;</strong><span>{{messagePassword}}</span>
+      <strong>{{ '_SUCCESS_' | i18n }} :&nbsp;</strong><span>{{messagePassword}}</span>
     </div>
     <div class="alert alert-danger" ng-show="isErrorPassword">
-      <strong>erreur :&nbsp;</strong><span>{{errorMessagePassword}}</span>
+      <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessagePassword}}</span>
     </div>
   </form>
 
@@ -50,10 +50,10 @@
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessMail">
-      <strong>Succès :&nbsp;</strong><span>{{messageMail}}</span>
+      <strong>{{ '_SUCCESS_' | i18n }} :&nbsp;</strong><span>{{messageMail}}</span>
     </div>
     <div class="alert alert-danger" ng-show="isErrorMail">
-      <strong>erreur :&nbsp;</strong><span>{{errorMessageMail}}</span>
+      <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessageMail}}</span>
     </div>
   </form>
 
@@ -70,10 +70,10 @@
       </div>
     </div>
     <div class="alert alert-success" ng-show="isSuccessLang">
-      <strong>Succès :&nbsp;</strong><span>{{messageLang}}</span>
+      <strong>{{ '_SUCCESS_' | i18n }} :&nbsp;</strong><span>{{messageLang}}</span>
     </div>
     <div class="alert alert-danger" ng-show="isErrorLang">
-      <strong>erreur :&nbsp;</strong><span>{{errorMessageLang}}</span>
+      <strong>{{ '_ERROR_' | i18n }} :&nbsp;</strong><span>{{errorMessageLang}}</span>
     </div>
   </form>
   
