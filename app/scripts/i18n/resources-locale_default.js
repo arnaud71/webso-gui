@@ -117,7 +117,7 @@
     },
     {
         "key": "_WATCH_",
-        "value": "monitor"
+        "value": "Monitor"
     },
     {
         "key": "_WATCHES_",
@@ -496,7 +496,7 @@
     },
     {
         "key": "_WATCH_LIST_",
-        "value": "monitor list"
+        "value": "Monitor list"
     },
     {
         "key": "_MODAL_EDIT_WATCH_",
@@ -766,6 +766,10 @@
     {
         "key": "_WRONG_MAIL_FORMAT_",
         "value": "Wrong mail"
+    },
+    {
+        "key": "_EMPTY_LANG_",
+        "value": "Chose a language please"
     },
 
 

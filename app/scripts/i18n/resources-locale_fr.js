@@ -767,6 +767,10 @@
         "key": "_WRONG_MAIL_FORMAT_",
         "value": "Erreur dans l'adresse email"
     },
+    {
+        "key": "_EMPTY_LANG_",
+        "value": "Veuillez choisir une langue"
+    },
 
 
 

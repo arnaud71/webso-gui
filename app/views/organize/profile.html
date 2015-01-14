@@ -56,4 +56,25 @@
       <strong>erreur :&nbsp;</strong><span>{{errorMessageMail}}</span>
     </div>
   </form>
+
+  <form ng-submit="modifyLang()" name="modifyFrom" role="form" class="form-horizontal">
+    <div class="form-group" >
+      <label class="col-sm-2 control-label">{{ "_LANG_" | i18n }}</label>
+      <div class="col-sm-7">
+        <select ng-model="lang" name="lang" ng-options="lang.name for lang in langs" ng-change="update('ok')" required></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" data-ng-disabled="modifyForm.$invalid" class="btn btn-default" name="validate">{{ '_EDIT_' | i18n }}</button>
+      </div>
+    </div>
+    <div class="alert alert-success" ng-show="isSuccessLang">
+      <strong>Succès :&nbsp;</strong><span>{{messageLang}}</span>
+    </div>
+    <div class="alert alert-danger" ng-show="isErrorLang">
+      <strong>erreur :&nbsp;</strong><span>{{errorMessageLang}}</span>
+    </div>
+  </form>
+  
 </div>

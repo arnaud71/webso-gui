@@ -2,10 +2,11 @@
 
 angular.module('websoApp')
     .config(function($httpProvider) { $httpProvider.defaults.useXDomain = true; delete $httpProvider.defaults.headers.common['X-Requested-With'];})
-    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg, $filter) {
+    .controller('ProfileSettingCtrl', function ($scope, $resource, $cookieStore, $location, cfg, $filter, $window) {
 
     $scope.isSuccess = false;
     var username = $cookieStore.get('username');
+    var lang     = $cookieStore.get('lang');
     var token    = $cookieStore.get('token');
     var tokenTimeout    = $cookieStore.get('token_timeout');
     var userId = '';
@@ -15,6 +16,13 @@ angular.module('websoApp')
     $scope.password        = '';
     $scope.passwordConfirm = '';
     $scope.email           = '';
+    $scope.langs           = $filter('i18n')('_LANG_LIST_');
+    var tmp = [];
+
+    angular.forEach($scope.langs, function(val, key){
+        tmp[val.id] = val;
+    });
+    $scope.lang = tmp[lang];
 
     $scope.userList = $resource(cfg.urlServices+'db/:action',
         {action:'get.pl', token_s: token, token_timeout_l: tokenTimeout, callback:"JSON_CALLBACK"},
@@ -30,7 +38,7 @@ angular.module('websoApp')
 
     $scope.informationModify = $resource(cfg.urlServices+'db/:action',
         {action:'change.pl', callback:"JSON_CALLBACK"},
-        {get:{method:'JSONP'},
+        {put:{method:'JSONP'},
         post:{method:'POST', headers: {'Content-Type': 'application/json'}}});
 
     $scope.modifyPassword = function() {
@@ -45,8 +53,7 @@ angular.module('websoApp')
             $scope.isErrorPassword = true;
         }
         else{
-            $scope.informationModify.get({id: userId, password_s: $scope.password}).$promise.then(function(user) {
-            // $scope.informationModify.post({id: userId, password_s: $scope.password}).$promise.then(function(user) {
+            $scope.informationModify.post({id: userId, password_s: $scope.password}).$promise.then(function(user) {
                 if(user.error){
                     $scope.isErrorPassword = true;
                     $scope.errorMessagePassword = user.error;
@@ -79,8 +86,7 @@ angular.module('websoApp')
             $scope.isErrorMail = true;
         }   
         else{
-            $scope.informationModify.get({id: userId, email_s: $scope.email}).$promise.then(function(user) {
-            // $scope.informationModify.post({password_s: $scope.password, email_s: $scope.email}).$promise.then(function(user) {
+            $scope.informationModify.post({id: userId, email_s: $scope.email}).$promise.then(function(user) {
                 if(user.error){
                     $scope.isErrorMail = true;
                     $scope.errorMessageMail = user.error;
@@ -88,7 +94,7 @@ angular.module('websoApp')
                 else {
                     if(user.success){   
                         $scope.isSuccessMail = true;
-                        $scope.errorMessageMail = $filter('i18n')('_EMPTY_MAIL_');
+                        $scope.messageMail = $filter('i18n')('_UPDATE_INFO_OK_');
                     }
                 }
             },
@@ -101,8 +107,38 @@ angular.module('websoApp')
         }
     };
 
+    $scope.modifyLang = function() {
+        if(angular.isUndefined($scope.lang) || $scope.lang.length == 0){
+            $scope.errorMessageLang = $filter('i18n')('_EMPTY_LANG_');
+            $scope.isErrorLang = true;
+        }   
+        else{
+            $scope.informationModify.post({id: userId, lang_s: $scope.lang.id}).$promise.then(function(user) {
+                if(user.error){
+                    $scope.isErrorLang = true;
+                    $scope.errorMessageLang = user.error;
+                }
+                else {
+                    if(user.success){   
+                        $scope.isSuccessLang = true;
+                        $scope.messageLang = $filter('i18n')('_UPDATE_INFO_OK_');
+                        $cookieStore.put('lang', $scope.lang.id);
+                        $window.location.reload();
+                    }
+                }
+            },
+              //error
+              function () {
+                $scope.errorMessageLang = $filter('i18n')('_ERROR_CONNECTION_');
+                $scope.isErrorLang = true;
+              }
+            );
+        }
+    };
+
     $scope.releaseError = function() {
         $scope.isErrorMail = false;
+        $scope.isErrorLang = false;
         $scope.isErrorPassword = false;
     }
 });
