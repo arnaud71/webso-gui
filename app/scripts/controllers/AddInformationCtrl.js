@@ -12,6 +12,8 @@ angular.module('websoApp')
     $scope.inputDetails = '';
     $scope.inputComments= '';
     $scope.inputFolder  = '';
+    $scope.fileName     = '';
+    $scope.fileHash     = '';
     var error = {};
 
     var $username = $cookieStore.get('username');
@@ -169,6 +171,8 @@ angular.module('websoApp')
           }
           else if(response.data.success){
             $scope.successMsg = response.data.success;
+            $scope.fileName = response.data.name;
+            $scope.fileHash = response.data.hash;
           }
         // });
       }, function(response) {
