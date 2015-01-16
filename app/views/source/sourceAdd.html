@@ -12,8 +12,9 @@
 
         <div class="col-md-6">
             <h3>{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</h3>
+            {{ '_REQUIRE_FIELDS_' | i18n }}
             <div class="form-group" >
-                <label class="col-md-5 control-label required"> {{ '_SOURCE_' | i18n }}</label>
+                <label class="col-md-5 control-label required"> {{ '_SOURCE_' | i18n }}*</label>
 
 
                 <div class="col-md-7">
@@ -27,7 +28,7 @@
 
             </div>
             <div class="form-group" >
-                <label class="col-md-5 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
+                <label class="col-md-5 control-label">{{ '_SOURCE_NAME_' | i18n }}*</label>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="{{ '_ENTER_TITLE_' | i18n }}" ng-model="model.inputTitle" id="inputTitle" name="inputTitle">
                 </div>
@@ -41,7 +42,7 @@
             </div> -->
 
             <div class="form-group" >
-                <label class="col-md-5 control-label">{{ '_TAGS_' | i18n }}</label>
+                <label class="col-md-5 control-label">{{ '_TAGS_' | i18n }}*</label>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="{{ '_ENTER_TAG_' | i18n }}" ng-model="model.inputTags" id="inputTags" name="inputTags">
                 </div>
