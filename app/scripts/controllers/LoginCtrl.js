@@ -26,18 +26,19 @@ angular.module('websoApp')
         var token_timeout = $cookieStore.get('token_timeout');
     }
 
-/****************** Connection procedure ***********************/  
+/****************** Connection procedure ***********************/
     $scope.verifyLogin = $resource(cfg.urlServices+'db/:action',
         {action:'login.pl', callback:"JSON_CALLBACK"},
-        {get:{method:'JSONP'}});
+        {get:{method:'JSONP'},
+        post:{method:'POST', headers: {'Content-Type': 'application/json'}}});
 
-    $scope.dbList = $resource(cfg.urlServices+'db/:action',
+    $scope.ressource = $resource(cfg.urlServices+'db/:action',
         {action:'get.pl',callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});
 
     $scope.login = function () {
         $scope.loading = true;
-        // sending login information to the service to validate the authentication 
+        // sending login information to the service to validate the authentication
         var requete = {};
         // if(scope.isAuthenticated){
         //  requete = {token_s : token, token_timeout_dt : token_timeout};
@@ -45,7 +46,7 @@ angular.module('websoApp')
         // else{
             requete = {user_s : $scope.username, password_s : $scope.password};
         //}
-        $scope.verifyLogin.get(requete).$promise.then(function(user) {
+        $scope.verifyLogin.post(requete).$promise.then(function(user) {
 
             if(user.error){
                 $scope.loading = false;
@@ -54,13 +55,8 @@ angular.module('websoApp')
             }
             else {
                 if(user.success){
-
-
-                    // ***************************************************************
-                    // doSearchFolder
-                    // list the available sources
-
-                    $scope.dbList.get({
+                    // Queries to simplify some view in search
+                    $scope.ressource.get({
                         type_s      : 'tree',
                         title_t     : 'vfolder',
                         user_s      : $scope.username,
@@ -92,7 +88,7 @@ angular.module('websoApp')
                         alert('Failed: ' + reason);
                     });
 
-                    $scope.dbList.get({
+                    $scope.ressource.get({
                         type_s      : 'tree',
                         title_t     : 'wfolder',
                         user_s      : $scope.username,
