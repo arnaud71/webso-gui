@@ -17,14 +17,25 @@ angular.module('websoApp')
     var error = {};
 
     var $username = $cookieStore.get('username');
+    var $token    = $cookieStore.get('token');
+    var $token_timeout = $cookieStore.get('token_timeout');
 
     $scope.informationAdd = $resource(cfg.urlServices+'db/:action',
-        {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
-        {get:{method:'JSONP'}});
+      {action:'put.pl', type_s:'validation',user_s: $username ,level_sharing_i:'1',callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
+    $scope.dataGet = $resource(cfg.urlServices+'db/:action',
+      {action:'get.pl', callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'}});
+
+    $scope.dataChange = $resource(cfg.urlServices+'db/:action',
+      {action:'change.pl', callback:"JSON_CALLBACK"},
+      {put:{method:'JSONP'},
+      post:{method:'POST'}});
 
 
     $scope.doAdd = function () {
-      if($scope.inputTitle == '' || $scope.inputFolder == '' || $scope.inputComments == '') {
+      if($scope.inputTitle == '' || $scope.inputFolder == '' || $scope.inputComments == '' || $scope.inputTags == '') {
         alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
       }
       else{
@@ -36,6 +47,7 @@ angular.module('websoApp')
             comment_s : $scope.inputComments,
             folder_i  : $scope.inputFolder.id,
             folder_s  : $scope.inputFolder.name,
+            file_s    : 'f_'+$scope.fileHash,
         });
         // var addInfo = alert('Information ajoutée');
 
@@ -146,9 +158,10 @@ angular.module('websoApp')
       $scope.file='';
       file.progress = '';
 
-      var data = $scope.formUpload ? {
-        username: $scope.username
-      } : {};
+      var data = {
+        token: $token,
+        token_timeout : $token_timeout
+      };
 
       file.upload = $upload.upload({
         // url: 'https://angular-file-upload-cors-srv.appspot.com/upload' + $scope.getReqParams(),
