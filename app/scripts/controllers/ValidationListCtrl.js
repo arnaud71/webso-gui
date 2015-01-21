@@ -6,8 +6,11 @@ angular.module('websoApp')
     $scope.mySelections = [];
     var $username = $cookieStore.get('username');
     var $userRole = $cookieStore.get('userRole');
+    var $token    = $cookieStore.get('token');
+    var $token_timeout = $cookieStore.get('token_timeout');
     $scope.isError                = false;
     $scope.errorMessage           = $filter('i18n')('_ERROR_CONNECTION_');
+    $scope.url                    = cfg.urlServices+'file/download.pl?';
 
     /*
     Getting validation doc
@@ -21,6 +24,11 @@ angular.module('websoApp')
           {action:'get.pl', type_s:'validation',user_s:$username,callback:"JSON_CALLBACK"},
           {get:{method:'JSONP'}});
     // }
+    $scope.fileDownload = $resource(cfg.urlServices+'file/:action',
+      {action:'download.pl'},//,callback:"JSON_CALLBACK"},
+      {get:{method:'JSONP'},
+      post:{method:'POST'}});
+
     $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
       {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
       {put: {method: 'JSONP'}});
@@ -145,7 +153,7 @@ angular.module('websoApp')
 
         // {width:'100px',field:'IsWatched_b', displayName:  $filter('i18n')('_WATCH_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  $filter('i18n')('_DATE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>  <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
+        {width:'110px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a class="btn btn-xs" ng-show="row.getProperty(\'url_s\')" ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a> <a class="btn btn-xs" ng-show="row.getProperty(\'file_s\')" ng-href="{{url}}fileID={{row.getProperty(\'file_s\')}}&token='+$token+'&token_timeout='+$token_timeout+'" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-file"></span></a>'}
       ]
     };
 
@@ -320,12 +328,5 @@ angular.module('websoApp')
     };
     $scope.doSearchFolder();
 
-
-
     //$scope.doSearch();
-
-
-
   });
-
-//http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1
