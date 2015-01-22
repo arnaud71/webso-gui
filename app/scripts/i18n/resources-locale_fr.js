@@ -732,6 +732,10 @@
         "key": "_SEARCH_WATCHING_FOLDER_",
         "value": "Dossier de surveillance"
     },
+    {
+        "key": "_DOWNLOAD_",
+        "value": "Télécharger"
+    },
 
 
 

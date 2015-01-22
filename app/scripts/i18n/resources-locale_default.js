@@ -732,6 +732,10 @@
         "key": "_SEARCH_WATCHING_FOLDER_",
         "value": "Monitor folder"
     },
+    {
+        "key": "_DOWNLOAD_",
+        "value": "Download"
+    },
 
 
 
