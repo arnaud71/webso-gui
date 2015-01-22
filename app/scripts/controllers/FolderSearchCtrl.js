@@ -8,6 +8,9 @@ angular.module('websoApp')
     var $token_timeout            = $cookieStore.get('token_timeout');
     var $vfolder                  = $cookieStore.get('vfolder');
     var $wfolder                  = $cookieStore.get('wfolder');
+    
+    $scope.tk                     = $token;
+    $scope.tt                     = $token_timeout;
 
     $scope.showFound              = false;
     $scope.totalItems             = 0;
@@ -25,6 +28,7 @@ angular.module('websoApp')
     $scope.onlineSourceList       = {};
     $scope.onlineSourceList['google_news'] = 'Google News';  // if you change that please change the appropriate check box default value
     $scope.onlineCurrentSearchUrl = '';
+    $scope.url                    = cfg.urlServices+'file/download.pl?';
 
 
     // to keep index  to adress table like a hash
