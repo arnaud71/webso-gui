@@ -66,10 +66,13 @@
                     <tr ng-repeat="fold in folder">
                         <td>
                             <div id="titleFound">
-                                <a href="{{fold.url_s}}" target="_blank">{{fold.title_t}}</a>
+                                <a ng-if="fold.url_s" href="{{fold.url_s}}" target="_blank">{{fold.title_t}}</a>
+                                <span ng-if="!fold.url_s"><b>{{fold.title_t}}</b></span>
                             </div>
                             <div id="contentFound">
                                 <!-- <span>{{ '_SEARCH_' | i18n }} : {{ fold.query_s }} | {{ fold.notification_s }}</span><br> -->
+                                <span>{{ '_TAGS_' | i18n }} : {{ fold.tags_ss }}</span><br>
+                                <span ng-if='fold.file_s'><span class="glyphicon glyphicon-file"></span> : <a ng-href="{{url}}&fileID={{fold.file_s}}">{{ '_DOWNLOAD_' | i18n }}</a></span><br>
                                 <span>{{ '_VALIDATE_ON_' | i18n }} : {{ fold.creation_dt | date:'dd-MM-yyyy HH:mm' }}</span><br>
                                 <span>{{ '_UPDATED_ON_' | i18n }} : {{ fold.updating_dt | date:'dd-MM-yyyy HH:mm' }}</span>
                             </div>

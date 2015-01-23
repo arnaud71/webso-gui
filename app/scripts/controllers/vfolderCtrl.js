@@ -4,6 +4,9 @@ angular.module('websoApp')
   .controller('vfolderCtrl', function ($filter, $cookieStore, $scope, cfg, $resource) {
 
     var $username = $cookieStore.get('username');
+    var $token    = $cookieStore.get('token');
+    var $token_timeout = $cookieStore.get('token_timeout');
+    $scope.url    = cfg.urlServices+'file/download.pl?token='+$token+'&token_timeout='+$token_timeout;
 
     $scope.addResource = $resource(cfg.urlServices+'db/:action',
       {action:'put.pl',user_s:$username,callback:'JSON_CALLBACK'},
