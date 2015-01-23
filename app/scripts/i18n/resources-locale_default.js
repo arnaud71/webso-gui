@@ -749,7 +749,7 @@
     },
     {
         "key": "_EMPTY_PASSWORD_",
-        "value": "Empty passsword"
+        "value": "Empty password"
     },
     {
         "key": "_PASSWORD_LENGTH_",
