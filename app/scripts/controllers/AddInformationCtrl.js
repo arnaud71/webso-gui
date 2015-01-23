@@ -41,7 +41,7 @@ angular.module('websoApp')
       else{
         $scope.informationAddResult = $scope.informationAdd.get({
             url_s     : $scope.inputUrl,
-            tags_s    : $scope.inputTags,
+            tags_ss   : $scope.inputTags,
             title_t   : $scope.inputTitle,
             detail_s  : $scope.inputDetails,
             comment_s : $scope.inputComments,

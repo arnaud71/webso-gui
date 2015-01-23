@@ -865,7 +865,7 @@ angular.module('websoApp')
           else{
             $scope.validationAdd.get({
               url_s         : $scope.validationForm.url,
-              tags_s        : $scope.validationForm.tags,
+              tags_ss       : $scope.validationForm.tags,
               title_t       : $scope.validationForm.title,
               content_en    : $scope.validationForm.content,
               content_t     : $scope.validationForm.content,
@@ -980,7 +980,7 @@ angular.module('websoApp')
           source_type_s:    'online',
           url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
-          tags_s:           $scope.validationForm.tags,
+          tags_ss:          $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
           // domain_s:         $scope.validationForm.domain.name,
           // activity_s:       $scope.validationForm.activity.name,
@@ -1118,7 +1118,7 @@ angular.module('websoApp')
               source_type_s     : 'rss',
               url_s:            $scope.validationForm.url,
               title_t:          $scope.validationForm.title,
-              tags_s:           $scope.validationForm.tags,
+              tags_ss:          $scope.validationForm.tags,
               refresh_s:        $scope.validationForm.frequency.option,
               // domain_s:         $scope.validationForm.domain.name,
               // activity_s:       $scope.validationForm.activity.name,
@@ -1177,7 +1177,7 @@ angular.module('websoApp')
                 source_type_s     : 'RSS',
                 url_s:            $scope.WatchForm.url,
                 title_t:          $scope.WatchForm.title,
-                tags_s:           $scope.WatchForm.tags,
+                tags_ss:          $scope.WatchForm.tags,
                 refresh_s:        $scope.WatchForm.frequency.option,
                 waiting_b:        false
               }).$promise.then(function(result) {
@@ -1185,7 +1185,7 @@ angular.module('websoApp')
                   type_s:           'watch',
                   title_t:          $scope.WatchForm.title,
                   url_s:            $scope.WatchForm.url,
-                  tags_s:           $scope.WatchForm.tags,
+                  tags_ss:          $scope.WatchForm.tags,
                   folder_s:         $scope.WatchForm.folder.id,
                   // folder_s:         $scope.WatchForm.folder.name,
                   query_s:          $scope.WatchForm.query,

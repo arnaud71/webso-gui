@@ -145,7 +145,7 @@ angular.module('websoApp')
         {visible:false,width:'50px',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'*',field:'url_s', displayName:  $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_s', displayName:  $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_ss', displayName:  $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'100px',field:'domain_s', displayName:  $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'200px',field:'comment_s', displayName:  $filter('i18n')('_COMMENTS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName:  $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -250,7 +250,7 @@ angular.module('websoApp')
         $scope.atomicChange.put({
           id            : result.id,
           url_s         : result.url,
-          tags_s        : result.tags,
+          tags_ss       : result.tags,
           title_t       : result.title,
           detail_s      : result.detail,
           comment_s     : result.comment,
@@ -267,7 +267,7 @@ angular.module('websoApp')
       $scope.validationForm.id                = data.id;
       $scope.validationForm.url               = data.url_s;
       $scope.validationForm.title             = data.title_t;
-      $scope.validationForm.tags              = data.tags_s;
+      $scope.validationForm.tags              = data.tags_ss;
       $scope.validationForm.detail            = data.detail_s;
       $scope.validationForm.comment           = data.comment_s;
       $scope.validationForm.folder            = {'id': data.folder_i,'name': data.folder_s};

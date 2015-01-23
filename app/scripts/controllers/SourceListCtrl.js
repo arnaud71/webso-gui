@@ -88,7 +88,7 @@ angular.module('websoApp')
         {visible:false,width:'50px',field:'id', displayName: $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
         {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_s', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'100px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName: 'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -168,7 +168,7 @@ angular.module('websoApp')
         $scope.atomicChange.put({
           id            : result.id,
           url_s         : result.url,
-          tags_s        : result.tags,
+          tags_ss       : result.tags,
           title_t       : result.title,
           refresh_s     : result.frequency.option,
           // domain_s      : result.domain.name,
@@ -182,7 +182,7 @@ angular.module('websoApp')
       $scope.ModalForm.id                = data.id;
       $scope.ModalForm.url               = data.url_s;
       $scope.ModalForm.title             = data.title_t;
-      $scope.ModalForm.tags              = data.tags_s;
+      $scope.ModalForm.tags              = data.tags_ss;
       $scope.ModalForm.frequency         = {option: data.refresh_s};
       $scope.ModalForm.frequencies       = [{option:'1h'}, {option:'12h'}, {option:'24h'}, {option:'48h'}];
       // $scope.ModalForm.domain            = {'name': data.domain_s};

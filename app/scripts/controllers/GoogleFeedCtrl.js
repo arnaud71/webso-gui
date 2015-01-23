@@ -146,7 +146,7 @@ angular.module('websoApp')
             source_type_s : 'rss',
             type_s :        'source',
             url_s :         this.url,
-            tags_s:         '',
+            tags_ss:        '',
             title_t:        this.title,
             domain_s:       '',
             activity_s:     '',
