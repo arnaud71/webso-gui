@@ -235,7 +235,7 @@
                                         </div>
 
                                         <div ng-if="doc.file_s">
-                                            <span class="glyphicon glyphicon-file"></span> : <a ng-href="{{url}}fileID={{doc.file_s}}&token={{tk}}&token_timeout={{tt}}" target="_blank">{{ '_DOWNLOAD_' | i18n }}</a><br>
+                                            <span class="glyphicon glyphicon-file"></span> : <a ng-href="{{url}}&fileID={{doc.file_s}}" target="_blank">{{ '_DOWNLOAD_' | i18n }}</a><br>
                                             {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}
                                         </div>
 
