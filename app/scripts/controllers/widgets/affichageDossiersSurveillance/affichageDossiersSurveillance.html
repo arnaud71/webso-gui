@@ -13,13 +13,12 @@
                         <div id="dateFound">
                             {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
                         </div>
-                        <div id="domainFound">
-                        	{{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><u>{{tag}}</u></span>
+                        <div id="TagsFound">
+                        	{{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><u>{{tag}}</u>,&nbsp;</span>
                         </div>
-                        <div id="domainFound">
+                        <div id="QueryFound">
                             {{ '_QUERY_' | i18n }} : {{doc.query_s}}
                         </div>
-
                     </td>
                 </tr>
             </table>

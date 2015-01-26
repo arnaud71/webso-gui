@@ -14,7 +14,7 @@
                             {{ '_DETAILS_' | i18n }} : {{doc.detail_s}}
                         </div>
                         <div id="detailsFound">
-                            {{ '_TAGS_' | i18n }} : {{doc.tags_ss}}
+                            {{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><u>{{tag}}</u>,&nbsp;</span>
                         </div>
                         <div id="detailsFound">
                             {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}

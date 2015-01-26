@@ -19,6 +19,9 @@
             </div>
             <div id="notificationFound">
                 {{ '_NOTIFICATION_' | i18n }} : {{watchData.notification_s}}
+            </div>
+            <div id="TagsFound">
+                {{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><u>{{tag}}</u>,&nbsp;</span>
             </div><br>
             <table class="table table-striped">
                 <tr ng-repeat="doc in solrResult.success.response.docs">
