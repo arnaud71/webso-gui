@@ -120,7 +120,7 @@ angular.module('websoApp')
         scope.$modelValue.id = '*';
       }
       $scope.dbList.get({
-        folder_s  : scope.$modelValue.id,
+        folder_i  : scope.$modelValue.id,
         type_s    : 'watch',
         user_s    : $username
       }).$promise.then(function(result) {

@@ -62,7 +62,7 @@ angular.module('sample.widgets.affichageDossiersSurveillance', ['adf.provider'])
       {get:{method:'JSONP'}});
 
     if(angular.isDefined(data)){
-      $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:watch AND folder_s:'+angular.fromJson(data).id});
+      $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:watch AND folder_i:'+angular.fromJson(data).id});
     }
     else{
       $scope.solrResult = $scope.solr.get({sort:'updating_dt desc', rows:5, q:'user_s:' + currentUsername[0],fq:'type_s:watch'});

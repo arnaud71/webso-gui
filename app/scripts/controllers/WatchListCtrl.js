@@ -135,7 +135,7 @@ angular.module('websoApp')
                 {visible:false,width:'50px',field:'id', displayName: $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 // {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
                 {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                {width:'100px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'150px',field:'tags_ss',resizable: true,  displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'folder_s', displayName: $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -207,6 +207,7 @@ angular.module('websoApp')
             $scope.ModalForm                = {};
             $scope.ModalForm.folder         = {id: '', name: ''};
             $scope.ModalForm.query          = '';
+            $scope.ModalForm.frequency      = '';
             $scope.ModalForm.notification   = '';
 
             var modalInstance = $modal.open({
@@ -225,9 +226,11 @@ angular.module('websoApp')
                     id            : result.id,
                     query_s       : result.query,
                     tags_ss       : result.tags,
-                    folder_s      : result.folder.id,
-                    domain_s      : result.domain.name,
-                    activity_s    : result.activity.name,
+                    folder_i      : result.folder.id,
+                    folder_s      : result.folder.name,
+                    // domain_s      : result.domain.name,
+                    // activity_s    : result.activity.name,
+                    refresh_s      : result.frequency.option,
                     notification_s : result.notification.option
                 }).$promise.then(function () {
                     $scope.doSearch();
@@ -240,12 +243,12 @@ angular.module('websoApp')
             $scope.ModalForm.id                = data.id;
             $scope.ModalForm.query             = data.query_s;
             $scope.ModalForm.tags              = data.tags_ss;
-            $scope.ModalForm.folder            = {'name': data.folder_s};
-            $scope.ModalForm.domains           = $scope.domains;
-            $scope.ModalForm.domain            = {'name': data.domain_s};
-            $scope.ModalForm.activity          = {'name': data.activity_s};
+            $scope.ModalForm.folder            = {'id': data.folder_i, 'name': data.folder_s};
+            // $scope.ModalForm.domains           = $scope.domains;
+            // $scope.ModalForm.domain            = {'name': data.domain_s};
+            // $scope.ModalForm.activity          = {'name': data.activity_s};
+            $scope.ModalForm.frequency         = {'option': data.refresh_s};
             $scope.ModalForm.notification      = {'option': data.notification_s};
-
 
             $scope.ok = function () {
                 $modalInstance.close($scope.ModalForm);
@@ -256,6 +259,18 @@ angular.module('websoApp')
             };
 
         };
+
+        /*
+         Frequency menu
+         */
+        $scope.frequencies = [
+          {option:'1h'},
+          {option:'12h'},
+          {option:'24h'},
+          {option:'48h'}
+        ] ;
+
+        $scope.frequency = $scope.frequencies[1];
 
         //$scope.doSearch();
     });
