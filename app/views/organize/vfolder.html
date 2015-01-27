@@ -71,7 +71,7 @@
                             </div>
                             <div id="contentFound">
                                 <!-- <span>{{ '_SEARCH_' | i18n }} : {{ fold.query_s }} | {{ fold.notification_s }}</span><br> -->
-                                <span>{{ '_TAGS_' | i18n }} : {{ fold.tags_ss }}</span><br>
+                                <span>{{ '_TAGS_' | i18n }} : <span ng-repeat="tag in fold.tags_ss">{{tag}},&nbsp;</span></span><br>
                                 <span ng-if='fold.file_s'><span class="glyphicon glyphicon-file"></span> : <a ng-href="{{url}}&fileID={{fold.file_s}}">{{ '_DOWNLOAD_' | i18n }}</a></span><br>
                                 <span>{{ '_VALIDATE_ON_' | i18n }} : {{ fold.creation_dt | date:'dd-MM-yyyy HH:mm' }}</span><br>
                                 <span>{{ '_UPDATED_ON_' | i18n }} : {{ fold.updating_dt | date:'dd-MM-yyyy HH:mm' }}</span>
