@@ -165,7 +165,7 @@ angular.module('websoApp')
 
       file.upload = $upload.upload({
         // url: 'https://angular-file-upload-cors-srv.appspot.com/upload' + $scope.getReqParams(),
-        url: cfg.urlServices+'file/file_upload_2.pl',
+        url: cfg.urlServices+'file/file_upload.pl',
         // url: cfg.urlServices+'file/file_upload.pl',
         method: 'POST',
         headers: {
