@@ -748,6 +748,10 @@
         "value": "Error, need at least title, folder and comment"
     },
     {
+        "key": "_ERROR_WATCH_ADD_",
+        "value": "Error, fill form with at least, title, tag(s), folder and frequency"
+    },
+    {
         "key": "_EMPTY_PASSWORD_",
         "value": "Empty password"
     },

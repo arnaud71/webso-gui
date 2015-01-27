@@ -205,9 +205,22 @@
 
             <div ng-hide="heg">
                 <div ng-show="model.inputUrl">
-                    {{ '_SOURCE_' | i18n }}: {{model.inputUrl}}, {{ '_TITLE_' | i18n }}: {{model.inputTitle}}
+                    <!-- {{ '_SOURCE_' | i18n }}: {{model.inputUrl}}, {{ '_TITLE_' | i18n }}: {{model.inputTitle}} -->
+                    {{model.source_id_ss}}
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group" >
+                        <label class="col-md-5 control-label">{{ '_TITLE_' | i18n }}*</label>
+                        <div  class="col-md-7">
+                            <input type="text" class="form-control" ng-model="model.inputTitle">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-md-5 control-label">{{ '_TAGS_' | i18n }}*</label>
+                        <div  class="col-md-7">
+                            <input type="text" class="form-control" ng-model="model.inputTags">
+                        </div>
+                    </div>
                     <div class="form-group" >
                         <label class="col-md-5 control-label">{{ '_FOLDER_' | i18n }}*</label>
                         <div  class="col-md-7">
@@ -229,7 +242,6 @@
                             <button ng-disabled="docAvailable" type="submit" class="btn btn-default" name ="testButton" ng-click="testWatch()">{{ '_TEST_' | i18n }}</button>
                         </div>
                     </div>
-
 
                     <div class="form-group" >
                         <label class="col-md-5 control-label">{{ '_NOTIFICATION_' | i18n }}</label>
@@ -401,6 +413,48 @@
                 </form>
             </div>
         </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+        </div>
+    </script>
+
+    <!-- Edit source Modal -->
+    <script type="text/ng-template" id="editSourceModal.html">
+        <div class="modal-header">
+            <h3>{{ '_MODAL_EDIT_SOURCE_' | i18n }}</h3>
+
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_SOURCE_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="url" class="form-control" ng-model="ModalForm.url">
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="ModalForm.title">
+                    </div>
+                </div>
+                <!--<div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form" value="{{ModalForm.frequency.option}}" disabled>
+                        <select ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in ModalForm.frequencies"></select>
+                    </div>
+                </div>-->
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_TAGS_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="ModalForm.tags">
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
             <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>

@@ -90,9 +90,9 @@ angular.module('websoApp')
                 function() {        //call back function for asynchronous
                     if (typeof $scope.watchResult.success.response === "undefined") {}
                     else {
-                        angular.forEach($scope.watchResult.success.response.docs, function (item, index) {
-                            item.folder_s = $scope.folderArray[item.folder_s];
-                        });
+                        // angular.forEach($scope.watchResult.success.response.docs, function (item, index) {
+                        //     item.folder_s = $scope.folderArray[item.folder_s];
+                        // });
                         data = $scope.watchResult;
                         $scope.setPagingData(data,page,pageSize);
                         //$('.row').trigger('resize');
@@ -122,6 +122,7 @@ angular.module('websoApp')
             data: 'myData',
             enablePaging: true,
             enableRowSelection : false,
+            enableColumnResize : false,
             showFooter: true,
             totalServerItems: 'totalServerItems',
             pagingOptions: $scope.pagingOptions,
@@ -135,11 +136,11 @@ angular.module('websoApp')
                 {visible:false,width:'50px',field:'id', displayName: $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 // {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}" target="_blank">{{row.getProperty(col.field)}}</a></div>' },
                 {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+                {width:'150px',field:'query_s', displayName: $filter('i18n')('_QUERY_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'150px',field:'tags_ss',resizable: true,  displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'folder_s', displayName: $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-                // {width:'100px',field:'query_s', displayName: $filter('i18n')('_WATCHES_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
                 {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button>  <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button>    <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a>'}
             ]
         };
@@ -150,9 +151,9 @@ angular.module('websoApp')
                     if (typeof $scope.watchResult.success.response === "undefined") {}
                     else {
                         // Modify display of folder
-                        angular.forEach($scope.watchResult.success.response.docs, function (item, index) {
-                            item.folder_s = $scope.folderArray[item.folder_s];
-                        });
+                        // angular.forEach($scope.watchResult.success.response.docs, function (item, index) {
+                        //     item.folder_s = $scope.folderArray[item.folder_s];
+                        // });
                         $scope.myData = $scope.watchResult.success.response.docs;
 
                         $('.row').trigger('resize');

@@ -14,6 +14,9 @@ angular.module('websoApp')
       useExternalFilter : false
     };
 
+    $scope.atomicChange = $resource(cfg.urlServices + 'db/:action',
+      {action: 'change.pl', id: '', callback: "JSON_CALLBACK"},
+      {put: {method: 'JSONP'}});
 
     $scope.totalServerItemsSource = 0;
     $scope.totalServerItemsWatch  = 0;
@@ -45,7 +48,8 @@ angular.module('websoApp')
       watchId             : 0,
       docAvailable        : 0,
       mySourceSelections  : [],
-      myWatchSelections   : []
+      myWatchSelections   : [],
+      source_id_ss        : []
     };
 
     $scope.rowTabSource = {}; // keep track of row number for deletion if sorting
@@ -64,6 +68,7 @@ angular.module('websoApp')
       data                : 'myDataSource',
       selectedItems       : $scope.model.mySourceSelections,
       afterSelectionChange: function () {
+        $scope.model.source_id_ss = [];
         angular.forEach($scope.model.mySourceSelections, function ( item ) {
           $scope.model.inputTitle = item.title_t;
           $scope.model.inputUrl   = item.url_s;
@@ -74,6 +79,7 @@ angular.module('websoApp')
           // $scope.model.inputActivity.name    = item.activity_s;
           $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
+          $scope.model.source_id_ss.push(item.id);
         });
         $scope.checkSourceUrl($scope.model.inputUrl);
         $scope.doSearchWatch();
@@ -81,7 +87,7 @@ angular.module('websoApp')
       enablePaging        : true,
       enableRowSelection  : true,
       enableColumnResize  : true,
-      multiSelect         : false,
+      multiSelect         : true,
       showFooter          : true,
       totalServerItems    : 'totalServerItemsSource',
       pagingOptions       : $scope.pagingOptionsSource,
@@ -96,12 +102,12 @@ angular.module('websoApp')
         {visible:false,width:'50px',field:'id', displayName: $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'150px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName: 'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName: $filter('i18n')('_CREATION_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: ' <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a><!-- <button type="button" class="btn btn-xs" ng-click="test(source.id,source.url_s)"><span class="glyphicon glyphicon-pencil"></span></button>-->'}
+        {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="sourceEdit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)"><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a>'}
       ]
     };
 
@@ -139,7 +145,7 @@ angular.module('websoApp')
         {visible:false,width:'100px',field:'source_id_s', displayName: $filter('i18n')('_SOURCE_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'*',field:'url_s', displayName: $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName: $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        {width:'150px',field:'tags_ss', displayName: $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'100px',field:'domain_s', displayName: $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName: $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -320,13 +326,13 @@ angular.module('websoApp')
                       sort        :'creation_dt desc',
                       rows        :$scope.pagingOptionsWatch.pageSize
         }).$promise.then(function(result) {
-          $scope.folderArray=[];
-          $scope.doSearchFolder();
-          angular.forEach(result.success.response.docs, function (item, index) {
-            $scope.rowTabWatch[item.id]= index;
-            item.folder_s = $scope.folderArray[item.folder_s];
+          // $scope.folderArray=[];
+          // $scope.doSearchFolder();
+          // angular.forEach(result.success.response.docs, function (item, index) {
+          //   $scope.rowTabWatch[item.id]= index;
+          //   item.folder_s = $scope.folderArray[item.folder_s];
 
-          });
+          // });
 
           $scope.myDataWatch            = result.success.response.docs;
           $scope.totalServerItemsWatch  = result.success.response.numFound;
@@ -417,7 +423,7 @@ angular.module('websoApp')
     // doAddWatch
     // add a watch in the DB
     $scope.doAddWatch = function () {
-      if((angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert('Merci de choisir une source et un dossier');
+      if((angular.isUndefined($scope.model.inputTitle) || $scope.model.inputTitle  == '') || (angular.isUndefined($scope.model.inputTags) || $scope.model.inputTags  == '') || (angular.isUndefined($scope.model.inputFrequency) || $scope.model.inputFrequency  == '') || (angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert('Merci de choisir une source et un dossier');
       else{
         $scope.watchAddResult = $scope.addResource.get({
           type_s:         'watch',
@@ -426,9 +432,11 @@ angular.module('websoApp')
           tags_ss       :  $scope.model.inputTags,
           // domain_s      :  $scope.model.inputDomain.name,
           // activity_s    :  $scope.model.inputActivity.name,
-          folder_s      :  $scope.model.inputFolder.id,
+          folder_i      :  $scope.model.inputFolder.id,
+          folder_s      :  $scope.model.inputFolder.name,
           query_s       :  $scope.model.inputQuery,
-          source_id_s   :  $scope.model.sourceId,
+          source_id_ss  :  $scope.model.source_id_ss,
+          refresh_s     :  $scope.model.inputFrequency.option,
           //source_id_s   :  $scope.sourceAddResult.success.id,
           notification_s:  $scope.model.inputNotification.option
 
@@ -548,6 +556,58 @@ angular.module('websoApp')
       };
     };
 
+    //  ************************
+    //  source edit modal
+    //  ************************
+    $scope.sourceEdit = function(obj){
+      $scope.ModalForm                   = {};
+      $scope.ModalForm.url               = '';
+      $scope.ModalForm.title             = '';
+      $scope.ModalForm.tags              = '';
+      $scope.ModalForm.frequency         = {option: ''};
+
+      var modalInstance = $modal.open({
+        templateUrl: 'editSourceModal.html',
+        controller: ModalInstanceEditCtrl,
+        scope: $scope,
+        resolve: {
+          data: function () {
+            return obj.entity;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        $scope.atomicChange.put({
+          id            : result.id,
+          url_s         : result.url,
+          tags_ss       : result.tags,
+          title_t       : result.title,
+          refresh_s     : result.frequency.option,
+        }).$promise.then(function () {
+            $scope.doSearchSource();
+        });
+      });
+    }
+
+    var ModalInstanceEditCtrl = function ($scope, $modalInstance, data) {
+      $scope.ModalForm                   = {};
+      $scope.ModalForm.id                = data.id;
+      $scope.ModalForm.url               = data.url_s;
+      $scope.ModalForm.title             = data.title_t;
+      $scope.ModalForm.tags              = data.tags_ss;
+      $scope.ModalForm.frequency         = {option: data.refresh_s};
+      $scope.ModalForm.frequencies       = [{option:'1h'}, {option:'12h'}, {option:'24h'}, {option:'48h'}];
+
+      $scope.ok = function () {
+        $modalInstance.close($scope.ModalForm);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+
+    };
 
 
     // ***************************************************************

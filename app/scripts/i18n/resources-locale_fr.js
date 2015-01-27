@@ -748,6 +748,10 @@
         "value": "Erreur merci de saisir au moins un titre, un dossier et un commentaire"
     },
     {
+        "key": "_ERROR_WATCH_ADD_",
+        "value": "Erreur merci de saisir un titre, un/des tag(s), un dossier et une fréquence d'actualisation"
+    },
+    {
         "key": "_EMPTY_PASSWORD_",
         "value": "Mots de passe vide"
     },
