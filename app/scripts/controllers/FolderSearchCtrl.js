@@ -1015,7 +1015,13 @@ angular.module('websoApp')
     }
 
     $scope.seeWatch = function (id, titre){
-      $scope.typeWatch = 'type_s: document AND source_id_ss:'+id;
+      var txt = '';
+      var b = false;
+      angular.forEach(id, function(key, val){
+        txt += ((b)? ' OR ': '')+'source_id_ss:'+key;
+        b=true;
+      });
+      $scope.typeWatch = 'type_s: document AND ('+txt+')';
       $scope.f = $scope.folderFacetFq;
       $scope.folderFacetFq = '';
       $scope.affichageWatch = true;

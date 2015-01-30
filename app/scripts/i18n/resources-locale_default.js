@@ -502,6 +502,10 @@
         "key": "_MODAL_EDIT_WATCH_",
         "value": "Edit monitor"
     },
+    {
+        "key": "_ERROR_ADD_WATCH_",
+        "value": "Error, select a source and fill title, tags, folder and frequency before validate"
+    },
 
 
 

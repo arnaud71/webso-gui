@@ -218,8 +218,7 @@
 
                                         <div ng-if="(doc.type_s =='validation')" id="titleFound">
                                             <!-- <a ng-click="seeValidate(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a> -->
-                                            <a ng-if="doc.url_s" href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                            <span ng-if="!doc.url_s" >{{doc.title_t}}</span>
+                                            <h5><b>{{doc.title_t}}</b></h5>
                                         </div>
                                         <div ng-if="((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
                                             {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
@@ -230,13 +229,17 @@
                                         </div>
 
                                         <div ng-if="doc.url_s" id="urlFound">
-                                            <span ng-if="doc.url_s.length<=100">{{doc.url_s}}</span>
-                                            <span ng-if="doc.url_s.length>100">{{doc.url_s| limitTo:100}}...</span>
+                                            <a ng-if="doc.url_s && (doc.url_s.length<=100)" href="{{doc.url_s}}" target="_blank">{{doc.url_s}}</a>
+                                            <a ng-if="doc.url_s && (doc.url_s.length>100)" href="{{doc.url_s}}" target="_blank">{{doc.url_s| limitTo:100}}...</a>
                                         </div>
 
                                         <div ng-if="doc.file_s">
                                             <span class="glyphicon glyphicon-file"></span> : <a ng-href="{{url}}&fileID={{doc.file_s}}" target="_blank">{{ '_DOWNLOAD_' | i18n }}</a><br>
                                             {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}
+                                        </div>
+
+                                        <div ng-if="doc.tags_ss" id="tagsFound">
+                                             {{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><a>{{tag}}</a>,&nbsp;</span>
                                         </div>
 
                                         <div id="dateFound">
@@ -322,30 +325,21 @@
                                     <!-- HEADER OF HEACH ROW -->
 
                                         <div ng-if="(doc.type_s =='watch')" id="titleFound">
-                                            <a ng-click="seeWatch(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a>
-                                        </div>
-                                        <!-- If doc is a validation -->
-                                        <div ng-if="(doc.type_s =='validation')" id="titleFound">
-                                            <!-- <a ng-click="seeValidate(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a> -->
-                                            <a ng-if="doc.url_s" href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                            <span ng-if="!doc.url_s" >{{doc.title_t}}</span>
+                                            <a ng-click="seeWatch(doc.source_id_ss, doc.title_t)"><h5><b>{{doc.title_t}}</b></h5></a>
                                         </div>
                                         <div ng-if="affichageWatch" id="titleFound">
-                                            <!-- <a ng-click="seeValidate(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a> -->
-                                            <a ng-if="doc.url_s" href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                            <span ng-if="!doc.url_s" >{{doc.title_t}}</span>
+                                            <h5><b>{{doc.title_t}}</b></h5>
                                         </div>
-                                        <!-- <div ng-if="!searchNav[idx.source].checked" id="titleFound">
-                                            <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                        </div> -->
+
                                         <div ng-if="((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
                                             {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
                                             {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
+
                                         <div id="contentFound" ng-if="(doc.source_type_s=='rss') || (doc.source_type_s=='RSS') || (affichageSource) || affichageWatch">
-                                         <!-- || !(searchNav[idx.source].checked)"> -->
+                                        <!-- || !(searchNav[idx.source].checked)"> -->
                                             <div ng-controller="CollapseSolrCtrl">
 
                                                 <div collapse="!isCollapsed">
@@ -358,20 +352,20 @@
                                                             <!-- <span ng-if="solrResult.highlighting[doc.id].content_en[1]" ng-bind-html="solrResult.highlighting[doc.id].content_en[1]+"></span>
                                                             <span ng-if="solrResult.highlighting[doc.id].content_en[2]" ng-bind-html="solrResult.highlighting[doc.id].content_en[2]+"></span> -->
 
-                                                           <!-- &gt;&gt;&gt;&gt; -->
-                                                           <a>{{ '_SHOW_' | i18n }}&NonBreakingSpace;&gt;</a>
+                                                            <!-- &gt;&gt;&gt;&gt; -->
+                                                            <a>{{ '_SHOW_' | i18n }}&NonBreakingSpace;&gt;</a>
                                                             <!-- <span ng-bind="getSummary(doc.id)"></span> -->
                                                         </span>
                                                 </div>
                                                 <div collapse="isCollapsed">
-                                                        <span ng-click="isCollapsed = !isCollapsed">
-                                                        {{doc.content_en}} <a>&lt;&NonBreakingSpace;{{ '_HIDE_' | i18n }}</a>
-                                                        </span>
+                                                    <span ng-click="isCollapsed = !isCollapsed">
+                                                    {{doc.content_en}} <a>&lt;&NonBreakingSpace;{{ '_HIDE_' | i18n }}</a>
+                                                    </span>
                                                 </div>
 
                                             </div>
                                         </div>
-                                        <div>
+                                        <div ng-if="!affichageWatch">
                                             {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
                                         </div>
                                         <div ng-if="doc.file_s">
@@ -383,13 +377,18 @@
                                             {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
                                             {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                         </div>
-                                        <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
-                                            <span ng-if="doc.url_s.length<100">
-                                            {{doc.url_s}}
-                                            </span>
-                                            <span ng-if="doc.url_s.length>100">
-                                                {{doc.url_s| limitTo:100}}...
-                                            </span>
+
+                                        <div ng-if="doc.tags_ss" id="tagsFound">
+                                             {{ '_TAGS_' | i18n }} : <span ng-repeat="tag in doc.tags_ss"><a>{{tag}}</a>,&nbsp;</span>
+                                        </div>
+
+                                        <div ng-if="affichageWatch" id="urlFound">
+                                            <a ng-if="doc.url_s.length<100" ng-href="{{doc.url_s}}">{{doc.url_s}}</a>
+                                            <a ng-if="doc.url_s.length>100" ng-href="{{doc.url_s}}">{{doc.url_s| limitTo:100}}...</a>
+                                        </div>
+                                        <div ng-if="!affichageWatch" id="urlFound">
+                                            <span ng-if="doc.url_s.length<100" ng-href="{{doc.url_s}}">{{doc.url_s}}</span>
+                                            <span ng-if="doc.url_s.length>100" ng-href="{{doc.url_s}}">{{doc.url_s| limitTo:100}}...</span>
                                         </div>
 
                                         <div id="dateFound">
@@ -477,18 +476,22 @@
                                         <div ng-if="!searchNav[idx.source].checked" id="titleFound">
                                             <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
-                                        <div ng-if="affichageWatch || affichageSource || affichageValidation" id="titleFound">
+                                        <div ng-if="affichageSource" id="titleFound">
                                             <!-- <a ng-click="seeValidate(doc.source_id_s, doc.title_t)">{{doc.title_t}}</a> -->
-                                            <a ng-if="doc.url_s" href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
-                                            <span ng-if="!doc.url_s" >{{doc.title_t}}</span>
+                                            <!-- <a ng-if="doc.url_s" href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a> -->
+                                            <h5><b>{{doc.title_t}}</b></h5>
                                         </div>
-                                        <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS'))" id="titleFound">
+                                        <div ng-if="(doc.source_type_s=='rss') || (doc.source_type_s=='RSS')" id="titleFound">
                                             {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
-                                        <div ng-if="(searchNav[idx.source].checked) && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
+                                        <div ng-if="!affichageWaiting && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
                                             {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
                                         </div>
-                                        <div id="contentFound" ng-if="(doc.source_type_s=='rss') || affichageSource || !(searchNav[idx.source].checked)">
+                                        <div ng-if="affichageWaiting">
+                                            <h5 ng-if="((doc.type_s=='document') && (doc.waiting_b))"><b>{{ '_WEBSITE_' | i18n }} : {{doc.title_t}}</b></h5>
+                                            <h5 ng-if="!((doc.type_s=='document') && (doc.waiting_b))"><b>{{doc.title_t}}</b></h5>
+                                        </div>
+                                        <div id="contentFound" ng-if="doc.content_t && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS') || affichageSource || !(searchNav[idx.source].checked) || affichageWaiting)">
                                             <div ng-controller="CollapseSolrCtrl">
 
                                                 <div collapse="!isCollapsed">
@@ -522,13 +525,13 @@
                                             {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
                                             {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                         </div>
-                                        <div ng-if="!(doc.source_type_s == 'online')" id="urlFound">
-                                            <span ng-if="doc.url_s.length<100">
-                                            {{doc.url_s}}
-                                            </span>
-                                            <span ng-if="doc.url_s.length>100">
-                                                {{doc.url_s| limitTo:100}}...
-                                            </span>
+                                        <div ng-if="!(doc.source_type_s == 'online') && ((affichageSource && doc.url_s) || (affichageWaiting && doc.url_s)) " id="urlFound">
+                                            <a ng-if="doc.url_s.length<=100" ng-href="{{doc.url_s}}">{{doc.url_s}}</a>
+                                            <a ng-if="doc.url_s.length>100" ng-href="{{doc.url_s}}">{{doc.url_s| limitTo:100}}...</a>
+                                        </div>
+                                        <div ng-if="!(doc.source_type_s == 'online') && !(affichageSource) && !affichageWaiting" id="urlFound">
+                                            <span ng-if="doc.url_s.length<=100">{{doc.url_s}}</span>
+                                            <span ng-if="doc.url_s.length>100">{{doc.url_s| limitTo:100}}...</span>
                                         </div>
 
                                         <div id="dateFound">

@@ -502,6 +502,10 @@
         "key": "_MODAL_EDIT_WATCH_",
         "value": "Modification de la surveillance"
     },
+    {
+        "key": "_ERROR_ADD_WATCH_",
+        "value": "Merci de choisir une source et de saisir au moins un titre, un tag, un dossier et une fréquence de mise à jour"
+    },
 
 
 
