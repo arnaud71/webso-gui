@@ -107,7 +107,7 @@ angular.module('websoApp')
         {width:'100px',field:'user_s', displayName: $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         //{width:'100px',field:'IsWatched_b', displayName: 'Surveillance', cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName: $filter('i18n')('_CREATION_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="sourceEdit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)"><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a>'}
+        {width:'100px',field:'', displayName: $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="sourceEdit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="sourceDelete(row.getProperty(\'id\'),row.rowIndex)"><span class="glyphicon glyphicon-trash"></span></button> <a ng-href="{{row.getProperty(\'url_s\')}}" target="_blank"><span class="btn btn-xs glyphicon glyphicon-link"></span></a>'}
       ]
     };
 
@@ -211,37 +211,38 @@ angular.module('websoApp')
       {action:'delete_q.pl', query:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
 
-  	// add a widget to Solr
-	function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget){
-	    $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
-	      {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
-	      {get:{method:'JSONP'}});
-
-	    $scope.widgetAdd.get({
-	        widget_type_s  : widgetType,
-	        title_t        : widgetTitle,
-	        enable_s       : isEnable,
-	        weight_s       : widgetWeight,
-	        user_s          : userWidget,
-	        query_s         : ''
-	    }).$promise.then(function(widg){
-          if(widg.success){
-            var w = {
-                id: widg.id,
-                type: widgetType,
-                config: widg.query_s
-            };
-          }
-        });
-	};
+    // add a widget to Solr
+    function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget, WidQuery){
+        $scope.widgetAdd = $resource(cfg.urlServices+'db/:action',
+          {action:'put.pl', type_s:'widget', callback:"JSON_CALLBACK"},
+          {get:{method:'JSONP'}});
+        $scope.widgetAdd.get({
+            widget_type_s  : widgetType,
+            title_t        : widgetTitle,
+            enable_s       : isEnable,
+            weight_s       : widgetWeight,
+            user_s         : userWidget,
+            query_s        : WidQuery,
+            row_i          : 0,
+            col_i          : 0
+        }).$promise.then(function(widg){
+            if(widg.success){
+              var w = {
+                  id: widg.id,
+                  type: widgetType,
+                  config: widg.query_s
+              };
+            }
+          });
+    };
 
     // add widget : principal function
-    function addWidget(widgetType){
+    function addWidget(widgetType, widgetTitle, wquery){
         var userInformations = serviceWidgets.getUserIdents(), widgetTitle, array, w;
         // widget's title
         widgetTitle = serviceWidgets.getTitleWidget(widgetType);
         // add the widget to Solr
-        addWidgetToSolr(widgetType, widgetTitle, true, 1, userInformations[0]);
+        addWidgetToSolr(widgetType, widgetTitle, true, 1, userInformations[0], wquery);
     };
 
     // ***************************************************************
@@ -401,7 +402,7 @@ angular.module('websoApp')
           });
 
           if($scope.model.valueCheckBoxSource === true){
-            addWidget('affichageSource', $scope.model.inputTitle);
+            addWidget('affichageSource', $scope.model.inputTitle, '');
           }
 
           var modalInstance = $modal.open({
@@ -423,7 +424,7 @@ angular.module('websoApp')
     // doAddWatch
     // add a watch in the DB
     $scope.doAddWatch = function () {
-      if((angular.isUndefined($scope.model.inputTitle) || $scope.model.inputTitle  == '') || (angular.isUndefined($scope.model.inputTags) || $scope.model.inputTags  == '') || (angular.isUndefined($scope.model.inputFrequency) || $scope.model.inputFrequency  == '') || (angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert('Merci de choisir une source et un dossier');
+      if((angular.isUndefined($scope.model.inputTitle) || $scope.model.inputTitle  == '') || (angular.isUndefined($scope.model.inputTags) || $scope.model.inputTags  == '') || (angular.isUndefined($scope.model.inputFrequency) || $scope.model.inputFrequency  == '') || (angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert($filter('i18n')('_ERROR_ADD_WATCH_'));
       else{
         $scope.watchAddResult = $scope.addResource.get({
           type_s:         'watch',
@@ -440,11 +441,11 @@ angular.module('websoApp')
           //source_id_s   :  $scope.sourceAddResult.success.id,
           notification_s:  $scope.model.inputNotification.option
 
+        }).$promise.then(function(result){
+          if($scope.model.valueCheckBoxWatch === true){
+            addWidget('affichageSurveillance', $scope.model.inputTitle, result.id);
+          }
         });
-
-        if($scope.model.valueCheckBoxWatch === true){
-          addWidget('affichageSurveillance', $scope.model.inputTitle);
-        }
 
         // var addWatch = alert('Surveillance ajoutée');
         // Testing  Modal trigger
