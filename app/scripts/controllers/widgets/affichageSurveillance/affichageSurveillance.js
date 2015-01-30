@@ -66,7 +66,13 @@ angular.module('sample.widgets.affichageSurveillance', ['adf.provider'])
             if(result.success.response.numFound){
                 // Result = result.success.response.docs[0].source_id_s;
                 $scope.watchData = result.success.response.docs[0];
-                $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND source_id_ss:'+result.success.response.docs[0].source_id_s})
+                var source = '';
+                var b = false;
+                angular.forEach(result.success.response.docs[0].source_id_ss, function(key, val){
+                    source += ((b)? ' OR ': '')+'source_id_ss:'+key;
+                    b=true;
+                });
+                $scope.solr.get({sort:'date_dt desc', rows:5, q:result.success.response.docs[0].query_s, fq:'type_s:document AND ('+source+')'})
                     .$promise.then(function(data){
                         $scope.solrResult = data;
                     });
