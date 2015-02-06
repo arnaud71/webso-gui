@@ -103,6 +103,24 @@ angular.module('websoApp')
         title_t         : 'vfolder',
         content_s       : $filter('json')($scope.model.data)
       },function () {
+        var $vfolder = [];
+        angular.forEach($scope.model.data, function(value1, key1) {
+          // if(angular.isArray(value1)){
+
+          $vfolder.push({"id":value1.id ,"name":value1.title});
+          angular.forEach(value1.nodes, function(value2, key2){
+            $vfolder.push({"id":value2.id , "name":value2.title});
+            angular.forEach(value2.nodes, function(value3, key3){
+              $vfolder.push({"id":value3.id, "name":value3.title});
+              if(angular.isArray(value3.nodes)){
+                angular.forEach(value3.nodes, function(value4, key4){
+                  $vfolder.push({"id":value4.id, "name":value4.title});
+                });
+              }
+            });
+          });
+        });
+        $cookieStore.put('vfolder', $vfolder);
       },
       // error
       function(){
