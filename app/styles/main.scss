@@ -9,7 +9,7 @@ $icon-font-path: "../bower_components/bootstrap-sass/fonts/";
 
 /* Put your CSS here */
 html, body {
-  margin: 20px;
+  margin: 0 40px;
 }
 
 
@@ -21,6 +21,7 @@ body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  padding-bottom: 30px;
 }
 
 .hero-unit {
