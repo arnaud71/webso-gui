@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard, $filter) {
+  .controller('AddWatchCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log, $http, serviceWidgets, dashboard, $filter, sharedService) {
 
     var $username = $cookieStore.get('username');
 
@@ -426,9 +426,10 @@ angular.module('websoApp')
     $scope.doAddWatch = function () {
       if((angular.isUndefined($scope.model.inputTitle) || $scope.model.inputTitle  == '') || (angular.isUndefined($scope.model.inputTags) || $scope.model.inputTags  == '') || (angular.isUndefined($scope.model.inputFrequency) || $scope.model.inputFrequency  == '') || (angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert($filter('i18n')('_ERROR_ADD_WATCH_'));
       else{
+        alert($scope.model.source_id_ss);
         $scope.watchAddResult = $scope.addResource.get({
           type_s:         'watch',
-          url_s         :  $scope.model.inputUrl,
+          // url_s         :  $scope.model.inputUrl,
           title_t       :  $scope.model.inputTitle,
           tags_ss       :  $scope.model.inputTags,
           // domain_s      :  $scope.model.inputDomain.name,
@@ -445,13 +446,13 @@ angular.module('websoApp')
           if($scope.model.valueCheckBoxWatch === true){
             addWidget('affichageSurveillance', $scope.model.inputTitle, result.id);
           }
-        });
-
-        // var addWatch = alert('Surveillance ajoutée');
-        // Testing  Modal trigger
-        var modalInstance = $modal.open({
-          templateUrl: 'addWatchModal.html',
-          controller: ModalInstanceCtrl
+          // Testing  Modal trigger
+          var modalInstance = $modal.open({
+            templateUrl: 'addWatchModal.html',
+            controller: ModalInstanceCtrl
+          });
+          //Send message to update list
+          sharedService.broadcast('Update');
         });
       }
     };
@@ -464,7 +465,7 @@ angular.module('websoApp')
         //$scope.$emit('CHECKRSS');
         $scope.sourceChecked = false;
         var url = '';
-        if($filter('limitTo')($scope.model.inputUrl, 7) == 'http://'){
+        if(($filter('limitTo')($scope.model.inputUrl, 7) == 'http://') || ($filter('limitTo')($scope.model.inputUrl, 8) == 'https://')){
           url = $scope.model.inputUrl;
         }
         else{

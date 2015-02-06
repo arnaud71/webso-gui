@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('WatchListCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter) {
+    .controller('WatchListCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter, sharedService) {
 
         var $username = $cookieStore.get('username');
         /*
@@ -160,9 +160,12 @@ angular.module('websoApp')
                     }
                 }
             );
-
-
         };
+
+        // Receive message to update grid
+        $scope.$on('handleBroadcast', function(event, message) {
+          $scope.doSearch();
+        });
 
         /*
          Deleting source
@@ -275,5 +278,3 @@ angular.module('websoApp')
 
         //$scope.doSearch();
     });
-
-//http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1

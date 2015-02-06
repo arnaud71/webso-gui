@@ -112,9 +112,12 @@ angular.module('websoApp')
           }
         }
       );
-
-
     };
+
+    // Receive message to update grid
+    $scope.$on('handleBroadcast', function(event, message) {
+      $scope.doSearch();
+    });
 
     /*
      Deleting source

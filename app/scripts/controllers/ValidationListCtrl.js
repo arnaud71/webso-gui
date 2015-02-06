@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('ValidationListCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter) {
+  .controller('ValidationListCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $filter, sharedService) {
 
     $scope.mySelections = [];
     var $username = $cookieStore.get('username');
@@ -10,7 +10,7 @@ angular.module('websoApp')
     var $token_timeout = $cookieStore.get('token_timeout');
     $scope.isError                = false;
     $scope.errorMessage           = $filter('i18n')('_ERROR_CONNECTION_');
-    $scope.url                    = cfg.urlServices+'file/download.pl?';
+    $scope.url                    = cfg.urlServices+'file/download.pl?token='+$token+'&token_timeout='+$token_timeout;
 
     /*
     Getting validation doc
@@ -154,7 +154,7 @@ angular.module('websoApp')
 
         // {width:'100px',field:'IsWatched_b', displayName:  $filter('i18n')('_WATCH_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'creation_dt', displayName:  $filter('i18n')('_DATE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        {width:'110px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a class="btn btn-xs" ng-show="row.getProperty(\'url_s\')" ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a> <a class="btn btn-xs" ng-show="row.getProperty(\'file_s\')" ng-href="{{url}}fileID={{row.getProperty(\'file_s\')}}&token='+$token+'&token_timeout='+$token_timeout+'" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-file"></span></a>'}
+        {width:'110px',field:'', displayName:  $filter('i18n')('_CRUD_MANAGEMENT_'), cellTemplate: '<button type="button" class="btn btn-xs" ng-click="edit(row)"><span class="glyphicon glyphicon-pencil"></span></button> <button type="button" class="btn btn-xs" ng-click="doDelete(row.getProperty(\'id\'),row.rowIndex)" ><span class="glyphicon glyphicon-trash"></span></button> <a class="btn btn-xs" ng-show="row.getProperty(\'url_s\')" ng-href="{{row.getProperty(\'url_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-link"></span></a> <a class="btn btn-xs" ng-show="row.getProperty(\'file_s\')" ng-href="{{url}}&fileID={{row.getProperty(\'file_s\')}}" target="_blank" class="btn btn-xs"><span class="glyphicon glyphicon-file"></span></a>'}
       ]
     };
 
@@ -179,6 +179,11 @@ angular.module('websoApp')
 
 
     };
+
+    // Receive message to update grid
+    $scope.$on('handleBroadcast', function(event, message) {
+      $scope.doSearch2();
+    });
 
     /*
      Deleting source
@@ -206,6 +211,7 @@ angular.module('websoApp')
         }).$promise.then(function () {
 
           $scope.myData.splice(index, 1);
+          $scope.doSearch2();
 
         }, function (reason) {
           alert('Failed id: ' + reason);

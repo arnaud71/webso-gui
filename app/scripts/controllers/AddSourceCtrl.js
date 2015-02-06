@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-    .controller('AddSourceCtrl', function ($cookieStore, $scope,$resource,cfg, $modal,$log) {
+    .controller('AddSourceCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $log) {
 
         /*
         Globals
@@ -18,13 +18,15 @@ angular.module('websoApp')
         $scope.inputDomain    = '';
         $scope.inputActivity  = '';
         var $username = $cookieStore.get('username');
+        var $token    = $cookieStore.get('token');
+        var $token_timeout = $cookieStore.get('token_timeout');
 
      //   $scope.inputCreationDate = Date.now();
 
 
 
         $scope.sourceAdd = $resource(cfg.urlServices+':action',
-            {action:'db/put.pl', type_s:'source',user_s:$username,level_sharing_i:'1' ,source_type_s:'rss',isWatched_b:'false',callback:"JSON_CALLBACK"},
+            {action:'db/put.pl', type_s:'source',user_s:$username,level_sharing_i:'1' ,source_type_s:'RSS',isWatched_b:'false',callback:"JSON_CALLBACK"},
             {get:{method:'JSONP'}});
 
 
@@ -36,13 +38,16 @@ angular.module('websoApp')
                 domain_s:         $scope.inputDomain,
                 refresh_s:        $scope.frequency.option,
                 activity_s:       $scope.inputActivity
-            });
-           // var addWatch = alert('Source ajoutée');
-
-            // Testing  Modal trigger
-            var modalInstance = $modal.open({
-                templateUrl: 'addSourceModal.html',
-                controller: ModalInstanceCtrl
+            }).$promise.then(function(){
+                //Send message to update list
+                sharedService.broadcast('Update');
+                // Testing  Modal trigger
+                var modalInstance = $modal.open({
+                    templateUrl: 'addSourceModal.html',
+                    controller: ModalInstanceCtrl
+                });
+            }, function(reason) {
+                alert('Failed: ' + reason);
             });
         };
 
@@ -70,16 +75,3 @@ angular.module('websoApp')
     $scope.frequency = $scope.frequencies[1];
 
     });
-
-/*
- "url_s": "http://www.plos.org/feed/",
- "type_s": "source",
- "user_s": "user_0",
- "level_sharing_i": 1,
- "source_type_s": "rss",
- "id": "s_8e53acb2ab186c690ad1448f3fa26a75",
- "_version_": 1460213573609324500
-
- */
-
-//http://albator.hesge.ch/cgi-bin/webso/sources/get.json?&source_user=user_1

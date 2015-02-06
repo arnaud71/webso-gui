@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('AddInformationCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $upload, $filter) {
+  .controller('AddInformationCtrl', function ($cookieStore, $scope, $resource, cfg, $modal, $upload, $filter, sharedService) {
 
     /*
      Input fields - from sourceAdd & surveillanceAdd??
@@ -39,6 +39,9 @@ angular.module('websoApp')
         alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
       }
       else{
+        if($scope.fileHash){
+          $scope.fileHash = 'f_'+$scope.fileHash;
+        }
         $scope.informationAddResult = $scope.informationAdd.get({
             url_s     : $scope.inputUrl,
             tags_ss   : $scope.inputTags,
@@ -47,15 +50,17 @@ angular.module('websoApp')
             comment_s : $scope.inputComments,
             folder_i  : $scope.inputFolder.id,
             folder_s  : $scope.inputFolder.name,
-            file_s    : 'f_'+$scope.fileHash,
-        });
-        // var addInfo = alert('Information ajoutée');
-
-        // Testing  Modal trigger
-        var modalInstance = $modal.open({
-            templateUrl: 'validateModal.html',
-            controller: ModalInstanceCtrl
-        });
+            file_s    : $scope.fileHash,
+        }).$promise.then(function(){
+            //Send message to update list
+            sharedService.broadcast('Update');
+            var modalInstance = $modal.open({
+              templateUrl: 'validateModal.html',
+              controller: ModalInstanceCtrl
+            });
+          }, function(reason) {
+            alert('Failed: ' + reason);
+          });
       }
     };
     $scope.validationOk = false;
