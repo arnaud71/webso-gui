@@ -65,7 +65,7 @@
     },
     {
         "key": "_SAVE_",
-        "value": "Sauve"
+        "value": "Save"
     },
     {
         "key": "_SEARCH_",
@@ -219,6 +219,59 @@
         "key": "_LANG_",
         "value": "Language"
     },
+    {
+        "key": "_FRENCH_",
+        "value": "French"
+    },
+    {
+        "key": "_ENGLISH_",
+        "value": "English"
+    },
+    {
+        "key": "_OTHER_",
+        "value": "Other"
+    },
+    {
+        "key": "_DAY_",
+        "value": "day"
+    },
+    {
+        "key": "_WEEK_",
+        "value": "week"
+    },
+    {
+        "key": "_MONTH_",
+        "value": "month"
+    },
+    {
+        "key": "_SAVED_",
+        "value": "Saved"
+    },
+    {
+        "key": "_WAITING_",
+        "value": "Waiting"
+    },
+    {
+        "key": "_READ_",
+        "value": "Read"
+    },
+    {
+        "key": "_UNREAD_",
+        "value": "Unread"
+    },
+    {
+        "key": "_READING_",
+        "value": "reading"
+    },
+    {
+        "key": "_PERIOD_",
+        "value": "Period"
+    },
+    {
+        "key": "_FILE_",
+        "value": "File"
+    },
+
 
 
 
@@ -749,7 +802,7 @@
     },
     {
         "key": "_ERROR_VALIDATE_ADD_",
-        "value": "Error, need at least title, folder and comment"
+        "value": "Error, need at least title, tag(s), folder and comment"
     },
     {
         "key": "_ERROR_WATCH_ADD_",
@@ -812,7 +865,7 @@
           {"option":"Email"}
         ]
     },
-        {
+    {
         "key": "_LANG_LIST_",
         "value": [
           {"name":"French", "id": "fr"},

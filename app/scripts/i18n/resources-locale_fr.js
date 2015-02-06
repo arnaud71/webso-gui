@@ -219,6 +219,58 @@
         "key": "_LANG_",
         "value": "Langue"
     },
+    {
+        "key": "_FRENCH_",
+        "value": "Français"
+    },
+    {
+        "key": "_ENGLISH_",
+        "value": "Anglais"
+    },
+    {
+        "key": "_OTHER_",
+        "value": "autre"
+    },
+    {
+        "key": "_DAY_",
+        "value": "jour"
+    },
+    {
+        "key": "_WEEK_",
+        "value": "semaine"
+    },
+    {
+        "key": "_MONTH_",
+        "value": "moi"
+    },
+    {
+        "key": "_SAVED_",
+        "value": "enregistré(e)"
+    },
+    {
+        "key": "_WAITING_",
+        "value": "en attente"
+    },
+    {
+        "key": "_READ_",
+        "value": "lu"
+    },
+    {
+        "key": "_UNREAD_",
+        "value": "non lu"
+    },
+    {
+        "key": "_READING_",
+        "value": "Lecture"
+    },
+    {
+        "key": "_PERIOD_",
+        "value": "Période"
+    },
+    {
+        "key": "_FILE_",
+        "value": "Fichier"
+    },
 
 
 
@@ -749,7 +801,7 @@
     },
     {
         "key": "_ERROR_VALIDATE_ADD_",
-        "value": "Erreur merci de saisir au moins un titre, un dossier et un commentaire"
+        "value": "Erreur merci de saisir au moins un titre, un/des tag(s), un dossier et un commentaire"
     },
     {
         "key": "_ERROR_WATCH_ADD_",
