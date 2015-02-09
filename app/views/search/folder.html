@@ -125,11 +125,11 @@
                                 <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
                                     <td>
                                         <div id="titleFound">
-                                            <a href="{{online.link}}" target="_blank" ng-bind-html="online.title"></a>
+                                            <a href="{{online.link}}" target="_blank" ng-bind-html="online.title_highlight"></a>
                                         </div>
                                         <div id="contentFound">
 
-                                            <p ng-bind-html="online.description"></p>
+                                            <p ng-bind-html="online.description_highlight"></p>
 
                                         </div>
                                         <div id="urlFound">
@@ -524,6 +524,7 @@
                                             {{ '_SHOW_' | i18n }} : {{doc.query_s}}<br>
                                             {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
                                             {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
+                                            {{ '_UPDATED_ON_' | i18n }} : {{doc.updating_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                         </div>
                                         <div ng-if="!(doc.source_type_s == 'online') && ((affichageSource && doc.url_s) || (affichageWaiting && doc.url_s)) " id="urlFound">
                                             <a ng-if="doc.url_s.length<=100" ng-href="{{doc.url_s}}">{{doc.url_s}}</a>

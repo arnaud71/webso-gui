@@ -32,17 +32,18 @@ angular.module('websoApp')
     $scope.idx = {};
 
     $scope.periodFacets = [
-      {name: 'day',   value: 'jour',    nb:0, checked:false, fq:' AND date_dt:[NOW-1DAY TO NOW]'},
-      {name: 'week',  value: 'semaine', nb:0, checked:false, fq:' AND date_dt:[NOW-7DAY TO NOW]'},
-      {name: 'month', value: 'mois',    nb:0, checked:false, fq:' AND date_dt:[NOW-30DAY TO NOW]'}
+      {name: 'day',   value: $filter('i18n')('_DAY_'),  nb:0, checked:false, fq:' AND date_dt:[NOW-1DAY TO NOW]'},
+      {name: 'week',  value: $filter('i18n')('_WEEK_'), nb:0, checked:false, fq:' AND date_dt:[NOW-7DAY TO NOW]'},
+      {name: 'month', value: $filter('i18n')('_MONTH'), nb:0, checked:false, fq:' AND date_dt:[NOW-30DAY TO NOW]'}
     ];
     angular.forEach($scope.periodFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.langFacets = [
-      {name: 'en', value:'anglais',     nb:0, checked:false,  fq:' AND lang_s:en' },
-      {name: 'fr', value:'français',    nb:0, checked:false,  fq:' AND lang_s:fr' }
+      {name: 'en',  value: $filter('i18n')('_ENGLISH_'), nb:0, checked:false, fq:' AND lang_s:en' },
+      {name: 'fr',  value: $filter('i18n')('_FRENCH_'),  nb:0, checked:false, fq:' AND lang_s:fr' },
+      {name: 'oth', value: $filter('i18n')('_OTHER_'),   nb:0, checked:false, fq: 'AND NOT(lang_s:fr OR lang_s:en)'}
     ];
     angular.forEach($scope.langFacets, function(value, key) {
       $scope.idx[value.name] = key;
@@ -50,33 +51,33 @@ angular.module('websoApp')
 
 
     $scope.folderFacets =  [
-      {name: 'validation',  value:'validation',   nb:0, checked:false},
-      {name: 'watch',       value:'surveillance', nb:0, checked:true }
+      {name: 'validation', value: $filter('i18n')('_VALIDATION_'), nb:0, checked:false},
+      {name: 'watch',      value: $filter('i18n')('_WATCH_'),      nb:0, checked:true }
     ];
     angular.forEach($scope.folderFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.sourceFacets =  [
-      {name: 'selection',  value:'enregistrée(s)',  nb:0, checked:false, fq:' AND waiting_b:false'},
-      {name: 'waiting',    value:'en attente',      nb:0, checked:false, fq:' AND waiting_b:true' }
+      {name: 'selection', value: $filter('i18n')('_SAVED_'),   nb:0, checked:false, fq:' AND waiting_b:false'},
+      {name: 'waiting',   value: $filter('i18n')('_WAITING_'), nb:0, checked:false, fq:' AND waiting_b:true' }
     ];
     angular.forEach($scope.sourceFacets, function(value, key) {
       $scope.idx[value.name] = key;
     });
 
     $scope.readFacets =  [
-      {name: 'notRead',  value:'non lu',  nb:0, checked:false, fq:' AND read_b:false' },
-      {name: 'read',     value:'lu',      nb:0, checked:false, fq:' AND read_b:true' }
+      {name: 'notRead', value: $filter('i18n')('_UNREAD_'), nb:0, checked:false, fq:' AND read_b:false' },
+      {name: 'read',    value: $filter('i18n')('_READ_'),   nb:0, checked:false, fq:' AND read_b:true' }
     ];
     angular.forEach($scope.readFacets, function(value, key) {
-      $scope.idx[value.name] = key;
+      $scope.idx[value.name] = key; 
     });
 
     $scope.facetsGroup =  [
-      {name :'readFacet',   value: 'Lecture' ,  items : $scope.readFacets,    checked : true, visible : true},
-      {name :'periodFacet', value: 'Période' ,  items : $scope.periodFacets,  checked : true, visible : true},
-      {name :'langFacet',   value: 'Langage' ,  items : $scope.langFacets,    checked : true, visible : true},
+      {name :'readFacet',   value: $filter('i18n')('_READING_'), items : $scope.readFacets,   checked : true, visible : true},
+      {name :'periodFacet', value: $filter('i18n')('_PERIOD_'),  items : $scope.periodFacets, checked : true, visible : true},
+      {name :'langFacet',   value: $filter('i18n')('_LANG_'),    items : $scope.langFacets,   checked : true, visible : true},
     //  {name :'folderFacet', value: 'Dossier' ,  items : $scope.folderFacets,  checked : true, visible : true}
     ];
     angular.forEach($scope.facetsGroup, function(value, key) {
@@ -84,7 +85,7 @@ angular.module('websoApp')
     });
 
     $scope.sourceGroup =  [
-      {name :'sourceFacet', value : 'Source' ,  items : $scope.sourceFacets, checked : true, visible : false},
+      {name :'sourceFacet', value : $filter('i18n')('_SOURCE_') ,  items : $scope.sourceFacets, checked : true, visible : false},
       //{name :'waitFacet', value : 'En attente' ,  items : $scope.waitingFacets, checked : false, visible : true, fq:'+type_s:waiting'},
     ];
     angular.forEach($scope.sourceGroup, function(value, key) {
@@ -691,6 +692,15 @@ angular.module('websoApp')
           $scope.langFacetFq = '';
         }
       }
+      else if (item.name == 'oth') {
+        if (item.checked == false) {
+          // $scope.searchNav[$scope.idx.watch].facetsGroup[$scope.idx.langFacet].items[$scope.idx.fr].checked = false;
+          $scope.langFacetFq = item.fq;
+        }
+        else {
+          $scope.langFacetFq = '';
+        }
+      }
 
       // read or not read
       else if (item.name == 'read') {
@@ -985,6 +995,7 @@ angular.module('websoApp')
           ressources_s:     $scope.typeQueryStr,
           waiting_b:        true
         }).$promise.then(function(result){
+          // alert(result.id);
           angular.forEach(liste, function(value, key) {
             // alert(result.id+' '+value.pubDate);
             $scope.ressourceAdd.put({
@@ -997,7 +1008,7 @@ angular.module('websoApp')
               content_t:        value.description,
               content_fr:       value.description,
               content_en:       value.description,
-              // date_dt:          value.pubDate,
+              date_dt:          value.pubDate,
               read_b:           false,
               validated_b:      false,
               waiting_b:        true,
@@ -1101,14 +1112,14 @@ angular.module('websoApp')
         if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
           $scope.validationForm                   = {};
           $scope.validationForm.url               = feed.url;
-          $scope.validationForm.title             = feed.title;
+          $scope.validationForm.title             = $filter('htmlToPlaintext')(feed.title);
           $scope.validationForm.tags              = '';
           // $scope.validationForm.domain            = {};
           // $scope.validationForm.domain.name       = '';
           // $scope.validationForm.activity          = {};
           // $scope.validationForm.activity.name     = '';
-          $scope.validationForm.frequency         = {};
-          $scope.validationForm.frequency.option  = '';
+          // $scope.validationForm.frequency         = {};
+          // $scope.validationForm.frequency.option  = '';
 
           var modalInstance = $modal.open({
             scope: $scope,
@@ -1118,11 +1129,11 @@ angular.module('websoApp')
 
           modalInstance.result.then(function () {
             $scope.feedAdd.put({
-              source_type_s     : 'rss',
+              source_type_s     : 'RSS',
               url_s:            $scope.validationForm.url,
               title_t:          $scope.validationForm.title,
               tags_ss:          $scope.validationForm.tags,
-              refresh_s:        $scope.validationForm.frequency.option,
+              // refresh_s:        $scope.validationForm.frequency.option,
               // domain_s:         $scope.validationForm.domain.name,
               // activity_s:       $scope.validationForm.activity.name,
               waiting_b:        false
@@ -1157,7 +1168,7 @@ angular.module('websoApp')
 
         $scope.WatchForm                   = {};
         $scope.WatchForm.url               = feed.url;
-        $scope.WatchForm.title             = String(feed.title).replace(/<[^>]+>/gm, ''); //Remove html tags from text
+        $scope.WatchForm.title             = $filter('htmlToPlaintext')(feed.title); //String(feed.title).replace(/<[^>]+>/gm, ''); //Remove html tags from text
         $scope.WatchForm.tags              = '';
         $scope.WatchForm.query             = '';
         $scope.WatchForm.frequency         = {option:''};
@@ -1189,8 +1200,8 @@ angular.module('websoApp')
                   title_t:          $scope.WatchForm.title,
                   url_s:            $scope.WatchForm.url,
                   tags_ss:          $scope.WatchForm.tags,
-                  folder_s:         $scope.WatchForm.folder.id,
-                  // folder_s:         $scope.WatchForm.folder.name,
+                  folder_i:         $scope.WatchForm.folder.id,
+                  folder_s:         $scope.WatchForm.folder.name,
                   query_s:          $scope.WatchForm.query,
                   source_id_s:      result.id,
                   notification_s:   $scope.WatchForm.notification.option
