@@ -68,7 +68,7 @@ angular.module('websoApp')
       data                : 'myDataSource',
       selectedItems       : $scope.model.mySourceSelections,
       afterSelectionChange: function () {
-        $scope.model.source_id_ss = [];
+        $scope.model.source_id_ss = "";
         angular.forEach($scope.model.mySourceSelections, function ( item ) {
           $scope.model.inputTitle = item.title_t;
           $scope.model.inputUrl   = item.url_s;
@@ -79,9 +79,10 @@ angular.module('websoApp')
           // $scope.model.inputActivity.name    = item.activity_s;
           $scope.model.inputFrequency   = item.refresh_s;
           $scope.model.sourceId   = item.id;
-          $scope.model.source_id_ss.push(item.id);
+          $scope.model.source_id_ss += item.id+',';
         });
-        $scope.checkSourceUrl($scope.model.inputUrl);
+        // $scope.checkSourceUrl($scope.model.inputUrl);
+        $scope.model.source_id_ss = $scope.model.source_id_ss.slice(0,-1);
         $scope.doSearchWatch();
       },
       enablePaging        : true,
@@ -426,7 +427,6 @@ angular.module('websoApp')
     $scope.doAddWatch = function () {
       if((angular.isUndefined($scope.model.inputTitle) || $scope.model.inputTitle  == '') || (angular.isUndefined($scope.model.inputTags) || $scope.model.inputTags  == '') || (angular.isUndefined($scope.model.inputFrequency) || $scope.model.inputFrequency  == '') || (angular.isUndefined($scope.model.inputFolder) || $scope.model.inputFolder  == '') || ($scope.model.sourceId == "*")) alert($filter('i18n')('_ERROR_ADD_WATCH_'));
       else{
-        alert($scope.model.source_id_ss);
         $scope.watchAddResult = $scope.addResource.get({
           type_s:         'watch',
           // url_s         :  $scope.model.inputUrl,
@@ -439,7 +439,6 @@ angular.module('websoApp')
           query_s       :  $scope.model.inputQuery,
           source_id_ss  :  $scope.model.source_id_ss,
           refresh_s     :  $scope.model.inputFrequency.option,
-          //source_id_s   :  $scope.sourceAddResult.success.id,
           notification_s:  $scope.model.inputNotification.option
 
         }).$promise.then(function(result){
