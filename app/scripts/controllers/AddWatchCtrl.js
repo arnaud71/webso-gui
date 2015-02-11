@@ -49,7 +49,8 @@ angular.module('websoApp')
       docAvailable        : 0,
       mySourceSelections  : [],
       myWatchSelections   : [],
-      source_id_ss        : []
+      source_id_ss        : [],
+      url2rss             : ''
     };
 
     $scope.rowTabSource = {}; // keep track of row number for deletion if sorting
@@ -211,6 +212,10 @@ angular.module('websoApp')
     $scope.dbDeleteQuery = $resource(cfg.urlServices+'db/:action',
       {action:'delete_q.pl', query:'',callback:"JSON_CALLBACK"},
       {get:{method:'JSONP'}});
+
+    $scope.page2rss = $resource('http://page2rss.com/api/:action',
+      {action:'page', url:'', callback:'JSON_CALLBACK'},
+      {get: {method: 'JSONP'}});
 
     // add a widget to Solr
     function addWidgetToSolr(widgetType, widgetTitle, isEnable, widgetWeight, userWidget, WidQuery){
@@ -381,10 +386,18 @@ angular.module('websoApp')
       .$promise.then(function(result) {
 
         if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+          var $url = '';
+          if($scope.checkSourceResult.sourceType == 'HTTP'){
+            $url = $scope.model.url2rss;
+          }
+          else{
+            $url = $scope.model.inputUrl;
+          }
           $scope.sourceAddResult = $scope.addResource.get({
             source_type_s   : $scope.checkSourceResult.sourceType,
             type_s          : 'source',
-            url_s           : $scope.model.inputUrl,
+            url_s           : $url,
+            link_s          : $scope.model.inputUrl,
             tags_ss         : $scope.model.inputTags,
             title_t         : $scope.model.inputTitle,
             // domain_s        : $scope.model.inputDomain.name,
@@ -487,7 +500,13 @@ angular.module('websoApp')
             }
             else{
               if ($scope.checkSourceResult.sourceType == 'HTTP') {
-                $scope.model.inputTitle = $scope.checkSourceResult.title;
+                $scope.page2rss.get({
+                  url: url
+                }).$promise.then(function(res){
+                  $scope.model.url2rss = res.page.feed;
+                  $scope.model.inputTitle = res.page.title;
+                });
+                // $scope.model.inputTitle = $scope.checkSourceResult.title;
                 $scope.sourceChecked = true;
                 $scope.sourceType = 'page web';
               }
