@@ -285,7 +285,7 @@
                         </div> -->
                     </div>
                     <div id="docsFound">
-                        <div onlineResult ng-show="onlineResult.count">
+                        <!--<div onlineResult ng-show="onlineResult.count">
                             <table class="table table-striped">
                                 <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
                                     <td>
@@ -316,7 +316,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
+                        </div> -->
                         <div solr-result ng-show="solrResult.response.numFound">
                             <table class="table table-striped">
                                 <tr ng-repeat="doc in solrResult.response.docs">
@@ -432,7 +432,7 @@
                         </div>
                     </div>
                     <div id="docsFound">
-                        <div onlineResult ng-show="onlineResult.count">
+                        <!--<div onlineResult ng-show="onlineResult.count">
                             <table class="table table-striped">
                                 <tr ng-repeat="online in onlineResult.res | orderBy: 'pubDate' ">
                                     <td>
@@ -463,7 +463,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
+                        </div> -->
                         <div solr-result ng-show="solrResult.response.numFound">
                             <table class="table table-striped">
 
@@ -485,11 +485,11 @@
                                             {{ '_RSS_FEED_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="!affichageWaiting && ((doc.source_type_s=='HTTP') || ((doc.type_s=='document') && (doc.waiting_b)))" id="titleFound">
-                                            {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a>
+                                            <!-- {{ '_WEBSITE_' | i18n }}: <a href="{{doc.url_s}}" target="_blank">{{doc.title_t}}</a> -->
+                                            {{ '_WEBSITE_' | i18n }}: <a ng-click="seeDocuments(doc.id, doc.title_t)">{{doc.title_t}}</a>
                                         </div>
                                         <div ng-if="affichageWaiting">
-                                            <h5 ng-if="((doc.type_s=='document') && (doc.waiting_b))"><b>{{ '_WEBSITE_' | i18n }} : {{doc.title_t}}</b></h5>
-                                            <h5 ng-if="!((doc.type_s=='document') && (doc.waiting_b))"><b>{{doc.title_t}}</b></h5>
+                                            <h5 ng-if="(doc.waiting_b)"><b>{{doc.title_t}}</b></h5>
                                         </div>
                                         <div id="contentFound" ng-if="doc.content_t && ((doc.source_type_s=='rss') || (doc.source_type_s=='RSS') || affichageSource || !(searchNav[idx.source].checked) || affichageWaiting)">
                                             <div ng-controller="CollapseSolrCtrl">
@@ -521,7 +521,7 @@
                                             {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
                                         </div>
                                         <div ng-if="doc.source_type_s == 'online'" id="urlFound">
-                                            {{ '_SHOW_' | i18n }} : {{doc.query_s}}<br>
+                                            {{ '_QUERY_' | i18n }} : {{doc.query_s}}<br>
                                             {{ '_SOURCES_' | i18n }} : {{doc.ressources_s}}<br>
                                             {{ '_ADDED_ON_' | i18n }} : {{doc.creation_dt|date:'dd-MM-yyyy HH:mm'}}<br>
                                             {{ '_UPDATED_ON_' | i18n }} : {{doc.updating_dt|date:'dd-MM-yyyy HH:mm'}}<br>

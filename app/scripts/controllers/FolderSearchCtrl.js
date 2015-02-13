@@ -985,7 +985,7 @@ angular.module('websoApp')
       modalInstance.result.then(function () {
         $scope.feedAdd.put({
           source_type_s:    'online',
-          url_s:            $scope.validationForm.url,
+          // url_s:            $scope.validationForm.url,
           title_t:          $scope.validationForm.title,
           tags_ss:          $scope.validationForm.tags,
           refresh_s:        $scope.validationForm.frequency.option,
