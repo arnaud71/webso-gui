@@ -459,46 +459,46 @@ angular.module('websoApp')
 
 
 
-    // // ***************************************************************
-    // // doSearchFolder
-    // // list the available sources
-    // $scope.doSearchFolder = function () {
-    //   $scope.isError = false;
+    // ***************************************************************
+    // doSearchFolder
+    // list the available sources
+    $scope.doSearchFolder = function () {
+      $scope.isError = false;
 
-    //   $scope.dbList.get({
-    //     type_s      : 'tree',
-    //     title_t     : 'vfolder',
-    //     user_s      : $username,
-    //   }).$promise.then(function(result) {
+      $scope.dbList.get({
+        type_s      : 'tree',
+        title_t     : 'vfolder',
+        user_s      : $username,
+      }).$promise.then(function(result) {
 
-    //       $scope.folders = [];
-    //       var tmp = JSON.parse(result.success.response.docs[0].content_s);
-    //       var log = [];
-    //       angular.forEach(tmp[0].nodes, function(value1, key1) {
-    //         // if(angular.isArray(value1)){
+          $scope.folders = [];
+          var tmp = JSON.parse(result.success.response.docs[0].content_s);
+          var log = [];
+          angular.forEach(tmp[0].nodes, function(value1, key1) {
+            // if(angular.isArray(value1)){
 
-    //         $scope.folders.push({"id":value1.id ,"name":value1.title});
-    //         angular.forEach(value1.nodes, function(value2, key2){
-    //           $scope.folders.push({"id":value2.id , "name":value2.title});
-    //           angular.forEach(value2.nodes, function(value3, key3){
-    //             $scope.folders.push({"id":value3.id, "name":value3.title});
-    //             if(angular.isArray(value3.nodes)){
-    //               angular.forEach(value3.nodes, function(value4, key4){
-    //                 $scope.folders.push({"id":value4.id, "name":value4.title});
-    //               }, log);
-    //             }
-    //           }, log);
-    //         }, log);
-    //       }, log);
-    //       //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
-    //       //$scope.folder = $scope.folders[1];
+            $scope.folders.push({"id":value1.id ,"name":value1.title});
+            angular.forEach(value1.nodes, function(value2, key2){
+              $scope.folders.push({"id":value2.id , "name":value2.title});
+              angular.forEach(value2.nodes, function(value3, key3){
+                $scope.folders.push({"id":value3.id, "name":value3.title});
+                if(angular.isArray(value3.nodes)){
+                  angular.forEach(value3.nodes, function(value4, key4){
+                    $scope.folders.push({"id":value4.id, "name":value4.title});
+                  }, log);
+                }
+              }, log);
+            }, log);
+          }, log);
+          //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
+          //$scope.folder = $scope.folders[1];
 
-    //     }, function(reason) {
-    //       alert('Failed: ' + reason);
-    //     });
-    // };
+        }, function(reason) {
+          alert('Failed: ' + reason);
+        });
+    };
 
-    // $scope.doSearchFolder();
+    $scope.doSearchFolder();
 
     $scope.doSearchFromPage = function () {
       $scope.isCollapsed = false;

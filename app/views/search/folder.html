@@ -565,10 +565,10 @@
                 <h3>{{ '_VALIDATE_FILE_' | i18n }}</h3>
             </div>
             <div class="modal-body">
-
+                <div>{{ '_REQUIRE_FIELDS_' | i18n }}</div>
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}</label>
+                        <label class="col-sm-2 control-label">{{ '_TITLE_' | i18n }}*</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.title">
                         </div>
@@ -580,7 +580,7 @@
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}</label>
+                        <label class="col-sm-2 control-label">{{ '_TAG_' | i18n }}*</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" ng-model="validationForm.tags">
                         </div>
@@ -592,13 +592,13 @@
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label">{{ '_COMMENTS_' | i18n }}</label>
+                        <label class="col-sm-2 control-label">{{ '_COMMENTS_' | i18n }}*</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" rows="6" ng-model="validationForm.comment"></textarea>
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}</label>
+                        <label class="col-sm-2 control-label">{{ '_FOLDER_' | i18n }}*</label>
                         <div class="col-sm-10">
                             <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
                             <!-- <pre>{{validationFolder.id}}</pre>
