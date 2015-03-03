@@ -238,6 +238,13 @@ websoApp.config(function($stateProvider, $urlRouterProvider) {
             data: {
                 authorizedRoles: ['administrateur']
             }
+        }).state('/organize/administrate', {
+            url: '/organize/administrate',
+            templateUrl: 'views/organize/administrate.html',
+            controller: 'AdministrativCtrl',
+            data: {
+                authorizedRoles: ['administrateur']
+            }
         })
 
         //  Booklet

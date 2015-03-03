@@ -1,0 +1,204 @@
+<div ng-controller="headerCtrl">
+    <div ng-include src="template.url"></div>
+</div>
+
+<ol class="breadcrumb text-center">
+    <li><a href="#/home">{{ "_SERVICE_NAME_" | i18n }}</a></li>
+    <li><a>{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
+    <li class="active">{{ "_ADMINISTRATE_" | i18n }}</li>
+</ol>
+
+
+<div ng-controller="AdministrativCtrl">
+    <h3>{{ '_NAV_VALIDATION_ADD_' | i18n }}</h3>
+    {{ '_REQUIRE_FIELDS_' | i18n }}
+    <div class="row">
+        <div class="col-md-9">
+            <div ng-if="views.addComp">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_COMPANY_NAME_" | i18n }}*</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="{{ '_COMPANY_NAME_' | i18n }}" ng-model="formCompany.name" id="name" name="name">
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_MAX_USER_" | i18n }}*</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" ng-model="formCompany.maxUser" id="maxUser" name="maxUser" min="0">
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_MAX_GROUP_" | i18n }}*</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" ng-model="formCompany.maxGroup" id="maxGroup" name="maxGroup" min="0">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-7">
+                        <button type="submit" class="btn btn-default" ng-click="newCompany()" name="add">{{ "_VALIDATE_" | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="views.addGroup">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_GROUP_NAME_" | i18n }}*</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="{{ '_GROUP_NAME_' | i18n }}" ng-model="formGroup.name" id="name" name="name">
+                        </div>
+                    </div>
+                </form>
+
+                <!-- <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_MAX_USER_" | i18n }}</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" ng-model="formGroup.maxUser" id="maxUser" name="maxUser">
+                        </div>
+                    </div>
+                </form> -->
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_PERMISSIONS_" | i18n }}</label>
+                        <div class="col-sm-7">
+                            <!-- <input type="" class="form-control" ng-model="formGroup.maxGroup" id="maxGroup" name="maxGroup"> -->
+                            <select multiple size="4" ng-model="formGroup.permissions">
+                                <option value="Option 1">Option 1</option>
+                                <option value="Option 2">Option 2</option>
+                                <option value="Option 3">Option 3</option>
+                                <option value="Option 4">Option 4</option>
+                                <option value="Option 5">Option 5</option>
+                                <option value="Option 6">Option 6</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-7">
+                        <button type="submit" class="btn btn-default" ng-click="newGroup()" name="add">{{ "_VALIDATE_" | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="views.addUser">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_FIRST_NAME_" | i18n }}*</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="{{ '_FIRST_NAME_' | i18n }}" ng-model="formUser.firstName" id="firstName" name="firstName">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_LAST_NAME_" | i18n }}*</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="{{ '_LAST_NAME_' | i18n }}" ng-model="formUser.lastName" id="lastName" name="lastName">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_EMAIL_" | i18n }}*</label>
+                        <div class="col-sm-7">
+                            <input type="email" class="form-control" placeholder="{{ '_EMAIL_' | i18n }}" ng-model="formUser.email" id="email" name="email" require>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_GROUP_" | i18n }}*</label>
+                        <div class="col-sm-3">
+                            <select ng-model="formUser.group" name="groupi" ng-options="group as group.name_s for group in groupList"></select>  <!-- folder as folder.name for folder in folders"> -->
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-7">
+                        <button type="submit" class="btn btn-default" ng-click="newUser()" name="add">{{ "_VALIDATE_" | i18n }}</button>
+                    </div>
+                </div>
+
+                <!-- <form class="form-horizontal" role="form">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_MAX_GROUP_" | i18n }}</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" ng-model="formUser.maxGroup" id="maxGroup" name="maxGroup" min="0">
+                        </div>
+                    </div>
+                </form> -->
+            </div>
+            <!-- <div class="gridStyleSource" ng-grid="gridList"> -->
+            <div ng-if="views.showCompList">
+                <div class="gridStyleSource" ng-grid="companyGridList"></div>
+                <!-- <table align='center'>
+                    <caption>Options</caption>
+                    <tr ng-repeat="company in companyList">
+                        <td>{{company.name_s}}</td>
+                        <td>{{company.group_max_i}}</td>
+                        <td>{{company.user_max_i}}</td>
+                        <td ng-repeat="companyField in company">
+                            {{companyField}}
+                        </td>
+                    </tr>
+                </table> -->
+            </div>
+            <div ng-if="views.showGroupList">
+                <div class="gridStyleSource" ng-grid="groupGridList"></div>
+                <!-- {{groupList}} -->
+            </div>
+            <div ng-if="views.showUserList">
+                <div class="gridStyleSource" ng-grid="userGridList"></div>
+                <!-- {{userList}} -->
+            </div>
+        </div>
+        <div class="col-md-3">
+            <ul>
+                <li ng-if="1==1">gestion des entreprises
+                    <ul>
+                        <li><a ng-click="showCompanyList()">Voir la liste des entreprises</a></li>
+                        <li><a ng-click="formAddCompany()">Ajouter une entreprise</a></li>
+                    </ul>
+                </li>
+                <li>gestion des entreprises
+                    <ul>
+                        <li><a href="" ng-click="showUserList()">Voir la liste des utilisateurs</a></li>
+                        <li><a href="" ng-click="formAddUser()">Ajouter un utilisateur</a></li>
+                    </ul>
+                </li>
+                <li>gestion des entreprises
+                    <ul>
+                        <li><a href="" ng-click="showGroupList()">Voir la liste des groupes</a></li>
+                        <li><a href="" ng-click="formAddGroup()">Ajouter un groupe</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="OkayModal.html">
+        <div class="modal-header">
+            <h3>{{ "_ADD_INFORMATION_" | i18n }}</h3>
+        </div>
+        <div class="modal-body">
+            {{ "_VALIDATION_SUCCESS_" | i18n }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ "_OK_" | i18n }}</button>
+
+            <!-- <button class="btn btn-warning" ng-click="cancel()">{{ "_CANCEL_" | i18n }}</button> -->
+        </div>
+    </script>
+</div>

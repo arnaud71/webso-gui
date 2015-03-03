@@ -357,6 +357,10 @@
         "key": "_NAV_USERS_LIST_",
         "value": "Comptes utilisateurs"
     },
+        {
+        "key": "_NAV_ADMINISTRATE_",
+        "value": "Administration"
+    },
     {
         "key": "_NAV_BOOKLET_",
         "value": "Bookmarklet"
@@ -522,6 +526,14 @@
     {
         "key": "_REQUIRE_FIELDS_",
         "value": "(*: champ obligatoire)"
+    },
+    {
+        "key": "_PARENT_FOLDER_",
+        "value": "Dossier parent"
+    },
+    {
+        "key": "_FOLDER_NAME_",
+        "value": "Nom de dossier"
     },
 
 
@@ -792,6 +804,10 @@
         "key": "_DOWNLOAD_",
         "value": "Télécharger"
     },
+    {
+        "key": "_CREATE_FROLDER_",
+        "value": "Créer dossier"
+    },
 
 
 
@@ -835,6 +851,42 @@
         "key": "_EMPTY_LANG_",
         "value": "Veuillez choisir une langue"
     },
+
+
+
+    {
+        "key": "_COMPANY_NAME_",
+        "value": "Nom de l'entreprise"
+    },
+    {
+        "key": "_GROUP_",
+        "value": "Groupe"
+    },
+    {
+        "key": "_MAX_USER_",
+        "value": "Utilisateur max"
+    },
+    {
+        "key": "_MAX_GROUP_",
+        "value": "Groupes max"
+    },
+    {
+        "key": "_GROUP_NAME_",
+        "value": "Nom du groupe"
+    },
+    {
+        "key": "_FIRST_NAME_",
+        "value": "Prénom"
+    },
+    {
+        "key": "_LAST_NAME_",
+        "value": "Nom"
+    },
+    {
+        "key": "_PERMISSIONS_",
+        "value": "Permissions"
+    },
+
 
 
 

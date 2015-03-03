@@ -1,0 +1,36 @@
+.glyph {
+    background-image: url("/images/csg-54c65b61a7ab0.png");
+    background-position: 48px 48px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.glyph-small {
+    background-image: url("/images/csg-54c65b61a7ab0.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: text-bottom;
+    width: 28px;
+}
+
+.file-doc{ background-position: 0 0; width: 48px; height: 48px; } 
+.file-xls{ background-position: 0 -53px; width: 48px; height: 48px; } 
+.file-ppt{ background-position: 0 -106px; width: 48px; height: 48px; } 
+.file-pdf{ background-position: 0 -159px; width: 48px; height: 48px; } 
+.file-jpg{ background-position: 0 -212px; width: 48px; height: 48px; } 
+.file-png{ background-position: 0 -265px; width: 48px; height: 48px; } 
+.file-eps{ background-position: 0 -318px; width: 48px; height: 48px; } 
+.file-psd{ background-position: 0 -371px; width: 48px; height: 48px; } 
+.file-txt{ background-position: 0 -424px; width: 48px; height: 48px; } 
+.file-zip{ background-position: 0 -477px; width: 48px; height: 48px; } 
+.file-wav{ background-position: 0 -530px; width: 48px; height: 48px; } 
+.file-mp3{ background-position: 0 -583px; width: 48px; height: 48px; } 
+.file-css{ background-position: 0 -636px; width: 48px; height: 48px; } 
+.file-dll{ background-position: 0 -689px; width: 48px; height: 48px; } 
+.file-htm{ background-position: 0 -742px; width: 48px; height: 48px; } 
+.file-mov{ background-position: 0 -795px; width: 48px; height: 48px; } 
+.file-avi{ background-position: 0 -848px; width: 48px; height: 48px; } 
+.file-ukn{ background-position: 0 -901px; width: 48px; height: 48px; } 

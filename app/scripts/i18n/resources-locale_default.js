@@ -274,7 +274,6 @@
 
 
 
-
     {
         "key": "_SIGN_IN_",
         "value": "Sign in"
@@ -357,6 +356,10 @@
     {
         "key": "_NAV_USERS_LIST_",
         "value": "User accounts"
+    },
+        {
+        "key": "_NAV_ADMINISTRATE_",
+        "value": "Administrate"
     },
     {
         "key": "_NAV_BOOKLET_",
@@ -523,6 +526,14 @@
     {
         "key": "_REQUIRE_FIELDS_",
         "value": "(*: required field)"
+    },
+    {
+        "key": "_PARENT_FOLDER_",
+        "value": "Parent folder"
+    },
+    {
+        "key": "_FOLDER_NAME_",
+        "value": "Folder name"
     },
 
 
@@ -793,6 +804,10 @@
         "key": "_DOWNLOAD_",
         "value": "Download"
     },
+    {
+        "key": "_CREATE_FROLDER_",
+        "value": "Create folder"
+    },
 
 
 
@@ -835,6 +850,41 @@
     {
         "key": "_EMPTY_LANG_",
         "value": "Chose a language please"
+    },
+
+
+
+    {
+        "key": "_COMPANY_NAME_",
+        "value": "Company name"
+    },
+    {
+        "key": "_GROUP_",
+        "value": "Group"
+    },
+    {
+        "key": "_MAX_USER_",
+        "value": "Max users"
+    },
+    {
+        "key": "_MAX_GROUP_",
+        "value": "Max groups"
+    },
+    {
+        "key": "_GROUP_NAME_",
+        "value": "Groupe name"
+    },
+    {
+        "key": "_FIRST_NAME_",
+        "value": "First name"
+    },
+    {
+        "key": "_LAST_NAME_",
+        "value": "Last name"
+    },
+    {
+        "key": "_PERMISSIONS_",
+        "value": "Permissions"
     },
 
 
