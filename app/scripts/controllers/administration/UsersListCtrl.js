@@ -265,7 +265,7 @@ angular.module('websoApp')
 
     // modify the role of a user
     $scope.roleModify = $resource(cfg.urlServices+'db/:action',
-        {action:'update.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
+        {action:'change.pl', id:'', type_s:'user', callback:"JSON_CALLBACK"},
         {get:{method:'JSONP'}});
 
     $scope.modifyRole = function (userId, role) {
