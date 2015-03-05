@@ -25,7 +25,7 @@
     },
     {
         "key": "_CANCEL_",
-        "value": "Anuler"
+        "value": "Annuler"
     },
     {
         "key": "_EMAIL_",
@@ -535,6 +535,10 @@
         "key": "_FOLDER_NAME_",
         "value": "Nom de dossier"
     },
+    {
+        "key": "_IMPORTANCE_",
+        "value": "Importance"
+    },
 
 
 
@@ -817,7 +821,7 @@
     },
     {
         "key": "_ERROR_VALIDATE_ADD_",
-        "value": "Erreur merci de saisir au moins un titre, un/des tag(s), un dossier et un commentaire"
+        "value": "Erreur merci de saisir au moins un titre, un/des tag(s), un dossier, un commentaire et un niveau d'importance"
     },
     {
         "key": "_ERROR_WATCH_ADD_",

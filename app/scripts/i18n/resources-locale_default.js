@@ -517,7 +517,7 @@
     },
     {
         "key": "_ARE_YOU_SURE_DEL_VALIDATION",
-        "value": "Are you sur you want to  delete this validation "
+        "value": "Are you sur you want to delete this validation "
     },
     {
         "key": "_EDIT_VALIDATION_",
@@ -534,6 +534,10 @@
     {
         "key": "_FOLDER_NAME_",
         "value": "Folder name"
+    },
+    {
+        "key": "_IMPORTANCE_",
+        "value": "Importance"
     },
 
 
@@ -817,7 +821,7 @@
     },
     {
         "key": "_ERROR_VALIDATE_ADD_",
-        "value": "Error, need at least title, tag(s), folder and comment"
+        "value": "Error, need at least title, tag(s), folder, comment and importance"
     },
     {
         "key": "_ERROR_WATCH_ADD_",

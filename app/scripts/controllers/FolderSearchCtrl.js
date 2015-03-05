@@ -858,6 +858,7 @@ angular.module('websoApp')
         $scope.validationForm.tags     = '';
         $scope.validationForm.folder   = '';
         $scope.validationForm.comment  = '';
+        $scope.validationForm.importance = '';
 
         var modalInstance = $modal.open({
           scope: $scope,
@@ -866,7 +867,7 @@ angular.module('websoApp')
         });
 
         modalInstance.result.then(function () {
-          if($scope.validationForm.url == '' || $scope.validationForm.folder.id == '' || $scope.validationForm.comment == '') {
+          if($scope.validationForm.url == '' || $scope.validationForm.folder.id == '' || $scope.validationForm.comment == '' || $scope.validationForm.importance == '') {
             alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
           }
           else{
@@ -880,6 +881,7 @@ angular.module('websoApp')
               comment_s     : $scope.validationForm.comment,
               folder_s      : $scope.validationForm.folder.name,
               folder_i      : $scope.validationForm.folder.id,
+              importance_i  : $scope.validationForm.importance,
               lang_s        : doc.lang_s,
               date_dt       : doc.date_dt
             });
@@ -895,6 +897,7 @@ angular.module('websoApp')
 
       }
       else {
+        //TODO remove validation
         $scope.atomicChange.get({
           id            : doc.id,
           validated_b   : validate
@@ -967,7 +970,7 @@ angular.module('websoApp')
     $scope.waitSource = function (url, liste){
       $scope.validationForm                   = {};
       $scope.validationForm.url               = url;
-      $scope.validationForm.title             = 'Recherche en ligne Webso';
+      $scope.validationForm.title             = 'Recherche en ligne';
       $scope.validationForm.tags              = '';
       // $scope.validationForm.domain            = {};
       // $scope.validationForm.domain.name       = '';
