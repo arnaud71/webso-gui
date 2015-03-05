@@ -146,8 +146,8 @@ angular.module('websoApp')
         {visible:false,width:'50px',field:'id', displayName:  $filter('i18n')('_ID_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         // {width:'*',field:'url_s', displayName:  $filter('i18n')('_SOURCE_'),cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()">{{row.getProperty(col.field)}}</div>' },
         {width:'*',field:'title_t', displayName:  $filter('i18n')('_TITLE_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
+        // {width:'*',field:'importance_i', displayName:  $filter('i18n')('_IMPORTANCE_'), cellTemplate: '<div class="ngCellText bg-danger" ng-bind-html="{{row.getProperty(col.field)}}"></div>'}, //'{{row.getProperty(col.field)}}'},//' | importanceView}}'},
         {width:'150px',field:'tags_ss', displayName:  $filter('i18n')('_TAB_TAGS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
-        // {width:'100px',field:'domain_s', displayName:  $filter('i18n')('_DOMAIN_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'200px',field:'comment_s', displayName:  $filter('i18n')('_COMMENTS_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'folder_s', displayName:  $filter('i18n')('_FOLDER_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
         {width:'100px',field:'user_s', displayName:  $filter('i18n')('_AUTHOR_'), cellTemplate: '<div class="ngCellText" ng-bind-html="row.getProperty(col.field)"></div>'},
@@ -241,6 +241,7 @@ angular.module('websoApp')
       $scope.validationForm.folder            = {};
       $scope.validationForm.folder.name       = '';
       $scope.validationForm.folder.id         = '';
+      $scope.validationForm.importance        = '';
 
       var modalInstance = $modal.open({
         templateUrl: 'editValidationModal.html',
@@ -263,6 +264,7 @@ angular.module('websoApp')
           comment_s     : result.comment,
           folder_s      : result.folder.name,
           folder_i      : result.folder.id,
+          importance_i  : result.importance
         }).$promise.then(function () {
           $scope.doSearch2();
         });
@@ -279,6 +281,7 @@ angular.module('websoApp')
       $scope.validationForm.comment           = data.comment_s;
       $scope.validationForm.folder            = {'id': data.folder_i,'name': data.folder_s};
       $scope.validationForm.folders           = $scope.folders;
+      $scope.validationForm.importance        = data.importance_i;
 
 
       $scope.ok = function () {

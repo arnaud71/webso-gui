@@ -14,6 +14,9 @@ angular.module('websoApp')
     $scope.inputFolder  = '';
     $scope.fileName     = '';
     $scope.fileHash     = '';
+    $scope.inputImportance   = '';
+    $scope.createFolderModal = [];
+    $scope.folderArray = [];
     var error = {};
 
     var $username = $cookieStore.get('username');
@@ -35,13 +38,14 @@ angular.module('websoApp')
 
 
     $scope.doAdd = function () {
-      if($scope.inputTitle == '' || $scope.inputFolder == '' || $scope.inputComments == '' || $scope.inputTags == '') {
+      if($scope.inputTitle == '' || $scope.inputFolder == '' || $scope.inputComments == '' || $scope.inputTags == '' || $scope.inputImportance == '') {
         alert($filter('i18n')('_ERROR_VALIDATE_ADD_'));
       }
       else{
         if($scope.fileHash){
-          $scope.fileHash = 'f_'+$scope.fileHash;
+          $scope.fileID = 'f_'+$scope.fileHash;
         }
+        alert($scope.inputImportance);
         $scope.informationAddResult = $scope.informationAdd.get({
             url_s     : $scope.inputUrl,
             tags_ss   : $scope.inputTags,
@@ -50,7 +54,8 @@ angular.module('websoApp')
             comment_s : $scope.inputComments,
             folder_i  : $scope.inputFolder.id,
             folder_s  : $scope.inputFolder.name,
-            file_s    : $scope.fileHash,
+            file_s    : $scope.fileID,
+            importance_i: $scope.inputImportance
         }).$promise.then(function(){
             //Send message to update list
             sharedService.broadcast('Update');
@@ -58,6 +63,16 @@ angular.module('websoApp')
               templateUrl: 'validateModal.html',
               controller: ModalInstanceCtrl
             });
+            $scope.inputUrl     = '';
+            $scope.inputTags    = '';
+            $scope.inputTitle   = '';
+            $scope.inputDetails = '';
+            $scope.inputComments= '';
+            $scope.inputFolder  = '';
+            $scope.fileName     = '';
+            $scope.fileHash     = '';
+            $scope.inputImportance   = '';
+            $scope.createFolderModal = [];
           }, function(reason) {
             alert('Failed: ' + reason);
           });
@@ -96,24 +111,28 @@ angular.module('websoApp')
         }).$promise.then(function(result) {
 
           $scope.folders = [];
+          // $scope.folderArray = [];
           var tmp = JSON.parse(result.success.response.docs[0].content_s);
           var log = [];
           angular.forEach(tmp[0].nodes, function(value1, key1) {
-            // if(angular.isArray(value1)){
-
             $scope.folders.push({"id":value1.id ,"name":value1.title});
+            $scope.folderArray[value1.id]=value1.title;
             angular.forEach(value1.nodes, function(value2, key2){
               $scope.folders.push({"id":value2.id , "name":value2.title});
+              $scope.folderArray[value2.id]=value2.title;
               angular.forEach(value2.nodes, function(value3, key3){
                 $scope.folders.push({"id":value3.id, "name":value3.title});
+                $scope.folderArray[value3.id]=value3.title;
                 if(angular.isArray(value3.nodes)){
                   angular.forEach(value3.nodes, function(value4, key4){
                     $scope.folders.push({"id":value4.id, "name":value4.title});
+                    $scope.folderArray[value4.id]=value4.title;
                   }, log);
                 }
               }, log);
             }, log);
           }, log);
+
           //$scope.folders = JSON.parse(result.success.response.docs[0].content_s);
           //$scope.folder = $scope.folders[1];
 
@@ -211,4 +230,73 @@ angular.module('websoApp')
       });
       $scope.file = file;
     }
+
+    $scope.createFolder = function(){
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'createFolderModal.html',
+        controller  : ModalInstanceCtrl,
+      });
+
+      modalInstance.result.then(function () {
+        if(angular.isUndefined($scope.createFolderModal.folderName) || ($scope.createFolderModal.folderName == '') || angular.isUndefined($scope.createFolderModal.parentFolder) || ($scope.createFolderModal.parentFolder == '')) alert($filter('i18n')('_WRONG_MAIL_FORMAT_'));
+        else{
+          var $folderID = 0;
+          if($scope.createFolderModal.parentFolder >= 1000){
+            alert('Vous êtes limité à 4 niveau de dossier.');
+          }
+          else{
+            $folderID = $scope.createFolderModal.parentFolder*10+1
+
+            while(angular.isDefined($scope.folderArray[$folderID])){
+              $folderID++;
+            }
+            alert($folderID);
+          }
+
+          $scope.dataGet.get({
+            user_s:$username,
+            type_s:'tree',
+            title_t:'vfolder'
+          }).$promise.then(function(res){
+            // alert(res.success.response.docs[0].content_s);
+            // alert($scope.createFolderModal.parentFolder);
+            var folder = angular.fromJson(res.success.response.docs[0].content_s);
+            // alert(folder);
+
+          })
+          // $scope.sendMail.send({
+          //   token         : $token,
+          //   token_timeout : $token_timeout,
+          //   url_s         : $scope.shareForm.url,
+          //   tags          : $scope.shareForm.tags,
+          //   titre         : $scope.shareForm.title,
+          //   // content_en    : $scope.shareForm.content,
+          //   content       : $scope.shareForm.content,
+          //   // content_fr    : $scope.shareForm.content,
+          //   commentaire   : $scope.shareForm.coment,
+          //   // folder_s      : $scope.shareForm.folder.name,
+          //   // folder_i      : $scope.shareForm.folder.id,
+          //   langue        : doc.lang_s,
+          //   date          : doc.date_dt,
+          //   mail          : $scope.shareForm.mail
+          // });
+        }
+      });
+      $scope.doSearchFolder();
+    }
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+    };
+
   });

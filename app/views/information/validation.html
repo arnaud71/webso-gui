@@ -102,6 +102,45 @@
             <label class="col-sm-2 control-label">{{ "_FOLDER_" | i18n }}*</label>
             <div class="col-sm-7">
                 <select ng-model="inputFolder" name="inputFolder" ng-options="folder as folder.name for folder in folders"></select>
+                <a ng-click="createFolder()">{{ "_CREATE_FROLDER_" | i18n }}</a>
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">{{ "_IMPORTANCE_" | i18n }}*</label>
+            <div class="col-sm-7">
+                <table>
+                    <tr>
+                        <td>
+                            <span style="display:block; height:5px; width:40px; background-color:green;"></span>
+                        </td>
+                        <td>
+                            <span style="display:block; height:5px; width:40px; background-color:yellow;"></span>
+                        </td>
+                        <td>
+                            <span style="display:block; height:5px; width:40px; background-color:orange;"></span>
+                        </td>
+                        <td>
+                            <span style="display:block; height:5px; width:40px; background-color:red;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">
+                            <input type="radio" ng-model="inputImportance" name="importance" value="1" checked>
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" ng-model="inputImportance" name="importance" value="2">
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" ng-model="inputImportance" name="importance" value="3">
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" ng-model="inputImportance" name="importance" value="4">
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </form>
@@ -125,6 +164,36 @@
             <button class="btn btn-primary" ng-click="ok()">{{ "_OK_" | i18n }}</button>
 
             <!-- <button class="btn btn-warning" ng-click="cancel()">{{ "_CANCEL_" | i18n }}</button> -->
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="createFolderModal.html">
+        <div class="modal-header">
+            <h3>{{ "_CREATE_FOLDER_" | i18n }}</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_PARENT_FOLDER_' | i18n }}*</label>
+                    <div class="col-sm-9">
+                        <!-- <select ng-model="createFolderModal.parentFolder" ng-options="folder as folder.name for folder in folders"></select>-->
+                        <select ng-model="createFolderModal.parentFolder">
+                            <option value="1">racine</option>
+                            <option ng-repeat="folder in folders" value="{{folder.id}}">{{folder.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_FOLDER_NAME_' | i18n }}*</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="createFolderModal.folderName">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ "_OK_" | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ "_CANCEL_" | i18n }}</button>
         </div>
     </script>
 </div>
@@ -219,6 +288,41 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" value="{{validationForm.folder.name}}" disabled>
                             <select ng-model="validationForm.folder" ng-options="folder as folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">{{ "_IMPORTANCE_" | i18n }}*</label>
+                        <div class="col-sm-10">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span style="display:block; height:5px; width:40px; background-color:green;"></span>
+                                    </td>
+                                    <td>
+                                        <span style="display:block; height:5px; width:40px; background-color:yellow;"></span>
+                                    </td>
+                                    <td>
+                                        <span style="display:block; height:5px; width:40px; background-color:orange;"></span>
+                                    </td>
+                                    <td>
+                                        <span style="display:block; height:5px; width:40px; background-color:red;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <input type="radio" ng-model="validationForm.importance" name="importance" value="1">
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <input type="radio" ng-model="validationForm.importance" name="importance" value="2">
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <input type="radio" ng-model="validationForm.importance" name="importance" value="3">
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <input type="radio" ng-model="validationForm.importance" name="importance" value="4">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </form>
