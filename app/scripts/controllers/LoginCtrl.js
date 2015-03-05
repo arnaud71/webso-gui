@@ -133,7 +133,7 @@ angular.module('websoApp')
                     $cookieStore.put('token', user.token);
                     $cookieStore.put('token_timeout', user.token_timeout);
                     
-                    $location.path('/home');
+                    $location.path('/dashboard');
                 }
             }
         },
