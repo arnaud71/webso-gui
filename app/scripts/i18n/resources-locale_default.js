@@ -401,7 +401,7 @@
 
     {
         "key": "_VFOLDER_H2_",
-        "value": "Organize valdiate folder"
+        "value": "Organize validate folder"
     },
     {
         "key": "_WFOLDER_H2_",
