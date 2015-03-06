@@ -107,7 +107,7 @@
                         <td>{{fold.folder_s}}</td>
                         <td>{{fold.comment_s}}</td>
                         <!-- <td>{{fold.detail_s}}</td> -->
-                        <td ng-bind-html="{{fold.importance_i}}"></td>
+                        <td><span style="display:block; height:5px; width:40px; background-color:{{fold.importance_i | importanceColor}}"></span></td>
                         <td><button type="button" class="btn btn-xs" ng-click="shareDoc(fold,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button></td>
                     </tr>
                 </table>
