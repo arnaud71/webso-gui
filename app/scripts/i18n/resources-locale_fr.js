@@ -905,6 +905,15 @@
 
 
 
+    {
+        "description": "Text for modals"
+    },
+    {
+        "key": "_SHARE_MODAL_ERROR",
+        "value": "L'email renseigné est incorrect"
+    },
+
+
 
     {
         "key": "_LOGIN_ERROR_LENGTH_",

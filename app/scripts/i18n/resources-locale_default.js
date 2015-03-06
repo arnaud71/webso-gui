@@ -906,6 +906,16 @@
 
 
     {
+        "description": "Text for modals"
+    },
+    {
+        "key": "_SHARE_MODAL_ERROR",
+        "value": "Bad mail format"
+    },
+
+
+
+    {
         "key": "_LOGIN_ERROR_LENGTH_",
         "value": "Username length must be between 6 and 20 characters"
     },

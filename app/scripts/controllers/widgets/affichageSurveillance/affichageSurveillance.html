@@ -54,6 +54,11 @@
                             </div>
                         </div>
                     </td>
+                    <td>
+                        <button ng-show="doc.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(doc,true,'solr')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                        <button ng-show="doc.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(doc,false,'solr')" tooltip="{{ '_UNVALDIATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                        <button type="button" class="btn btn-xs" ng-click="shareDoc(doc,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button>
+                    </td>
                 </tr>
             </table>
         </div>

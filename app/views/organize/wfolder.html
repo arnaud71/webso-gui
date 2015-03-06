@@ -143,7 +143,7 @@
                     </tr>
                     </thead>
                     <tr ng-repeat="fold in watch">
-                        <td><a class="btn" ng-click="viewMore(fold.id)"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
+                        <td><a class="btn" ng-click="viewMore(fold.id)"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
                         <td>{{fold.title_t}}</td>
                         <td><span ng-repeat="source in fold.source_name_ss"><a>{{source}}</a><br></span></td>
                         <td>{{fold.query_s}}</td>
@@ -154,13 +154,42 @@
                     </tr>
                 </table>
                 <table ng-if="viewDocs" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                {{ '_TITLE_' | i18n }}
+                            </th>
+                            <th>
+                                {{ '_CONTENT_' | i18n }}
+                            </th>
+                            <th>
+                                {{ '_DATE_' | i18n }}
+                            </th>
+                            <th>
+                                {{ '_READ_' | i18n }}
+                            </th>
+                            <th>
+                                {{ '_VALIDATED_' | i18n }}
+                            </th>
+                            <th>
+                                {{ '_CRUD_' | i18n }}
+                            </th>
+                        </tr>
+                    </thead>
                     <tr ng-repeat="fold in watch[0].documents">
                         <!-- <td><a class="btn" ng-click="viewMore(fold.id)"><span class="glyphicon glyphicon-chevron-right"></span></a></td> -->
+                        <td></td>
                         <td>{{fold.title_t}}</td>
                         <td>{{fold.content_t | limitTo:100}}...</td>
-                        <td>{{fold.date_dt}}</td>
+                        <td>{{fold.date_dt | date:'dd-MM-yyyy HH:mm'}}</td>
                         <td>{{fold.read_b}}</td>
                         <td>{{fold.validated_b}}</td>
+                        <td>
+                            <button ng-show="fold.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(fold,true,'solr')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
+                            <button ng-show="fold.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(fold,false,'solr')" tooltip="{{ '_UNVALDIATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
+                            <button type="button" class="btn btn-xs" ng-click="shareDoc(fold,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -175,6 +204,4 @@
             <pre class="code">{{ model.data | json }}</pre> -->
         </div>
     </div>
-
-
 </div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('websoApp')
-  .controller('vfolderCtrl', function ($filter, $cookieStore, $scope, cfg, $resource) {
+  .controller('vfolderCtrl', function ($filter, $cookieStore, $scope, cfg, $resource, $modal) {
 
     var $username = $cookieStore.get('username');
     var $token    = $cookieStore.get('token');
@@ -16,6 +16,11 @@ angular.module('websoApp')
     $scope.dbList = $resource(cfg.urlServices+'db/:action',
       {action:'get.pl',user_s:$username,callback:'JSON_CALLBACK'},
       {get:{method:'JSONP'}});
+
+    $scope.sendMail = $resource(cfg.urlServices+':action',
+      {action: 'send.pl', callback:'JSON_CALLBACK', token: $token, token_timeout: $token_timeout},
+      {send: {method: 'JSONP'}});
+
 
     $scope.remove = function(scope) {
       alert('Vous êtes sur le point de supprimer un dossier et tout son sontenu');
@@ -166,6 +171,66 @@ angular.module('websoApp')
         $scope.isError = true;
 
       });
+    };
+
+    $scope.shareDoc = function (doc, type) {
+
+      $scope.shareForm = {};
+      if (type == 'solr') {
+        $scope.shareForm.url = doc.url_s;
+        $scope.shareForm.title = doc.title_t;
+        $scope.shareForm.content = doc.content_t;
+      }
+      else if (type == 'online') {
+        $scope.shareForm.url = doc.link;
+        $scope.shareForm.title = doc.title;
+        $scope.shareForm.content = doc.description;
+      }
+      $scope.shareForm.tags     = '';
+      $scope.shareForm.folder   = '';
+      $scope.shareForm.comment  = '';
+      $scope.shareForm.mail     = '';
+
+      var modalInstance = $modal.open({
+        scope: $scope,
+        templateUrl : 'views/modals/shareModal.html',
+        controller  : ModalInstanceCtrl,
+      });
+
+      modalInstance.result.then(function () {
+        if($scope.shareForm.mail == '' || angular.isUndefined($scope.shareForm.mail)) alert($filter('i18n')('_WRONG_MAIL_FORMAT_'));
+        else{
+          $scope.sendMail.send({
+            token         : $token,
+            token_timeout : $token_timeout,
+            url_s         : $scope.shareForm.url,
+            tags          : $scope.shareForm.tags,
+            titre         : $scope.shareForm.title,
+            // content_en    : $scope.shareForm.content,
+            content       : $scope.shareForm.content,
+            // content_fr    : $scope.shareForm.content,
+            commentaire   : $scope.shareForm.coment,
+            // folder_s      : $scope.shareForm.folder.name,
+            // folder_i      : $scope.shareForm.folder.id,
+            langue        : doc.lang_s,
+            date          : doc.date_dt,
+            mail          : $scope.shareForm.mail
+          });
+        }
+      });
+    };
+
+    //  ***************************************
+    //  modal instance
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+      $scope.ok = function () {
+        $modalInstance.close();//($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
     };
 
     // default value

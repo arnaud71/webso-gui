@@ -20,6 +20,9 @@
                             {{ '_FOLDER_' | i18n }} : {{doc.folder_s}}
                         </div>
                     </td>
+                    <td>
+                        <button type="button" class="btn btn-xs" ng-click="shareDoc(doc,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button>
+                    </td>
                 </tr>
             </table>
         </div>

@@ -88,6 +88,9 @@
                         <th>
                             {{ '_DETAILS_' | i18n }}
                         </th>
+                        <th>
+                            {{ '_CRUD_' | i18n }}
+                        </th>
                     </tr>
                     </thead>
                     <tr ng-repeat="fold in folder">
@@ -100,6 +103,7 @@
                         <td>{{fold.folder_s}}</td>
                         <td>{{fold.comment_s}}</td>
                         <td>{{fold.detail_s}}</td>
+                        <td><button type="button" class="btn btn-xs" ng-click="shareDoc(fold,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button></td>
                     </tr>
                 </table>
             </div>
