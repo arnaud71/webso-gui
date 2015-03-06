@@ -379,58 +379,74 @@ angular.module('websoApp')
     // doAddSource
     // add a source in the DB
     $scope.doAddSource = function () {
-      $scope.dbList.get({
-        type_s :'source',
-        url_s  : '"'+$scope.model.inputUrl+'"'
-      })
-      .$promise.then(function(result) {
+      if($scope.model.inputUrl == '' || $scope.model.inputTitle == '' || $scope.model.inputTags == ''){
+        var modalInstance = $modal.open({
+          templateUrl: 'addSourceModalEmptyField.html',
+          controller: ModalInstanceCtrl
+        });
+      }
+      else{
+        $scope.dbList.get({
+          type_s :'source',
+          url_s  : '"'+$scope.model.inputUrl+'"'
+        })
+        .$promise.then(function(result) {
 
-        if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
-          var $url = '';
-          if($scope.checkSourceResult.sourceType == 'HTTP'){
-            $url = $scope.model.url2rss;
+          if(angular.isDefined(result.success.response.numFound) && result.success.response.numFound == 0){
+            var $url = '';
+            if($scope.checkSourceResult.sourceType == 'HTTP'){
+              $url = $scope.model.url2rss;
+            }
+            else{
+              $url = $scope.model.inputUrl;
+            }
+            $scope.sourceAddResult = $scope.addResource.get({
+              source_type_s   : $scope.checkSourceResult.sourceType,
+              type_s          : 'source',
+              url_s           : $url,
+              link_s          : $scope.model.inputUrl,
+              tags_ss         : $scope.model.inputTags,
+              title_t         : $scope.model.inputTitle,
+              // domain_s        : $scope.model.inputDomain.name,
+              // activity_s      : $scope.model.inputActivity.name,
+              waiting_b       : false,
+              refresh_s       : $scope.model.inputFrequency.option
+
+            },function () {
+                if (typeof $scope.sourceAddResult.success === "undefined") {}
+                else {
+                  $scope.model.sourceId = $scope.sourceAddResult.success.id;
+                  if ($scope.sourceAddResult.nb_doc_added>0) {
+                    $scope.model.docAvailable = 1;
+                  }
+                }
+            });
+
+            if($scope.model.valueCheckBoxSource === true){
+              addWidget('affichageSource', $scope.model.inputTitle, '');
+            }
+
+            var modalInstance = $modal.open({
+              templateUrl: 'addSourceModal.html',
+              controller: ModalInstanceCtrl
+            });
           }
           else{
-            $url = $scope.model.inputUrl;
+            var modalInstance = $modal.open({
+              templateUrl: 'addSourceModalPresent.html',
+              controller: ModalInstanceCtrl
+            });
           }
-          $scope.sourceAddResult = $scope.addResource.get({
-            source_type_s   : $scope.checkSourceResult.sourceType,
-            type_s          : 'source',
-            url_s           : $url,
-            link_s          : $scope.model.inputUrl,
-            tags_ss         : $scope.model.inputTags,
-            title_t         : $scope.model.inputTitle,
-            // domain_s        : $scope.model.inputDomain.name,
-            // activity_s      : $scope.model.inputActivity.name,
-            waiting_b       : false,
-            refresh_s       : $scope.model.inputFrequency.option
-
-          },function () {
-              if (typeof $scope.sourceAddResult.success === "undefined") {}
-              else {
-                $scope.model.sourceId = $scope.sourceAddResult.success.id;
-                if ($scope.sourceAddResult.nb_doc_added>0) {
-                  $scope.model.docAvailable = 1;
-                }
-              }
-          });
-
-          if($scope.model.valueCheckBoxSource === true){
-            addWidget('affichageSource', $scope.model.inputTitle, '');
-          }
-
-          var modalInstance = $modal.open({
-            templateUrl: 'addSourceModal.html',
-            controller: ModalInstanceCtrl
-          });
-        }
-        else{
-          var modalInstance = $modal.open({
-            templateUrl: 'addSourceModalPresent.html',
-            controller: ModalInstanceCtrl
-          });
-        }
-      });
+          //Free source fields
+          $scope.model = {
+            inputUrl            : '',
+            inputTags           : '',
+            inputTitle          : '',
+            url2rss             : ''
+          };
+          $scope.sourceChecked = false;
+        });
+      }
     };
 
 

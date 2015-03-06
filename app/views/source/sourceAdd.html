@@ -7,6 +7,7 @@
     <li><a href="#">{{ '_ORGANIZE_BAR_ITEM_' | i18n }}</a></li>
     <li class="active">{{ '_ORGANIZE_BAR_SOURCE_ADD_' | i18n }}</li>
 </ol>
+
 <div ng-controller="AddWatchCtrl"> <!-- AddSourceCtrl -->
     <form name="sourceForm" class="form-horizontal" role="form">
 
@@ -81,8 +82,6 @@
                 </div>
             </div>
         </div>
-    </tab>
-
     </form>
     <!-- Testing Modal  -->
     <script type="text/ng-template" id="addSourceModal.html">
@@ -101,10 +100,22 @@
 
     <script type="text/ng-template" id="addSourceModalPresent.html">
         <div class="modal-header">
-            <h3>Ajout de Source</h3>
+            <h3>{{ '_MODAL_SOURCE_ADD_ERROR_' | i18n }}</h3>
         </div>
         <div class="modal-body">
-            Source déjà ajoutée
+            {{ '_MODAL_SOURCE_ADD_ALREADY_SAVE_' | i18n }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="addSourceModalEmptyField.html">
+        <div class="modal-header">
+            <h3>{{ '_MODAL_SOURCE_ADD_ERROR_' | i18n }}</h3>
+        </div>
+        <div class="modal-body">
+            {{ '_MODAL_SOURCE_ADD_EMPTY_FIELD_' | i18n }}
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
@@ -113,46 +124,109 @@
 
     <!-- Edit Modal -->
     <script type="text/ng-template" id="editSourceModal.html">
-            <div class="modal-header">
-                <h3>{{ '_MODAL_EDIT_SOURCE_' | i18n }}</h3>
+        <div class="modal-header">
+            <h3>{{ '_MODAL_EDIT_SOURCE_' | i18n }}</h3>
+
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_SOURCE_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="url" class="form-control" ng-model="ModalForm.url">
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="ModalForm.title">
+                    </div>
+                </div>
+                <!--<div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form" value="{{ModalForm.frequency.option}}" disabled>
+                        <select ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in ModalForm.frequencies"></select>
+                    </div>
+                </div>-->
+                <div class="form-group" >
+                    <label class="col-sm-3 control-label">{{ '_TAGS_' | i18n }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="ModalForm.tags">
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="WatchModal.html">
+        <div class="modal-header">
+            <h3>{{ '_ADD_WATCH_' | i18n }}</h3>
 
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group" >
-                        <label class="col-sm-3 control-label">{{ '_SOURCE_' | i18n }}</label>
-                        <div class="col-sm-9">
-                            <input type="url" class="form-control" ng-model="ModalForm.url">
-                        </div>
-                    </div>
-                    <div class="form-group" >
-                        <label class="col-sm-3 control-label">{{ '_SOURCE_NAME_' | i18n }}</label>
+                        <label class="col-sm-3 control-label">{{ '_TITLE_' | i18n }}*</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" ng-model="ModalForm.title">
                         </div>
                     </div>
-                    <!--<div class="form-group" >
-                        <label class="col-sm-3 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}</label>
+                    <!-- <div class="form-group" >
+                        <label class="col-sm-3 control-label">{{ '_SOURCE_' | i18n }}</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form" value="{{ModalForm.frequency.option}}" disabled>
-                            <select ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in ModalForm.frequencies"></select>
+                            <input type="url" class="form-control" ng-model="ModalForm.url">
                         </div>
                     </div>-->
+
                     <div class="form-group" >
-                        <label class="col-sm-3 control-label">{{ '_TAGS_' | i18n }}</label>
+                        <label class="col-sm-3 control-label">{{ '_QUERY_' | i18n }}</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" ng-model="ModalForm.tags">
+                            <input type="text" class="form-control" ng-model="ModalForm.query">
                         </div>
                     </div>
-                    
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label">{{ '_TAGS_' | i18n }}*</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="ModalForm.tags" placeholder="Separate tags with coma">
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label">{{ '_FOLDER_' | i18n }}*</label>
+                        <div class="col-sm-9">
+                            <select id="inputFolder" ng-model="ModalForm.folder" ng-options="folder.name for folder in folders"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label">{{ '_FREQUENCY_CHECK_' | i18n }}*</label>
+                        <div class="col-sm-9">
+                            <select id="inputFrequency" ng-model="ModalForm.frequency" ng-options="frequency.option for frequency in frequencies"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label">{{ '_NOTIFICATION_' | i18n }}*</label>
+
+                        <div class="col-sm-9">
+                            <select id="inputNotification" ng-model="ModalForm.notification" ng-options="notification.option for notification in notifications"></select>
+                        </div>
+                    </div>
                 </form>
             </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
-                <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
-            </div>
-        </script>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">{{ '_OK_' | i18n }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ '_CANCEL_' | i18n }}</button>
+        </div>
+    </script>
 </div>
 
 <div ng-controller="SourceListCtrl">

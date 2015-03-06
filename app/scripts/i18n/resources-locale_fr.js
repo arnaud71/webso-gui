@@ -477,6 +477,18 @@
         "value": "Source ajoutée  avec succès"
     },
     {
+        "key": "_MODAL_SOURCE_ADD_ERROR_",
+        "value": "Erreur d'ajout de source"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_EMPTY_FIELD_",
+        "value": "Merci de remplir tous les champs"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_ALREADY_SAVE_",
+        "value": "Source déjà enregistrée"
+    },
+    {
         "key": "_MODAL_SOURCE_DEL_",
         "value": "Effacement de la Source"
     },

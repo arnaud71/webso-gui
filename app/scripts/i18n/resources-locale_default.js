@@ -477,6 +477,18 @@
         "value": "Source added with success"
     },
     {
+        "key": "_MODAL_SOURCE_ADD_ERROR_",
+        "value": "Add source error"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_EMPTY_FIELD_",
+        "value": "Please fill all fields"
+    },
+    {
+        "key": "_MODAL_SOURCE_ADD_ALREADY_SAVE_",
+        "value": "Source already save"
+    },
+    {
         "key": "_MODAL_SOURCE_DEL_",
         "value": "Delete source"
     },
