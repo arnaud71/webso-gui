@@ -85,8 +85,11 @@
                         <th>
                             {{ '_COMMENTS_' | i18n }}
                         </th>
-                        <th>
+                        <!-- <th>
                             {{ '_DETAILS_' | i18n }}
+                        </th> -->
+                        <th>
+                            {{ '_IMPORTANCE_' | i18n }}
                         </th>
                         <th>
                             {{ '_CRUD_' | i18n }}
@@ -99,10 +102,12 @@
                         <td>{{fold.content_t}}</td>
                         <td ng-if="fold.url_s"><a ng-href="{{fold.url_s}}">{{fold.url_s}}</a></td>
                         <td ng-if="fold.file_s"><a ng-href="{{url}}&fileID={{fold.file_s}}"><span class="glyphicon glyphicon-file"></span> {{ '_DOWNLOAD_' | i18n }}</a></td>
+                        <td ng-if="!fold.file_s && !fold.url_s"></td>
                         <td><span ng-repeat="tag in fold.tags_ss"><a>{{tag}}</a><br></span></td>
                         <td>{{fold.folder_s}}</td>
                         <td>{{fold.comment_s}}</td>
-                        <td>{{fold.detail_s}}</td>
+                        <!-- <td>{{fold.detail_s}}</td> -->
+                        <td ng-bind-html="{{fold.importance_i}}"></td>
                         <td><button type="button" class="btn btn-xs" ng-click="shareDoc(fold,'solr')" tooltip="{{ '_SHARE_DOCUMENT_' | i18n }}"> <span class="glyphicon glyphicon-send"></span></button></td>
                     </tr>
                 </table>

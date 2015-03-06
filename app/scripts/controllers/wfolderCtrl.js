@@ -193,6 +193,7 @@ angular.module('websoApp')
         $scope.isError = true;
       });
     };
+    $scope.folderList({'$modelValue':{'id':1}});
 
     $scope.viewMore = function(id){
       $scope.viewDocs = true;

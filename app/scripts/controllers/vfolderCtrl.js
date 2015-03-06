@@ -172,6 +172,7 @@ angular.module('websoApp')
 
       });
     };
+    $scope.folderList({'$modelValue':{'id':1}});
 
     $scope.shareDoc = function (doc, type) {
 

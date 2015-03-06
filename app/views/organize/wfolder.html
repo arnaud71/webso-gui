@@ -169,9 +169,9 @@
                             <th>
                                 {{ '_READ_' | i18n }}
                             </th>
-                            <th>
-                                {{ '_VALIDATED_' | i18n }}
-                            </th>
+                            <!-- <th>
+                                {{ '_VALIDATE_' | i18n }}
+                            </th> -->
                             <th>
                                 {{ '_CRUD_' | i18n }}
                             </th>
@@ -184,7 +184,7 @@
                         <td>{{fold.content_t | limitTo:100}}...</td>
                         <td>{{fold.date_dt | date:'dd-MM-yyyy HH:mm'}}</td>
                         <td>{{fold.read_b}}</td>
-                        <td>{{fold.validated_b}}</td>
+                        <!-- <td>{{fold.validated_b}}</td> -->
                         <td>
                             <button ng-show="fold.validated_b == false" type="button" class="btn btn-xs" ng-click="validateDoc(fold,true,'solr')" tooltip="{{ '_VALIDATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved"></span></button>
                             <button ng-show="fold.validated_b == true" type="button" class="btn btn-xs" ng-click="validateDoc(fold,false,'solr')" tooltip="{{ '_UNVALDIATE_DOC_' | i18n }}"> <span class="glyphicon glyphicon-saved text-primary"></span></button>
